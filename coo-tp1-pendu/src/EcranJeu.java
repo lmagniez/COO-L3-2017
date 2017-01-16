@@ -168,7 +168,7 @@ public class EcranJeu extends JPanel{
 	    String ligne;
 	    try
 	    {
-	    	lecteurAvecBuffer = new BufferedReader(new FileReader("./coo-tp1-guess-the-word/mot.txt"));
+	    	lecteurAvecBuffer = new BufferedReader(new FileReader("mot.txt"));
 	    }
 	    catch(FileNotFoundException exc)
 	    {
