@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -39,18 +41,50 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * (pour pouvoir leur associer les listener)
 	 * @throws IOException
 	 */
-	public Fenetre() throws IOException{
+	public Fenetre(){
 		this.setTitle("Animation");
-		this.setSize(500, 300);
+		this.setSize(425, 525);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-
+		this.setResizable(false);
+		this.setFocusable(false);
+		
+		
 		lePanneau= new EcranJeu(this);
 		lePanneau2 = new EcranFinDePartie(this);
 		lePanneau3 = new EcranChoixDifficulte(this);
 		
 		this.add(lePanneau3);
+		
+		lePanneau.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent e){
+				Fenetre.this.lePanneau.gestion(e);
+			}
+		});
+		
+		
+		
+		Thread thread=new Thread(new Runnable(){
+			@Override
+			public void run() {
+				while(true){
+					//Fenetre.this.app.getA().calcul();
+					lePanneau.repaint();
+					try{
+						
+						Thread.sleep(100);
+					}catch(InterruptedException e){
+						//
+					}
+				}
+				
+			}
+		});
+		thread.start();
+		
+		
 		this.setVisible(true);
+		//this.pack();
 		
 	}
 
@@ -59,13 +93,9 @@ public class Fenetre extends JFrame implements ActionListener{
 	 * (choisit dans l'écran de difficulté)
 	 * @param vieMax nombre de vie pour la nouvelle partie
 	 */
-	public void initFenetreEcranJeu(int vieMax)
+	public void initFenetreEcranJeu()
 	{
-		lePanneau.vieMax=vieMax;
-		lePanneau.vie=vieMax;
 		lePanneau.reinit();
-		
-		
 		afficherPanneau(lePanneau);
 		
 	}
@@ -97,21 +127,12 @@ public class Fenetre extends JFrame implements ActionListener{
 		boolean isOver=false;
 		String command = ((JButton) arg0.getSource()).getActionCommand();
 		
-		if(command=="Facile")
-			initFenetreEcranJeu(10);
-		if(command=="Moyen")
-			initFenetreEcranJeu(7);
-		if(command=="Difficile")
-			initFenetreEcranJeu(5);
+		if(command=="Démarrer")
+			initFenetreEcranJeu();
+		if(command=="Quitter")
+			this.dispose();
 		
 		
-		if(command=="Abandon")
-		{
-			
-			lePanneau2.pendu.changerPendu(10);
-			lePanneau2.gameOverLabel.setText("Abandon. La réponse était: "+lePanneau.mot.getMot()+". Rejouer?");
-			isOver=true;
-		}
 		
 		if(command=="Ok")
 		{	
@@ -123,38 +144,7 @@ public class Fenetre extends JFrame implements ActionListener{
 			this.dispose();
 		}
 		
-		JButton button = lePanneau.buttons.get(command);
-	    if (null != button) 
-	    {
-	    	button.setEnabled(false);
-	    	//trouve une lettre
-	    	if(lePanneau.mot.update(command.charAt(0)))
-	    	{
-	    		lePanneau.motLabel.setText(lePanneau.mot.getMotActuel());
-	    		//test victoire
-	    		if(lePanneau.mot.getLettreRestante()==0)
-	    		{
-	    			lePanneau2.pendu.changerPendu(0);
-	    			lePanneau2.gameOverLabel.setText("Bien joué! La réponse était: "+lePanneau.mot.getMot()+". Rejouer?");
-	    			isOver=true;
-	    			
-	    		}
-	    	}
-	    	//retire une vie
-	    	else
-	    	{
-	    		lePanneau.vie--;
-	    		lePanneau.vieLabel.setText("Vie: "+lePanneau.vie);
-	    		lePanneau.pendu.changerPendu(lePanneau.vieMax-lePanneau.vie);
-	    		
-	    		if(lePanneau.vie==0)
-	    		{
-	    			lePanneau2.pendu.changerPendu(10);
-	    			lePanneau2.gameOverLabel.setText("Perdu. La réponse était: "+lePanneau.mot.getMot()+". Rejouer?");
-	    			isOver=true;
-	    		}
-	    	}
-	    }
+		
 	    
 	    if(isOver)
 		{
