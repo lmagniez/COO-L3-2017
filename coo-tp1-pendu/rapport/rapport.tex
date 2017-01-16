@@ -1,0 +1,71 @@
+\documentclass[a4paper,utf8]{article}
+\usepackage{rapport}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{MnSymbol,wasysym}
+\usepackage{hyperref}
+\usepackage[french]{babel}
+
+
+\formation{L3MI}
+\date{}
+\matiere{Conception Orientée Objet}
+\titre{Guess The Word - Compte Rendu TP1}
+
+\newcommand\code[1]{\textsf{#1}}
+\newcommand\srdjan[1]{{\color{red} #1}}
+
+\begin{document}
+
+\entete
+
+\section{Ce qui a été réalisé}
+
+
+
+\subsection{Création du jeu guess the word}
+
+L\textquotesingle utilisateur cherche à deviner un mot en proposant des lettres, 
+il a le droit \`{a} x erreurs.  \\% 
+Tout a été réalisé comme indiqué dans le sujet.
+
+\subsection{Gestion de la difficulté}
+
+Menu permettant de choisir la difficulté \\%
+(Facile :10 vies, Moyen :7 vies, Difficile : 5 vies)
+
+\subsection{Implémentation d'un parser simple lisant une liste de mots}
+
+Chaque ligne correspond \'{a} un mot, on ne prend en compte que les majuscules dans cette version.
+
+\subsection{Affichage d?un pendu en fonction du nombre de vies restantes}
+
+Dessiné en ASCII progressivement, \'{a} chaque fois que le joueur perd une vie.
+
+\section{Les difficultés rencontrées}
+
+\subsection{Difficulté pour créer plusieurs écrans.}
+
+Comment switcher entre plusieurs JPanel ?\\%
+\\%
+J\textquotesingle ai eu quelques problèmes sur le début (Comment accéder au JPanel en dehors de celui-ci ?)\\%
+Il suffisait simplement de stocker chaque JPanel dans la même classe et de les appeler.\\%
+Alternative : Tous les JPanels dans la même classe.\\%
+Le JFrame final contient 3 JPanel\\%
+-EcranJeu : jeu du pendu\\%
+-EcranDifficulte : début de partie, choix de difficulté\\%
+-EcranGameOver : fin de partie \\%
+\\%
+On créé un seul ActionListener dans le JFrame (Il y en avait au début dans chaque JPanel, problème pour changer d\textquotesingle écran).\\%
+On associe alors chaque bouton à l?action Listener de la JFrame et en fonction de chaque texte du bouton (utilisé comme identifiant), on y associe l?action correspondante. \\%
+
+\subsection{Liste des boutons}
+\textbf{« facile », « moyen », « difficile »} : défini le nombre de vie et lance l\textquotesingle écran de jeu. \\%
+\textbf{« A », ?, « Z » :} Teste si la lettre appartient au mot et remplace les *  correspondantes. Sinon on enlève une vie et on affiche le pendu. \\%
+\textbf{« Abandon » :} Passe sur l\textquotesingle écran de fin de partie. \\%
+\textbf{« Rejouer », « Quitter » :} Relance une partie ou quitte la partie. \\%
+
+
+
+\end{document}
