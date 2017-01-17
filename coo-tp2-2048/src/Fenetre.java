@@ -25,16 +25,16 @@ import javax.swing.JScrollPane;
  * Implémente ActionListener et va gérer tous les cas rencontrés lors
  *
  */
-public class Fenetre extends JFrame implements ActionListener{
+public class Fenetre extends JFrame {
 	
 	/**
 	 * Initie la JFrame, puis lance le jeu du pendu
 	 * @throws IOException 
 	 */
 	
-	private EcranJeu lePanneau;
-	private EcranFinDePartie lePanneau2;
-	private EcranChoixDifficulte lePanneau3;
+	protected EcranJeu lePanneau;
+	protected EcranFinDePartie lePanneau2;
+	protected EcranChoixDifficulte lePanneau3;
 	
 	/**
 	 * Constructeur, initialise les panneaux en leur associant la fenetre 
@@ -113,46 +113,6 @@ public class Fenetre extends JFrame implements ActionListener{
 		this.repaint();
 	}
 	
-	/**
-	 * Mise en place de l'action listener pour chaque bouton
-	 * Facile Moyen Difficile: Réinitialise une fenetre de jeu
-	 * Abandon: Lance la fenetre de fin de partie
-	 * Ok: Lance la fenetre de difficulté
-	 * Non: Ferme la fenetre
-	 * Lettre: Vérifie si la lettre est contenu dans le mot et agit en conséquence
-	 */
-	@Override
-	public void actionPerformed(ActionEvent arg0) 
-	{
-		boolean isOver=false;
-		String command = ((JButton) arg0.getSource()).getActionCommand();
-		
-		if(command=="Démarrer")
-			initFenetreEcranJeu();
-		if(command=="Quitter")
-			this.dispose();
-		
-		
-		
-		if(command=="Ok")
-		{	
-			afficherPanneau(lePanneau3);
-		}
-		
-		if(command=="Non")
-		{
-			this.dispose();
-		}
-		
-		
-	    
-	    if(isOver)
-		{
-			afficherPanneau(lePanneau2);
-		}
-	    
-		
-	}
 	
 	public static void main(String[] args) throws IOException {
 		Fenetre f = new Fenetre();

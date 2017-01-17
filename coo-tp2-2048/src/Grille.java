@@ -49,14 +49,52 @@ public class Grille extends JPanel{
 		
 	}
 	
-	public void fusionVerticale()
+	
+	public void fusion(Direction d)
 	{
+		Case pred, suiv;
+		
+		
+		for(int i=0; i<NB_LIGNES; i++)
+		{
+			
+				System.out.println(grid[i][0].value+" "+grid[i][1].value+" "+grid[i][2].value+" "+grid[i][3].value+" ");
+			
+		}
+		
+		if(d==Direction.SUD)
+		{
+			//pour chaque colonne y
+			for(int l=0; l<NB_COLONNES; l++)
+			{
+				//on regarde si on peut fusionner pred avec suiv
+				for(int i=NB_LIGNES-1; i>=0; i--)
+				{
+					pred=grid[i][l];
+					System.out.println("pred "+pred.value);
+					if(pred.value!=0)
+						//cherche le suivant
+						for(int j=i-1; j>0; j--)
+						{
+							if(pred.value==grid[j][l].value)
+							{	
+								System.out.println("ok!! l:"+l+" i:"+i+" value: "+grid[i][l].value
+										+" j:"+j+" value: "+grid[j][l].value+" ");
+								
+								grid[j][l].changeValue(grid[j][l].value*2);
+								pred.changeValue(0);
+								nbSet--;
+							}
+							i=j-1;
+							break;
+						}
+				}
+			}			
+		}
+		
 		
 	}
-	public void fusionHorizontale()
-	{
 	
-	}
 	
 	public void deplacerCase(Direction d)
 	{
@@ -86,9 +124,9 @@ public class Grille extends JPanel{
 		
 		if(d==Direction.NORD )
 		{
-			for(int ligne=0; ligne<NB_LIGNES; ligne++)
-				for(int i=1; i<NB_COLONNES; i++)
-					for(int j=1; j<NB_COLONNES;j++)
+			for(int ligne=0; ligne<NB_COLONNES; ligne++)
+				for(int i=1; i<NB_LIGNES; i++)
+					for(int j=1; j<NB_LIGNES;j++)
 						if(grid[j-1][ligne].value==0)
 						{
 							grid[j-1][ligne].changeValue(grid[j][ligne].value);
@@ -98,9 +136,9 @@ public class Grille extends JPanel{
 		
 		if(d==Direction.SUD )
 		{
-			for(int ligne=0; ligne<NB_LIGNES; ligne++)
-				for(int i=NB_COLONNES-2; i>=0; i--)
-					for(int j=NB_COLONNES-2; j>=0;j--)
+			for(int ligne=0; ligne<NB_COLONNES; ligne++)
+				for(int i=NB_LIGNES-2; i>=0; i--)
+					for(int j=NB_LIGNES-2; j>=0;j--)
 						if(grid[j+1][ligne].value==0)
 						{
 							grid[j+1][ligne].changeValue(grid[j][ligne].value);

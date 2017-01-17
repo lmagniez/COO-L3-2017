@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * @author loick
  *
  */
-public class EcranFinDePartie extends JPanel{
+public class EcranFinDePartie extends JPanel implements ActionListener{
 
 	private Fenetre f;
 	
@@ -37,15 +37,31 @@ public class EcranFinDePartie extends JPanel{
 		
 		
 		b1=new JButton("Ok");
-		b1.addActionListener(f);
+		b1.addActionListener(this);
 		b2=new JButton("Non");			
-		b2.addActionListener(f);
+		b2.addActionListener(this);
 		gameOverLabel=new JLabel("Game over");
 				
 		this.add(gameOverLabel);
 		this.add(b1);
 		this.add(b2);
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		String command = ((JButton) e.getSource()).getActionCommand();
+		
+		if(command=="Ok")
+		{	
+			f.afficherPanneau(f.lePanneau3);
+		}
+		
+		if(command=="Non")
+		{
+			f.dispose();
+		}
 	}
 	
 

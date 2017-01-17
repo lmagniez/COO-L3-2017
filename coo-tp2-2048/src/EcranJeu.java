@@ -47,6 +47,7 @@ public class EcranJeu extends JPanel{
 	{
 		this.f=f;
 		this.setFocusable(true);
+		this.requestFocus();
 		
 		//this.setLayout(new BorderLayout());
 		
@@ -86,6 +87,7 @@ public class EcranJeu extends JPanel{
 	            break;
 	        case KeyEvent.VK_DOWN:
 	        	System.out.println("down");
+	        	this.g.fusion(Direction.SUD);
 	        	this.g.deplacerCase(Direction.SUD);
 	        	this.g.apparitionCase();
 	            break;
@@ -100,6 +102,14 @@ public class EcranJeu extends JPanel{
 	        	this.g.apparitionCase();
 	            break;
 	     }
+	    
+	    for(int i=0; i<Grille.NB_LIGNES; i++)
+		{
+			
+				System.out.println(this.g.grid[i][0].value+" "+this.g.grid[i][1].value+" "+this.g.grid[i][2].value+" "+this.g.grid[i][3].value+" ");
+			
+		}
 	}
+
 
 }
