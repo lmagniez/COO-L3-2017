@@ -22,19 +22,25 @@ import javax.swing.JScrollPane;
  * 
  * @author loick
  * Classe principale contenant les 3 JFrames correspondant aux écrans de jeux
- * Implémente ActionListener et va gérer tous les cas rencontrés lors
  *
  */
-public class Fenetre extends JFrame implements ActionListener{
+
+/*
+ * CardLayout
+ * gestion.show()
+ */
+
+public class Fenetre extends JFrame {
 	
 	/**
 	 * Initie la JFrame, puis lance le jeu du pendu
 	 * @throws IOException 
 	 */
 	
-	private EcranJeu lePanneau;
-	private EcranFinDePartie lePanneau2;
-	private EcranChoixDifficulte lePanneau3;
+	protected EcranJeu lePanneau;
+	protected EcranFinDePartie lePanneau2;
+	protected EcranStart lePanneau3;
+	protected EcranRegle lePanneau4;
 	
 	/**
 	 * Constructeur, initialise les panneaux en leur associant la fenetre 
@@ -43,7 +49,7 @@ public class Fenetre extends JFrame implements ActionListener{
 	 */
 	public Fenetre(){
 		this.setTitle("Animation");
-		this.setSize(425, 525);
+		this.setSize(400, 475);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -52,7 +58,8 @@ public class Fenetre extends JFrame implements ActionListener{
 		
 		lePanneau= new EcranJeu(this);
 		lePanneau2 = new EcranFinDePartie(this);
-		lePanneau3 = new EcranChoixDifficulte(this);
+		lePanneau3 = new EcranStart(this);
+		lePanneau4 = new EcranRegle(this);
 		
 		this.add(lePanneau3);
 		
@@ -62,25 +69,6 @@ public class Fenetre extends JFrame implements ActionListener{
 			}
 		});
 		
-		
-		
-		Thread thread=new Thread(new Runnable(){
-			@Override
-			public void run() {
-				while(true){
-					//Fenetre.this.app.getA().calcul();
-					lePanneau.repaint();
-					try{
-						
-						Thread.sleep(100);
-					}catch(InterruptedException e){
-						//
-					}
-				}
-				
-			}
-		});
-		thread.start();
 		
 		
 		this.setVisible(true);
@@ -113,49 +101,10 @@ public class Fenetre extends JFrame implements ActionListener{
 		this.repaint();
 	}
 	
-	/**
-	 * Mise en place de l'action listener pour chaque bouton
-	 * Facile Moyen Difficile: Réinitialise une fenetre de jeu
-	 * Abandon: Lance la fenetre de fin de partie
-	 * Ok: Lance la fenetre de difficulté
-	 * Non: Ferme la fenetre
-	 * Lettre: Vérifie si la lettre est contenu dans le mot et agit en conséquence
-	 */
-	@Override
-	public void actionPerformed(ActionEvent arg0) 
-	{
-		boolean isOver=false;
-		String command = ((JButton) arg0.getSource()).getActionCommand();
-		
-		if(command=="Démarrer")
-			initFenetreEcranJeu();
-		if(command=="Quitter")
-			this.dispose();
-		
-		
-		
-		if(command=="Ok")
-		{	
-			afficherPanneau(lePanneau3);
-		}
-		
-		if(command=="Non")
-		{
-			this.dispose();
-		}
-		
-		
-	    
-	    if(isOver)
-		{
-			afficherPanneau(lePanneau2);
-		}
-	    
-		
-	}
 	
 	public static void main(String[] args) throws IOException {
 		Fenetre f = new Fenetre();
+		
 	}
 
 

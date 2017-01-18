@@ -30,9 +30,8 @@ public class Case extends JLabel{
 		this.value=0;
 		this.idColor=0;
 		
-		//this.setText("test");
+		this.setMinimumSize(new Dimension(45,45));
 		this.setPreferredSize(new Dimension(90,90));
-		this.setSize(90,90);
 		
 		this.setBackground(bgColor[idColor]);
 		this.setForeground(textColor[idColor]);
@@ -43,6 +42,10 @@ public class Case extends JLabel{
 		
 	}
 	
+	/**
+	 * Changer la valeur de la case et en fonction de celle-ci, changer la couleur du texte et du fond
+	 * @param value valeur de la case
+	 */
 	public void changeValue(int value)
 	{
 		int id=getIdFromValue(value);
@@ -68,8 +71,16 @@ public class Case extends JLabel{
 			if(value==values[i])
 				return i;
 		}
-		return values[NB_COLORS-1];
+		return NB_COLORS-1;
 	}
 	
+	/**
+	 * Réinitialise la case en passant sa valeur à 0 et en mettant à jour la couleur et le contenu du JLabel
+	 */
+	public void reinit()
+	{
+		System.out.println("ok!");
+		this.changeValue(0);
+	}
 	
 }

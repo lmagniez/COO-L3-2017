@@ -15,21 +15,20 @@ import javax.swing.JPanel;
  * @author loick
  *
  */
-public class EcranFinDePartie extends JPanel implements ActionListener{
+public class EcranRegle extends JPanel implements ActionListener{
 
 	private Fenetre f;
 	
 	protected JButton b1;
-	protected JButton b2;
 	protected JPanel p;
 	
-	protected JLabel gameOverLabel;
+	protected JLabel regleLabel;
 	
 	/**
 	 * Initialisation du JPanel (Une fois)
 	 * @param f Fenetre utilisé pour les ActionListener
 	 */
-	public EcranFinDePartie(Fenetre f)
+	public EcranRegle(Fenetre f)
 	{
 		this.f=f;
 		
@@ -38,13 +37,10 @@ public class EcranFinDePartie extends JPanel implements ActionListener{
 		
 		b1=new JButton("Ok");
 		b1.addActionListener(this);
-		b2=new JButton("Non");			
-		b2.addActionListener(this);
-		gameOverLabel=new JLabel("Game over");
+		regleLabel=new JLabel("Règles");
 				
-		this.add(gameOverLabel);
+		this.add(regleLabel);
 		this.add(b1);
-		this.add(b2);
 		
 	}
 
@@ -55,12 +51,9 @@ public class EcranFinDePartie extends JPanel implements ActionListener{
 		
 		if(command=="Ok")
 		{	
-			f.afficherPanneau(f.lePanneau3);
-		}
-		
-		if(command=="Non")
-		{
-			f.dispose();
+			f.afficherPanneau(f.lePanneau);
+			f.lePanneau.setFocusable(true);
+			f.lePanneau.requestFocus();
 		}
 	}
 	
