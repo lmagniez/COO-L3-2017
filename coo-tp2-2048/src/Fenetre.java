@@ -25,11 +25,6 @@ import javax.swing.JScrollPane;
  *
  */
 
-/*
- * CardLayout
- * gestion.show()
- */
-
 public class Fenetre extends JFrame {
 	
 	/**

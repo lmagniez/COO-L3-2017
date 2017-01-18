@@ -186,6 +186,51 @@ public class Grille extends JPanel{
 		return res;
 	}
 	
+	public void fusion(Direction d)
+	{
+		Case pred, suiv;
+		
+		
+		for(int i=0; i<NB_LIGNES; i++)
+		{
+			
+				System.out.println(grid[i][0].value+" "+grid[i][1].value+" "+grid[i][2].value+" "+grid[i][3].value+" ");
+			
+		}
+		
+		if(d==Direction.SUD)
+		{
+			//pour chaque colonne y
+			for(int l=0; l<NB_COLONNES; l++)
+			{
+				//on regarde si on peut fusionner pred avec suiv
+				for(int i=NB_LIGNES-1; i>=0; i--)
+				{
+					pred=grid[i][l];
+					System.out.println("pred "+pred.value);
+					if(pred.value!=0)
+						//cherche le suivant
+						for(int j=i-1; j>0; j--)
+						{
+							if(pred.value==grid[j][l].value)
+							{	
+								System.out.println("ok!! l:"+l+" i:"+i+" value: "+grid[i][l].value
+										+" j:"+j+" value: "+grid[j][l].value+" ");
+								
+								grid[j][l].changeValue(grid[j][l].value*2);
+								pred.changeValue(0);
+								nbSet--;
+							}
+							i=j-1;
+							break;
+						}
+				}
+			}			
+		}
+		
+		
+	}
+	
 	/**
 	 * Essaye de déplacer des cases en allant dans une direction
 	 * @param d Direction empruntée 
@@ -229,6 +274,7 @@ public class Grille extends JPanel{
 				for(int i=1; i<NB_LIGNES; i++)
 					for(int j=1; j<NB_LIGNES;j++)
 						if(grid[j-1][col].value==0&&grid[j][col].value!=0)
+
 						{
 							if(!change)return true;
 							grid[j-1][col].changeValue(grid[j][col].value);

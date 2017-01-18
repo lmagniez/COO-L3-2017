@@ -1,13 +1,12 @@
-/EcranJeu.class
-/Fenetre.class
-/Panneau.class
-/Colors.class
 /Case.class
-/EcranFinDePartie.class
+/Colors.class
+/Direction.class
 /EcranChoixDifficulte.class
-/Grille.class
+/EcranFinDePartie.class
+/EcranJeu.class
 /Fenetre$1.class
 /Fenetre$2.class
+<<<<<<< HEAD
 /Fenetre$3.class
 /Directions.class
 /Direction.class
@@ -16,3 +15,8 @@
 /EcranRegle.class
 /IA.class
 /IA$1.class
+=======
+/Fenetre.class
+/Grille.class
+/Panneau.class
+>>>>>>> 5674533389bc242c2ea43d41fa150e42fc5fc9cc
