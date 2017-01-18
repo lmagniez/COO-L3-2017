@@ -43,8 +43,8 @@ public class Fenetre extends JFrame {
 	 * @throws IOException
 	 */
 	public Fenetre(){
-		this.setTitle("2048");
-		this.setSize(400, 475);
+		this.setTitle("Monopoly");
+		this.setSize(1200, 700);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
