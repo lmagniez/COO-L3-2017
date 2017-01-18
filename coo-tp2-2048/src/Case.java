@@ -4,6 +4,12 @@ import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Classe représentant une case dans la grille, Chaque case a une valeur et une couleur de fond/texte 
+ * qui lui correspond
+ * @author loick
+ *
+ */
 public class Case extends JLabel{
 
 	private static final int NB_COLORS=9;
@@ -22,6 +28,9 @@ public class Case extends JLabel{
 	protected int idColor;
 	protected int value; 
 	
+	/**
+	 * Initialisation d'une case (texte centré et valeur à 0)
+	 */
 	public Case()
 	{
 		this.setHorizontalAlignment(SwingConstants.CENTER);
@@ -79,7 +88,6 @@ public class Case extends JLabel{
 	 */
 	public void reinit()
 	{
-		System.out.println("ok!");
 		this.changeValue(0);
 	}
 	

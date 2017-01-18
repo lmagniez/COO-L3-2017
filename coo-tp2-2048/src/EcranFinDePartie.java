@@ -48,6 +48,10 @@ public class EcranFinDePartie extends JPanel implements ActionListener{
 		
 	}
 
+	/**
+	 * Ok: Recommence la partie
+	 * Non: Ferme la fenetre
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

@@ -1,11 +1,20 @@
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+/**
+ * Classe implémentant une IA
+ * @author loick
+ *
+ */
 public class IA {
 	
 	Fenetre f;
 	Thread thread;
 	
+	/**
+	 * Lance le thread et execute des actions toutes les x frames
+	 * @param f Fenetre de jeu
+	 */
 	public IA(Fenetre f)
 	{
 		this.f=f;
@@ -29,6 +38,11 @@ public class IA {
 		thread.start();
 	}
 	
+	/**
+	 * Décision aléatoire, non utilisé
+	 * @param g Grille de jeu
+	 * @param score Score du jeu
+	 */
 	public void deciderAlea(Grille g, Score score)
 	{
 		Random r=new Random();
@@ -63,6 +77,14 @@ public class IA {
         	g.apparitionCase();
 		
 	}
+	
+	/**
+	 * Décision en fonction du score.
+	 * On va essayer ici de maximiser le score tout en essayant de garder au maximum les blocs de 
+	 * grandes valeurs en bas à droite.
+	 * @param g Grille
+	 * @param score Score du jeu
+	 */
 	
 	public void deciderScore(Grille g, Score score)
 	{

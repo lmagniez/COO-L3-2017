@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 /**
- * JPanel correspondant à l'écran de choix de difficulté avant de lancer une partie.
+ * JPanel correspondant à l'écran démarrage, propose de commencer en tant que joueur, ia, ou quitte la partie
  * @author loick
  *
  */
@@ -79,6 +79,11 @@ public class EcranStart extends JPanel implements ActionListener{
 		this.add(quit);
 	}
 
+	/**
+	 * Démarrer: Lance la fenetre de jeu
+	 * IA: Lance l'IA définie dans la classe IA
+	 * Quitter: Ferme la fenetre
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

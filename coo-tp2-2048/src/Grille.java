@@ -8,6 +8,13 @@ import java.util.Random;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+/**
+ * Classe implémentant une grille de jeu (un ensemble de case)
+ * C'est ici que se passera la plupart des actions de jeu.
+ * @author loick
+ *
+ */
+
 public class Grille extends JPanel{
 
 	
@@ -17,6 +24,9 @@ public class Grille extends JPanel{
 	protected int nbSet;
 	protected Case[][] grid;
 	
+	/**
+	 * Initialise la 
+	 */
 	public Grille()
 	{
 		this.setBackground(Color.GRAY);
@@ -287,7 +297,6 @@ public class Grille extends JPanel{
 		int nbCaseRestante=NB_COLONNES*NB_LIGNES-nbSet;
 		Random r= new Random();
 		int position =r.nextInt(nbCaseRestante)+1; //on va remplacer la ième case non occupée
-		System.out.println("position"+position);
 		int cpt=0;
 		
 		for(int i=0; i<NB_LIGNES; i++)
@@ -299,7 +308,6 @@ public class Grille extends JPanel{
 				if(cpt==position)
 				{
 					int res = r.nextInt(5);
-					System.out.println("res: "+res);
 					if(res==4)
 						grid[i][j].changeValue(4);
 					else

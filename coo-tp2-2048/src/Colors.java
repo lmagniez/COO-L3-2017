@@ -1,5 +1,10 @@
 import java.awt.Color;
 
+/**
+ * Ensemble de constantes de couleurs utilisés pour le graphique
+ * @author loick
+ *
+ */
 public abstract class Colors {
 
 	public static Color case0=new Color(190, 179, 166);

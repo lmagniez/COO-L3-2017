@@ -79,6 +79,10 @@ public class EcranJeu extends JPanel{
 		
 	}
 	
+	/**
+	 * Initialise l'IA si elle est demandé par l'utilisateur
+	 * @throws InterruptedException
+	 */
 	public void initIA() throws InterruptedException
 	{
 		ia=new IA(f);
@@ -95,7 +99,10 @@ public class EcranJeu extends JPanel{
 		
 	}
 	
-	
+	/**
+	 * Gestion clavier des directions et des touches quitter(ESC) aide(H) et recommencer(J)
+	 * @param e
+	 */
 	public void gestion(KeyEvent e){
 		int keyCode=e.getKeyCode();
 		

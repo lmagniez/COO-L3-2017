@@ -10,8 +10,7 @@ import javax.swing.JPanel;
 
 
 /**
- * JPanel correspondant à une fin de partie.
- * On demande à l'utilisateur si il souhaite recommencer une partie.
+ * JPanel affichant les règles à l'utilisateur
  * @author loick
  *
  */
@@ -44,6 +43,9 @@ public class EcranRegle extends JPanel implements ActionListener{
 		
 	}
 
+	/**
+	 * Ok: quitte l'écran d'aide et revient au jeu
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

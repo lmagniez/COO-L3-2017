@@ -21,7 +21,7 @@ import javax.swing.JScrollPane;
 /**
  * 
  * @author loick
- * Classe principale contenant les 3 JFrames correspondant aux écrans de jeux
+ * Classe principale contenant les 4 JFrames correspondant aux écrans de jeux
  *
  */
 
@@ -72,9 +72,7 @@ public class Fenetre extends JFrame {
 	}
 
 	/**
-	 * Réinitialise un écran de jeu en lui changeant le nombre de vie 
-	 * (choisit dans l'écran de difficulté)
-	 * @param vieMax nombre de vie pour la nouvelle partie
+	 * Réinitialise un écran de jeu (Toutes les cases à zéro sauf une)
 	 */
 	public void initFenetreEcranJeu()
 	{
