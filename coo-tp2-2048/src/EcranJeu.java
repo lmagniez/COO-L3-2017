@@ -34,7 +34,7 @@ public class EcranJeu extends JPanel{
 	private IA ia;
 	
 	protected Score score;
-	protected Panneau menu;
+	protected JPanel menu;
 	protected Grille g;
 	
 	
@@ -46,7 +46,7 @@ public class EcranJeu extends JPanel{
 	 */
 	public EcranJeu(Fenetre f)
 	{
-		menu=new Panneau();
+		menu=new JPanel();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		menu.setLayout(new BoxLayout(menu, BoxLayout.LINE_AXIS));
 		
