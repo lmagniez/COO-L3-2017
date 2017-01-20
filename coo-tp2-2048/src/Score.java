@@ -39,5 +39,14 @@ public class Score extends JLabel{
 		this.scoreValue=0;
 		this.setText("Score: "+scoreValue);
 	}
+
+	public int getScoreValue() {
+		return scoreValue;
+	}
+
+	public void setScoreValue(int scoreValue) {
+		this.scoreValue = scoreValue;
+		this.setText("Score: "+scoreValue);
+	}
 	
 }

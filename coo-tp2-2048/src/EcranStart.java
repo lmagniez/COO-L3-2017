@@ -91,15 +91,13 @@ public class EcranStart extends JPanel implements ActionListener{
 		
 		if(command=="Démarrer")
 		{
-			
+			f.lePanneau.is_IA=false;
 			f.initFenetreEcranJeu();
-			f.lePanneau.setFocusable(true);
-			f.lePanneau.requestFocus();
-			
 		}
 		
 		if(command=="IA")
 		{
+			f.lePanneau.is_IA=true;
 			f.initFenetreEcranJeu();
 			try {
 				f.lePanneau.initIA();

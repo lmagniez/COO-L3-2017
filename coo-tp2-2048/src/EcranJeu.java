@@ -1,28 +1,17 @@
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * JPanel correspondant à une partie, l'utilisateur clique sur des lettres pour essayer de deviner le mot
+ * JPanel correspondant à une partie de 2048
+ * Dispose d'un panel pour le menu, un pour la grille.
+ * Gestion des déplacements.  
  * @author loick
  *
  */
@@ -37,7 +26,8 @@ public class EcranJeu extends JPanel{
 	protected JPanel menu;
 	protected Grille g;
 	
-	
+	protected boolean continuer;
+	protected boolean is_IA;
 	
 	/**
 	 * Créé un nouveau JPanel de jeu (Une fois)
@@ -74,7 +64,12 @@ public class EcranJeu extends JPanel{
 		this.add(Box.createRigidArea(new Dimension(0,15)));
 		this.add(g);
 		
-        
+
+		this.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent e){
+				EcranJeu.this.gestion(e);
+			}
+		});
 		
 		
 	}
@@ -94,6 +89,7 @@ public class EcranJeu extends JPanel{
 	 */
 	public void reinit()
 	{
+		this.continuer=false;
 		this.score.reinit();
 		this.g.reinit();
 		
@@ -134,18 +130,49 @@ public class EcranJeu extends JPanel{
 	        case KeyEvent.VK_H:
 	        	f.afficherPanneau(f.lePanneau4);
 	        	break;
-	        	
 	     }
 	    
 	    if(has_moved||has_fused)
         	this.g.apparitionCase();
 	    
-	    //Verifier si déplacement possible 
+	    //Verifier si déplacement possible : game over
 	    if(this.g.nbSet==Grille.NB_COLONNES*Grille.NB_LIGNES&&!this.g.canMove())
 	    {
+	    	f.lePanneau2.s.setScoreValue(f.lePanneau.score.scoreValue);
+	    	f.lePanneau2.gameOverLabel.setText("Game Over");
+	    	f.lePanneau2.g=f.lePanneau.g.clone();
+			f.lePanneau2.add(f.lePanneau2.g);//add car n'arrive pas à mettre a jour si on garde l'instance à chaque fois
+			
+			f.lePanneau2.b4.setVisible(false);
 	    	f.afficherPanneau(f.lePanneau2);
+	    	
 	    }
+	    
+	    else 
+	    	testGagne();
+	    
 	}
 
 
+
+	/**
+	 * Teste si une case de la grille est à 2048, et lance l'écran de victoire si c'est le cas.
+	 * @return
+	 */
+	public boolean testGagne()
+	{
+		if(this.g.isInside(2048)&&!continuer)
+	    {
+	    	f.lePanneau2.s.setScoreValue(f.lePanneau.score.scoreValue);
+	    	f.lePanneau2.gameOverLabel.setText("Gogné!");
+	    	f.lePanneau2.g=f.lePanneau.g.clone();
+			f.lePanneau2.add(f.lePanneau2.g);//add car n'arrive pas à mettre a jour si on garde l'instance à chaque fois
+			
+	    	f.lePanneau2.b4.setVisible(true);
+	    	f.afficherPanneau(f.lePanneau2);
+	    	return true;
+	    }
+		return false;
+	}
 }
+

@@ -22,6 +22,7 @@ public class IA {
 			@Override
 			public void run() {
 				while(true){
+					//if(f.lePanneau.testGagne())thread.stop();
 					IA.this.deciderScore(f.lePanneau.g,f.lePanneau.score);
 					f.revalidate();
 					f.repaint();
@@ -131,6 +132,12 @@ public class IA {
 					if(!g.deplacerCase(Direction.OUEST, true))
 						if(!g.deplacerCase(Direction.NORD, true))
 						{	gameOver=true;
+						
+							f.lePanneau2.s.setScoreValue(f.lePanneau.score.scoreValue);
+							f.lePanneau2.gameOverLabel.setText("Game Over");
+							f.lePanneau2.g=f.lePanneau.g.clone();
+							f.lePanneau2.add(f.lePanneau2.g);
+						
 							this.f.afficherPanneau(this.f.lePanneau2);
 							thread.interrupt();
 							thread.stop();

@@ -58,11 +58,7 @@ public class Fenetre extends JFrame {
 		
 		this.add(lePanneau3);
 		
-		lePanneau.addKeyListener(new KeyAdapter(){
-			public void keyPressed(KeyEvent e){
-				Fenetre.this.lePanneau.gestion(e);
-			}
-		});
+		
 		
 		
 		
@@ -90,6 +86,8 @@ public class Fenetre extends JFrame {
 		getContentPane().removeAll();
 		getContentPane().repaint();
 		getContentPane().add(p);
+		p.requestFocus();
+		p.setFocusable(true);
 		getContentPane().validate();
 		this.repaint();
 	}

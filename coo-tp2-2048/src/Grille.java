@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  *
  */
 
-public class Grille extends JPanel{
+public class Grille extends JPanel implements Cloneable{
 
 	
 	public static final int NB_COLONNES = 4;
@@ -25,7 +25,7 @@ public class Grille extends JPanel{
 	protected Case[][] grid;
 	
 	/**
-	 * Initialise la 
+	 * Initialise la grille
 	 */
 	public Grille()
 	{
@@ -61,6 +61,46 @@ public class Grille extends JPanel{
 	}
 	
 	/**
+	 * Constructeur pour cloner l'objet
+	 * @param nbSet
+	 * @param g
+	 */
+	public Grille(int nbSet, Case[][] g)
+	{
+		this.setBackground(Color.GRAY);
+		this.setPreferredSize(new Dimension(400,400));
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		this.nbSet=nbSet;
+		this.grid=new Case[NB_LIGNES][NB_COLONNES];
+		for(int i=0; i<NB_LIGNES; i++)
+		{	
+			for(int j=0; j<NB_COLONNES; j++)
+			{
+				c.gridx=j;
+				c.gridy=i;
+				c.insets=new Insets(3,3,3,3);;
+				grid[i][j]=g[i][j].clone();
+				this.add(grid[i][j],c);
+			}
+		}
+	}
+	
+	public void refresh()
+	{
+		for(int i=0; i<NB_LIGNES; i++)
+		{	
+			for(int j=0; j<NB_COLONNES; j++)
+			{
+			
+				grid[i][j].revalidate();
+				grid[i][j].repaint();
+			}
+		
+		}
+	}
+	
+	/**
 	 * Essaye de fusionner des cases en allant dans une direction
 	 * @param d Direction empruntée
 	 * @param s Score (pour mettre à jour)
@@ -87,7 +127,7 @@ public class Grille extends JPanel{
 						{
 							if(pred.value==grid[j][l].value)
 							{	
-								s.addScore(grid[j][l].value);
+								s.addScore(grid[j][l].value*2);
 								if(!change)return true;
 								grid[j][l].changeValue(grid[j][l].value*2);
 								pred.changeValue(0);
@@ -320,6 +360,19 @@ public class Grille extends JPanel{
 		
 		
 	}
+	/**
+	 * Teste si une case de valeur x est dans la grille 
+	 * @param value valeur a tester
+	 * @return case présente?
+	 */
+	public boolean isInside(int value)
+	{
+		for(int i=0; i<NB_LIGNES; i++)
+			for(int j=0; j<NB_COLONNES; j++)
+				if(this.grid[i][j].value==value)
+					return true;
+		return false;
+	}
 	
 	/**
 	 * Réinitialiser la grille
@@ -333,6 +386,13 @@ public class Grille extends JPanel{
 			}
 		this.nbSet=0;
 		this.apparitionCase();
+	}
+	
+	public Grille clone()
+	{
+		return new Grille(this.nbSet,this.grid);
+		
+		
 	}
 	
 }

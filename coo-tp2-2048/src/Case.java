@@ -10,7 +10,7 @@ import javax.swing.SwingConstants;
  * @author loick
  *
  */
-public class Case extends JLabel{
+public class Case extends JLabel implements Cloneable{
 
 	private static final int NB_COLORS=9;
 	
@@ -48,6 +48,20 @@ public class Case extends JLabel{
 		this.setOpaque(true);
 		this.setVisible(true);
 		
+		
+	}
+	
+	public Case(int value)
+	{
+		this.setHorizontalAlignment(SwingConstants.CENTER);
+		this.setVerticalAlignment(SwingConstants.CENTER);
+		this.setMinimumSize(new Dimension(45,45));
+		this.setPreferredSize(new Dimension(90,90));
+		
+		this.changeValue(value);
+		
+		this.setOpaque(true);
+		this.setVisible(true);
 		
 	}
 	
@@ -90,5 +104,12 @@ public class Case extends JLabel{
 	{
 		this.changeValue(0);
 	}
+	
+	public Case clone()
+	{
+		return new Case(value);
+		
+	}
+	
 	
 }
