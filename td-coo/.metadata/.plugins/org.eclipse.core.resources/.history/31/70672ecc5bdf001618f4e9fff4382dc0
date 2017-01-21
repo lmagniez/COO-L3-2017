@@ -1,0 +1,15 @@
+
+
+
+
+public class Main {
+public static void main(String[] args) {
+//Instanciation de notre modele
+AbstractModel model = new XXX();
+//Creation du controleur
+AbstractControler controler = new XXXControler(model);
+//Creation de notre fenetre avec le controleur en parametre
+Vue vue = new Vue(controler);
+//Ajout de la fenetre comme observer de notre modele
+model.addObserver(vue);
+}

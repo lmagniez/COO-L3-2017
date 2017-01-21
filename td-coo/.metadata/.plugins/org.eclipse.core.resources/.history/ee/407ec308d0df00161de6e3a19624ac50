@@ -1,0 +1,20 @@
+package com.model;
+
+public enum Symbole {
+	ROND("o"),
+	CROIX("x"),
+	VIDE("")
+
+	private final String symbol;
+	private Operation(String symbol) {
+		this.symbol = symbol;
+	}
+
+	// getter traditionnel
+	public String getSymbol() {
+		  return symbol;
+	}
+}
+
+
+

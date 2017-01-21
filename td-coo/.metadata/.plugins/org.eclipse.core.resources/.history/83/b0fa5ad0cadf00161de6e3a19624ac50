@@ -1,0 +1,9 @@
+package com.observer;
+
+import com.model.Symbole;
+
+public interface Observer {
+	//public void update(String str); // Le meme type que la methode notify
+	public void update(int x, int y, String ); // Le meme type que la methode notify
+	
+}

@@ -1,0 +1,30 @@
+
+package com.controler;
+
+import com.model.AbstractModel;
+
+public abstract class AbstractControler {
+
+	protected AbstractModel calc;
+
+	//...
+
+	public AbstractControler(AbstractModel cal){
+		this.calc = cal;
+		//On initialise toutes les variables utiles
+		//...
+	}
+	//Definir toutes les methodes de modifications (les setters)
+	public void setCase(String s){
+		//...
+		control();
+	}
+	
+	public void reset(){
+		calc.init_grille();
+	}
+	
+	
+	//Methode de controle
+	abstract void control();
+}

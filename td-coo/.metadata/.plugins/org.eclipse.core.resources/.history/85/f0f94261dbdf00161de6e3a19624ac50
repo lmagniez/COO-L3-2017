@@ -1,0 +1,105 @@
+package com.model;
+
+import com.observer.Observer;
+
+public class Grille extends AbstractModel {
+
+	private int nbSet=0;
+	private Symbole grille[][];
+	
+	private static String[] tabSymbole={"O","X",""};
+	
+	
+	public Grille()
+	{
+		grille=new Symbole[NB_LIGNE][NB_LIGNE];
+	}
+
+	@Override
+	public void init_grille() {
+		
+		nbSet=0;
+		
+		for(int i=0; i<NB_LIGNE; i++)
+			for(int j=0; j<NB_LIGNE; j++)
+			{
+				grille[i][j]=Symbole.VIDE;
+				notifyObserver(i, j, tabSymbole[Symbole.VIDE.ordinal()]);
+			}
+	}
+	
+	public void set_grille(String s, int x, int y) {
+        
+		//changer symbole string -> Symb
+		Symbole j=Symbole.fromString(s);
+		
+		if(grille[x][y]==Symbole.VIDE&&j!=Symbole.VIDE)
+		{	
+			grille[x][y]=j;
+        	notifyObserver(x, y, tabSymbole[j.ordinal()]);
+        }
+        else
+        	System.out.println("probleme deplacement");
+        	//throw new IllegalMoveException();
+        	
+    } 
+
+    public boolean isGameOver()
+    {
+    	return (nbSet==NB_LIGNE*NB_LIGNE);
+    		
+    }
+    
+    public Symbole getWinner()
+    {
+    	boolean pattern=true;
+    	
+    	//chaque ligne
+    	for(int i=0; i<NB_LIGNE; i++)
+    	{
+    		pattern=true;
+    		for(int j=0; j<NB_LIGNE-1; j++)
+    			if(grille[i][j]!=grille[i][j+1])
+    				pattern=false;
+    		if(pattern)return grille[i][0];
+    	}
+    	
+    	//chaque colonne
+    	for(int j=0; j<NB_LIGNE; j++)
+    	{
+    		pattern=true;
+    		for(int i=0; i<NB_LIGNE-1; i++)
+    			if(grille[i][j]!=grille[i][j+1])
+    				pattern=false;
+    		if(pattern)return grille[0][j];
+    	}
+    	
+    	//chaque diagonale
+    	pattern=true;
+    	for(int i=0; i<NB_LIGNE-1; i++)
+    		if(grille[i][i]!=grille[i+1][i+1])
+    			pattern=false;
+    	if(pattern) return grille[0][0];
+    			
+    	pattern=true;
+    	
+    	int j=NB_LIGNE-1;
+    	for(int i=0; i<NB_LIGNE-1; i++)
+    	{
+    		j++;
+    		if(grille[i][j]!=grille[i+1][j-1])
+    			pattern=false;
+    	}
+    	if(pattern) return grille[0][NB_LIGNE-1];
+    			
+    	
+    	
+		return Symbole.VIDE;
+    	
+    }
+
+    
+    
+	
+	
+}

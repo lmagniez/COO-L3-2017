@@ -1,0 +1,50 @@
+@startuml
+
+Adherent "0..*" --> "1"  Bibliotheque : adhere 
+Bibliotheque "1" *-- "*" Document : contient
+
+class Adherent {
+ -prénom : String
+ -nom : String
+ -emprunts : ArrayList<Livre>
+ -nbEmprunts : Integer
+ +emprunter(l:Livre)
+ +restituer(l:Livre)
+ +prolonger(l:Livre)
+}
+
+class Bibliotheque {
+ -docs : Document[]
+ -adherents : Adherent[]
+ +ajoutDoc(doc: Document)
+
+}
+
+class Document {
+ -titre : String
+}
+
+class Volume {
+ -auteur : String
+}
+
+class BD {
+ -dessinateur : String
+}
+
+class Journal {
+ -parution : Date
+}
+
+class Livre {
+ -emprunt : boolean
+ -dateDernierEmprunt : Date
+ -dateRestitution : Date
+}
+
+Document <|-- Journal
+Document <|-- Volume
+Volume <|-- Dictionnaire
+Volume <|-- Livre
+Volume <|-- BD
+@enduml
