@@ -1,0 +1,48 @@
+package balle;
+
+import java.util.Random;
+
+public class Balle {
+
+	Fenetre f;
+	
+	protected int x;
+	protected int y;
+	protected int hx;
+	protected int hy;
+	protected int coefy;
+	protected int coefx;
+	
+	
+	public Balle(Fenetre f)
+	{
+		this.f=f;
+		this.x=50;
+		this.y=50;
+		this.hx=30;
+		this.hy=30;
+		
+		Random r = new Random();
+		coefy= r.nextInt(5);
+		coefx= r.nextInt(5);
+		
+	}
+	
+	public void updateBalle()
+	{
+		
+		this.x+=coefx;
+		this.y+=coefy;
+		
+		gestionCollision()
+	}
+	
+	
+	public void collision()
+	{
+		
+	}
+	
+	
+	
+}

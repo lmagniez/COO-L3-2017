@@ -1,0 +1,8 @@
+\BOOKMARK [1][-]{section.1}{Ce qui a \351t\351 r\351alis\351}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Cr\351ation du jeu guess the word}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Gestion de la difficult\351}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Impl\351mentation d'un parser simple lisant une liste de mots}{section.1}% 4
+\BOOKMARK [2][-]{subsection.1.4}{Affichage d?un pendu en fonction du nombre de vies restantes}{section.1}% 5
+\BOOKMARK [1][-]{section.2}{Les difficult\351s rencontr\351es}{}% 6
+\BOOKMARK [2][-]{subsection.2.1}{Difficult\351 pour cr\351er plusieurs \351crans.}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.2}{Liste des boutons}{section.2}% 8

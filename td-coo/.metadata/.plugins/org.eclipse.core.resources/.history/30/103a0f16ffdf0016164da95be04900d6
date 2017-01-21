@@ -1,0 +1,57 @@
+package balle;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+
+public class Fenetre extends JFrame {
+
+	private Balle b;
+	
+	public Fenetre()
+	{
+		Toolkit.getDefaultToolkit().sync();
+		this.setSize(500, 500);
+		this.setTitle("Calculette");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setVisible(true);
+		
+		b=new Balle(this);
+		
+	}
+	
+	public void lancer() throws InterruptedException
+	{
+		while(true)
+		{
+			Thread.sleep(10);
+			b.updateBalle();
+		}
+	}
+	
+	public void paint(Graphics g) {
+		paint(g,b);
+	}
+		
+	
+	public void paint(Graphics g, Balle b) {
+		super.paint(g);
+		g.setColor(Color.GREEN);
+        g.fillOval(b.x, b.y, b.hx, b.hy);
+
+        this.validate();
+		this.revalidate();
+        this.repaint();
+    }
+	
+	public static void main(String[] args) throws InterruptedException {
+		
+		Fenetre f = new Fenetre();
+		f.lancer();
+	}
+	
+}
