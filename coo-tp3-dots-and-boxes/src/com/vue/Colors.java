@@ -1,3 +1,4 @@
+package com.vue;
 import java.awt.Color;
 
 /**
@@ -18,7 +19,17 @@ public abstract class Colors {
 	public static Color case2048=new Color(226, 180, 52);
 	public static Color caseOver=new Color(60, 58, 51);
 
-	public static Color textColor1 = new Color(0,0,0);
+	
+	static Color textColor1 = new Color(0,0,0);
 	public static Color textColor2 = new Color(255,255,255);
+	
+	
+	public static Color RED_TRANSPARENT=new Color(255,0,0,80);
+	public static Color BLUE_TRANSPARENT=new Color(0,0,255,80);
+	public static Color YELLOW_TRANSPARENT=new Color(255,255,0,80);
+	public static Color GREEN_TRANSPARENT=new Color(0,255,0,80);
+	
+	
+	
 	
 }

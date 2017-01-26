@@ -1,4 +1,4 @@
-package com.vue;
+package com.vue.grille;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -25,8 +25,8 @@ public class Cote {
 	protected boolean vertical;
 	protected Color c;
 	
-	public static final int LONG = 50;
-	public static final int LARG = 20;
+	public static final int LONG = 60;
+	public static final int LARG = 10;
 	
 	/**
 	 * Constructeur d'un coté
@@ -39,14 +39,14 @@ public class Cote {
 		
 		this.x=x;
 		this.y=y;
-		this.c=Color.BLACK;
+		this.c=Color.GRAY;
 		
 		this.vertical=vertical;
 		
 		if(vertical)
 		{
-			this.posX=VuePrincipale2.GRILLE_POSX+x*LONG;
-			this.posY=VuePrincipale2.GRILLE_POSY+y*LONG+Cote.LARG;
+			this.posX=Grille.GRILLE_POSX+x*LONG;
+			this.posY=Grille.GRILLE_POSY+y*LONG+Cote.LARG;
 			this.hX=LARG;
 			this.hY=LONG-LARG;
 		}
@@ -54,8 +54,8 @@ public class Cote {
 		{
 			
 			//inverser
-			this.posX=VuePrincipale2.GRILLE_POSX+x*LONG+Cote.LARG;
-			this.posY=VuePrincipale2.GRILLE_POSY+y*LONG;
+			this.posX=Grille.GRILLE_POSX+x*LONG+Cote.LARG;
+			this.posY=Grille.GRILLE_POSY+y*LONG;
 			this.hX=LONG-LARG;
 			this.hY=LARG;	
 			

@@ -13,7 +13,7 @@ public abstract class AbstractModel implements Observable{
 	//Vos methodes abstraites
 	public abstract boolean ajoutTraitH(int x, int y);
 	public abstract boolean ajoutTraitV(int x, int y);
-	public abstract void initGrille();
+	public abstract void reinit();
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur
@@ -25,7 +25,11 @@ public abstract class AbstractModel implements Observable{
 		
 		// si tout est ok, on met a jour les observateurs
 		for(Observer obs : listObserver)
+		{
 			obs.updateLineH(x,y,v);
+			
+		}
+		
 	
 	}
 	
@@ -33,8 +37,16 @@ public abstract class AbstractModel implements Observable{
 		
 		// si tout est ok, on met a jour les observateurs
 		for(Observer obs : listObserver)
+		{
 			obs.updateLineV(x,y,v);
+		}
+	}
 	
+	public void notifyTour(int tour){
+		for(Observer obs : listObserver)
+		{
+			obs.updateTour(tour);
+		}
 	}
 	
 	public void notifyNewSquare(int x, int y, BoxValues v) {
@@ -51,6 +63,15 @@ public abstract class AbstractModel implements Observable{
 		for(Observer obs : listObserver)
 			obs.updateWinner(winners);
 	}
+	
+	public void notifyReinit()
+	{
+		for(Observer obs : listObserver)
+			obs.updateReinit();
+	}
+	
+	
+	
 	
 	
 	// permet de supprimer les observateurs

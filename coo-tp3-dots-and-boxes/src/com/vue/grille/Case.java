@@ -1,4 +1,4 @@
-package com.vue;
+package com.vue.grille;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,11 +21,11 @@ public class Case
 	{
 		this.x=x;
 		this.y=y;
-		this.posX=VuePrincipale2.GRILLE_POSX+x*Cote.LONG+Cote.LARG+1;
-		this.posY=VuePrincipale2.GRILLE_POSY+y*Cote.LONG+Cote.LARG+1;
+		this.posX=Grille.GRILLE_POSX+x*Cote.LONG+Cote.LARG+1;
+		this.posY=Grille.GRILLE_POSY+y*Cote.LONG+Cote.LARG+1;
 		this.hX=-1+Cote.LONG-Cote.LARG;
 		this.hY=-1+Cote.LONG-Cote.LARG;
-		this.c=Color.GRAY;
+		this.c=Color.BLACK;
 		
 	}
 }

@@ -1,24 +1,42 @@
-package com.vue;
+package com.vue.grille;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+
+import com.model.BoxValues;
 
 public class Grille extends JPanel implements MouseListener{
 	
-	private VuePrincipale2 vue;
+	private Vue2 vue;
 	
 	protected Case[][] cases;
 	protected Cote[][] cotesH;
 	protected Cote[][] cotesV;
-	private int nbLigne;
+	protected int nbLigne;
 	
+	public static int GRILLE_POSX;
+	public static int GRILLE_POSY;
 	
-	public Grille(VuePrincipale2 v, int nbLigne)
+	public Grille(Vue2 v, int nbLigne)
 	{
+		this.setBorder(BorderFactory.createLineBorder(Color.white));
+		
+		
+		GRILLE_POSX=(Vue2.TAILLE_ECRAN_GRILLE
+				-((Cote.LONG)*nbLigne))/2;
+		GRILLE_POSY=GRILLE_POSX;
+		
+		this.setPreferredSize(new Dimension(Vue2.TAILLE_ECRAN_GRILLE,Vue2.TAILLE_ECRAN_GRILLE));
+		this.setMaximumSize(new Dimension(Vue2.TAILLE_ECRAN_GRILLE,Vue2.TAILLE_ECRAN_GRILLE));
+		this.setVisible(true);
+		
+		
 		this.nbLigne=nbLigne;
 		this.cases = new Case[nbLigne][nbLigne];
 		this.cotesV = new Cote[nbLigne + 1][nbLigne];
@@ -29,8 +47,6 @@ public class Grille extends JPanel implements MouseListener{
 		for(int i=0; i<nbLigne; i++)
 			for(int j=0; j<nbLigne; j++)
 				cases[i][j]=new Case(i,j);
-		
-		System.out.println("--------");
 
 		
 		for(int i=0; i<nbLigne+1; i++)
@@ -47,8 +63,27 @@ public class Grille extends JPanel implements MouseListener{
 	}
 	
 	
-	public void paint(Graphics g)
+	public void reinit()
 	{
+		
+		Color c=Vue2.getColorByBoxValues(BoxValues.NONE);
+		for(int i=0; i<nbLigne+1; i++){
+			for(int j=0; j<nbLigne; j++){
+				cotesH[j][i].c=c;
+				cotesV[i][j].c=c;
+			}
+		}
+		Color c2=Vue2.getSquareColorByBoxValues(BoxValues.EMPTY_SQUARE);
+		for(int i=0; i<nbLigne; i++){
+			for(int j=0; j<nbLigne; j++){
+				cases[i][j].c=c2;
+			}
+		}
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		g.clearRect(0, 0, Vue2.TAILLE_ECRAN_GRILLE, Vue2.TAILLE_ECRAN_GRILLE);
 		
 		for(int i=0; i<nbLigne+1; i++)
 			for(int j=0; j<nbLigne; j++)
@@ -69,8 +104,17 @@ public class Grille extends JPanel implements MouseListener{
 			for(int j=0; j<nbLigne; j++)
 			{
 				g.setColor(cases[i][j].c);
+				//g.clearRect(cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
 				g.fillRect (cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
-			}	
+			}
+		
+		for(int i=0; i<nbLigne+1; i++)
+			for(int j=0; j<nbLigne+1; j++)
+			{
+				g.setColor(new Color(220,220,220));
+				g.fillOval(GRILLE_POSX+(Cote.LONG)*i-3, GRILLE_POSY+(Cote.LONG)*j-3,15,15);
+			}
+		
 	}
 
 	

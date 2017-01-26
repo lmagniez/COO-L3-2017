@@ -10,14 +10,16 @@ import java.util.ArrayList;
  */
 public class GrilleModel extends AbstractModel {
 
-	private int nbLigne;
-	private CoteModel coteH[][];
-	private CoteModel coteV[][];
+	protected int nbLigne;
+	protected CoteModel coteH[][];
+	protected CoteModel coteV[][];
 	private CasesModel cases;
+	protected boolean isIA[]; 
+	private IA ia;
 
-	private int nbJoueur;
+	protected int nbJoueur;
 	private int nbTrait;
-	private int tour;
+	protected int tour;
 
 	public final static int NB_COTES = 4;
 
@@ -26,9 +28,11 @@ public class GrilleModel extends AbstractModel {
 	 * 
 	 * @param nbLigne
 	 */
-	public GrilleModel(int nbLigne, int nbJoueur) {
+	public GrilleModel(int nbLigne, int nbJoueur,boolean isIA[]) {
 		this.nbJoueur = nbJoueur;
 		this.nbLigne = nbLigne;
+		this.isIA=isIA;
+		this.ia= new IA(this);
 		cases = new CasesModel(nbLigne, nbJoueur);
 		coteH = new CoteModel[nbLigne][nbLigne + 1];
 		coteV = new CoteModel[nbLigne + 1][nbLigne];
@@ -69,10 +73,10 @@ public class GrilleModel extends AbstractModel {
 	}
 
 	public boolean ajoutTraitH(int x, int y) {
+		System.out.println("horizon: "+x+" "+y);
 		boolean rejouer;
-		System.out.println("H");
 		rejouer = false;
-		System.out.println("Tour: " + tour + "->" + BoxValues.fromInteger(tour));
+		//System.out.println("Tour: " + tour + "->" + BoxValues.fromInteger(tour));
 		BoxValues v = BoxValues.fromInteger(tour);
 
 		//test sortant: Le coté ne doit pas déjà être utilisé.
@@ -106,25 +110,26 @@ public class GrilleModel extends AbstractModel {
 		//test de fin de partie
 		if(cases.isGameOver()){
 			ArrayList<BoxValues> gagnants= cases.getWinner();
+			ia.arret();
 			this.notifyWinner(gagnants);
 		}
 		
 		if (!rejouer)
 			tour = (tour + 1) % nbJoueur;
 
-		System.out.println("Tour suivant: " + tour + "->" + BoxValues.fromInteger(tour));
-
+		notifyTour(tour);
+		
 		return true;
 
 	}
 
 	public boolean ajoutTraitV(int x, int y)
 	{
+		System.out.println("vert: "+x+" "+y);
 		boolean rejouer;
-		System.out.println("V");
 		rejouer=false;
 		BoxValues v=BoxValues.fromInteger(tour%(nbJoueur));
-		System.out.println("Tour: "+tour+"->"+BoxValues.fromInteger(tour));
+		//System.out.println("Tour: "+tour+"->"+BoxValues.fromInteger(tour));
 		
 		//test sortant: Le coté ne doit pas déjà être utilisé.
 		if(coteV[x][y].v!=BoxValues.NONE)
@@ -157,13 +162,14 @@ public class GrilleModel extends AbstractModel {
 		//Test fin de partie
 		if(cases.isGameOver()){
 			ArrayList<BoxValues> gagnants= cases.getWinner();
+			ia.arret();
 			this.notifyWinner(gagnants);
 		}
 		
 		if(!rejouer)
 			tour=(tour+1)%nbJoueur;
 		
-		System.out.println("Tour suivant: "+tour+"->"+BoxValues.fromInteger(tour));
+		notifyTour(tour);
 		
 		return true;
 		
@@ -172,13 +178,17 @@ public class GrilleModel extends AbstractModel {
 	/**
 	 * Initialise la grille
 	 */
-	public void initGrille() {
+	public void reinit() {
 		for (int i = 0; i < nbLigne + 1; i++) {
 			for (int j = 0; j < nbLigne; j++) {
-				coteH[i][j].v = BoxValues.NONE;
-				coteV[j][i].v = BoxValues.NONE;
+				coteH[j][i].v = BoxValues.NONE;
+				coteV[i][j].v = BoxValues.NONE;
 			}
 		}
+		cases.reinit();
+		nbTrait=0;
+		tour=0;
+		this.notifyReinit();
 	}
 
 }

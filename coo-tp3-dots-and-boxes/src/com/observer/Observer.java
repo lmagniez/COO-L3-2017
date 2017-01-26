@@ -10,4 +10,6 @@ public interface Observer {
 	public void updateSquare(int x, int y, BoxValues v);
 	public void updateLineH(int x, int y, BoxValues v);
 	public void updateLineV(int x, int y, BoxValues v);
+	public void updateTour(int tour);
+	public void updateReinit();
 }

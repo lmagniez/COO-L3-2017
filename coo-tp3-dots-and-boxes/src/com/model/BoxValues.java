@@ -1,7 +1,7 @@
 package com.model;
 
 public enum BoxValues {
-	J1,J2,J3,J4,NONE;
+	J1,J2,J3,J4,NONE,EMPTY_SQUARE;
 	
 	
 	public static BoxValues fromInteger(int x) {
@@ -14,7 +14,6 @@ public enum BoxValues {
             return J3;
         case 3:
             return J4;
-            
         }
         return null;
     }

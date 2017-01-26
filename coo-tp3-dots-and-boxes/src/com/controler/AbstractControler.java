@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.model.AbstractModel;
 import com.model.BoxValues;
+import com.vue.titre.Vue1;
 
 public abstract class AbstractControler {
 
@@ -24,6 +25,11 @@ public abstract class AbstractControler {
 		//On initialise toutes les variables utiles
 		//...
 	}
+	
+	public AbstractControler(){	
+	}
+	
+	
 	//Definir toutes les methodes de modifications (les setters)
 	public void setLigneVerticale(int x, int y){
 		
@@ -45,10 +51,12 @@ public abstract class AbstractControler {
 	
 	
 	public void reset(){
-		calc.initGrille();
+		calc.reinit();
 	}
 	
 	
 	//Methode de controle
 	abstract void control();
+	//public abstract void changeScreen(Vue1 vue);
+	public abstract void genererJeu(Vue1 vue, int nbLigne, int nbJoueur, boolean[] isIA);
 }

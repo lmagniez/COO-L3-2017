@@ -31,7 +31,7 @@ public class CasesModel {
 	{
 		for(int i=0; i<nbLigne; i++)
 			for(int j=0; j<nbLigne; j++)
-				cases[i][j]=BoxValues.NONE;
+				cases[i][j]=BoxValues.EMPTY_SQUARE;
 
 		for(int i=0; i<nbJoueur; i++)
 			nbCases[i]=0;
@@ -48,7 +48,7 @@ public class CasesModel {
 	
 	public boolean ajoutCarre(int x, int y, BoxValues v)
 	{
-		if(cases[x][y]==BoxValues.NONE&&v!=BoxValues.NONE)
+		if(cases[x][y]==BoxValues.EMPTY_SQUARE&&v!=BoxValues.EMPTY_SQUARE)
 		{
 			cases[x][y]=v;
 			nbCases[v.ordinal()]++;
