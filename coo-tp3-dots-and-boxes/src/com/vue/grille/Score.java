@@ -13,6 +13,11 @@ import javax.swing.border.EmptyBorder;
 
 import com.model.BoxValues;
 
+/**
+ * JPanel du score de chaque joueur et du joueur courant
+ * @author loick
+ *
+ */
 public class Score extends JPanel {
 	
 	private int nbJoueur;
@@ -26,7 +31,10 @@ public class Score extends JPanel {
 	private JLabel labelTour;
 	private int tour;
 	
-	
+	/**
+	 * Constructeur, initialise le Jpanel
+	 * @param nbJoueur
+	 */
 	public Score(int nbJoueur)
 	{
 		
@@ -65,19 +73,28 @@ public class Score extends JPanel {
 		
 	}
 	
+	/**
+	 * Ajouter un trait (maj affichage)
+	 */
 	public void addTrait()
 	{
 		nbTraits++;
 		labelNbTraits.setText("Nombre Traits: "+nbTraits);
 	}
 	
+	/**
+	 * Ajouter un carré à un joueur (maj affichage)
+	 * @param idJoueur (id joueur)
+	 */
 	public void addCarreJoueur(int idJoueur)
 	{
 		scoreJ[idJoueur]++;
 		labelScore[idJoueur].setText("Score J"+(idJoueur+1)+": "+scoreJ[idJoueur]);
 	}
 	
-	
+	/**
+	 * Réinitialiser le score (maj affichage)
+	 */
 	public void reinit()
 	{
 		for(int i=0; i<nbJoueur; i++)
@@ -89,6 +106,10 @@ public class Score extends JPanel {
 		}
 	}
 	
+	/**
+	 * Changer le joueur courant (maj affichage)
+	 * @param tour joueur courant
+	 */
 	public void changeTour(int tour)
 	{
 		this.tour=tour;

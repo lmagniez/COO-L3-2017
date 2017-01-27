@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import com.model.BoxValues;
 import com.vue.titre.Vue1;
 
+/**
+ * Interface des différents elements observables
+ * @author loick
+ *
+ */
 public interface Observable {
 	public void addObserver(Observer obs);
 	public void removeObserver();

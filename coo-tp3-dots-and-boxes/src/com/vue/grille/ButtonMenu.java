@@ -8,6 +8,12 @@ import javax.swing.border.LineBorder;
 
 import com.vue.Colors;
 
+/**
+ * Bouton pour un menu
+ * @author loick
+ *
+ */
+
 public class ButtonMenu extends JButton{
 	
 	public ButtonMenu(String s, Color txtColor, Color bgColor)

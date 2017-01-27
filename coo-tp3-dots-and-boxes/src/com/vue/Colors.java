@@ -2,7 +2,7 @@ package com.vue;
 import java.awt.Color;
 
 /**
- * Ensemble de constantes de couleurs utilisés pour le graphique
+ * Ensemble de constantes de couleurs utilisés pour le graphisme
  * @author loick
  *
  */

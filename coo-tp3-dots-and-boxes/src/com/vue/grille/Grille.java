@@ -11,6 +11,12 @@ import javax.swing.JPanel;
 
 import com.model.BoxValues;
 
+/**
+ * Classe représentant une Grille
+ * Dispose d'un tableau de traits horizontaux, un tableau de traits verticaux, et un tableau de cases 
+ * @author loick
+ *
+ */
 public class Grille extends JPanel implements MouseListener{
 	
 	private Vue2 vue;
@@ -23,6 +29,11 @@ public class Grille extends JPanel implements MouseListener{
 	public static int GRILLE_POSX;
 	public static int GRILLE_POSY;
 	
+	/**
+	 * Constructeur créant la grille et l'intégrant à la vue.
+	 * @param v vue 
+	 * @param nbLigne nombre de ligne de la grille
+	 */
 	public Grille(Vue2 v, int nbLigne)
 	{
 		this.setBorder(BorderFactory.createLineBorder(Color.white));
@@ -63,6 +74,9 @@ public class Grille extends JPanel implements MouseListener{
 	}
 	
 	
+	/**
+	 * Réinitialiser la grille.
+	 */
 	public void reinit()
 	{
 		
@@ -118,6 +132,11 @@ public class Grille extends JPanel implements MouseListener{
 	}
 
 	
+	/**
+	 * Test de collision sur les différents traits
+	 * @param arg0 Souris 
+	 * @return Coté si on en trouve un qui concorde avec la position de souris
+	 */
 	public Cote collision(MouseEvent arg0)
 	{
 		for(int i=0; i<nbLigne+1; i++)

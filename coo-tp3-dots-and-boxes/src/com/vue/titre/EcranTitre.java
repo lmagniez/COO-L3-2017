@@ -21,7 +21,6 @@ public class EcranTitre extends JPanel{
 	
 	protected ButtonMenu start;
 	protected ButtonMenu quit;
-	protected ButtonMenu ia;
 	
 	protected JPanel p;
 	
@@ -39,15 +38,12 @@ public class EcranTitre extends JPanel{
 		start=new ButtonMenu("Démarrer",Colors.textColor2,Colors.case8);
 		start.addActionListener(new ButtonListener());
 		
-		ia=new ButtonMenu("IA",Colors.textColor2, Colors.case128);	
-		ia.addActionListener(new ButtonListener());
-		
 		quit=new ButtonMenu("Quitter",Colors.textColor2,Colors.case16);	
 		quit.addActionListener(new ButtonListener());
 		
 		startLabel=new JLabel("3 dots 3 Boxes");
 		startLabel.setSize(new Dimension(150,50));
-		startLabel.setFont(new Font("Arial",Font.BOLD,50));
+		startLabel.setFont(new Font("Arial",Font.BOLD,40));
 		startLabel.setAlignmentX(this.CENTER_ALIGNMENT);
 		
 		this.add(Box.createRigidArea(new Dimension(5,50)));
@@ -55,14 +51,11 @@ public class EcranTitre extends JPanel{
 		this.add(Box.createRigidArea(new Dimension(5,50)));
 		this.add(start);
 		this.add(Box.createRigidArea(new Dimension(5,50)));
-		this.add(ia);
-		this.add(Box.createRigidArea(new Dimension(5,50)));
 		this.add(quit);
 	}
 
 	/**
 	 * Démarrer: Lance la fenetre de jeu
-	 * IA: Lance l'IA définie dans la classe IA
 	 * Quitter: Ferme la fenetre
 	 */
 	
@@ -73,15 +66,9 @@ public class EcranTitre extends JPanel{
 			
 			if(command=="Démarrer")
 			{
-				System.out.println("Demarrer");
 				f.setSize(new Dimension(500,500));
 				f.afficherPanneau(f.lePanneau2);
 				
-			}
-			
-			if(command=="IA")
-			{
-				System.out.println("ia");
 			}
 			
 			if(command=="Quitter")

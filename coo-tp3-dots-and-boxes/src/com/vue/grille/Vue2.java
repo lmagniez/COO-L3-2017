@@ -33,6 +33,12 @@ import com.vue.Colors;
 import com.vue.Fenetre;
 import com.vue.titre.Vue1;
 
+/**
+ * Classe correspondant à la vue du jeu
+ * @author loick
+ *
+ */
+
 public class Vue2 extends Fenetre implements Observer {
 
 	// private JPanel container = new JPanel();
@@ -45,12 +51,18 @@ public class Vue2 extends Fenetre implements Observer {
 	public static final int TAILLE_ECRAN_GRILLE=600;
 	public static final int TAILLE_ECRAN_SCORE=200;
 	
-	// l'ensemble des objets de vue
-	// private
 
 	// L'instance de notre objet controleur
 	protected AbstractControler controler;
 
+	/**
+	 * Constructeur, initialise la vue du jeu
+	 * @param controler controler du jeu
+	 * @param nbLigne nombre de cases par ligne 
+	 * @param nbJoueur nombre de joueurs
+	 * @param vueMenu vue du menu (rappelle plus tard)
+	 * @param isIA tableau type de joueurs
+	 */
 	public Vue2(AbstractControler controler, int nbLigne, int nbJoueur, Vue1 vueMenu, boolean[] isIA) {
 		this.vueMenu=vueMenu;
 		this.setSize(TAILLE_ECRAN_GRILLE+TAILLE_ECRAN_SCORE, TAILLE_ECRAN_GRILLE);
@@ -60,15 +72,6 @@ public class Vue2 extends Fenetre implements Observer {
 		this.setResizable(false);
 		this.setLayout(new BoxLayout(getContentPane(), BoxLayout.LINE_AXIS));
 		
-		for(int i=0; i<isIA.length; i++)
-		{
-			System.out.println(isIA[i]);
-		}
-		
-		// initComposant();
-
-		// initialisation des composants
-		// ...
 		this.controler = controler;
 		this.grid=new Grille(this, nbLigne);
 		this.score = new Score(nbJoueur);
@@ -82,19 +85,6 @@ public class Vue2 extends Fenetre implements Observer {
 		repaint();
 	
 		}
-
-	/*
-	 * //Les listeners de chaque bouton ou composant class CaseListener
-	 * implements ActionListener{ public void actionPerformed(ActionEvent e) {
-	 * Case c = ((Case) e.getSource()); controler.setCase(c.x, c.y);
-	 * 
-	 * } }
-	 */
-
-	/*
-	 * class ResetListener implements ActionListener { public void
-	 * actionPerformed(ActionEvent arg0) { controler.reset(); } }
-	 */
 
 	private Component topJustify( JPanel panel )  {
 	    Box  b = Box.createVerticalBox();
@@ -137,10 +127,13 @@ public class Vue2 extends Fenetre implements Observer {
 		return Color.PINK;
 	}
 
+	/**
+	 * Mise a jour du gagnant
+	 * @param gagnants liste des gagnants
+	 */
 	@Override
 	public void updateWinner(ArrayList<BoxValues> gagnants) {
 		// TODO Auto-generated method stub
-		System.out.println("win");
 		repaint();
 		JOptionPane.showMessageDialog(this, "Le gagnant est" + gagnants.get(0));
 		// System.out.println("Le gagnant est"+s);
@@ -149,7 +142,13 @@ public class Vue2 extends Fenetre implements Observer {
 		this.vueMenu.setVisible(true);
 		this.dispose();
 	}
-
+	
+	/**
+	 * Mise a jour d'un carré
+	 * @param x abscisse 
+	 * @param y ordonée
+	 * @param v valeur
+	 */
 	@Override
 	public void updateSquare(int x, int y, BoxValues v) {
 		grid.cases[x][y].c = getSquareColorByBoxValues(v);
@@ -157,6 +156,12 @@ public class Vue2 extends Fenetre implements Observer {
 		repaint();
 	}
 
+	/**
+	 * Mise a jour d'une ligne
+	 * @param x abscisse
+	 * @param y ordonée
+	 * @param v valeur 
+	 */
 	@Override
 	public void updateLineH(int x, int y, BoxValues v) {
 		// TODO Auto-generated method stub
@@ -164,7 +169,13 @@ public class Vue2 extends Fenetre implements Observer {
 		score.addTrait();
 		repaint();
 	}
-
+	
+	/**
+	 * Mise a jour d'une ligne
+	 * @param x abscisse
+	 * @param y ordonée
+	 * @param v valeur 
+	 */
 	@Override
 	public void updateLineV(int x, int y, BoxValues v) {
 		// TODO Auto-generated method stub
@@ -173,13 +184,13 @@ public class Vue2 extends Fenetre implements Observer {
 		repaint();
 	}
 	
+	
 	public void updateTour(int tour){
 		score.changeTour(tour);
 	}
 	
 
 	public void updateReinit() {
-		System.out.println("ok");
 		// TODO Auto-generated method stub
 		grid.reinit();
 	}

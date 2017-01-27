@@ -1,0 +1,78 @@
+\documentclass[a4paper,utf8]{article}
+\usepackage{rapport}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{MnSymbol,wasysym}
+\usepackage{hyperref}
+\usepackage[french]{babel}
+
+
+\formation{L3MI}
+\date{}
+\matiere{Conception Orientée Objet}
+\titre{Dots And Boxes - Compte Rendu}
+
+\newcommand\code[1]{\textsf{#1}}
+\newcommand\srdjan[1]{{\color{red} #1}}
+
+\begin{document}
+
+\entete
+
+\section{Ce qui a été réalisé}
+
+-Implémentation du jeu en MVC (Quelques confusions sur le menu)\\%
+-Implémentation d\textquotesingle une IA \\%
+-Menu de gestion du nombre de joueurs, du type de joueurs (Humain/IA), du nombre de cases. \\%
+
+\section{Ce qui a été réalisé}
+
+Pour répondre au problème, on va modéliser la grille de la manière suivante : \\%
+-Un ensemble de traits verticaux \\%
+-Un ensemble de traits horizontaux \\%
+-Un ensemble de cases \\%
+\\%
+Chaque attribut dispose d\textquotesingle une valeur associé à un joueur.\\%
+A l\textquotesingle initialisation, aucun attribut n\textquotesingle est assigné aux joueurs.\\%
+
+\makebox[\textwidth]{\includegraphics[width=500pt]{img/image12}}
+
+
+\section{Méthode de décision de l\textquotesingle IA}
+
+\subsection{Modélisation} 
+
+Première chose à dire, chaque trait a une influence sur au plus 2 carrés. (1 seul pour les bordures).\\%
+\\%
+Pour chaque trait, on va regarder les carrés auxquels il appartient.\\%
+Après avoir récupéré le(s) carré(s), on va compter les cotés appartenant à un joueur, et on va établir un couple de 2 entiers. (-1 si pas de carrés possibles )\\%
+
+Exemple : \\%
+TraitH (3,4) si on ajoute le trait, on aura 3 traits/4 sur le carré du haut, et un carré entier sur le carré du dessous.\\%
+TraitV (-1,2) Trait sur la bordure gauche, on aura 2 traits/4 sur le carré de droite.\\%
+\\%
+
+
+\subsection{Décision} 
+
+L\textquotesingle IA va alors choisir de manière aléatoire et dans l\textquotesingle ordre de priorité suivant le couple le plus adapté :\\%
+\\%
++++\\%
+\^\\%
+\textbar (4,4) : Optimal, On peut former deux carrés  \\%
+\textbar (4,1)/(1,4) : Prioritaire (forme un carré et aucun avantage pour l\textquotesingle autre joueur)\\%
+\textbar (4,2)/(2,4) : Prioritaire (forme un carré et aucun avantage pour l\textquotesingle autre joueur)\\%
+\textbar (4,3)/(3,4) : (Forme un carré mais avantage pour l\textquotesingle autre joueur)\\%
+\textbar (1,1) : Aucun risque\\%
+\textbar ...\\%
+\textbar ...\\%
+\textbar (3,1)/(1,3) : Laisse un carré pour l\textquotesingle autre joueur\\%
+\textbar (3,2)/(2,3) : Laisse un carré pour l\textquotesingle autre joueur\\%
+\textbar (3,3)/(3,3) : Pire cas, 2 carré pour l\textquotesingle autre joueur\\%
+- - -\\%
+
+\makebox[\textwidth]{\includegraphics[width=400pt]{img/image2}}
+
+
+\end{document}

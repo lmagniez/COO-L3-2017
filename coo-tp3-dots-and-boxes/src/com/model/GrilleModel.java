@@ -3,7 +3,7 @@ package com.model;
 import java.util.ArrayList;
 
 /**
- * Modele abstrait de la grille
+ * Modèle abstrait de la grille
  * 
  * @author loick
  *
@@ -49,12 +49,9 @@ public class GrilleModel extends AbstractModel {
 	}
 
 	/**
-	 * 
-	 * @param x
-	 *            abscisse
-	 * @param y
-	 *            ordonnée
-	 * @return carre 4 côtés dans l'ordre suivant: Nord, Est, Sud, Ouest
+	 * @param x abscisse
+	 * @param y ordonnée
+	 * @return carré de 4 côtés dans l'ordre suivant: Nord, Est, Sud, Ouest
 	 */
 	public boolean isFullSquare(int x, int y) {
 		CoteModel carre[] = new CoteModel[NB_COTES];
@@ -72,8 +69,15 @@ public class GrilleModel extends AbstractModel {
 
 	}
 
+	/**
+	 * Ajout d'un trait horizontal sur le modèle,
+	 * Teste si un carré se forme suite à l'ajout,
+	 * Teste si il y a fin de partie (tous les carrés sont remplis)
+	 * Modifie le prochain joueur qui joue. (le joueur rejoue si il remplit un carré) 
+	 * @param x abscisse du trait
+	 * @param y ordonée du trait
+	 */
 	public boolean ajoutTraitH(int x, int y) {
-		System.out.println("horizon: "+x+" "+y);
 		boolean rejouer;
 		rejouer = false;
 		//System.out.println("Tour: " + tour + "->" + BoxValues.fromInteger(tour));
@@ -123,9 +127,16 @@ public class GrilleModel extends AbstractModel {
 
 	}
 
+	/**
+	 * Ajout d'un trait vertical sur le modèle, notifie l'ajout.
+	 * Teste si un carré se forme suite à l'ajout, notifie si un ajout.
+	 * Teste si il y a fin de partie (tous les carrés sont remplis), notifie si fin de partie.
+	 * Modifie le prochain joueur qui joue. (le joueur rejoue si il remplit un carré), notifie la vue.
+	 * @param x abscisse du trait
+	 * @param y ordonée du trait
+	 */
 	public boolean ajoutTraitV(int x, int y)
 	{
-		System.out.println("vert: "+x+" "+y);
 		boolean rejouer;
 		rejouer=false;
 		BoxValues v=BoxValues.fromInteger(tour%(nbJoueur));
@@ -176,7 +187,10 @@ public class GrilleModel extends AbstractModel {
 	}
 
 	/**
-	 * Initialise la grille
+	 * Initialise la grille.
+	 * Enleve toute association de traits au joueur.
+	 * Enleve toute association de carré au joueur.
+	 * Notifie le changement à la vue.
 	 */
 	public void reinit() {
 		for (int i = 0; i < nbLigne + 1; i++) {

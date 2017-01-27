@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
 /**
  * 
  * @author loick
- * Classe principale contenant les 4 JFrames correspondant aux écrans de jeux
+ * Classe abstraite correspondant à une JFrame, dispose de méthodes génériques
  *
  */
 

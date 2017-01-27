@@ -50,7 +50,7 @@ public class EcranParam extends JPanel{
 		 */
 		
 		//init bouton start
-		start=new ButtonMenu("Démarrer23",Colors.textColor2,Colors.case8);
+		start=new ButtonMenu("Démarrer",Colors.textColor2,Colors.case8);
 		start.addActionListener(new ButtonListener());
 		
 		//init bouton quitter
@@ -142,9 +142,8 @@ public class EcranParam extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			String command = ((JButton) e.getSource()).getActionCommand();
 			
-			if(command=="Démarrer23")
+			if(command=="Démarrer")
 			{
-				System.out.println("Demarrer");
 				int nbJoueurs=0;
 				boolean isIA[];
 				

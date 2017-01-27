@@ -16,24 +16,32 @@ import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.grille.Vue2;
 
+/**
+ * Vue correspondant à un écran titre et un écran de parametrage.
+ * Ne dispose pas de modèle (menu), mais accède à un controler.
+ * @author loick
+ *
+ */
+
 public class Vue1 extends Fenetre{
 
 	protected EcranTitre lePanneau;
 	protected EcranParam lePanneau2; 
+	
 	protected AbstractControler controler;
 	
 	
-	protected AbstractModel grilleModel;
-	protected AbstractControler grilleControler;
 	
-	
-	
+	/**
+	 * Contructeur de la vue (appelé une fois)
+	 * @param controler
+	 */
 	public Vue1(AbstractControler controler){
 		
 		this.controler=controler;
 		
 		this.setTitle("3 DOTS 3 BOXES");
-		this.setSize(400, 475);
+		this.setSize(400, 400);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -43,24 +51,22 @@ public class Vue1 extends Fenetre{
 		lePanneau2 = new EcranParam(this);
 		
 		this.add(lePanneau);
-		
-		
 		this.setVisible(true);
-		//this.pack();
 		
 	}
 
 	
 	
 	/**
-	 * Réinitialise un écran de jeu (Toutes les cases à zéro sauf une)
+	 * Réinitialise un écran de jeu (Toutes les cases à zéro)
 	 */
 	public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
 	{
 		
-		grilleModel = new GrilleModel(nbLigne, nbJoueur, isIA);
+		//Creation du modele de grille
+		AbstractModel grilleModel = new GrilleModel(nbLigne, nbJoueur, isIA);
 		//Creation du controleur
-		grilleControler = new GrilleControler(grilleModel);
+		AbstractControler grilleControler = new GrilleControler(grilleModel);
 		//Creation de notre fenetre avec le controleur en parametre
 		Vue2 vueJeu = new Vue2(grilleControler, nbLigne,nbJoueur,this,isIA);
 		//Ajout de la fenetre comme observer de notre modele
@@ -71,10 +77,7 @@ public class Vue1 extends Fenetre{
 	
 	
 	
-	public static void main(String[] args) throws IOException {
-		Vue1 f = new Vue1(new MenuControler());
-		
-	}
+	
 
 
 }

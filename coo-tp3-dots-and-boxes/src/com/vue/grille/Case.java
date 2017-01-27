@@ -7,6 +7,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Case de la grille
+ * @author loick
+ *
+ */
+
 public class Case
 {
 	protected int x;
@@ -17,6 +23,11 @@ public class Case
 	protected int hY;
 	protected Color c;
 	
+	/**
+	 * On calcule la position posX et posY en fonction de la taille des traits et leurs indices sur la grille 
+	 * @param x indice grille
+	 * @param y indice grille
+	 */
 	public Case(int x, int y)
 	{
 		this.x=x;

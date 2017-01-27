@@ -2,6 +2,12 @@ package com.model;
 
 import java.util.ArrayList;
 
+/**
+ * Classe correspondant à un ensemble de carré
+ * (les carrés changent de valeur dès qu'on détecte que les 4 traits du carrés sont associés à un joueur)  
+ * @author loick
+ *
+ */
 public class CasesModel {
 
 	
