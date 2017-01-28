@@ -1,3 +1,4 @@
+package com.vue;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
 import java.awt.Image;
 
 /**
@@ -26,32 +28,28 @@ import java.awt.Image;
  *
  */
 
-public class EcranStart extends JPanel implements ActionListener{
+public class EcranStart extends Ecran implements ActionListener{
 
-	
-	private Fenetre f;
 	private Image fond;
 	
 	protected JButton start;
 	protected JButton quit;
 	protected JButton credits;
 	
-	protected JButton buttons[][];
-	
-	protected EcranOpt opt; 
+	//protected JButton buttons[][];
 	protected JLabel startLabel;
-	
-	public static final int NB_BUTTONS_X=3;
-	public static final int NB_BUTTONS_Y=1;
 	
 	
 	/**
 	 * Initialisation du JPanel (1 fois)
 	 * @param f Fenetre utilisé pour les ActionListener
 	 */
-	public EcranStart(Fenetre f)
+	public EcranStart(VueMenu f)
 	{
-		this.f=f;
+		NB_BUTTONS_X=3;
+		NB_BUTTONS_Y=1;
+		
+		this.vue=f;
 		//fond= Toolkit.getDefaultToolkit().createImage("r")
 		fond=new ImageIcon("./Sprites/title.jpg").getImage();
 		
@@ -87,18 +85,18 @@ public class EcranStart extends JPanel implements ActionListener{
 		buttons[1][0]=credits;
 		buttons[2][0]=quit;
 		
-		GestionBouton.ajoutListenerBouton(buttons);
+		this.addListener();
 		
 		this.add(start);
 		this.add(credits);
 		this.add(quit);
 	
 		
-		opt = new EcranOpt(f);
 		
-		this.add(opt);
 		
-		opt.setVisible(false);
+		//this.add(opt);
+		
+		//f.lePanneau5.setVisible(false);
 		
 		
 	}
@@ -118,8 +116,12 @@ public class EcranStart extends JPanel implements ActionListener{
 		
 		if(command=="Démarrer")
 		{
-			this.opt.setVisible(true);
-			this.opt.buttons[0][0].requestFocus();
+			//this.opt.setVisible(true);
+			//this.opt.buttons[0][0].requestFocus();
+			
+			this.focusNouvelEcran(vue.lePanneau5);
+			
+			/*
 			for(int i=0; i<NB_BUTTONS_X;i++)
 			{
 				for(int j=0; j<NB_BUTTONS_Y; j++)
@@ -131,22 +133,28 @@ public class EcranStart extends JPanel implements ActionListener{
 			//f.initFenetreEcranJeu();
 			//f.lePanneau.setFocusable(true);
 			//f.lePanneau.requestFocus();
-			
+			*/
 		}
 		
-		if(command=="IA")
+		if(command=="Crédits")
 		{
-			f.initFenetreEcranJeu();
+			
+			//this.focusNouvelEcran(vue.lePanneau4);
+			vue.afficherPanneau(vue.lePanneau4);
+			vue.lePanneau4.requestFocus();
+			
+			/*
+			vue.initFenetreEcranJeu();
 			try {
-				f.lePanneau.initIA();
+				vue.lePanneau.initIA();
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			}
+			}*/
 		}
 		
 		if(command=="Quitter")
-			f.dispose();
+			vue.dispose();
 	}
 	
 	public void paintComponent(Graphics g) {

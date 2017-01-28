@@ -1,3 +1,4 @@
+package com.vue;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -10,41 +11,47 @@ import javax.swing.JPanel;
 
 
 /**
- * JPanel affichant les règles à l'utilisateur
+ * JPanel correspondant à une fin de partie.
+ * On demande à l'utilisateur si il souhaite recommencer une partie.
  * @author loick
  *
  */
-public class EcranRegle extends JPanel implements ActionListener{
+public class EcranFinDePartie extends JPanel implements ActionListener{
 
-	private Fenetre f;
+	private VueMenu vue;
 	
 	protected JButton b1;
+	protected JButton b2;
 	protected JPanel p;
 	
-	protected JLabel regleLabel;
+	protected JLabel gameOverLabel;
 	
 	/**
 	 * Initialisation du JPanel (Une fois)
-	 * @param f Fenetre utilisé pour les ActionListener
+	 * @param vue Fenetre utilisé pour les ActionListener
 	 */
-	public EcranRegle(Fenetre f)
+	public EcranFinDePartie(VueMenu vue)
 	{
-		this.f=f;
+		this.vue=vue;
 		
 		this.setLayout(new FlowLayout());
 		
 		
 		b1=new JButton("Ok");
 		b1.addActionListener(this);
-		regleLabel=new JLabel("Règles");
+		b2=new JButton("Non");			
+		b2.addActionListener(this);
+		gameOverLabel=new JLabel("Game over");
 				
-		this.add(regleLabel);
+		this.add(gameOverLabel);
 		this.add(b1);
+		this.add(b2);
 		
 	}
 
 	/**
-	 * Ok: quitte l'écran d'aide et revient au jeu
+	 * Ok: Recommence la partie
+	 * Non: Ferme la fenetre
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -53,9 +60,12 @@ public class EcranRegle extends JPanel implements ActionListener{
 		
 		if(command=="Ok")
 		{	
-			f.afficherPanneau(f.lePanneau);
-			f.lePanneau.setFocusable(true);
-			f.lePanneau.requestFocus();
+			vue.afficherPanneau(vue.lePanneau3);
+		}
+		
+		if(command=="Non")
+		{
+			vue.dispose();
 		}
 	}
 	

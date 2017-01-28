@@ -1,3 +1,4 @@
+package com.vue;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -27,9 +28,9 @@ import javax.swing.JPanel;
  *
  */
 
-public class EcranJeu extends JPanel{
+public class EcranJeu extends Ecran{
 
-	private Fenetre f;
+	private VueMenu vue;
 	private JLabel title;
 	
 	protected JPanel menu;
@@ -38,16 +39,16 @@ public class EcranJeu extends JPanel{
 	
 	/**
 	 * Créé un nouveau JPanel de jeu (Une fois)
-	 * @param f Fenetre pour ajouter les ActionListener
+	 * @param vue Fenetre pour ajouter les ActionListener
 	 * @throws IOException
 	 */
-	public EcranJeu(Fenetre f)
+	public EcranJeu(VueMenu vue)
 	{
 		menu=new JPanel();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		menu.setLayout(new BoxLayout(menu, BoxLayout.LINE_AXIS));
 		
-		this.f=f;
+		this.vue=vue;
 		this.setFocusable(true);
 		this.requestFocus();
 		
@@ -115,7 +116,7 @@ public class EcranJeu extends JPanel{
 	        	
 	        	break;
 	        case KeyEvent.VK_H:
-	        	f.afficherPanneau(f.lePanneau2);
+	        	vue.afficherPanneau(vue.lePanneau2);
 	        	break;
 	        	
 	     }
