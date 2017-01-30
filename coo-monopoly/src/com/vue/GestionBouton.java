@@ -1,10 +1,14 @@
 package com.vue;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 
 public abstract class GestionBouton {
 	
@@ -14,12 +18,19 @@ public abstract class GestionBouton {
 	      @Override
 	      public void keyTyped(KeyEvent e) {
 	         if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-	            ((JButton) e.getComponent()).doClick();
+	        	if(e.getComponent() instanceof JButton)
+	        		((JButton) e.getComponent()).doClick();
+	        	if(e.getComponent() instanceof JComboBox){
+	        		if(((JComboBox) e.getComponent()).isPopupVisible())
+	        			((JComboBox) e.getComponent()).setPopupVisible(false);
+	        		else
+	        			((JComboBox) e.getComponent()).setPopupVisible(true);
+	        	}
 	         }
 	      }
-	   };
+	};
 	
-	public static void ajoutListenerBouton(JButton[][] buttons)
+	public static void ajoutListenerBouton(JComponent[][] buttons)
 	{
 		
 		for(int i=0; i<buttons.length; i++)
@@ -39,7 +50,7 @@ public abstract class GestionBouton {
 		                     {
 		                        buttons[curRow - 1][curCol].requestFocus();
 		                     	buttons[curRow - 1][curCol].setForeground(Color.GREEN);
-		                     	buttons[curRow][curCol].setForeground(Color.WHITE);
+		                     	buttons[curRow][curCol].setForeground(Color.BLACK);
 		                     }
 		                     break;
 		                  case KeyEvent.VK_DOWN:
@@ -47,7 +58,7 @@ public abstract class GestionBouton {
 		                     {  
 		                    	buttons[curRow + 1][curCol].requestFocus();
 		                     	buttons[curRow + 1][curCol].setForeground(Color.GREEN);
-		                     	buttons[curRow][curCol].setForeground(Color.WHITE);
+		                     	buttons[curRow][curCol].setForeground(Color.BLACK);
 		                     	
 		                     }
 		                     
@@ -57,7 +68,7 @@ public abstract class GestionBouton {
 		                      {
 		                         buttons[curRow][curCol - 1].requestFocus();
 		                         buttons[curRow][curCol - 1].setForeground(Color.GREEN);
-			                     buttons[curRow][curCol].setForeground(Color.WHITE);
+			                     buttons[curRow][curCol].setForeground(Color.BLACK);
 		                      }
 		                      break;
 		                  case KeyEvent.VK_RIGHT:
@@ -65,7 +76,7 @@ public abstract class GestionBouton {
 		                      {
 		                         buttons[curRow][curCol + 1].requestFocus();
 		                         buttons[curRow][curCol + 1].setForeground(Color.GREEN);
-			                     buttons[curRow][curCol].setForeground(Color.WHITE);
+			                     buttons[curRow][curCol].setForeground(Color.BLACK);
 		                      }
 		                      break;
 		                  default:

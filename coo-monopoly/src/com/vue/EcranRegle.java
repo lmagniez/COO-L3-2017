@@ -136,6 +136,7 @@ public class EcranRegle extends Ecran implements ActionListener{
         textArea.setFont(new Font("Arial", Font.PLAIN, 16));
         textArea.setBackground(Color.lightGray);
 		textArea.append(s);
+		textArea.setEditable(false);
 		return textArea;
 
 	}

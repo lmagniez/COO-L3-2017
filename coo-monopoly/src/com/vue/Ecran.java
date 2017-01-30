@@ -1,25 +1,35 @@
 package com.vue;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.event.AncestorListener;
 
 public abstract class Ecran extends JPanel{
 
 	protected int NB_BUTTONS_X;
 	protected int NB_BUTTONS_Y;
-	protected JButton buttons[][];
+	protected JComponent buttons[][];
 	protected VueMenu vue;
 	
 	public void addListener()
 	{
-		for(int i=0; i<NB_BUTTONS_X; i++)
-			for(int j=0; j<NB_BUTTONS_Y; j++)
-				buttons[i][j].addActionListener(new ButtonListener());
-		
+		for(int i=0; i<NB_BUTTONS_X; i++){
+			for(int j=0; j<NB_BUTTONS_Y; j++){
+				if(buttons[i][j] instanceof JButton)
+					((AbstractButton) buttons[i][j]).addActionListener(new ButtonListener());
+				if(buttons[i][j] instanceof JComboBox)
+					((JComboBox) buttons[i][j]).addActionListener(new ComboBoxListener());
+				
+			}
+		}
 		GestionBouton.ajoutListenerBouton(buttons);
 		
 	}
@@ -63,11 +73,31 @@ public abstract class Ecran extends JPanel{
 	class ButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			
+			
 			for(int i=0; i<NB_BUTTONS_X; i++)
 				for(int j=0; j<NB_BUTTONS_Y; j++)
-					buttons[i][j].setForeground(Color.WHITE);
+					buttons[i][j].setForeground(Color.BLACK);
 			
 			JButton b = ((JButton) e.getSource());
+			b.setForeground(Color.GREEN);
+			b.requestFocus();
+
+		}
+	}
+	
+	class ComboBoxListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
+			
+			repaint();
+			
+			
+			for(int i=0; i<NB_BUTTONS_X; i++)
+				for(int j=0; j<NB_BUTTONS_Y; j++)
+					buttons[i][j].setForeground(Color.BLACK);
+			
+			
+			JComboBox b = ((JComboBox) e.getSource());
 			b.setForeground(Color.GREEN);
 			b.requestFocus();
 

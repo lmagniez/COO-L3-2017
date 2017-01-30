@@ -12,10 +12,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -80,7 +82,7 @@ public class EcranStart extends Ecran implements ActionListener{
 		quit.setBorder(new LineBorder (Color.BLACK, 1));
 		quit.setBounds(100, 550, 200, 50);
 		
-		buttons=new JButton[NB_BUTTONS_X][NB_BUTTONS_Y];
+		buttons=new JComponent[NB_BUTTONS_X][NB_BUTTONS_Y];
 		buttons[0][0]=start;
 		buttons[1][0]=credits;
 		buttons[2][0]=quit;
