@@ -1,5 +1,5 @@
 
-package com.vue;
+package com.vue.menu;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,6 +22,7 @@ import com.controler.GrilleControler;
 import com.model.AbstractModel;
 import com.model.GrilleModel;
 import com.observer.Observer;
+import com.vue.Fenetre;
 
 public class VueMenu extends Fenetre implements Observer{
 	
@@ -32,9 +33,8 @@ public class VueMenu extends Fenetre implements Observer{
 	protected EcranStart lePanneau3;
 	protected EcranRegle lePanneau4;
 	protected EcranOpt lePanneau5;
+	protected EcranOptPlus lePanneau6;
 	
-	
-	private Case[][] cases;
 	// l'ensemble des objets de vue
 	//private 
 	
@@ -59,6 +59,8 @@ public class VueMenu extends Fenetre implements Observer{
 		lePanneau3 = new EcranStart(this);
 		lePanneau4 = new EcranRegle(this);
 		lePanneau5 = new EcranOpt(this);
+		lePanneau6 = new EcranOptPlus(this);
+		
 		
 		//this.add(lePanneau5);
 		//this.lePanneau5.setVisible(false);
@@ -115,14 +117,6 @@ public class VueMenu extends Fenetre implements Observer{
 		
 	}
 	
-	//Les listeners de chaque bouton ou composant
-	class CaseListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			Case c = ((Case) e.getSource());
-			controler.setCase(c.x, c.y);
-
-		}
-	}
 	
 	
 	class ResetListener implements ActionListener{
@@ -131,11 +125,6 @@ public class VueMenu extends Fenetre implements Observer{
 		}               
 	}
 	
-	@Override
-	public void update(int x, int y, String s) {
-		// TODO Auto-generated method stub
-		cases[x][y].setText(s);
-	}
 
 	@Override
 	public void updateWinner(String s) {
@@ -143,6 +132,13 @@ public class VueMenu extends Fenetre implements Observer{
 		JOptionPane.showMessageDialog(this, "Le gagnant est"+s);
 		//System.out.println("Le gagnant est"+s);
 		controler.reset();
+	}
+
+
+	@Override
+	public void update(int x, int y, String s) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

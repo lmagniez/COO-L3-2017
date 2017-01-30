@@ -1,4 +1,4 @@
-package com.vue;
+package com.vue.menu;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -22,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import com.vue.Colors;
+
 import java.awt.Image;
 
 /**
@@ -37,6 +39,8 @@ public class EcranStart extends Ecran implements ActionListener{
 	protected JButton start;
 	protected JButton quit;
 	protected JButton credits;
+	protected JButton regles;
+	
 	
 	//protected JButton buttons[][];
 	protected JLabel startLabel;
@@ -48,7 +52,7 @@ public class EcranStart extends Ecran implements ActionListener{
 	 */
 	public EcranStart(VueMenu f)
 	{
-		NB_BUTTONS_X=3;
+		NB_BUTTONS_X=4;
 		NB_BUTTONS_Y=1;
 		
 		this.vue=f;
@@ -61,7 +65,7 @@ public class EcranStart extends Ecran implements ActionListener{
 		start=new JButton("Démarrer");
 		start.addActionListener(this);
 		start.setAlignmentX(this.CENTER_ALIGNMENT);
-		start.setForeground(Colors.textColor2);
+		start.setForeground(Colors.textColor1);
 		start.setBackground(Colors.case8);
 		start.setBorder(new LineBorder (Color.BLACK, 1));
 		start.setBounds(100, 250, 200, 50);
@@ -69,15 +73,23 @@ public class EcranStart extends Ecran implements ActionListener{
 		credits=new JButton("Crédits");	
 		credits.setAlignmentX(this.CENTER_ALIGNMENT);
 		credits.addActionListener(this);
-		credits.setForeground(Colors.textColor2);
+		credits.setForeground(Colors.textColor1);
 		credits.setBackground(Colors.case128);
 		credits.setBorder(new LineBorder (Color.BLACK, 1));
 		credits.setBounds(100, 400, 200, 50);
 		
+		regles=new JButton("Règles");	
+		regles.setAlignmentX(this.CENTER_ALIGNMENT);
+		regles.addActionListener(this);
+		regles.setForeground(Colors.textColor1);
+		regles.setBackground(Colors.case128);
+		regles.setBorder(new LineBorder (Color.BLACK, 1));
+		regles.setBounds(900, 200, 200, 50);
+		
 		quit=new JButton("Quitter");	
 		quit.setAlignmentX(this.CENTER_ALIGNMENT);
 		quit.addActionListener(this);
-		quit.setForeground(Colors.textColor2);
+		quit.setForeground(Colors.textColor1);
 		quit.setBackground(Colors.case16);
 		quit.setBorder(new LineBorder (Color.BLACK, 1));
 		quit.setBounds(100, 550, 200, 50);
@@ -86,20 +98,16 @@ public class EcranStart extends Ecran implements ActionListener{
 		buttons[0][0]=start;
 		buttons[1][0]=credits;
 		buttons[2][0]=quit;
+		buttons[3][0]=regles;
 		
 		this.addListener();
 		
 		this.add(start);
 		this.add(credits);
+		this.add(regles);
 		this.add(quit);
 	
-		
-		
-		
-		//this.add(opt);
-		
-		//f.lePanneau5.setVisible(false);
-		
+		this.start.requestFocus();
 		
 	}
 	
@@ -118,41 +126,18 @@ public class EcranStart extends Ecran implements ActionListener{
 		
 		if(command=="Démarrer")
 		{
-			//this.opt.setVisible(true);
-			//this.opt.buttons[0][0].requestFocus();
 			
 			this.focusNouvelEcran(vue.lePanneau5);
 			
-			/*
-			for(int i=0; i<NB_BUTTONS_X;i++)
-			{
-				for(int j=0; j<NB_BUTTONS_Y; j++)
-				{	
-					buttons[i][j].setForeground(Color.WHITE);
-					buttons[i][j].setEnabled(false);
-				}
-			}
-			//f.initFenetreEcranJeu();
-			//f.lePanneau.setFocusable(true);
-			//f.lePanneau.requestFocus();
-			*/
 		}
 		
-		if(command=="Crédits")
+		if(command=="Règles")
 		{
 			
 			//this.focusNouvelEcran(vue.lePanneau4);
 			vue.afficherPanneau(vue.lePanneau4);
 			vue.lePanneau4.requestFocus();
 			
-			/*
-			vue.initFenetreEcranJeu();
-			try {
-				vue.lePanneau.initIA();
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}*/
 		}
 		
 		if(command=="Quitter")

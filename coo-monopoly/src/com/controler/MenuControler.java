@@ -6,9 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.model.AbstractModel;
-import com.vue.Ecran;
 import com.vue.Fenetre;
-import com.vue.VueMenu;
+import com.vue.menu.Ecran;
+import com.vue.menu.VueMenu;
 
 
 /**

@@ -23,7 +23,7 @@ public class ButtonMenu extends JButton{
 		this.setForeground(Colors.textColor2);
 		this.setBackground(Colors.case8);
 		this.setBorder(new LineBorder (Color.BLACK, 1));
-		this.setMaximumSize(new Dimension(150,50));
+		this.setMaximumSize(new Dimension(170,50));
 	}
 
 }

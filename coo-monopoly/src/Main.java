@@ -3,7 +3,7 @@ import com.controler.GrilleControler;
 import com.controler.MenuControler;
 import com.model.AbstractModel;
 import com.model.GrilleModel;
-import com.vue.VueMenu;
+import com.vue.menu.VueMenu;
 
 public class Main {
 	public static void main(String[] args) {

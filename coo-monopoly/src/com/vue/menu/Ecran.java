@@ -1,4 +1,4 @@
-package com.vue;
+package com.vue.menu;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -11,6 +11,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.event.AncestorListener;
+
+import com.vue.GestionBouton;
 
 public abstract class Ecran extends JPanel{
 
@@ -42,7 +44,7 @@ public abstract class Ecran extends JPanel{
 			for(int j=0; j<NB_BUTTONS_Y; j++)
 			{
 				buttons[i][j].setEnabled(false);
-				buttons[i][j].setForeground(Color.WHITE);
+				buttons[i][j].setForeground(Color.BLACK);
 			}
 		}
 		
@@ -53,7 +55,7 @@ public abstract class Ecran extends JPanel{
 			for(int j=0; j<c.NB_BUTTONS_Y; j++)
 			{
 				c.buttons[i][j].setEnabled(true);
-				c.buttons[i][j].setForeground(Color.WHITE);
+				c.buttons[i][j].setForeground(Color.BLACK);
 			}
 		}
 		

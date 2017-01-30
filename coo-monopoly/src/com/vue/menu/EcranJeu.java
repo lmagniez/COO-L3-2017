@@ -1,4 +1,4 @@
-package com.vue;
+package com.vue.menu;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -52,7 +52,7 @@ public class EcranJeu extends Ecran{
 		this.setFocusable(true);
 		this.requestFocus();
 		
-		title=new JLabel("2048");
+		title=new JLabel("MONOPOLY");
 		title.setSize(new Dimension(150,50));
 		title.setFont(new Font("Arial",Font.BOLD,40));
 		
