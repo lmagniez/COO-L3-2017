@@ -1,5 +1,6 @@
+package com.vue.grid;
 
-package com.vue.grille;
+
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,15 +26,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.controler.AbstractControler;
+import com.controler.GridControler;
 import com.controler.MenuControler;
 import com.model.AbstractModel;
-import com.model.BoxValues;
 import com.model.CaseValue;
+import com.model.GridModel;
 import com.model.patternWin;
 import com.observer.Observer;
 import com.vue.Colors;
 import com.vue.Fenetre;
-import com.vue.grid.Score;
+import com.vue.grille.Vue2;
 import com.vue.titre.Vue1;
 
 /**
@@ -42,17 +44,17 @@ import com.vue.titre.Vue1;
  *
  */
 
-public class Vue2 extends Fenetre implements Observer {
+public class VueGrille extends Fenetre implements Observer {
 
 	// private JPanel container = new JPanel();
 
 	private Vue1 vueMenu;
-	private Grille grid;
+	private Grid grid;
 	private Score score;
 	
 
 	public static final int TAILLE_ECRAN_GRILLE=600;
-	public static final int TAILLE_ECRAN_SCORE=200;
+	public static final int TAILLE_ECRAN_SCORE=300;
 	
 
 	// L'instance de notre objet controleur
@@ -66,7 +68,11 @@ public class Vue2 extends Fenetre implements Observer {
 	 * @param vueMenu vue du menu (rappelle plus tard)
 	 * @param isIA tableau type de joueurs
 	 */
-	public Vue2(AbstractControler controler, int nbLigne, int nbJoueur, Vue1 vueMenu, boolean[] isIA) {
+	
+	//ADD CONTROLEr
+	public VueGrille(GridControler controler, int nbRow, int nbCol, int nbJoueur) {
+		
+		this.controler=controler;
 		this.vueMenu=vueMenu;
 		this.setSize(TAILLE_ECRAN_GRILLE+TAILLE_ECRAN_SCORE, TAILLE_ECRAN_GRILLE);
 		this.setTitle("3 Dots 3 Boxes");
@@ -76,16 +82,18 @@ public class Vue2 extends Fenetre implements Observer {
 		this.setLayout(new BoxLayout(getContentPane(), BoxLayout.LINE_AXIS));
 		
 		this.controler = controler;
-		this.grid=new Grille(this, nbLigne);
-		this.score = new Score(nbJoueur);
-
+		this.grid=new Grid(this, nbRow, nbCol);
+		this.score= new Score(2);
+		
 		this.add(grid);
 		this.add(score);
 		this.setVisible(true);
+		
 	
 
-		this.setBackground(Color.BLACK);
-		repaint();
+		getContentPane().setBackground(Color.LIGHT_GRAY);
+		//grid.setBackground(Color.BLUE);
+		//repaint();
 	
 		}
 
@@ -98,115 +106,51 @@ public class Vue2 extends Fenetre implements Observer {
 	    return b;
 	}
 	
-	public static Color getColorByBoxValues(BoxValues v)
+	public static Color getColorByCaseValue(CaseValue v)
 	{
-		if(v==BoxValues.J1)
+		if(v==CaseValue.J1)
 			return Color.RED;
-		if(v==BoxValues.J2)
-			return Color.BLUE;
-		if(v==BoxValues.J3)
+		if(v==CaseValue.J2)
 			return Color.YELLOW;
-		if(v==BoxValues.J4)
-			return Color.GREEN;
-		if(v==BoxValues.NONE)
-			return Color.GRAY;
-		
-		return Color.PINK;
-	}
-	
-	public static Color getSquareColorByBoxValues(BoxValues v)
-	{
-		if(v==BoxValues.J1)
-			return Colors.RED_TRANSPARENT;
-		if(v==BoxValues.J2)
-			return Colors.BLUE_TRANSPARENT;
-		if(v==BoxValues.J3)
-			return Colors.YELLOW_TRANSPARENT;
-		if(v==BoxValues.J4)
-			return Colors.GREEN_TRANSPARENT;
-		if(v==BoxValues.EMPTY_SQUARE)
-			return Color.BLACK;
+		if(v==CaseValue.NONE)
+			return Color.WHITE;
+
 		
 		return Color.PINK;
 	}
 
-	/**
-	 * Mise a jour du gagnant
-	 * @param gagnants liste des gagnants
-	 */
-	@Override
-	public void updateWinner(ArrayList<BoxValues> gagnants) {
-		// TODO Auto-generated method stub
-		repaint();
-		JOptionPane.showMessageDialog(this, "Le gagnant est" + gagnants.get(0));
-		// System.out.println("Le gagnant est"+s);
-		
-		//controler.reset();
-		this.vueMenu.setVisible(true);
-		this.dispose();
-	}
-	
-	/**
-	 * Mise a jour d'un carré
-	 * @param x abscisse 
-	 * @param y ordonée
-	 * @param v valeur
-	 */
-	@Override
-	public void updateSquare(int x, int y, BoxValues v) {
-		grid.cases[x][y].c = getSquareColorByBoxValues(v);
-		score.addCarreJoueur(v.ordinal());
-		repaint();
-	}
-
-	/**
-	 * Mise a jour d'une ligne
-	 * @param x abscisse
-	 * @param y ordonée
-	 * @param v valeur 
-	 */
-	@Override
-	public void updateLineH(int x, int y, BoxValues v) {
-		// TODO Auto-generated method stub
-		grid.cotesH[x][y].c = getColorByBoxValues(v);
-		score.addTrait();
-		repaint();
-	}
-	
-	/**
-	 * Mise a jour d'une ligne
-	 * @param x abscisse
-	 * @param y ordonée
-	 * @param v valeur 
-	 */
-	@Override
-	public void updateLineV(int x, int y, BoxValues v) {
-		// TODO Auto-generated method stub
-		grid.cotesV[x][y].c = getColorByBoxValues(v);
-		score.addTrait();
-		repaint();
-	}
 	
 	
 	public void updateTour(int tour){
-		score.changeTour(tour);
+		
 	}
 	
 
 	public void updateReinit() {
-		// TODO Auto-generated method stub
-		grid.reinit();
+		
 	}
 
 	@Override
 	public void updateChip(int x, int y, CaseValue v) {
-		// TODO Auto-generated method stub
+		
+		this.grid.cases[x][y].c=VueGrille.getColorByCaseValue(v);
+		this.repaint();
 		
 	}
 
 	@Override
 	public void updateWinner(int x, int y, patternWin p) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public static void main(String[] args) {
+		GridModel m=new GridModel(7, 6, 2);
+		GridControler c = new GridControler(m);
+		VueGrille v=new VueGrille(c,7,6,2);
+		
+		m.addObserver(v);
+		
 		
 	}
 

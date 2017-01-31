@@ -5,7 +5,7 @@ package com.controler;
 import java.util.ArrayList;
 
 import com.model.AbstractModel;
-import com.model.BoxValues;
+import com.model.patternWin;
 import com.vue.titre.Vue1;
 
 /**
@@ -41,33 +41,15 @@ public abstract class AbstractControler {
 	}
 	
 	//Definir toutes les methodes de modifications (les setters)
-	/**
-	 * Modifier une ligne verticale
-	 * @param x
-	 * @param y
-	 */
-	public void setLigneVerticale(int x, int y){
+	
+	
+	public void setJeton(int x){
 		
 		this.x=x;
-		this.y=y;
-		this.vertical=true;
 		
 		control();
 	}
 	
-	/**
-	 * Modifier une ligne horizontale
-	 * @param x
-	 * @param y
-	 */
-	public void setLigneHorizontale(int x, int y){
-		
-		this.x=x;
-		this.y=y;
-		this.vertical=false;
-		
-		control();
-	}
 	
 	/**
 	 * Reinitialiser le modèle
@@ -79,6 +61,4 @@ public abstract class AbstractControler {
 	
 	//Methode de controle
 	abstract void control();
-	//public abstract void changeScreen(Vue1 vue);
-	public abstract void genererJeu(Vue1 vue, int nbLigne, int nbJoueur, boolean[] isIA);
 }

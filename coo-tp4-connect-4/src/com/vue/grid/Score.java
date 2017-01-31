@@ -1,17 +1,21 @@
-package com.vue.grille;
+package com.vue.grid;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.model.BoxValues;
+import com.vue.grille.Vue2;
 
 /**
  * JPanel du score de chaque joueur et du joueur courant
@@ -31,6 +35,8 @@ public class Score extends JPanel {
 	private JLabel labelTour;
 	private int tour;
 	
+	private Image title;
+	
 	/**
 	 * Constructeur, initialise le Jpanel
 	 * @param nbJoueur
@@ -42,34 +48,18 @@ public class Score extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		this.setBackground(Color.LIGHT_GRAY);
+		this.setBackground(Color.BLACK);
 		//this.setOpaque(true);
 		
-		this.nbJoueur=nbJoueur;
-		labelScore=new JLabel[nbJoueur];
-		scoreJ= new int[nbJoueur];
+		title = new ImageIcon("./sprites/title.jpeg").getImage();
+		//Icon title=new ImageIcon(new ImageIcon("./sprites/title.jpeg").getImage().getScaledInstance(300, 100, Image.SCALE_DEFAULT));
+		JLabel titre = new JLabel();
+		JLabel titre2 = new JLabel("test");
 		
-		for(int i=0; i<nbJoueur; i++)
-		{
-			scoreJ[i]=0;
-			this.labelScore[i]=new JLabel("Score J"+(i+1)+": 0");
-			this.labelScore[i].setBorder(new EmptyBorder(10, 10, 0, 0));
-			this.labelScore[i].setForeground(Vue2.getColorByBoxValues(BoxValues.fromInteger(i)));
-			this.add(labelScore[i]);
-		}
+		this.add(titre);
+		this.add(titre2);
 		
-		
-		this.add(Box.createRigidArea(new Dimension(0,10)));
-		
-		labelNbTraits=new JLabel("Nombre Traits: "+nbTraits);
-		labelNbTraits.setBorder(new EmptyBorder(10, 10, 0, 0));
-		this.add(labelNbTraits);
-		
-		
-		labelTour=new JLabel("Au tour de: J"+(tour+1));
-		labelTour.setBorder(new EmptyBorder(10, 10, 0, 0));
-		this.add(labelTour);
-		
+		repaint();
 		
 	}
 	
@@ -120,6 +110,12 @@ public class Score extends JPanel {
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		//g.drawImage(title, VueGrille.TAILLE_ECRAN_GRILLE, 0, 
+		//		VueGrille.TAILLE_ECRAN_SCORE,100,this);
+		
+		g.drawImage(title, 500, 100,this);
+		
+		
 	}
 	
 	
