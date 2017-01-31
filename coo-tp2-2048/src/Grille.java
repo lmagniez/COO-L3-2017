@@ -50,10 +50,9 @@ public class Grille extends JPanel implements Cloneable{
 			}
 		}
 		
-		this.nbSet=0;
-		
+		this.nbSet=0;		
 		this.apparitionCase();
-		
+
 		this.repaint();
 		this.revalidate();
 		
@@ -92,7 +91,6 @@ public class Grille extends JPanel implements Cloneable{
 		{	
 			for(int j=0; j<NB_COLONNES; j++)
 			{
-			
 				grid[i][j].revalidate();
 				grid[i][j].repaint();
 			}
