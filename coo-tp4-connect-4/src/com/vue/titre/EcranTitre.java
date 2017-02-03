@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import com.vue.Colors;
-import com.vue.grille.ButtonMenu;
+import com.vue.ButtonMenu;
 
 public class EcranTitre extends JPanel{
 	protected Vue1 f;
@@ -41,7 +41,7 @@ public class EcranTitre extends JPanel{
 		quit=new ButtonMenu("Quitter",Colors.textColor2,Colors.case16);	
 		quit.addActionListener(new ButtonListener());
 		
-		startLabel=new JLabel("3 dots 3 Boxes");
+		startLabel=new JLabel("Connect 4");
 		startLabel.setSize(new Dimension(150,50));
 		startLabel.setFont(new Font("Arial",Font.BOLD,40));
 		startLabel.setAlignmentX(this.CENTER_ALIGNMENT);

@@ -1,1 +1,1 @@
-[[{"location":"/home/loick/GIT/COO-L3-2017/td-coo/balle","type":"PROJECT","hints":{"PROJECT_NAME":"balle"}},"ABSENT"],[{"location":"/usr/lib/jvm/java-8-openjdk-i386","type":"JRE","hints":{"EXECUTION_ENVIRONMENT":"JavaSE-1.8"}},"jre:jre:1.8.0"]]
+[[{"location":"/usr/lib/jvm/java-8-openjdk-i386","type":"JRE","hints":{"EXECUTION_ENVIRONMENT":"JavaSE-1.8"}},"jre:jre:1.8.0"],[{"location":"/home/loick/GIT/COO-L3-2017/td-coo/reseau","type":"PROJECT","hints":{"PROJECT_NAME":"reseau"}},"ABSENT"]]

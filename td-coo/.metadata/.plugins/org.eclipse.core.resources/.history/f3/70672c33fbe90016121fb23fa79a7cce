@@ -1,0 +1,21 @@
+package reseau;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Serveur {
+
+	public static void main(String[] arg){
+		ServerSocket socketserver;
+		Socket socketduserver;
+		
+		try{
+			socketserver = new ServerSocket(1789);
+			socketduserveur = socketserver.accept();
+			System.out.println("Un joueur s'est connecté !");
+			socketserver.close();
+			socketduserveur.close;
+		}
+	}
+	
+}

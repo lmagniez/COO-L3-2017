@@ -7,14 +7,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.controler.AbstractControler;
-import com.controler.GrilleControler;
-import com.controler.MenuControler;
+import com.controler.GridControler;
 import com.model.AbstractModel;
-import com.model.BoxValues;
-import com.model.GrilleModel;
+import com.model.GridModel;
 import com.observer.Observer;
 import com.vue.Fenetre;
-import com.vue.grille.Vue2;
+import com.vue.grid.VueGrid;
 
 /**
  * Vue correspondant à un écran titre et un écran de parametrage.
@@ -28,7 +26,6 @@ public class Vue1 extends Fenetre{
 	protected EcranTitre lePanneau;
 	protected EcranParam lePanneau2; 
 	
-	protected AbstractControler controler;
 	
 	
 	
@@ -36,11 +33,9 @@ public class Vue1 extends Fenetre{
 	 * Contructeur de la vue (appelé une fois)
 	 * @param controler
 	 */
-	public Vue1(AbstractControler controler){
+	public Vue1(){
 		
-		this.controler=controler;
-		
-		this.setTitle("3 DOTS 3 BOXES");
+		this.setTitle("CONNECT 4");
 		this.setSize(400, 400);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -58,19 +53,20 @@ public class Vue1 extends Fenetre{
 	
 	
 	/**
-	 * Réinitialise un écran de jeu (Toutes les cases à zéro)
+	 * Initialise une fenetre de jeu (et l'initialise)
+	 * @param swapColor 
 	 */
-	public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
+	public void initFenetreEcranJeu(int nbRow, int nbCol, int nbJR, boolean[] isIA, boolean swapColor)
 	{
 		
 		//Creation du modele de grille
-		AbstractModel grilleModel = new GrilleModel(nbLigne, nbJoueur, isIA);
+		AbstractModel gridModel = new GridModel(nbRow, nbCol, nbJR, isIA);
 		//Creation du controleur
-		AbstractControler grilleControler = new GrilleControler(grilleModel);
+		AbstractControler gridControler = new GridControler(gridModel);
 		//Creation de notre fenetre avec le controleur en parametre
-		Vue2 vueJeu = new Vue2(grilleControler, nbLigne,nbJoueur,this,isIA);
+		VueGrid vueJeu = new VueGrid(gridControler, nbRow, nbCol,swapColor,this);
 		//Ajout de la fenetre comme observer de notre modele
-		grilleModel.addObserver(vueJeu);
+		gridModel.addObserver(vueJeu);
 		this.setVisible(false);
 		
 	}

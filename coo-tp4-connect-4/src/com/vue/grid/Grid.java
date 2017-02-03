@@ -9,6 +9,8 @@ import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import com.model.patternWin;
+
 
 /**
  * Classe représentant une Grille
@@ -18,24 +20,28 @@ import javax.swing.JPanel;
  */
 public class Grid extends JPanel implements MouseListener{
 	
-	private VueGrille vue;
+	private VueGrid vue;
 	
 	protected Case[][] cases;
 	protected int nbRow, nbCol;
 	
+	protected int lignePosX, lignePosY;
+	
+	
 	public static int GRILLE_POSX;
 	public static int GRILLE_POSY;
-	public static final int GRILLE_WIDTH=VueGrille.TAILLE_ECRAN_GRILLE;
-	public static final int GRILLE_HEIGHT=VueGrille.TAILLE_ECRAN_GRILLE;
+	public static final int GRILLE_WIDTH=VueGrid.TAILLE_ECRAN_GRILLE;
+	public static final int GRILLE_HEIGHT=VueGrid.TAILLE_ECRAN_GRILLE;
 	
-	
+
+	protected boolean actif=true;
 	
 	/**
 	 * Constructeur créant la grille et l'intégrant à la vue.
 	 * @param v vue 
 	 * @param nbLigne nombre de ligne de la grille
 	 */
-	public Grid(VueGrille v, int nbRow, int nbCol)
+	public Grid(VueGrid v, int nbRow, int nbCol)
 	{
 		setBackground(Color.BLUE);
 		this.setOpaque(true);
@@ -44,12 +50,12 @@ public class Grid extends JPanel implements MouseListener{
 		//this.setBorder(BorderFactory.createLineBorder(Color.white));
 		
 		
-		GRILLE_POSX=(VueGrille.TAILLE_ECRAN_GRILLE
+		GRILLE_POSX=(VueGrid.TAILLE_ECRAN_GRILLE
 				-(GRILLE_WIDTH/2));
 		GRILLE_POSY=GRILLE_POSY;
 		
-		this.setPreferredSize(new Dimension(VueGrille.TAILLE_ECRAN_GRILLE,VueGrille.TAILLE_ECRAN_GRILLE));
-		this.setMaximumSize(new Dimension(VueGrille.TAILLE_ECRAN_GRILLE,VueGrille.TAILLE_ECRAN_GRILLE));
+		this.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE,VueGrid.TAILLE_ECRAN_GRILLE));
+		this.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE,VueGrid.TAILLE_ECRAN_GRILLE));
 		this.setVisible(true);
 		
 		
@@ -107,6 +113,7 @@ public class Grid extends JPanel implements MouseListener{
 	
 	public int collision(MouseEvent arg0)
 	{
+		if(actif)
 		for(int i=0; i<nbRow; i++)
 		{	
 				if(collide(i,arg0.getX(), arg0.getY()))
@@ -118,7 +125,7 @@ public class Grid extends JPanel implements MouseListener{
 				}
 				
 				
-			}
+		}
 		
 		return -1;
 	}
@@ -160,18 +167,27 @@ public class Grid extends JPanel implements MouseListener{
 		
 	}
 	
+	
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		//g.clearRect(0, 0, VueGrille.TAILLE_ECRAN_GRILLE, VueGrille.TAILLE_ECRAN_GRILLE);
 		
+		int epaisseurTrait=10;
+		
 		for(int i=0; i<nbRow; i++)
 			for(int j=0; j<nbCol; j++)
 			{
+				g.setColor(new Color(0, 0, 128));
+				g.fillOval (cases[i][j].posX-epaisseurTrait/2, cases[i][j].posY-epaisseurTrait/2
+						, cases[i][j].hX+epaisseurTrait, cases[i][j].hY+epaisseurTrait);
+				
+				
 				g.setColor(cases[i][j].c);
 				//System.out.println(cases[i][j].c);
 				//g.clearRect(cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
 				g.fillOval (cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
+				
 			}
 		
 	}

@@ -34,19 +34,15 @@ public abstract class AbstractControler {
 		this.calc = cal;
 	}
 	
-	/**
-	 * Contructeur vide utilisé pour un menu (pas de modèles)
-	 */
-	public AbstractControler(){	
-	}
-	
 	//Definir toutes les methodes de modifications (les setters)
-	
-	
+
+	/**
+	 * Ajouter un jeton à l'abscisse x (appelle la méthode control).
+	 * @param x
+	 */
 	public void setJeton(int x){
 		
-		this.x=x;
-		
+		this.x=x;	
 		control();
 	}
 	

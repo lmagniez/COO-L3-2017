@@ -13,8 +13,7 @@ public interface Observer {
 	public void updateTour(int tour);
 	
 	public void updateChip(int x, int y, CaseValue v);
-	public void updateWinner(int x, int y, patternWin p);
-	
-	
+	public void updateWinner(int tour);
+		
 	public void updateReinit();
 }

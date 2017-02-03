@@ -16,7 +16,7 @@ public interface Observable {
 	
 	public void notifyTour(int tour);
 	public void notifyNewChip(int x, int y, CaseValue v);
-	public void notifyWinner(int x, int y, patternWin p);
+	public void notifyWinner(int tour);
 	public void notifyFull();
 	
 	

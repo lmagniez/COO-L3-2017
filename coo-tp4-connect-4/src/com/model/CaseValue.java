@@ -1,17 +1,17 @@
 package com.model;
 
 /**
- * Enum correspondant aux différentes valeurs que peuvent avoir un trait/carré
+ * Enum correspondant aux différentes valeurs que peut avoir une case
  * @author loick
  *
  */
 public enum CaseValue {
-	J1,J2,NONE;
+	J1,J2,WIN,NONE;
 	
 	/**
-	 * Accéder à la BoxValue en fonction d'un entier
+	 * Accéder à la CaseValue en fonction d'un entier
 	 * @param x entier 
-	 * @return BoxValues associé à l'entier
+	 * @return CaseValue associé à l'entier
 	 */
 	public static CaseValue fromInteger(int x) {
         switch(x) {

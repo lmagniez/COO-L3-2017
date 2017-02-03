@@ -1,5 +1,10 @@
 package com.model;
 
+/**
+ * Enumeration représentant les différents patterns pour gagner.
+ * @author loick
+ *
+ */
 public enum patternWin {
 	HORIZONTAL,VERTICAL,DIAGONALEHAUT,DIAGONALEBAS,NONE;
 	

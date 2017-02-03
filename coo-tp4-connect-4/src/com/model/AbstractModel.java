@@ -46,9 +46,9 @@ public abstract class AbstractModel implements Observable{
 	
 	
 	@Override
-	public void notifyWinner(int x, int y, patternWin p) {
+	public void notifyWinner(int tour) {
 		for(Observer obs : listObserver)
-			obs.updateWinner(x,y,p);
+			obs.updateWinner(tour);
 	}
 	
 	/**
@@ -81,6 +81,9 @@ public abstract class AbstractModel implements Observable{
 
 	}
 	
+	/**
+	 * Notifier Colonne pleine
+	 */
 	@Override
 	public void notifyFull() {
 		// TODO Auto-generated method stub

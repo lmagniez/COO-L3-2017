@@ -15,7 +15,14 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 
 import com.vue.Colors;
-import com.vue.grille.ButtonMenu;
+import com.vue.ButtonMenu;
+
+/**
+ * Classe correspondant à l'écran de paramétrage de la partie.
+ * Intervient dans la vue du menu.
+ * @author loick
+ *
+ */
 
 public class EcranParam extends JPanel{
 
@@ -26,13 +33,11 @@ public class EcranParam extends JPanel{
 	
 	protected JLabel startLabel;
 	
-	protected JSlider nombreCase;
-	protected JComboBox typeJoueurs[];
+	protected JSlider nbRow,nbCol;
+	protected JComboBox typeJoueurs[],nbJetonsG,couleurJeton;
 	
-	
-	
-	public static final int MIN_PARAM=2;
-	public static final int MAX_PARAM=9;
+	public static final int MIN_PARAM=3;
+	public static final int MAX_PARAM=15;
 	
 	
 	
@@ -63,32 +68,42 @@ public class EcranParam extends JPanel{
 		startLabel.setFont(new Font("Arial",Font.BOLD,20));
 		startLabel.setAlignmentX(this.CENTER_ALIGNMENT);
 		
-		//init slider nombre case
-		nombreCase = new JSlider(JSlider.HORIZONTAL, MIN_PARAM, MAX_PARAM, MAX_PARAM/2);
-		nombreCase.setMinorTickSpacing(1);
-        nombreCase.setMajorTickSpacing(1);
-        nombreCase.setPaintTicks(true);
-        nombreCase.setPaintLabels(true);
-        nombreCase.setLabelTable(nombreCase.createStandardLabels(1));
-		nombreCase.setMaximumSize(new Dimension(200,50));
+		//init slider nombre de lignes
+		nbRow = new JSlider(JSlider.HORIZONTAL, MIN_PARAM, MAX_PARAM, 7);
+		nbRow.setMinorTickSpacing(2);
+        nbRow.setMajorTickSpacing(2);
+        nbRow.setPaintTicks(true);
+        nbRow.setPaintLabels(true);
+        nbRow.setLabelTable(nbRow.createStandardLabels(1));
+		nbRow.setMaximumSize(new Dimension(300,50));
         
+		//init slider nombre de colonne
+		nbCol = new JSlider(JSlider.HORIZONTAL, MIN_PARAM, MAX_PARAM, 6);
+		nbCol.setMinorTickSpacing(1);
+        nbCol.setMajorTickSpacing(3);
+        nbCol.setPaintTicks(true);
+        nbCol.setPaintLabels(true);
+        nbCol.setLabelTable(nbRow.createStandardLabels(1));
+		nbCol.setMaximumSize(new Dimension(300,50));
+        
+		
 		//init combo box
 		String str[]={"JOUEUR","IA"};
 		String str2[]={"NONE","JOUEUR","IA"};
+		String str3[]={"3","4","5","6"};
 		
-        typeJoueurs = new JComboBox[4];
+		
+        typeJoueurs = new JComboBox[2];
         for(int i=0; i<2; i++)
         {
         	typeJoueurs[i] = new JComboBox(str);
         	typeJoueurs[i].setMaximumSize(new Dimension(150,50));
         	typeJoueurs[i].setSelectedIndex(0);
         }
-        for(int i=2; i<4; i++)
-        {
-        	typeJoueurs[i] = new JComboBox(str2);
-        	typeJoueurs[i].setMaximumSize(new Dimension(150,50));
-        	typeJoueurs[i].setSelectedIndex(0);
-        }
+        
+        nbJetonsG=new JComboBox(str3);
+        nbJetonsG.setMaximumSize(new Dimension(150,50));
+    	nbJetonsG.setSelectedIndex(1);
         
         
         /*
@@ -96,16 +111,42 @@ public class EcranParam extends JPanel{
          */
         
         this.add(startLabel);
-		this.add(Box.createRigidArea(new Dimension(5,50)));
+		this.add(Box.createRigidArea(new Dimension(5,40)));
 		
 		//Nombre de cases
 		JPanel p=new JPanel();
 		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
-		p.add(new JLabel("Nombre de cases :"));
+		p.add(new JLabel("Nombre de lignes :"));
 		p.add(Box.createRigidArea(new Dimension(30,10)));
-		p.add(nombreCase);
+		p.add(nbRow);
 		this.add(p);
-		this.add(Box.createRigidArea(new Dimension(5,50)));
+		this.add(Box.createRigidArea(new Dimension(5,40)));
+		
+		//Nombre de colonnes
+		JPanel p4=new JPanel();
+		p4.setLayout(new BoxLayout(p4,BoxLayout.LINE_AXIS));
+		p4.add(new JLabel("Nombre de colonnes :"));
+		p4.add(Box.createRigidArea(new Dimension(30,10)));
+		p4.add(nbCol);
+		this.add(p4);
+		this.add(Box.createRigidArea(new Dimension(5,40)));
+		
+		JPanel p5= new JPanel();
+		p5.setLayout(new BoxLayout(p5,BoxLayout.LINE_AXIS));
+		p5.add(new JLabel("Nombre de jetons a aligner :"));
+		p5.add(nbJetonsG);
+		this.add(p5);
+		this.add(Box.createRigidArea(new Dimension(5,40)));
+		
+		
+		String str4[]={"J1:ROUGE    J2:JAUNE","J1:JAUNE    J2:ROUGE"};
+        couleurJeton = new JComboBox(str4);
+        couleurJeton.setMaximumSize(new Dimension(200,50));
+        couleurJeton.setSelectedIndex(0);
+        this.add(couleurJeton);
+		this.add(Box.createRigidArea(new Dimension(5,40)));
+		
+        	
 		
 		//Parametres des joueurs
 		JPanel p2=new JPanel();
@@ -116,16 +157,8 @@ public class EcranParam extends JPanel{
 		p2.add(new JLabel("J2: "));
 		p2.add(typeJoueurs[1]);
 		
-		JPanel p3=new JPanel();
-		p3.setLayout(new BoxLayout(p3,BoxLayout.LINE_AXIS));
-		p3.add(new JLabel("J3: "));
-		p3.add(typeJoueurs[2]);
-		p3.add(Box.createRigidArea(new Dimension(30,10)));
-		p3.add(new JLabel("J4: "));
-		p3.add(typeJoueurs[3]);
 		
 		this.add(p2);
-		this.add(p3);
 		this.add(Box.createRigidArea(new Dimension(5,50)));
 		
         //Boutons start et quitter
@@ -137,6 +170,13 @@ public class EcranParam extends JPanel{
 		
 	}
 	
+	
+	/**
+	 * Listener des boutons de l'écran de paramètrage.
+	 * @author loick
+	 *
+	 */
+	
 	class ButtonListener implements ActionListener
 	{ 
 		public void actionPerformed(ActionEvent e) {
@@ -144,18 +184,12 @@ public class EcranParam extends JPanel{
 			
 			if(command=="Démarrer")
 			{
-				int nbJoueurs=0;
+				int nbJoueurs=2;
 				boolean isIA[];
-				
-				for(int i=0; i<4; i++){
-					if("JOUEUR".equals(typeJoueurs[i].getSelectedItem())
-							||"IA".equals(typeJoueurs[i].getSelectedItem()))
-						nbJoueurs++;
-				}
 				
 				isIA=new boolean[nbJoueurs];
 				int cpt=0;//si une case a none puis une ia
-				for(int i=0; i<4; i++){
+				for(int i=0; i<2; i++){
 					if("IA".equals(typeJoueurs[i].getSelectedItem()))
 					{
 						isIA[cpt]=true;
@@ -168,7 +202,17 @@ public class EcranParam extends JPanel{
 					}
 				}	
 				
-				f.controler.genererJeu(f, nombreCase.getValue(), nbJoueurs,isIA);				
+				int nbLigne=nbRow.getValue();
+				int nbColonne=nbCol.getValue();
+				String nbJRS=(String) nbJetonsG.getSelectedItem();
+				int nbJR=Integer.parseInt(nbJRS);
+				
+				boolean againstIA=false;
+				boolean swapColor=false;
+				if(couleurJeton.getSelectedIndex()==1)
+					swapColor=true;
+				
+				f.initFenetreEcranJeu(nbLigne, nbColonne, nbJR, isIA, swapColor);				
 			}
 			
 			

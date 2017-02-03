@@ -1,0 +1,38 @@
+package reseau;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+
+public class Serveur2 {
+
+	public static void main(String[] args) {
+		ServerSocket socket;
+		try {
+			socket = new ServerSocket(1789);
+			Thread t = new Thread (new Accepter_clients(socket));
+			t.start();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class Accepter_clients implements Runnable {
+	private ServerSocket socketserver;
+	private Socket socket;
+	private int nbrClient=1;
+	
+	public Accepter_clients(ServerSocket e)
+	{
+		socketserver=s;
+	}
+	public void run()
+	{
+		try{
+			while(true){
+				socket=socketserver.accept();
+				System.out.println("Le client num "+nbrclient+" est connecte !");
+			}
+		}
+	}
+}
