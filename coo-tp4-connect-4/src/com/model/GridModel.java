@@ -60,8 +60,9 @@ public class GridModel extends AbstractModel{
 			}
 		}
 		this.notifyReinit();
-		System.out.println("ok");
 		this.ia=new IA(this);
+		this.tour=0;
+		this.notifyTour(0);
 	}
 
 	
@@ -77,7 +78,7 @@ public class GridModel extends AbstractModel{
 	/**
 	 * Calcule le nombre de pions identiques à la suite pour une ligne d'ordonnée y
 	 * @param y ligne à tester
-	 * @return nombre de pions identiques
+	 * @return int[2] -> [0] nombre de pions identiques ; [1] ordonnée de départ
 	 */
 	public int[] nbPionIdentiqueLigne(int y)
 	{
@@ -113,7 +114,7 @@ public class GridModel extends AbstractModel{
 	/**
 	 * Calcule le nombre de pions identiques à la suite pour une colonne d'ordonnée x
 	 * @param x colonne à tester
-	 * @return nombre de pions identiques
+	  @return int[2] -> [0] nombre de pions identiques ; [1] abscisse de départ 
 	 */
 	public int[] nbPionIdentiqueCol(int x)
 	{
@@ -150,7 +151,7 @@ public class GridModel extends AbstractModel{
 	 * Calcule le nombre de pions identiques à la suite pour une diagonale bas 
 	 * partant de l'ordonnée x.
 	 * @param x colonne de départ (On part de grille[x][0])
-	 * @return nombre de pions identiques
+	 *  @return int[2] -> [0] nombre de pions identiques ; [1] ordonnée de départ (adapter l'abscisse plus tard)
 	 */
 	public int[] nbPionIdentiqueDiagBasX(int x)
 	{
@@ -185,7 +186,14 @@ public class GridModel extends AbstractModel{
 		}
 		if(max<maxtmp){
 			max=maxtmp;
-			ymax=cptNbBoucle-max-1;
+			//ymax=cptNbBoucle-max-1;
+			
+			System.out.println(cptNbBoucle);
+			System.out.println(max);
+			System.out.println(cols-1);
+			
+			ymax=cptNbBoucle-max;
+			//ymax=(cols-1)-(cptNbBoucle-(cols-1));
 		}
 		res[0]=max;res[1]=ymax;
 		return res;
@@ -196,7 +204,7 @@ public class GridModel extends AbstractModel{
 	 * Calcule le nombre de pions identiques à la suite pour une diagonale bas 
 	 * partant de l'abscisse y.
 	 * @param y abscisse de départ (On part de grille[0][y]) et on descend
-	 * @return nombre de pions identiques
+	 * @return int[2] -> [0] nombre de pions identiques ; [1] abscisse de départ (adapter l'ordonnée plus tard)
 	 */
 	public int[] nbPionIdentiqueDiagBasY(int y)
 	{
@@ -241,7 +249,7 @@ public class GridModel extends AbstractModel{
 	 * Calcule le nombre de pions identiques à la suite pour une diagonale haut 
 	 * partant de l'ordonnée x.
 	 * @param x colonne de départ (On part de grille[x][cols-1]) et on remonte
-	 * @return nombre de pions identiques
+	  @return int[2] -> [0] nombre de pions identiques ; [1] abscisse de départ (adapter l'ordonnée plus tard)
 	 */
 	public int[] nbPionIdentiqueDiagHautX(int x)
 	{
@@ -274,8 +282,17 @@ public class GridModel extends AbstractModel{
 				maxtmp++;
 		}
 		if(max<maxtmp){
+			System.out.println("ici");
 			max=maxtmp;
-			ymax=cptNbBoucle+max;
+			System.out.println(cptNbBoucle);
+			System.out.println(cols
+					-1);
+			ymax=(cols-1)-(cptNbBoucle-(cols-1));
+			System.out.println("ymax: "+ymax);
+					//-max-1;
+//////////////////////////////////
+			//ymax=cols-max;
+			//ymax=0;
 		}
 		res[0]=max;res[1]=ymax;
 		return res;
@@ -285,21 +302,19 @@ public class GridModel extends AbstractModel{
 	 * Calcule le nombre de pions identiques à la suite pour une diagonale haut 
 	 * partant de l'abscisse y.
 	 * @param y abscisse de départ (On part de grille[0][y]) et on remonte
-	 * @return nombre de pions identiques
+	 * @return int[2] -> [0] nombre de pions identiques ; [1] ordonnée de départ (adapter l'abscisse plus tard)
 	 */
 	public int[] nbPionIdentiqueDiagHautY(int y)
 	{
-		System.out.println("diag haut : y="+y);
 		int max=0, maxtmp=0;
 		CaseValue val=cases[0][y].v;
-		int res[]=new int[2];
+		int res[]=new int[3];
 		int ytmp=y+1;
 		int xmax=0;
 		int cptNbBoucle=0;
 		
 		for(int x=0; x<rows;x++){
 			ytmp--;
-			System.out.println("ytmp -->"+ytmp + " y:"+x);
 			cptNbBoucle++;
 			if(ytmp<0)
 				break;
@@ -325,6 +340,99 @@ public class GridModel extends AbstractModel{
 		return res;
 	}
 	
+	/*
+	 * 
+	 * Fonctions de vérifications
+	 * 
+	 */
+	
+	public void surlignerColonne(int col, int nbJetons, int debut)
+	{
+		//surligne les cases gagnantes
+		for(int i=debut; i<debut+nbJetons; i++)
+		{
+			this.cases[col][i].v=CaseValue.WIN;
+			this.notifyNewChip(col, i, CaseValue.WIN);
+		}
+		
+		this.notifyWinner(tour);
+	}
+	
+	public void surlignerDiagBasX(int col, int nbJetons, int debut)
+	{
+		col=col+debut;//met le x sur la bonne ordonée
+		for(int i=debut; i<debut+nbJetons; i++)
+		{	
+			this.cases[col][i].v=CaseValue.WIN;
+			this.notifyNewChip(col, i, CaseValue.WIN);
+			col++;
+		}
+		
+		this.notifyWinner(tour);
+	}
+	
+	public void surlignerDiagHautX(int col, int nbJetons, int debut)
+	{
+/////////////////////////////:
+		System.out.println("col "+col+" debut "+debut
+				);
+		int xtmp=col+(cols-1-debut);//met le x sur la bonne ordonée
+		//int xtmp=(debut)-col;
+		System.out.println("xtmp: "+xtmp);
+		//surligne les cases gagnantes
+		for(int i=debut; i>debut-nbJetons; i--)
+		{
+			this.cases[xtmp][i].v=CaseValue.WIN;
+			this.notifyNewChip(xtmp, i, CaseValue.WIN);
+			xtmp++;
+		}
+		this.notifyWinner(tour);
+	}
+	
+	public void surlignerLigne(int row, int nbJetons, int debut)
+	{
+		
+		//surligne les cases gagnantes
+		for(int i=debut; i<debut+nbJetons; i++)
+		{
+			this.cases[i][row].v=CaseValue.WIN;
+			this.notifyNewChip(i, row, CaseValue.WIN);
+		}
+		
+		this.notifyWinner(tour);
+	}
+	
+	public void surlignerDiagBasY(int row, int nbJetons, int debut)
+	{
+
+		int ytmp=row+debut;//met le y sur la bonne ordonée
+		
+		//surligne les cases gagnantes
+		for(int i=debut; i<debut+nbJetons; i++)
+		{
+			this.cases[i][ytmp].v=CaseValue.WIN;
+			this.notifyNewChip(i, ytmp, CaseValue.WIN);
+			ytmp++;
+		}
+		
+		this.notifyWinner(tour);
+	}
+	
+	public void surlignerDiagHautY(int row, int nbJetons, int debut)
+	{
+		int ytmp=row+(-debut);
+		
+		//surligne les cases gagnantes
+		for(int i=debut; i<debut+nbJetons; i++)
+		{
+			this.cases[i][ytmp].v=CaseValue.WIN;
+			this.notifyNewChip(i, ytmp, CaseValue.WIN);
+			ytmp--;
+		}
+		
+		this.notifyWinner(tour);
+		
+	}
 	
 	/**
 	 * Associe chacune des fonctions de vérifications et notifie la 
@@ -339,15 +447,8 @@ public class GridModel extends AbstractModel{
 			
 			if(res2[0]>=nbJetonsRequis)
 			{
-				//surligne les cases gagnantes
-				for(int i=res2[1]; i<res2[1]+res2[0]; i++)
-				{
-					this.cases[x][i].v=CaseValue.WIN;
-					this.notifyNewChip(x, i, CaseValue.WIN);
-				}
-				
-				this.notifyWinner(tour);
-				System.out.println("wincol!");
+				surlignerColonne(x,res2[0],res2[1]);
+				this.ia.arret();
 				return true;
 			}
 			
@@ -355,18 +456,8 @@ public class GridModel extends AbstractModel{
 			res2=nbPionIdentiqueDiagBasX(x);
 			if(res2[0]>=nbJetonsRequis)
 			{
-				System.out.println("res2 "+res2[0]+" "+res2[1]);
-				x=x+res2[1];//met le x sur la bonne ordonée
-				//surligne les cases gagnantes
-				for(int i=res2[1]; i<res2[1]+res2[0]; i++)
-				{	
-					this.cases[x][i].v=CaseValue.WIN;
-					this.notifyNewChip(x, i, CaseValue.WIN);
-					x++;
-				}
-				
-				this.notifyWinner(tour);
-				System.out.println("winbasX!");
+				surlignerDiagBasX(x, res2[0], res2[1]);
+				this.ia.arret();
 				return true;
 			}
 		
@@ -374,81 +465,78 @@ public class GridModel extends AbstractModel{
 			res2=nbPionIdentiqueDiagHautX(x);
 			if(res2[0]>=nbJetonsRequis)
 			{
-				x=x+(cols-1-res2[1]);//met le x sur la bonne ordonée
-				
-				//surligne les cases gagnantes
-				for(int i=res2[1]; i>res2[1]-res2[0]; i--)
-				{
-					this.cases[x][i].v=CaseValue.WIN;
-					this.notifyNewChip(x, i, CaseValue.WIN);
-					x++;
-				}
-				this.notifyWinner(tour);
-				System.out.println("winhaut1X!");
+				//x=x+(cols-1-res2[1]);//met le x sur la bonne ordonée
+				surlignerDiagHautX(x, res2[0], res2[1]);
+				this.ia.arret();
 				return true;
 			}
 			
 		}
 		
 		for(int y=0; y<cols; y++){
-			int res;
 			int res2[]=nbPionIdentiqueLigne(y);
 			
 			if(res2[0]>=nbJetonsRequis)
 			{
-				System.out.println("res2 "+res2[0]+" indice "+ res2[1]);
-				//surligne les cases gagnantes
-				for(int i=res2[1]; i<res2[1]+res2[0]; i++)
-				{
-					this.cases[i][y].v=CaseValue.WIN;
-					this.notifyNewChip(i, y, CaseValue.WIN);
-				}
-				
-				this.notifyWinner(tour);
-				System.out.println("winligne!");
+				surlignerLigne(y,res2[0],res2[1]);
+				this.ia.arret();
 				return true;
 			}
 			
 			res2=nbPionIdentiqueDiagBasY(y);
 			if(res2[0]>=nbJetonsRequis)
 			{
-				int ytmp=y+res2[1];//met le y sur la bonne ordonée
-				
-				//surligne les cases gagnantes
-				for(int i=res2[1]; i<res2[1]+res2[0]; i++)
-				{
-					this.cases[i][ytmp].v=CaseValue.WIN;
-					this.notifyNewChip(i, ytmp, CaseValue.WIN);
-					ytmp++;
-				}
-				
-				this.notifyWinner(tour);
+				surlignerDiagBasY(y,res2[0],res2[1]);
+				this.ia.arret();
 				return true;
 			}
 			
 			res2=nbPionIdentiqueDiagHautY(y);
 			if(res2[0]>=nbJetonsRequis)
 			{
-				int ytmp=y+(-res2[1]);
-				//y=y+res2[1];//met le y sur la bonne ordonée
-				System.out.println("res -> "+res2[0]+" "+res2[1]+" y:"+ytmp);
-				
-				//surligne les cases gagnantes
-				for(int i=res2[1]; i<res2[1]+res2[0]; i++)
-				{
-					System.out.println("update i:"+i+" y:"+ytmp);
-					this.cases[i][ytmp].v=CaseValue.WIN;
-					this.notifyNewChip(i, ytmp, CaseValue.WIN);
-					ytmp--;
-				}
-				
-				this.notifyWinner(tour);
-				System.out.println("winhauty!");
+				surlignerDiagHautY(y,res2[0],res2[1]);
+				this.ia.arret();
 				return true;
 			}
 		}
 		
 		return false;
+
+	}
+	
+	public CaseValue verifWinIA()
+	{
+		for(int x=0; x<rows; x++){
+			
+			int res2[]=nbPionIdentiqueCol(x);
+			if(res2[0]>=nbJetonsRequis)
+				return this.cases[x][res2[1]].v;
+			
+			res2=nbPionIdentiqueDiagBasX(x);
+			if(res2[0]>=nbJetonsRequis)
+				return this.cases[x][res2[1]].v;;
+		
+			res2=nbPionIdentiqueDiagHautX(x);
+			if(res2[0]>=nbJetonsRequis)
+				return this.cases[x][res2[1]].v;;
+			
+		}
+		
+		for(int y=0; y<cols; y++){
+			int res2[]=nbPionIdentiqueLigne(y);
+			if(res2[0]>=nbJetonsRequis)
+				return this.cases[res2[1]][y].v;
+			res2=nbPionIdentiqueDiagBasY(y);
+			if(res2[0]>=nbJetonsRequis)
+				return this.cases[res2[1]][y].v;
+			
+			res2=nbPionIdentiqueDiagHautY(y);
+			if(res2[0]>=nbJetonsRequis)
+				return this.cases[res2[1]][y].v;
+			
+		}
+		
+		return CaseValue.NONE;
 
 	}
 	
@@ -458,6 +546,13 @@ public class GridModel extends AbstractModel{
 	 */
 	public boolean columnFull(int x){
 		return cases[x][0].v!=CaseValue.NONE;
+	}
+	
+	/**
+	 * Teste si une colonne est entière
+	 */
+	public boolean columnEmpty(int x){
+		return cases[x][rows-1].v!=CaseValue.NONE;
 	}
 	
 	/**
@@ -493,6 +588,18 @@ public class GridModel extends AbstractModel{
 		
 	}
 	
+	public int getLastIntColumn(int x){
+		int i=cols-1;
+		//columnFull(x) return -1;
+		while(i!=0&&cases[x][i-1].v!=CaseValue.NONE)
+		{
+			i--;
+		}
+		System.out.println("x "+x+" i "+i);
+		return i;
+		
+	}
+	
 	/**
 	 * Ajout d'un jeton dans la grille de manière logique,
 	 * pui notifie la vue de l'ajout d'un jeton et du changement de tour.
@@ -500,14 +607,55 @@ public class GridModel extends AbstractModel{
 	 */
 	@Override
 	public boolean ajoutJeton(int x) {
-		this.nbJetons++;
-		this.tour=(tour+1)%nbJoueur;
+		
 		int y=getNextIntColumn(x);
 		if(cases[x][y].v==CaseValue.NONE){
+			this.nbJetons++;
+			this.tour=(tour+1)%nbJoueur;
+			
 			System.out.println("!! "+CaseValue.fromInteger(tour));
 			cases[x][y].v=CaseValue.fromInteger(tour);
 			this.notifyNewChip(x, y, cases[x][y].v);
 			this.notifyTour(tour);
+			
+			return true;
+		}	
+		
+		return false;
+	}
+	
+	public boolean retirerJetonIA(int x) {
+		
+		int y=getLastIntColumn(x);
+		if(cases[x][y].v!=CaseValue.NONE){
+			cases[x][y].v=CaseValue.NONE;
+			//this.notifyNewChip(x, y, cases[x][y].v);
+			//this.notifyTour(tour);
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
+	/**
+	 * Ajout d'un jeton dans la grille de manière logique,
+	 * pui notifie la vue de l'ajout d'un jeton et du changement de tour.
+	 * @param x abscisse de la colonne
+	 * @param j1 
+	 */
+	
+	public boolean ajoutJetonIA(int x, CaseValue value) {
+		int y=getNextIntColumn(x);
+		if(cases[x][y].v==CaseValue.NONE){
+			System.out.println("!! "+value);
+			cases[x][y].v=value;
+			
+			System.out.println("--------------------");
+			this.afficher();
+			System.out.println("--------------------");
+			
 			
 			return true;
 		}	
@@ -529,6 +677,9 @@ public class GridModel extends AbstractModel{
 			System.out.println();
 		}
 	}
+
+
+	
 
 
 	

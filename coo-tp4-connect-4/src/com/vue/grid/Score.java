@@ -30,7 +30,7 @@ public class Score extends JPanel {
 	
 	private VueGrid vue;
 	
-	private Image title;
+	private ImageIcon title;
 	
 	JTextArea textBox;
 	private String msgTour;
@@ -56,16 +56,16 @@ public class Score extends JPanel {
 		this.setBackground(Color.BLACK);
 		//this.setOpaque(true);
 		
-		title = new ImageIcon("./sprites/title.jpeg").getImage();
-		//Icon title=new ImageIcon(new ImageIcon("./sprites/title.jpeg").getImage().getScaledInstance(300, 100, Image.SCALE_DEFAULT));
+		title = new ImageIcon("./sprites/title.jpeg");
 		JLabel titre = new JLabel();
 		JLabel titre2 = new JLabel("test");
+		titre2.setIcon(title);
 		
 		msgTour="La textBox";
 		textBox=initTextArea(msgTour);
+		textBox.setEditable(false);
 		
 		this.add(titre);
-		this.add(titre2);
 		this.add(textBox);
 		
 		restart= new JButton("Recommencer");
@@ -116,13 +116,6 @@ public class Score extends JPanel {
 		textBox.setText(msgTour);	
 	}
 	
-	public void paintComponent(Graphics g)
-	{
-		super.paintComponent(g);
-		g.drawImage(title, 500, 100,this);
-		
-		
-	}
 	
 	
 	class ButtonListener implements ActionListener
@@ -151,6 +144,7 @@ public class Score extends JPanel {
 
 
 	public void displayWinner(int tour) {
+		tour=(tour+1)%2;
 		msgTour="J"+(tour+1)+" a remporté la partie !!";
 		textBox.setText(msgTour);	
 	}

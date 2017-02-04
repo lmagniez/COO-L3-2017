@@ -15,9 +15,9 @@ public enum CaseValue {
 	 */
 	public static CaseValue fromInteger(int x) {
         switch(x) {
-        case 0:
-            return J1;
         case 1:
+            return J1;
+        case 0:
             return J2;
         }
         return null;

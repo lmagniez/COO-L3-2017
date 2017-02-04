@@ -209,7 +209,7 @@ public class EcranParam extends JPanel{
 				
 				boolean againstIA=false;
 				boolean swapColor=false;
-				if(couleurJeton.getSelectedIndex()==1)
+				if(couleurJeton.getSelectedIndex()==0)
 					swapColor=true;
 				
 				f.initFenetreEcranJeu(nbLigne, nbColonne, nbJR, isIA, swapColor);				

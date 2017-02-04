@@ -119,6 +119,9 @@ public class VueGrid extends Fenetre implements Observer {
 		score.changeTour(tour);
 	}
 
+	/**
+	 * Réinitialise la grille
+	 */
 	public void updateReinit() {
 		for(int i=0; i<grid.cases.length; i++){
 			for(int j=0; j<grid.cases[0].length; j++){

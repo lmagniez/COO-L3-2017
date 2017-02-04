@@ -23,7 +23,8 @@ public abstract class AbstractModel implements Observable{
 	public abstract boolean ajoutJeton(int x);
 	public abstract boolean columnFull(int x);
 	public abstract boolean verifWin();
-	
+	public abstract boolean ajoutJetonIA(int x, CaseValue v);
+	public abstract boolean retirerJetonIA(int x);
 	
 	public abstract void reinit();
 	

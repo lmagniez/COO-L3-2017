@@ -13,6 +13,7 @@ public class IA extends Thread {
 
 	protected GridModel g;
 	protected volatile boolean running = true;
+	protected CaseValue joueur,adversaire;
 	
 	
 	/**
@@ -48,7 +49,7 @@ public class IA extends Thread {
 				Thread.sleep(100);
 				if(g.isIA[g.tour])
 					//IA.this.deciderAlea();
-					IA.this.deciderAlea();
+					IA.this.decider();
 				
 			} catch (InterruptedException e) {
 				//
@@ -79,6 +80,67 @@ public class IA extends Thread {
 			
 		}
 	}
+	
+	public void decider() {
+		
+			CaseValue joueur,adversaire;
+			if(g.tour==0){
+				joueur=CaseValue.J1;
+				adversaire=CaseValue.J2;
+			}
+			else{
+				joueur=CaseValue.J2;
+				adversaire=CaseValue.J1;
+			}
+		
+		
+			CaseValue res=CaseValue.NONE;
+			
+			//test pour soi
+			for(int i=0; i<g.rows; i++)
+			{
+				if(!this.g.columnFull(i))
+				{
+					this.g.ajoutJetonIA(i,joueur);
+					res=this.g.verifWinIA();
+					this.g.retirerJetonIA(i);
+					if(res!=CaseValue.NONE)
+					{
+						this.g.ajoutJeton(i);
+						this.g.verifWin();
+						this.arret();
+						return;
+					}
+						
+					
+				}
+			}
+			
+			//contre l'adversaire
+			for(int i=0; i<g.rows; i++)
+			{
+				if(!this.g.columnFull(i))
+				{
+					this.g.ajoutJetonIA(i,adversaire);
+					res=this.g.verifWinIA();
+					this.g.retirerJetonIA(i);
+					if(res!=CaseValue.NONE)
+					{
+						this.g.ajoutJeton(i);
+						return;
+					}
+						
+					
+				}
+			}
+			
+			System.out.println("deciderAlea");
+			deciderAlea();
+			
+			this.g.afficher();
+	}
+	
+	
 	
 
 }
