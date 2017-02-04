@@ -202,8 +202,8 @@ public class EcranParam extends JPanel{
 					}
 				}	
 				
-				int nbLigne=nbRow.getValue();
-				int nbColonne=nbCol.getValue();
+				int nbLigne=nbCol.getValue();
+				int nbColonne=nbRow.getValue();
 				String nbJRS=(String) nbJetonsG.getSelectedItem();
 				int nbJR=Integer.parseInt(nbJRS);
 				

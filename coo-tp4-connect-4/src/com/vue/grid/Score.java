@@ -129,7 +129,6 @@ public class Score extends JPanel {
 			
 			if(command=="Recommencer")
 			{
-				System.out.println("recommencer");
 				vue.controler.reset();
 			}
 			

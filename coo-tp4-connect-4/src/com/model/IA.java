@@ -59,7 +59,7 @@ public class IA extends Thread {
 	}
 
 	/**
-	 * Décision aléatoire, non utilisé
+	 * Décision aléatoire
 	 * @param g Grille de jeu
 	 * @param score Score du jeu
 	 */
@@ -81,6 +81,9 @@ public class IA extends Thread {
 		}
 	}
 	
+	/**
+	 * Decision de l'IA en fonction du joueur
+	 */
 	public void decider() {
 		
 			CaseValue joueur,adversaire;

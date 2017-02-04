@@ -186,14 +186,7 @@ public class GridModel extends AbstractModel{
 		}
 		if(max<maxtmp){
 			max=maxtmp;
-			//ymax=cptNbBoucle-max-1;
-			
-			System.out.println(cptNbBoucle);
-			System.out.println(max);
-			System.out.println(cols-1);
-			
 			ymax=cptNbBoucle-max;
-			//ymax=(cols-1)-(cptNbBoucle-(cols-1));
 		}
 		res[0]=max;res[1]=ymax;
 		return res;
@@ -282,17 +275,8 @@ public class GridModel extends AbstractModel{
 				maxtmp++;
 		}
 		if(max<maxtmp){
-			System.out.println("ici");
 			max=maxtmp;
-			System.out.println(cptNbBoucle);
-			System.out.println(cols
-					-1);
 			ymax=(cols-1)-(cptNbBoucle-(cols-1));
-			System.out.println("ymax: "+ymax);
-					//-max-1;
-//////////////////////////////////
-			//ymax=cols-max;
-			//ymax=0;
 		}
 		res[0]=max;res[1]=ymax;
 		return res;
@@ -345,7 +329,12 @@ public class GridModel extends AbstractModel{
 	 * Fonctions de vérifications
 	 * 
 	 */
-	
+	/**
+	 * Surligner une ligne
+	 * @param col colonne de départ
+	 * @param nbJetons nombre de jetons a surligner
+	 * @param debut ou debuter à partir de la colonne
+	 */
 	public void surlignerColonne(int col, int nbJetons, int debut)
 	{
 		//surligne les cases gagnantes
@@ -358,6 +347,12 @@ public class GridModel extends AbstractModel{
 		this.notifyWinner(tour);
 	}
 	
+	/**
+	 * Surligner une ligne
+	 * @param col colonne de départ
+	 * @param nbJetons nombre de jetons a surligner
+	 * @param debut ou debuter à partir de la colonne
+	 */
 	public void surlignerDiagBasX(int col, int nbJetons, int debut)
 	{
 		col=col+debut;//met le x sur la bonne ordonée
@@ -371,14 +366,16 @@ public class GridModel extends AbstractModel{
 		this.notifyWinner(tour);
 	}
 	
+	/**
+	 * Surligner une ligne
+	 * @param col colonne de départ
+	 * @param nbJetons nombre de jetons a surligner
+	 * @param debut ou debuter à partir de la colonne
+	 */
 	public void surlignerDiagHautX(int col, int nbJetons, int debut)
 	{
-/////////////////////////////:
-		System.out.println("col "+col+" debut "+debut
-				);
 		int xtmp=col+(cols-1-debut);//met le x sur la bonne ordonée
 		//int xtmp=(debut)-col;
-		System.out.println("xtmp: "+xtmp);
 		//surligne les cases gagnantes
 		for(int i=debut; i>debut-nbJetons; i--)
 		{
@@ -389,6 +386,12 @@ public class GridModel extends AbstractModel{
 		this.notifyWinner(tour);
 	}
 	
+	/**
+	 * Surligner une ligne
+	 * @param row ligne de départ
+	 * @param nbJetons nombre de jetons a surligner
+	 * @param debut ou debuter à partir de la ligne
+	 */
 	public void surlignerLigne(int row, int nbJetons, int debut)
 	{
 		
@@ -402,6 +405,12 @@ public class GridModel extends AbstractModel{
 		this.notifyWinner(tour);
 	}
 	
+	/**
+	 * Surligner une ligne
+	 * @param row ligne de départ
+	 * @param nbJetons nombre de jetons a surligner
+	 * @param debut ou debuter à partir de la ligne
+	 */
 	public void surlignerDiagBasY(int row, int nbJetons, int debut)
 	{
 
@@ -418,6 +427,12 @@ public class GridModel extends AbstractModel{
 		this.notifyWinner(tour);
 	}
 	
+	/**
+	 * Surligner une ligne
+	 * @param row ligne de départ
+	 * @param nbJetons nombre de jetons a surligner
+	 * @param debut ou debuter à partir de la ligne
+	 */
 	public void surlignerDiagHautY(int row, int nbJetons, int debut)
 	{
 		int ytmp=row+(-debut);
@@ -504,6 +519,11 @@ public class GridModel extends AbstractModel{
 
 	}
 	
+	/**
+	 * Verifier si il y a un pattern de victoire pour une IA
+	 * Ne renvoie que la valeur du gagnant et n'effectue pas de notifications à la vue.
+	 * @return Joueur gagnant
+	 */
 	public CaseValue verifWinIA()
 	{
 		for(int x=0; x<rows; x++){
@@ -588,6 +608,11 @@ public class GridModel extends AbstractModel{
 		
 	}
 	
+	/**
+	 * Récupère la dernière valeur ajoutée à la colonne
+	 * @param x abscisse de la colonne
+	 * @return ordonnée où ajouter le jeton
+	 */
 	public int getLastIntColumn(int x){
 		int i=cols-1;
 		//columnFull(x) return -1;
@@ -595,7 +620,6 @@ public class GridModel extends AbstractModel{
 		{
 			i--;
 		}
-		System.out.println("x "+x+" i "+i);
 		return i;
 		
 	}
@@ -613,7 +637,6 @@ public class GridModel extends AbstractModel{
 			this.nbJetons++;
 			this.tour=(tour+1)%nbJoueur;
 			
-			System.out.println("!! "+CaseValue.fromInteger(tour));
 			cases[x][y].v=CaseValue.fromInteger(tour);
 			this.notifyNewChip(x, y, cases[x][y].v);
 			this.notifyTour(tour);
@@ -624,6 +647,11 @@ public class GridModel extends AbstractModel{
 		return false;
 	}
 	
+	/**
+	 * Retirer un jeton sans en informer la vue
+	 * @param x abscisse de la colonne
+	 * @return jeton retiré?
+	 */
 	public boolean retirerJetonIA(int x) {
 		
 		int y=getLastIntColumn(x);
@@ -641,22 +669,15 @@ public class GridModel extends AbstractModel{
 	
 	/**
 	 * Ajout d'un jeton dans la grille de manière logique,
-	 * pui notifie la vue de l'ajout d'un jeton et du changement de tour.
+	 * sans notifier le changement à la vue
 	 * @param x abscisse de la colonne
-	 * @param j1 
+	 * @param ajout ou non
 	 */
 	
 	public boolean ajoutJetonIA(int x, CaseValue value) {
 		int y=getNextIntColumn(x);
 		if(cases[x][y].v==CaseValue.NONE){
-			System.out.println("!! "+value);
 			cases[x][y].v=value;
-			
-			System.out.println("--------------------");
-			this.afficher();
-			System.out.println("--------------------");
-			
-			
 			return true;
 		}	
 		

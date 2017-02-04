@@ -29,7 +29,6 @@ public class GridControler extends AbstractControler{
 	{
 		if(!this.calc.columnFull(x))
 		{
-			System.out.println("not full");
 			this.calc.ajoutJeton(x);
 			this.calc.verifWin();
 		}
