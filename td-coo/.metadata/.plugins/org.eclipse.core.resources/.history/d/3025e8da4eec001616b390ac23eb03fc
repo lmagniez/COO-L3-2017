@@ -19,13 +19,11 @@ public class Fenetre extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
-		this.requestFocus();
 		
 		b=new Balle(this,"balle1");
 		b2=new Balle(this,"balle2");
 		b3=new Balle(this,"balle3");
 		b4=new Balle(this,"balle4");
-		
 	}	
 	
 	public void paint(Graphics g) {
