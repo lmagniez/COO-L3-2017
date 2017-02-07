@@ -31,11 +31,12 @@ public class RacketModel {
 
 	public void update(Direction d)
 	{
-		if(d==Direction.NORD&&posY>0)
+		if(d==Direction.NORD&&posY>0+Constantes.MUR_HEIGHT)
 		{
 			this.posY-=coefY;
 		}
-		if(d==Direction.SUD&&posY<Constantes.DIMENSION_Y)
+		if(d==Direction.SUD
+				&&posY+Constantes.RAQUETTE_HEIGHT<Constantes.DIMENSION_Y-Constantes.MUR_HEIGHT)
 		{
 			this.posY+=coefY;
 		}

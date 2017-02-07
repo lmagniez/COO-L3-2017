@@ -14,8 +14,14 @@ public interface Observer {
 	public void updateWinner(int tour);	
 	public void updateReinit();
 	
-	public void updatePosBalle(int idBalle, int posX, int posY, int diam);
-	public void updatePosRacket(int idRacket, int posX, int posY, int width, int height);
-	public void initMurH(int idMur, int posX, int posY, int width, int height);
+	public void updateNewBalle(int idBalle, int posX, int posY);
+	public void updatePosBalle(int idBalle, int posX, int posY);
+	public void updatePosRacket(int idRacket, int posX, int posY);
+	public void initMurH(int idMur, int posX, int posY);
+	
+	
+	
+	public void updateNewBonus(int idB, int x, int y);
+	public void updateEraseBonus(int idB);
 	
 }

@@ -1,5 +1,7 @@
-package com.model.grid;
+package com.model.field;
 import java.util.Random;
+
+import com.model.grid.CaseValue;
 
 
 /**

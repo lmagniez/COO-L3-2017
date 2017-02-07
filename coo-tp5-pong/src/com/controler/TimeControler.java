@@ -2,10 +2,10 @@ package com.controler;
 
 import com.model.AbstractModel;
 
-public class FieldControler extends AbstractControler{
+public class TimeControler extends AbstractControler{
 
 	
-	 public FieldControler(AbstractModel g) {
+	 public TimeControler(AbstractModel g) {
 		 super(g);
 		 //this.calc=g;
 	 }
@@ -18,14 +18,12 @@ public class FieldControler extends AbstractControler{
 	  */
 	public void control()
 	{
-		if(!this.calc.columnFull(x))
-		{
-			this.calc.ajoutJeton(x);
-			this.calc.verifWin();
-		}
-		else
-			this.calc.notifyFull();
 		
+		if(bonus)
+		{
+			this.calc.ajoutBonus();
+			bonus=false;
+		}
 	}
 
 }

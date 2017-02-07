@@ -2,11 +2,10 @@ package com.controler;
 
 
 
-import java.util.ArrayList;
+import java.sql.Time;
 
 import com.model.AbstractModel;
-import com.model.grid.patternWin;
-import com.vue.titre.Vue1;
+import com.model.Direction;
 
 /**
  * Class abstraite des controlers.
@@ -22,6 +21,9 @@ public abstract class AbstractControler {
 	protected AbstractModel calc;
 	
 	protected int id;
+	protected Direction d;
+	protected boolean bonus;
+	protected boolean speed;
 	
 	
 
@@ -43,6 +45,19 @@ public abstract class AbstractControler {
 		this.id=id;
 		control();
 	}
+	
+	public void setChange(int id, Direction d){
+		this.id=id;
+		this.d=d;
+		control();
+	}
+	
+	public void setNouveauBonus(boolean bonus){
+		this.bonus=true;
+		control();
+	}
+	
+	
 	
 	
 	/**

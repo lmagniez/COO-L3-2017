@@ -3,7 +3,6 @@ package com.model;
 
 import java.util.ArrayList;
 
-import com.model.grid.CaseValue;
 import com.observer.Observable;
 import com.observer.Observer;
 
@@ -25,13 +24,8 @@ public abstract class AbstractModel implements Observable{
 	public abstract void updateBall(int idB);
 	public abstract void updateRacket(int idR, Direction d);
 	
-	/*
-	public abstract boolean ajoutJeton(int x);
-	public abstract boolean columnFull(int x);
-	public abstract boolean verifWin();
-	public abstract boolean ajoutJetonIA(int x, CaseValue v);
-	public abstract boolean retirerJetonIA(int x);
-	*/
+	public abstract void ajoutBonus();
+	
 	public abstract void reinit();
 	
 	// Implementation du pattern observer
@@ -60,22 +54,39 @@ public abstract class AbstractModel implements Observable{
 	}
 	
 	@Override
-	public void notifyNewPosBall(int idBalle, int x, int y, int diam) {
+	public void notifyNewPosBall(int idBalle, int x, int y) {
 		for(Observer obs : listObserver)
-			obs.updatePosBalle(idBalle, x, y, diam);
+			obs.updatePosBalle(idBalle, x, y);
 	}
 
 	@Override
-	public void notifyNewPosRacket(int idRacket, int posX, int posY, int width, int height) {
+	public void notifyNewPosRacket(int idRacket, int posX, int posY) {
 		for(Observer obs : listObserver)
-			obs.updatePosRacket(idRacket, posX, posY, width, height);
+			obs.updatePosRacket(idRacket, posX, posY);
 	}
 
 	@Override
-	public void notifyInitMurH(int idMur, int posX, int posY, int width, int height) {
+	public void notifyInitMurH(int idMur, int posX, int posY) {
 		for(Observer obs : listObserver)
-			obs.initMurH(idMur, posX, posY, width, height);		
+			obs.initMurH(idMur, posX, posY);		
 	}
+	
+	public void notifyNewBalle(int idBalle, int x, int y){
+		for(Observer obs : listObserver)
+			obs.updateNewBalle(idBalle, x,y);
+	}
+	
+	public void notifyNewBonus(int idB, int x, int y)
+	{
+		for(Observer obs : listObserver)
+			obs.updateNewBonus(idB, x, y);
+	}
+	public void notifyEraseBonus(int idB){
+		
+		for(Observer obs : listObserver)
+			obs.updateEraseBonus(idB);
+	}
+	
 	
 	
 }

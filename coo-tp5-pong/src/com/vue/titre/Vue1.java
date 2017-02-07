@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 
 import com.controler.AbstractControler;
 import com.controler.BallControler;
+import com.controler.RacketControler;
+import com.controler.TimeControler;
 import com.model.AbstractModel;
 import com.model.field.FieldModel;
 import com.observer.Observer;
@@ -63,8 +65,10 @@ public class Vue1 extends Fenetre{
 		AbstractModel fieldModel = new FieldModel();
 		//Creation du controleur
 		AbstractControler ballControler = new BallControler(fieldModel);
+		AbstractControler racketControler = new RacketControler(fieldModel);
+		AbstractControler timeControler = new TimeControler(fieldModel);
 		//Creation de notre fenetre avec le controleur en parametre
-		VueField vueJeu = new VueField(this, ballControler);
+		VueField vueJeu = new VueField(this, ballControler, racketControler,timeControler);
 		//Ajout de la fenetre comme observer de notre modele
 		fieldModel.addObserver(vueJeu);
 		this.setVisible(false);
