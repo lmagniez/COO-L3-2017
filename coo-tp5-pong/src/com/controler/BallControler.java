@@ -18,7 +18,8 @@ public class BallControler extends AbstractControler {
 	  */
 	public void control()
 	{	
-		this.calc.updateBall(this.id);
+		if(!this.calc.isStopped())
+			this.calc.updateBall(this.id);
 		
 	}
 }

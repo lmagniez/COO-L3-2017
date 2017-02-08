@@ -20,8 +20,13 @@ public class BonusModel {
 		
 		Random r =new Random();
 		
-		this.posX=Constantes.RAQUETTE_X_J1+r.nextInt(Constantes.RAQUETTE_X_J2);
-		this.posY=Constantes.MUR1_Y+r.nextInt(Constantes.MUR2_Y);
+		//this.posX=300;
+		//this.posY=300;
+		
+		
+		this.posX=Constantes.RAQUETTE_X_J1*2+r.nextInt(Constantes.RAQUETTE_X_J2-Constantes.RAQUETTE_X_J1*3);
+		this.posY=Constantes.MUR_HEIGHT+r.nextInt(Constantes.MUR2_Y-(Constantes.MUR_HEIGHT*2));
+		
 		this.diam=Constantes.DIAMETRE_BONUS;
 		this.id=nb_bonus++;
 		

@@ -21,9 +21,18 @@ public class TimeControler extends AbstractControler{
 		
 		if(bonus)
 		{
-			this.calc.ajoutBonus();
+			if(!this.calc.isStopped())
+				this.calc.ajoutBonus();
 			bonus=false;
 		}
+		
+		if(speed)
+		{
+			if(!this.calc.isStopped())
+				this.calc.augmenteVitesse();
+			speed=false;
+		}
+		
 	}
 
 }

@@ -2,9 +2,6 @@ package com.observer;
 
 import java.util.ArrayList;
 
-import com.model.grid.CaseValue;
-import com.model.grid.patternWin;
-
 /**
  * Interface des différents observer. Contient les différents updates.
  */
@@ -23,5 +20,8 @@ public interface Observer {
 	
 	public void updateNewBonus(int idB, int x, int y);
 	public void updateEraseBonus(int idB);
+	
+	public void updateScore(int sJ1, int sJ2);
+
 	
 }

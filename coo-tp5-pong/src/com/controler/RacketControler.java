@@ -18,7 +18,13 @@ public class RacketControler extends AbstractControler{
 	  */
 	public void control()
 	{
-		this.calc.updateRacket(id, d);
+		if(throwBall)
+		{
+			this.calc.throwBall();
+			throwBall=false;
+		}
+		else
+			this.calc.updateRacket(id, d);
 	}
 
 }

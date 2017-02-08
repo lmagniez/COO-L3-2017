@@ -10,6 +10,8 @@ public class MyKeyAdapter extends KeyAdapter {
 	private boolean isDownPressed = false;
 	private boolean isZPressed = false;
 	private boolean isSPressed = false;
+	private boolean isEnterPressed = false;
+	
 	
 	private boolean presser = false;
 
@@ -30,6 +32,12 @@ public class MyKeyAdapter extends KeyAdapter {
 		if (e.getKeyCode() == KeyEvent.VK_S) {
 			isSPressed = true;
 		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			isEnterPressed = true;
+		}
+		
+		
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -48,6 +56,10 @@ public class MyKeyAdapter extends KeyAdapter {
 		if (e.getKeyCode() ==  KeyEvent.VK_S) {
 			isSPressed = false;
 		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			isEnterPressed = false;
+		}
 	}
 
 	public boolean doActionUP() {
@@ -62,8 +74,14 @@ public class MyKeyAdapter extends KeyAdapter {
 		return isZPressed;
 	}
 	
+	public boolean doEnter(){
+		return isEnterPressed;
+	}
+	
 	public boolean doActionS() {
 		return isSPressed;
 	}
+	
+	
 
 }

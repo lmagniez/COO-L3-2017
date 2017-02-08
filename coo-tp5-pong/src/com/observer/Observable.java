@@ -1,9 +1,6 @@
 package com.observer;
 
 import java.util.ArrayList;
-
-import com.model.grid.CaseValue;
-import com.model.grid.patternWin;
 import com.vue.titre.Vue1;
 
 /**
@@ -22,6 +19,8 @@ public interface Observable {
 	public void notifyNewBalle(int idBalle, int x, int y);
 	public void notifyNewBonus(int idB, int x, int y);
 	public void notifyEraseBonus(int idB);
+	
+	public void notifyScore(int sJ1, int sJ2);
 	
 	
 	public void notifyReinit();

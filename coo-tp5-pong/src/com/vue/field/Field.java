@@ -1,6 +1,12 @@
 package com.vue.field;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Stroke;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -17,6 +23,10 @@ public class Field extends JPanel{
 	protected Vector<Ball> balls=new Vector<Ball>();
 	protected Vector<Bonus> bonus=new Vector<Bonus>();
 	protected GameTimer t;
+	protected int scoreJ1=0;
+	protected int scoreJ2=0;
+	
+	
 	
 	public Field(VueField vue)
 	{
@@ -24,7 +34,6 @@ public class Field extends JPanel{
 		this.murs=new MurH[2];
 		this.rackets=new Racket[2];
 		this.balls.add(new Ball(vue, 0,Constantes.BALLE_X_J1,Constantes.BALLE_Y));
-		this.balls.add(new Ball(vue, 1,Constantes.BALLE_X_J2,Constantes.BALLE_Y));
 		
 		this.murs[0]=new MurH(Constantes.MUR_X,Constantes.MUR1_Y,Constantes.MUR_WIDTH,Constantes.MUR_HEIGHT);
 		this.murs[1]=new MurH(Constantes.MUR_X,Constantes.MUR2_Y,Constantes.MUR_WIDTH,Constantes.MUR_HEIGHT);
@@ -39,6 +48,18 @@ public class Field extends JPanel{
 	
 	public void paintComponent(Graphics g)
 	{
+		
+		Graphics2D g2d = (Graphics2D) g;
+		
+		float[] dashingPattern2 = {10f, 4f};
+		Stroke stroke2 = new BasicStroke(4f, BasicStroke.CAP_BUTT,
+		        BasicStroke.JOIN_MITER, 1.0f, dashingPattern2, 0.0f);
+		 
+		g2d.setStroke(stroke2);
+		g2d.draw(new Line2D.Double(Constantes.DIMENSION_X/2, Constantes.MUR_HEIGHT, Constantes.DIMENSION_X/2, Constantes.MUR2_Y));
+		
+		
+		
 		for(int i=0; i<2; i++){
 			g.fillRect(murs[i].posX, murs[i].posY, murs[i].width, murs[i].height);
 			g.fillRect(rackets[i].posX, rackets[i].posY, rackets[i].width, rackets[i].height);
@@ -51,7 +72,10 @@ public class Field extends JPanel{
 		for(int i=0; i<bonus.size(); i++)
 			g.fillOval(this.bonus.get(i).posX, this.bonus.get(i).posY, 
 					this.bonus.get(i).diam, this.bonus.get(i).diam);
-	
+		
+		g.setFont(new Font("Arial", Font.PLAIN, 50));
+		g.setColor(Color.black);
+		g.drawString(scoreJ1+"      "+scoreJ2, Constantes.DIMENSION_X/2*8/10, Constantes.MUR_HEIGHT*2);
 		
 		
 	}

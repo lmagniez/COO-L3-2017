@@ -25,6 +25,10 @@ public abstract class AbstractModel implements Observable{
 	public abstract void updateRacket(int idR, Direction d);
 	
 	public abstract void ajoutBonus();
+	public abstract void augmenteVitesse();
+	public abstract void throwBall();
+	public abstract boolean isStopped();
+	
 	
 	public abstract void reinit();
 	
@@ -86,6 +90,12 @@ public abstract class AbstractModel implements Observable{
 		for(Observer obs : listObserver)
 			obs.updateEraseBonus(idB);
 	}
+	
+	public void notifyScore (int sJ1, int sJ2){
+		for(Observer obs : listObserver)
+			obs.updateScore(sJ1, sJ2);
+	}
+	
 	
 	
 	

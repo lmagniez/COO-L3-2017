@@ -48,6 +48,12 @@ public class Racket extends Thread {
 			{
 				vue.controlerRacket.setChange(this.idJ,Direction.NORD);
 			}
+			if(vue.adapter.doEnter())
+			{
+				vue.controlerRacket.throwBall();
+			}
+			
+			
 			this.vue.revalidate();
 			this.vue.repaint();
 		}

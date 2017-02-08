@@ -24,6 +24,8 @@ public abstract class AbstractControler {
 	protected Direction d;
 	protected boolean bonus;
 	protected boolean speed;
+	protected boolean throwBall;
+	
 	
 	
 
@@ -57,6 +59,15 @@ public abstract class AbstractControler {
 		control();
 	}
 	
+	public void setVitesse(boolean vitesse){
+		this.speed=true;
+		control();
+	}
+	
+	public void throwBall() {
+		this.throwBall=true;
+		control();
+	}
 	
 	
 	
@@ -70,4 +81,6 @@ public abstract class AbstractControler {
 	
 	//Methode de controle
 	abstract void control();
+
+	
 }

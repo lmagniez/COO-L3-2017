@@ -16,6 +16,15 @@ public class GameTimer extends Thread {
 		while(running)
 		{
 			
+			//vue.controlerTimer.setNouveauBonus(true);
+			
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			vue.controlerTimer.setNouveauBonus(true);
 			
 			try {
@@ -25,6 +34,7 @@ public class GameTimer extends Thread {
 				e.printStackTrace();
 			}
 			
+			vue.controlerTimer.setVitesse(true);
 			
 			
 		}

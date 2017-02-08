@@ -1,6 +1,7 @@
 package com.model.field;
 
 import com.model.Constantes;
+import com.model.Direction;
 
 public class BallModel {
 	
@@ -19,22 +20,35 @@ public class BallModel {
 		this.coefX=Constantes.BALLE_COEFX;
 		this.coefY=Constantes.BALLE_COEFY;
 		if(idJ==1)
-		{
 			this.posX=Constantes.BALLE_X_J1;
+		else{
+			this.posX=Constantes.BALLE_X_J2;
 			this.coefX*=-1;
 		}
-		else
-			this.posX=Constantes.BALLE_X_J2;
+		
+	}
+	
+	public BallModel(FieldModel field, int posX, int posY, int coefX, int coefY)
+	{
+
+		this.id=nb_balle++;
+		this.field=field;
+		this.posX=posX;
+		this.posY=posY;
+		this.coefX=coefX;
+		this.coefY=coefY;
 		
 		
 	}
 	
+	
 	public void updateBall()
 	{
-		posX+=coefX;
-		posY+=coefY;
+		//posX+=coefX;
+		//posY+=coefY;
 		
-		//System.out.println("update "+posX + " "+posY);
+		posX+=(coefX*field.actualSpeed);
+		posY+=(coefY*field.actualSpeed);
 	}
 	
 	public void changeDirectionX()
@@ -143,8 +157,10 @@ public class BallModel {
 		if(this.posX<0)
 		{
 			this.posX=0;
-			this.changeDirectionX();
 			//this.scoreJ2
+			this.field.avantageJ1=false;
+			this.field.scoreJ2++;
+			this.field.notifyScore(this.field.scoreJ1, this.field.scoreJ2);
 			this.field.reinit();
 			return true;
 		}
@@ -156,8 +172,10 @@ public class BallModel {
 		if(this.posX>Constantes.DIMENSION_X-Constantes.DIAMETRE_BALLE)
 		{
 			this.posX=Constantes.DIMENSION_X-Constantes.DIAMETRE_BALLE;
-			this.changeDirectionX();
 			//this.scoreJ1
+			this.field.avantageJ1=true;
+			this.field.scoreJ1++;
+			this.field.notifyScore(this.field.scoreJ1, this.field.scoreJ2);
 			this.field.reinit();
 			return true;
 		}
@@ -175,5 +193,23 @@ public class BallModel {
 		}
 		return false;
 	}
+	
+	public void update(Direction d)
+	{
+		if(d==Direction.NORD&&posY>Constantes.RAQUETTE_HEIGHT/2+Constantes.MUR_HEIGHT)
+		{
+			this.posY-=coefY;
+		}
+		if(d==Direction.SUD
+				&&posY<Constantes.DIMENSION_Y-Constantes.MUR_HEIGHT-Constantes.RAQUETTE_HEIGHT/2)
+		{
+			this.posY+=coefY;
+		}
+		if(posY<0)posY=0;
+		if(posY>Constantes.DIMENSION_Y)posY=Constantes.DIMENSION_Y;
+		
+		
+	}
+	
 	
 }

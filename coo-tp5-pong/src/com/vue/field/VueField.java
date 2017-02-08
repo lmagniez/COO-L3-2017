@@ -60,7 +60,6 @@ public class VueField extends Fenetre implements Observer{
 		
 		
 		f.balls.get(0).start();
-		f.balls.get(1).start();
 		
 		f.rackets[0].start();
 		f.rackets[1].start();
@@ -99,14 +98,17 @@ public class VueField extends Fenetre implements Observer{
 			e.printStackTrace();
 		}
 		
-		
+		this.f.bonus=new Vector<Bonus>();
 		this.f.balls=new Vector<Ball>();
 		Ball.NB_BALL=0;
+		Bonus.nb_bonus=0;
 		//this.f.balls.add(new Ball(this,0,Constantes.BALLE_X_J1,Constantes.BALLE_X_J2));
 		//f.balls.get(0).start();
 		
 		this.f.rackets[0].posY=Constantes.RAQUETTE_Y;
 		this.f.rackets[1].posY=Constantes.RAQUETTE_Y;
+	
+		
 	}
 
 
@@ -115,14 +117,17 @@ public class VueField extends Fenetre implements Observer{
 		
 		Ball b=getBallById(idBalle);
 		//System.out.println(f.balls.size());
-		b.posX=posX;
-		b.posY=posY;
-		b.diam=Constantes.DIAMETRE_BALLE;
+		if(b!=null){
+			b.posX=posX;
+			b.posY=posY;
+			b.diam=Constantes.DIAMETRE_BALLE;
+		}
 		/*
 		this.f.balls.get(idBalle).posX=posX;
 		this.f.balls.get(idBalle).posY=posY;
 		this.f.balls.get(idBalle).diam=Constantes.DIAMETRE_BALLE;
 		*/
+		
 	}
 
 	public Ball getBallById(int id)
@@ -172,6 +177,10 @@ public class VueField extends Fenetre implements Observer{
 		Ball b = new Ball(this,idBalle,posX,posY);
 		this.f.balls.add(b);
 		b.start();
+		
+		f.revalidate();
+		f.repaint();
+		
 		//f.balls.get(f.balls.size()-1).start();
 	}
 
@@ -182,13 +191,24 @@ public class VueField extends Fenetre implements Observer{
 		this.f.bonus.add(new Bonus(this,idB,x,y));
 	}
 
+	
 
 	@Override
 	public void updateEraseBonus(int idB) {
 		// TODO Auto-generated method stub
 		int i = getIndiceBonusById(idB);
 		System.out.println("updateEraseBonus vue field indiceRecherché idB: "+idB+" "+"i: "+i);
-		this.f.bonus.remove(i);
+		if(i!=-1)
+			this.f.bonus.remove(i);
+	}
+
+
+	@Override
+	public void updateScore(int sJ1, int sJ2) {
+		// TODO Auto-generated method stub
+		this.f.scoreJ1=sJ1;
+		this.f.scoreJ2=sJ2;
+		
 	}
 
 	
