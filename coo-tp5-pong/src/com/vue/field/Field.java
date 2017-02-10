@@ -15,34 +15,50 @@ import javax.swing.JPanel;
 import com.model.Constantes;
 import com.vue.MyKeyAdapter;
 
+/**
+ * Vue du terrain
+ * @author loick
+ *
+ */
 public class Field extends JPanel{
 
 	protected VueField vue;
 	protected MurH murs[];
 	protected Racket rackets[];
-	protected Vector<Ball> balls=new Vector<Ball>();
-	protected Vector<Bonus> bonus=new Vector<Bonus>();
+	protected Vector<Ball> balls;
+	protected Vector<Bonus> bonus;
 	protected GameTimer t;
 	protected int scoreJ1=0;
 	protected int scoreJ2=0;
 	
 	
-	
-	public Field(VueField vue)
+	/**
+	 * Constructeur
+	 * @param vue
+	 * @param isIA tableau de booleen contenant le type des joueurs (vrai: ia faux: joueur)
+	 */
+	public Field(VueField vue, boolean[] isIA)
 	{
 		this.vue=vue;
 		this.murs=new MurH[2];
 		this.rackets=new Racket[2];
+		this.balls=new Vector<Ball>();
+		this.bonus=new Vector<Bonus>();
 		this.balls.add(new Ball(vue, 0,Constantes.BALLE_X_J1,Constantes.BALLE_Y));
 		
 		this.murs[0]=new MurH(Constantes.MUR_X,Constantes.MUR1_Y,Constantes.MUR_WIDTH,Constantes.MUR_HEIGHT);
 		this.murs[1]=new MurH(Constantes.MUR_X,Constantes.MUR2_Y,Constantes.MUR_WIDTH,Constantes.MUR_HEIGHT);
-		this.rackets[0]=new Racket(vue,0,Constantes.RAQUETTE_X_J1,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
-		this.rackets[1]=new Racket(vue,1,Constantes.RAQUETTE_X_J2,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
 		
+		//DECISION DES JOUEURS
+		this.rackets[0]=new RacketIA(vue,0,Constantes.RAQUETTE_X_J1,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
+		this.rackets[1]=new RacketIA(vue,1,Constantes.RAQUETTE_X_J2,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
+		if(!isIA[0])
+			this.rackets[0]=new RacketJoueur(vue,0,Constantes.RAQUETTE_X_J1,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
+		if(!isIA[1])
+			this.rackets[1]=new RacketJoueur(vue,1,Constantes.RAQUETTE_X_J2,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
+
 		this.t=new GameTimer(vue);
 		
-		//this.murs[0]=new
 		
 	}
 	
@@ -70,7 +86,7 @@ public class Field extends JPanel{
 					this.balls.get(i).diam, this.balls.get(i).diam);
 		
 		for(int i=0; i<bonus.size(); i++)
-			g.fillOval(this.bonus.get(i).posX, this.bonus.get(i).posY, 
+			g.fillRect(this.bonus.get(i).posX, this.bonus.get(i).posY, 
 					this.bonus.get(i).diam, this.bonus.get(i).diam);
 		
 		g.setFont(new Font("Arial", Font.PLAIN, 50));

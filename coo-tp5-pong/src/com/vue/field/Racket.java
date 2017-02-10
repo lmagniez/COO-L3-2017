@@ -2,7 +2,12 @@ package com.vue.field;
 
 import com.model.Direction;
 
-public class Racket extends Thread {
+/**
+ * Vue de la raquette (Classe abstraite)
+ * @author loick
+ *
+ */
+public abstract class Racket extends Thread {
 
 	protected VueField vue;
 	protected int idJ;
@@ -10,6 +15,15 @@ public class Racket extends Thread {
 	protected int posY;
 	protected int height,width;
 	
+	/**
+	 * Constructeur
+	 * @param vue vue du terrain
+	 * @param idJ id du joueur
+	 * @param posX posX initiale
+	 * @param posY posY initiale
+	 * @param width largeur
+	 * @param height hauteur
+	 */
 	public Racket(VueField vue, int idJ, int posX, int posY, int width, int height)
 	{
 		this.vue=vue;
@@ -18,45 +32,6 @@ public class Racket extends Thread {
 		this.posY=posY;
 		this.height=height;
 		this.width=width;
-		
-	}
-	
-	public void run(){
-		
-		while(true)
-		{
-			
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if(idJ==1&&vue.adapter.doActionUP())
-			{
-				vue.controlerRacket.setChange(this.idJ,Direction.NORD);
-			}
-			if(idJ==1&&vue.adapter.doActionDOWN())
-			{
-				vue.controlerRacket.setChange(this.idJ,Direction.SUD);
-			}
-			if(idJ==0&&vue.adapter.doActionS())
-			{
-				vue.controlerRacket.setChange(this.idJ,Direction.SUD);
-			}
-			if(idJ==0&&vue.adapter.doActionZ())
-			{
-				vue.controlerRacket.setChange(this.idJ,Direction.NORD);
-			}
-			if(vue.adapter.doEnter())
-			{
-				vue.controlerRacket.throwBall();
-			}
-			
-			
-			this.vue.revalidate();
-			this.vue.repaint();
-		}
 		
 	}
 	

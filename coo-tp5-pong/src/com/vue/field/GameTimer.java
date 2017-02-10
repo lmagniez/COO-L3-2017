@@ -1,5 +1,10 @@
 package com.vue.field;
 
+/**
+ * Thread des evenements. Demande l'apparition de bonus et l'augmentation de vitesse
+ * @author loick
+ *
+ */
 public class GameTimer extends Thread {
 
 	protected boolean running=true;
@@ -10,6 +15,9 @@ public class GameTimer extends Thread {
 		this.vue=vue;
 	}
 	
+	/**
+	 *  Demande l'apparition de bonus et l'augmentation de vitesse
+	 */
 	public void run()
 	{
 		
@@ -47,6 +55,9 @@ public class GameTimer extends Thread {
 	public void arret() { // Méthode 2
 		running = false;
 	}
+	/**
+	 * Reprend le thread
+	 */
 	public void reprendre() { // Méthode 2
 		running = true;
 	}

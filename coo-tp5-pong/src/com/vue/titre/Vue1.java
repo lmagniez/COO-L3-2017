@@ -56,9 +56,8 @@ public class Vue1 extends Fenetre{
 	
 	/**
 	 * Initialise une fenetre de jeu (et l'initialise)
-	 * @param swapColor 
 	 */
-	public void initFenetreEcranJeu(int nbRow, int nbCol, int nbJR, boolean[] isIA, boolean swapColor)
+	public void initFenetreEcranJeu(boolean[] isIA)
 	{
 		
 		//Creation du modele de grille
@@ -68,10 +67,12 @@ public class Vue1 extends Fenetre{
 		AbstractControler racketControler = new RacketControler(fieldModel);
 		AbstractControler timeControler = new TimeControler(fieldModel);
 		//Creation de notre fenetre avec le controleur en parametre
-		VueField vueJeu = new VueField(this, ballControler, racketControler,timeControler);
+		VueField vueJeu = new VueField(this, isIA, ballControler, racketControler,timeControler);
 		//Ajout de la fenetre comme observer de notre modele
 		fieldModel.addObserver(vueJeu);
+		
 		this.setVisible(false);
+		
 		
 	}
 	

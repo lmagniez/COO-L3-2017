@@ -2,6 +2,12 @@ package com.controler;
 
 import com.model.AbstractModel;
 
+/**
+ * Classe controler de la balle
+ * Fait déplacer la balle
+ * @author loick
+ *
+ */
 public class BallControler extends AbstractControler {
 
 
@@ -10,12 +16,9 @@ public class BallControler extends AbstractControler {
 		 //this.calc=g;
 	 }
 
-	 /**
-	  * Ajout d'un jeton.
-	  * Appeler le modèle pour vérifier si la colonne d'abscisse x est pleine
-	  * Si celle-ci n'est pas pleine, on ajoute le jeton.
-	  * On vérifie ensuite si il y a un pattern impliquant la victoire du joueur. 
-	  */
+	/**
+	 * Demande la mise à jour de la balle si la balle n'est pas arrêtée.
+	 */
 	public void control()
 	{	
 		if(!this.calc.isStopped())

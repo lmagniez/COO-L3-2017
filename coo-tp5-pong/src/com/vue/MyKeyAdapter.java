@@ -2,6 +2,11 @@ package com.vue;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * KeyAdapter gérant les actions claviers simultanées
+ * @author loick
+ *
+ */
 public class MyKeyAdapter extends KeyAdapter {
 
 	//this.addKeyListener(new MyKeyAdapter());

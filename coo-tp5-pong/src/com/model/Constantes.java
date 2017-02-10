@@ -20,8 +20,8 @@ public abstract class Constantes {
 
 	public static final int RAQUETTE_HEIGHT=200;
 	public static final int RAQUETTE_WIDTH=20;
-	public static final int RAQUETTE_X_J1=DIMENSION_X*2/12;
-	public static final int RAQUETTE_X_J2=DIMENSION_X*10/12;
+	public static final int RAQUETTE_X_J1=DIMENSION_X*1/12;
+	public static final int RAQUETTE_X_J2=DIMENSION_X*11/12;
 	public static final int RAQUETTE_Y=(DIMENSION_Y/2)-RAQUETTE_HEIGHT/2;
 	public static final int RAQUETTE_VITESSE=3;
 	
@@ -34,7 +34,9 @@ public abstract class Constantes {
 	public static final int MUR2_Y=DIMENSION_Y-MUR_HEIGHT;
 	
 	//bonus
-	public static final int DIAMETRE_BONUS=300;
+	public static final int DIAMETRE_BONUS=70;
+	public static final int SCORE_GAGNANT=7;
+	
 	
 	
 	

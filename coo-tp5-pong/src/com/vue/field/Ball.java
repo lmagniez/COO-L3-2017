@@ -2,6 +2,11 @@ package com.vue.field;
 
 import com.model.Constantes;
 
+/**
+ * Vue de la balle implémentant un thread demandant la mise à jour de celle-ci
+ * @author loick
+ *
+ */
 public class Ball extends Thread {
 
 	public static int NB_BALL=0;
@@ -13,6 +18,13 @@ public class Ball extends Thread {
 	protected int diam;
 	protected boolean running=true;
 	
+	/**
+	 * Constructeur
+	 * @param vue vue du terrain
+	 * @param id id de la balle
+	 * @param posX posX initiale
+	 * @param posY posY initiale
+	 */
 	public Ball(VueField vue, int id, int posX, int posY)
 	{
 		this.running=true;
@@ -21,19 +33,20 @@ public class Ball extends Thread {
 		this.posX=posX;
 		this.posY=posY;
 		this.diam=Constantes.DIAMETRE_BALLE;
-		//nb=NB_BALL++;
 		
 	}
 	
+	/**
+	 * Demande la mise à jour de la balle
+	 */
 	public void run()
 	{
 		
 		while(running)
 		{
 			//System.out.println("run "+id + " running "+running);
-			
 			try {
-				Thread.sleep(10);
+				Thread.sleep(15);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -52,6 +65,9 @@ public class Ball extends Thread {
 	public void arret() { // Méthode 2
 		running = false;
 	}
+	/**
+	 * Reprend le thread
+	 */
 	public void reprendre() { // Méthode 2
 		running = true;
 	}

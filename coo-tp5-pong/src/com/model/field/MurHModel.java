@@ -2,6 +2,11 @@ package com.model.field;
 
 import com.model.Constantes;
 
+/**
+ * Modèle du mur horizontal
+ * @author loick
+ *
+ */
 public class MurHModel {
 
 	protected int idMur;
@@ -10,6 +15,10 @@ public class MurHModel {
 	protected final int width=Constantes.DIMENSION_X;
 	protected int height=Constantes.MUR_HEIGHT;
 	
+	/**
+	 * Constructeur
+	 * @param idMur id du mur
+	 */
 	public MurHModel(int idMur)
 	{
 		this.idMur=idMur;

@@ -1,0 +1,65 @@
+\documentclass[a4paper,utf8]{article}
+\usepackage{rapport}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{MnSymbol,wasysym}
+\usepackage{hyperref}
+\usepackage[french]{babel}
+
+
+\formation{L3MI}
+\date{}
+\matiere{Conception Orientée Objet}
+\titre{Dots And Boxes - Compte Rendu}
+
+\newcommand\code[1]{\textsf{#1}}
+\newcommand\srdjan[1]{{\color{red} #1}}
+
+\begin{document}
+
+\entete
+
+\section{Ce qui a été réalisé}
+
+-Implémentation du jeu Pong.\\%
+-Gestion des événements bonus/vitesse.\\%
+-Implémentation d?une IA, paramétrage possible de la partie (Joueur/IA).\\%
+
+
+\section{Difficultés rencontrées : gestion des collisions}
+
+Lors du début de l\textquotesingle implémentation, la balle avait tendance à rentrer dans les éléments et « rebondir » dedans.
+Le problème était du au coefficient de déplacement trop grands qui faisait rentrer la balle dans les éléments.\\%
+J?ai donc décidé de gérer les collisions par un ensemble de « blocs », si la balle arrive dans ce bloc, on la remet à l\textquotesingle extérieur, et on évite ainsi la collision.\\%
+
+Ci-dessous, l'ensemble des tests de collisions effectués par une balle.\\%
+
+\makebox[\textwidth]{\includegraphics[width=500pt]{img/collisions}}
+
+
+\newpage
+
+
+\section{Gestion des threads}
+
+Au final, 3 threads ont été implémentés pour 3 controlers :\\%
+-Thread de la balle : Demande au controler de déplacer la balle.\\%
+-Thread de la raquette : Deux types de raquettes :
+\begin{description}
+    \item[IA :] Demande au modèle de déplacer la raquette en fonction des balles sur l?écran.
+    \item[Joueur :] En fonction des événements clavier, déplace le joueur sur l\textquotesingle écran.
+\end{description}
+-Thread des événements : Demande au controler de générer des bonus et/ou accélérer les balles.
+	
+
+\section{Implémentation de l\textquotesingle IA :}
+
+
+
+Le thread RaquetteIA fait appel à une méthode dans le modèle qui va décider si la raquette va se déplacer vers le haut ou vers le bas.\\%
+Assez facile à réaliser quand une seule balle est présente, il a fallu gérer le cas ou plusieurs balles apparaissaient. \\%
+J?ai donc mis en place une méthode récupérant la balle la plus proche de la raquette sur l?axe x. En fonction de cette balle, on va chercher à se rapprocher le plus d?elle sur l?axe y.\\%
+
+
+\end{document}

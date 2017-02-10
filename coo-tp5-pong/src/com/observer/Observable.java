@@ -21,6 +21,7 @@ public interface Observable {
 	public void notifyEraseBonus(int idB);
 	
 	public void notifyScore(int sJ1, int sJ2);
+	public void notifyWinner(int idJoueur);
 	
 	
 	public void notifyReinit();

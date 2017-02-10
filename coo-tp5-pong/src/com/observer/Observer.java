@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface Observer {
 	
-	public void updateWinner(int tour);	
+	public void updateWinner(int idJoueur);	
 	public void updateReinit();
 	
 	public void updateNewBalle(int idBalle, int posX, int posY);

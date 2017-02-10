@@ -2,6 +2,13 @@ package com.controler;
 
 import com.model.AbstractModel;
 
+/**
+ * Classe controler des evenements.
+ * Demande l'apparition des bonus et l'augmentation de vitesse
+ * @author loick
+ *
+ */
+
 public class TimeControler extends AbstractControler{
 
 	
@@ -10,12 +17,9 @@ public class TimeControler extends AbstractControler{
 		 //this.calc=g;
 	 }
 
-	 /**
-	  * Ajout d'un jeton.
-	  * Appeler le modèle pour vérifier si la colonne d'abscisse x est pleine
-	  * Si celle-ci n'est pas pleine, on ajoute le jeton.
-	  * On vérifie ensuite si il y a un pattern impliquant la victoire du joueur. 
-	  */
+	/**
+	 * Demande l'ajout d'un bonus et/ou l'augmentation de vitesse des balles
+	 */
 	public void control()
 	{
 		

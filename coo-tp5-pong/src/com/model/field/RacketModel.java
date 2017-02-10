@@ -3,6 +3,11 @@ package com.model.field;
 import com.model.Constantes;
 import com.model.Direction;
 
+/**
+ * Modèle de la raquette
+ * @author loick
+ *
+ */
 public class RacketModel {
 
 	protected int idJoueur;
@@ -12,6 +17,10 @@ public class RacketModel {
 	protected int width;
 	protected int height;
 	
+	/**
+	 * Constructeur
+	 * @param idJoueur id du joueur
+	 */
 	public RacketModel(int idJoueur)
 	{
 		this.idJoueur=idJoueur;
@@ -28,7 +37,11 @@ public class RacketModel {
 		this.posY=Constantes.RAQUETTE_Y;
 		
 	}
-
+	
+	/**
+	 * Mise à jour logique de la raquette en fonction de la direction souhaitée (haut/bas)
+	 * @param d direction souhaitée
+	 */
 	public void update(Direction d)
 	{
 		if(d==Direction.NORD&&posY>0+Constantes.MUR_HEIGHT)
@@ -42,7 +55,6 @@ public class RacketModel {
 		}
 		if(posY<0)posY=0;
 		if(posY>Constantes.DIMENSION_Y)posY=Constantes.DIMENSION_Y;
-		
 		
 	}
 }

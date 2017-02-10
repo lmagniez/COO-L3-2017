@@ -3,6 +3,11 @@ package com.model.field;
 import com.model.Constantes;
 import com.model.Direction;
 
+/**
+ * Classe modèle représentant une balle
+ * @author loick
+ *
+ */
 public class BallModel {
 	
 	protected int id;
@@ -11,6 +16,11 @@ public class BallModel {
 	protected int coefX, coefY;
 	public static int nb_balle=0;
 	
+	/**
+	 * Constructeur
+	 * @param field modele du terrain 
+	 * @param idJ id du joueur
+	 */
 	public BallModel(FieldModel field, int idJ)
 	{
 
@@ -28,6 +38,14 @@ public class BallModel {
 		
 	}
 	
+	/**
+	 * Constructeur complet
+	 * @param field modele du terrain
+	 * @param posX pos x de la balle 
+	 * @param posY pos y de la balle
+	 * @param coefX coefficient x de la balle
+	 * @param coefY coefficient y de la balle
+	 */
 	public BallModel(FieldModel field, int posX, int posY, int coefX, int coefY)
 	{
 
@@ -41,28 +59,37 @@ public class BallModel {
 		
 	}
 	
-	
+	/**
+	 * Mise à jour de la balle en fonction de son coeff et sa vitesse
+	 */
 	public void updateBall()
 	{
-		//posX+=coefX;
-		//posY+=coefY;
 		
 		posX+=(coefX*field.actualSpeed);
 		posY+=(coefY*field.actualSpeed);
 	}
 	
+	/**
+	 * Inverse le coefficient x de la balle
+	 */
 	public void changeDirectionX()
 	{
-		//System.out.println("x");
 		coefX*=-1;
 	}
 	
+	/**
+	 * Inverse le coefficient y de la balle
+	 */
 	public void changeDirectionY()
 	{
-		//System.out.println("y");
 		coefY*=-1;
 	}
 	
+	/**
+	 * Test de la collision de la balle contre une autre balle
+	 * @param b balle à tester
+	 * @return collision ou non
+	 */
 	public boolean collideBall(BallModel b)
 	{
 		if((this.posX>=b.posX)&&(this.posX<=b.posX+Constantes.DIAMETRE_BALLE)
@@ -83,25 +110,13 @@ public class BallModel {
 		
 	}
 	
+	/**
+	 * Test de collision d'une balle contre une raquette
+	 * @param r raquette à tester
+	 * @return collision ou non
+	 */
 	public boolean collideRacket(RacketModel r)
 	{
-		
-		/*
-		if((this.posX+Constantes.DIAMETRE_BALLE>=r.posX)
-				&(this.posX+Constantes.DIAMETRE_BALLE<=r.posX+r.width)
-				&&this.posY+Constantes.DIAMETRE_BALLE>=r.posY
-				&&this.posY<=r.posY*1.05){
-			this.changeDirectionY();
-			return true;
-		}
-		
-		if((this.posX+Constantes.DIAMETRE_BALLE>=r.posX)
-				&&(this.posX+Constantes.DIAMETRE_BALLE<=r.posX+r.width)
-				&&this.posY<=r.posY+r.height&&this.posY>=(r.posY+r.height)*0.95){
-			this.changeDirectionY();
-			return true;
-		}*/
-		
 		
 		if((this.posX+Constantes.DIAMETRE_BALLE>r.posX)
 			&&(this.posX<r.posX+r.width)
@@ -117,21 +132,15 @@ public class BallModel {
 			this.changeDirectionX();
 			return true;
 		}
-		
-		
-		
-		
-		/*
-		if((this.posX+Constantes.DIAMETRE_BALLE>=r.posX)&&(this.posX<=r.posX+r.width)&&
-				(this.posY+Constantes.DIAMETRE_BALLE>=r.posY)&&(this.posY<=r.posY+r.height)){
-			this.changeDirectionY();
-			return true;
-		}
-		*/
 		return false;
 		
 	}
 	
+	/**
+	 * Test de collision d'une balle contre un mur
+	 * @param m mur a tester
+	 * @return collision ou non
+	 */
 	public boolean collideMurH(MurHModel m)
 	{
 		if((m.idMur==0)&&(this.posY<m.posY+m.height)
@@ -152,6 +161,10 @@ public class BallModel {
 		return false;
 	}
 	
+	/**
+	 * Collision du mur vertical gauche (point pour j2)
+	 * @return collision ou non
+	 */
 	public boolean collideMurVG()
 	{
 		if(this.posX<0)
@@ -162,11 +175,17 @@ public class BallModel {
 			this.field.scoreJ2++;
 			this.field.notifyScore(this.field.scoreJ1, this.field.scoreJ2);
 			this.field.reinit();
+			if(this.field.scoreJ2==Constantes.SCORE_GAGNANT)
+				this.field.notifyWinner(2);
 			return true;
 		}
 		return false;
 	}
 	
+	/**
+	 * Collision du mur vertical droit (point pour j1)
+	 * @return collision ou non
+	 */
 	public boolean collideMurVD()
 	{
 		if(this.posX>Constantes.DIMENSION_X-Constantes.DIAMETRE_BALLE)
@@ -177,11 +196,18 @@ public class BallModel {
 			this.field.scoreJ1++;
 			this.field.notifyScore(this.field.scoreJ1, this.field.scoreJ2);
 			this.field.reinit();
+			if(this.field.scoreJ1==Constantes.SCORE_GAGNANT)
+				this.field.notifyWinner(1);
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * Teste la collision contre un bonus donnée
+	 * @param b bonus à tester
+	 * @return collision ou non
+	 */
 	public boolean collideBonus(BonusModel b) {
 		// TODO Auto-generated method stub
 		
@@ -194,6 +220,11 @@ public class BallModel {
 		return false;
 	}
 	
+	/**
+	 * Met à jour la direction de la balle en fonction de la direction donnée
+	 * (Utilisé quand la balle est stoppée et associée à une raquette en début de manche)
+	 * @param d Direction de la balle
+	 */
 	public void update(Direction d)
 	{
 		if(d==Direction.NORD&&posY>Constantes.RAQUETTE_HEIGHT/2+Constantes.MUR_HEIGHT)

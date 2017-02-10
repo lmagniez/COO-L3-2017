@@ -2,6 +2,11 @@ package com.controler;
 
 import com.model.AbstractModel;
 
+/**
+ * Classe controler de la racket, lance la balle et dirige la raquette
+ * @author loick
+ *
+ */
 public class RacketControler extends AbstractControler{
 
 	
@@ -11,10 +16,8 @@ public class RacketControler extends AbstractControler{
 	 }
 
 	 /**
-	  * Ajout d'un jeton.
-	  * Appeler le modèle pour vérifier si la colonne d'abscisse x est pleine
-	  * Si celle-ci n'est pas pleine, on ajoute le jeton.
-	  * On vérifie ensuite si il y a un pattern impliquant la victoire du joueur. 
+	  * Demande le lancement de la balle, sinon:
+	  * Demande le déplacement de la raquette
 	  */
 	public void control()
 	{
