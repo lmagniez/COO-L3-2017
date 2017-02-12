@@ -13,6 +13,9 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import com.model.Constantes;
+import com.model.field.GameTimer;
+import com.model.field.RacketIA;
+import com.model.field.RacketJoueur;
 import com.vue.MyKeyAdapter;
 
 /**
@@ -27,7 +30,6 @@ public class Field extends JPanel{
 	protected Racket rackets[];
 	protected Vector<Ball> balls;
 	protected Vector<Bonus> bonus;
-	protected GameTimer t;
 	protected int scoreJ1=0;
 	protected int scoreJ2=0;
 	
@@ -35,9 +37,8 @@ public class Field extends JPanel{
 	/**
 	 * Constructeur
 	 * @param vue
-	 * @param isIA tableau de booleen contenant le type des joueurs (vrai: ia faux: joueur)
 	 */
-	public Field(VueField vue, boolean[] isIA)
+	public Field(VueField vue)
 	{
 		this.vue=vue;
 		this.murs=new MurH[2];
@@ -50,14 +51,8 @@ public class Field extends JPanel{
 		this.murs[1]=new MurH(Constantes.MUR_X,Constantes.MUR2_Y,Constantes.MUR_WIDTH,Constantes.MUR_HEIGHT);
 		
 		//DECISION DES JOUEURS
-		this.rackets[0]=new RacketIA(vue,0,Constantes.RAQUETTE_X_J1,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
-		this.rackets[1]=new RacketIA(vue,1,Constantes.RAQUETTE_X_J2,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
-		if(!isIA[0])
-			this.rackets[0]=new RacketJoueur(vue,0,Constantes.RAQUETTE_X_J1,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
-		if(!isIA[1])
-			this.rackets[1]=new RacketJoueur(vue,1,Constantes.RAQUETTE_X_J2,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
-
-		this.t=new GameTimer(vue);
+		this.rackets[0]=new Racket(vue,0,Constantes.RAQUETTE_X_J1,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
+		this.rackets[1]=new Racket(vue,1,Constantes.RAQUETTE_X_J2,Constantes.RAQUETTE_Y,Constantes.RAQUETTE_WIDTH,Constantes.RAQUETTE_HEIGHT);
 		
 		
 	}

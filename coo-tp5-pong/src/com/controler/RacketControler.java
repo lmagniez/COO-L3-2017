@@ -17,7 +17,7 @@ public class RacketControler extends AbstractControler{
 
 	 /**
 	  * Demande le lancement de la balle, sinon:
-	  * Demande le déplacement de la raquette
+	  * Demande le déplacement des raquettes
 	  */
 	public void control()
 	{
@@ -27,7 +27,10 @@ public class RacketControler extends AbstractControler{
 			throwBall=false;
 		}
 		else
-			this.calc.updateRacket(id, d);
+		{
+				this.calc.updateRacket(0, this.upJ1, this.downJ1);
+				this.calc.updateRacket(1, this.upJ2, this.downJ2);
+		}
 	}
 
 }

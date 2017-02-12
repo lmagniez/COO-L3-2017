@@ -24,7 +24,7 @@
 
 -Implémentation du jeu Pong.\\%
 -Gestion des événements bonus/vitesse.\\%
--Implémentation d?une IA, paramétrage possible de la partie (Joueur/IA).\\%
+-Implémentation d\textquotesingle une IA, paramétrage possible de la partie (Joueur/IA).\\%
 
 
 \section{Difficultés rencontrées : gestion des collisions}
@@ -43,15 +43,16 @@ Ci-dessous, l'ensemble des tests de collisions effectués par une balle.\\%
 
 \section{Gestion des threads}
 
-Au final, 3 threads ont été implémentés pour 3 controlers :\\%
--Thread de la balle : Demande au controler de déplacer la balle.\\%
+Au final, 3 threads ont été implémentés :\\%
+-Thread de la balle : Demande de déplacer la balle.\\%
 -Thread de la raquette : Deux types de raquettes :
 \begin{description}
-    \item[IA :] Demande au modèle de déplacer la raquette en fonction des balles sur l?écran.
+    \item[IA :] Demande au modèle de déplacer la raquette en fonction des balles sur l\textquotesingle écran.
     \item[Joueur :] En fonction des événements clavier, déplace le joueur sur l\textquotesingle écran.
 \end{description}
--Thread des événements : Demande au controler de générer des bonus et/ou accélérer les balles.
+-Thread des événements : Demande de générer des bonus et/ou accélérer les balles.
 	
+(Petite confusion concernant l\textquotesingle emplacement des Threads, ils avaient été placés dans la vue initialement, le problème a été corrigé).
 
 \section{Implémentation de l\textquotesingle IA :}
 
@@ -59,7 +60,7 @@ Au final, 3 threads ont été implémentés pour 3 controlers :\\%
 
 Le thread RaquetteIA fait appel à une méthode dans le modèle qui va décider si la raquette va se déplacer vers le haut ou vers le bas.\\%
 Assez facile à réaliser quand une seule balle est présente, il a fallu gérer le cas ou plusieurs balles apparaissaient. \\%
-J?ai donc mis en place une méthode récupérant la balle la plus proche de la raquette sur l?axe x. En fonction de cette balle, on va chercher à se rapprocher le plus d?elle sur l?axe y.\\%
+J\textquotesingle ai donc mis en place une méthode récupérant la balle la plus proche de la raquette sur l\textquotesingle axe x. En fonction de cette balle, on va chercher à se rapprocher le plus d\textquotesingle elle sur l\textquotesingle axe y.\\%
 
 
 \end{document}

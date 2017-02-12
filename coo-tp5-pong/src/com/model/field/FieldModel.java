@@ -25,17 +25,38 @@ public class FieldModel extends AbstractModel{
 	protected boolean avantageJ1=true;
 	protected int scoreJ1,scoreJ2;
 	
+	protected GameTimer t;
+	
 	
 	/**
 	 * Constructeur
 	 */
-	public FieldModel()
+	public FieldModel(boolean[] isIA)
 	{
+		//balls
 		balls=new Vector<BallModel>();
 		bonus=new Vector<BonusModel>();
 		balls.add(new BallModel(this,1));
-		this.racketJ1=new RacketModel(0); 
-		this.racketJ2=new RacketModel(1);
+		balls.get(0).start();
+		
+		
+		//rackets
+		if(isIA[0])
+			this.racketJ1=new RacketIA(this,0);
+		else
+			this.racketJ1=new RacketJoueur(this,0);
+		if(isIA[1])
+			this.racketJ2=new RacketIA(this,1);
+		else
+			this.racketJ2=new RacketJoueur(this,1);
+		Thread t1=new Thread(racketJ1);
+		Thread t2=new Thread(racketJ2);
+		t1.start();
+		t2.start();
+		
+		
+		t=new GameTimer(this);
+		t.start();
 		this.murHaut=new MurHModel(0);
 		this.murBas=new MurHModel(1);
 		this.gameStopped=true;
@@ -77,8 +98,9 @@ public class FieldModel extends AbstractModel{
 			if(bonus.get(i).onScreen&&b.collideBonus(bonus.get(i)))
 			{
 				this.notifyEraseBonus(bonus.get(i).id);
-				balls.add(new BallModel(this,b.posX+Constantes.DIAMETRE_BALLE,b.posY+Constantes.DIAMETRE_BALLE,b.coefX,-b.coefY));
-				
+				BallModel newBall= new BallModel(this,b.posX+Constantes.DIAMETRE_BALLE,b.posY+Constantes.DIAMETRE_BALLE,b.coefX,-b.coefY);
+				balls.add(newBall);
+				newBall.start();
 				
 				
 				//BallModel.nb_balle++;
@@ -121,13 +143,26 @@ public class FieldModel extends AbstractModel{
 		
 		if(idR==0){
 			this.racketJ1.update(d);
-			this.notifyNewPosRacket(0, racketJ1.posX, racketJ1.posY);
 		}
 		if(idR==1){
 			this.racketJ2.update(d);
-			this.notifyNewPosRacket(1, racketJ2.posX, racketJ2.posY);
 		}
 	}
+	
+	/**
+	 * Mise a jour de la raquette via booleen 
+	 * @param idR id raquette
+	 * @param up dirige la raquette vers le haut
+	 * @param down dirige la raquette vers le bas
+	 */
+	public void updateRacket(int idR, boolean up, boolean down)
+	{
+		if(idR==0)
+			this.racketJ1.updateDir(up,down);
+		if(idR==1)
+			this.racketJ2.updateDir(up,down);
+	}
+	
 
 	/**
 	 * Ajoute un bonus sur le modèle et notifie
@@ -224,10 +259,6 @@ public class FieldModel extends AbstractModel{
 			updateRacket(idJoueur,Direction.NORD);
 		else if(b.posY>r.posY+Constantes.RAQUETTE_HEIGHT/2)
 			updateRacket(idJoueur,Direction.SUD);
-				
-		
-		
-		
 	}
 	
 	/**
@@ -236,6 +267,12 @@ public class FieldModel extends AbstractModel{
 	@Override
 	public void reinit() {
 		// TODO Auto-generated method stub
+		
+		
+		for(int i=1; i<balls.size(); i++)
+		{
+			this.balls.get(i).arret();		
+		}
 		
 		BallModel.nb_balle=0;
 		BonusModel.nb_bonus=0;
@@ -250,19 +287,15 @@ public class FieldModel extends AbstractModel{
 		else b = new BallModel(this,2);
 			
 			
-		this.balls.add(b);		
+		this.balls.add(b);
+		
+		
 		this.actualSpeed=1.0;
 		this.gameStopped=true;
 		
 		this.notifyReinit();
 		this.notifyNewBalle(BallModel.nb_balle, b.posX, b.posY);
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		
 		
 		

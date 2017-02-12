@@ -22,9 +22,13 @@ public abstract class AbstractControler {
 	
 	protected int id;
 	protected Direction d;
-	protected boolean bonus;
-	protected boolean speed;
 	protected boolean throwBall;
+	
+	protected boolean released;
+	protected boolean upJ1;
+	protected boolean upJ2;
+	protected boolean downJ1;
+	protected boolean downJ2;
 	
 	
 	
@@ -37,16 +41,63 @@ public abstract class AbstractControler {
 		this.calc = cal;
 	}
 	
-	//Definir toutes les methodes de modifications (les setters)
 
 	/**
-	 * Changer l'id de l'objet à modifier (pour la balle).
-	 * @param id id de l'objet
+	 * Appuie touche haut
+	 * @param id id joueur
 	 */
-	public void setChange(int id){
+	public void setUp(int id){
 		this.id=id;
+		
+		if(id==0)
+			this.upJ1=true;
+		if(id==1)
+			this.upJ2=true;
 		control();
 	}
+	
+	/**
+	 * Appuie touche bas
+	 * @param id id joueur
+	 */
+	public void setDown(int id){
+		this.id=id;
+		
+		if(id==0)
+			this.downJ1=true;
+		if(id==1)
+			this.downJ2=true;
+		control();
+	}
+	
+	/**
+	 * Appuie touche entrée
+	 */
+	public void setEnter(){
+		throwBall=true;
+		control();
+	}
+	
+	/**
+	 * Relache la touche bas
+	 * @param i id joueur
+	 */
+	public void setReleasedDown(int i) {
+		if(i==0)
+			this.downJ1=false;
+		if(i==1)
+			this.downJ2=false;
+		control();
+	}
+	
+	public void setReleasedUp(int i) {
+		if(i==0)
+			this.upJ1=false;
+		if(i==1)
+			this.upJ2=false;
+		control();
+	}
+	
 	
 	/**
 	 * Changer l'id et la direction de l'objet à modifier (pour la raquette).
@@ -57,35 +108,7 @@ public abstract class AbstractControler {
 		this.id=id;
 		this.d=d;
 		control();
-	}
-	
-	/**
-	 * Prévenir l'apparition d'un nouveau bonus
-	 * @param bonus booléen (toujours à true)
-	 */
-	public void setNouveauBonus(boolean bonus){
-		this.bonus=bonus;
-		control();
-	}
-	
-	/**
-	 * Prévenir l'augmentation de la vitesse
-	 * @param vitesse booléen (toujours à true)
-	 */
-	public void setVitesse(boolean vitesse){
-		this.speed=vitesse;
-		control();
-	}
-	
-	/**
-	 * Prévenir le lancement de la balle.
-	 */
-	public void throwBall() {
-		this.throwBall=true;
-		control();
-	}
-	
-	
+	}	
 	
 	/**
 	 * Reinitialiser le modèle
@@ -94,19 +117,8 @@ public abstract class AbstractControler {
 		calc.reinit();
 	}
 	
-	/**
-	 * Demander la décision d'une IA 
-	 * @param idJoueur id de l'IA
-	 */
-	public void decide(int idJoueur) {
-		calc.decide(idJoueur);
-	}
-	
-	
 	//Methode de controle
 	abstract void control();
-
-	
 
 	
 }

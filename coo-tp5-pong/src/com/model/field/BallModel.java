@@ -8,14 +8,14 @@ import com.model.Direction;
  * @author loick
  *
  */
-public class BallModel {
+public class BallModel extends Thread{
 	
 	protected int id;
 	protected FieldModel field;
 	protected int posX,posY;
 	protected int coefX, coefY;
 	public static int nb_balle=0;
-	
+	protected boolean running=true;
 	/**
 	 * Constructeur
 	 * @param field modele du terrain 
@@ -35,6 +35,7 @@ public class BallModel {
 			this.posX=Constantes.BALLE_X_J2;
 			this.coefX*=-1;
 		}
+		this.running=true;
 		
 	}
 	
@@ -64,9 +65,9 @@ public class BallModel {
 	 */
 	public void updateBall()
 	{
-		
-		posX+=(coefX*field.actualSpeed);
-		posY+=(coefY*field.actualSpeed);
+		//System.out.println("updateBall: "+id);
+		this.posX+=(this.coefX*field.actualSpeed);
+		this.posY+=(this.coefY*field.actualSpeed);
 	}
 	
 	/**
@@ -240,6 +241,43 @@ public class BallModel {
 		if(posY>Constantes.DIMENSION_Y)posY=Constantes.DIMENSION_Y;
 		
 		
+	}
+	
+	/**
+	 * Demande la mise à jour de la balle
+	 */
+	public void run()
+	{
+		
+		while(running)
+		{
+			//if(!field.gameStopped){
+				//System.out.println("run "+id + " running "+running);
+				try {
+					Thread.sleep(15);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(!field.isStopped())
+					this.field.updateBall(id);
+			//}
+		}
+		
+		
+	}
+	/**
+	 * Stoppe le thread
+	 */
+	public void arret() { // Méthode 2
+		running = false;
+	}
+	/**
+	 * Reprend le thread
+	 */
+	public void reprendre() { // Méthode 2
+		running = true;
 	}
 	
 	

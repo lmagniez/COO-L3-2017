@@ -1,6 +1,8 @@
-package com.vue.field;
+package com.model.field;
 
+import com.model.Constantes;
 import com.model.Direction;
+import com.vue.field.VueField;
 
 /**
  * Extension de la classe raquette pour IA.
@@ -8,11 +10,19 @@ import com.model.Direction;
  * @author loick
  *
  */
-public class RacketIA extends Racket {
+public class RacketIA extends RacketModel {
 
+	protected FieldModel field;
 	
-	public RacketIA(VueField vue, int idJ, int posX, int posY, int width, int height) {
-		super(vue, idJ, posX, posY, width, height);
+	
+	/**
+	 * Constructeur
+	 * @param idJoueur id du joueur
+	 */
+	public RacketIA(FieldModel f, int idJoueur)
+	{
+		super(f,idJoueur);
+		this.field=f;
 		
 	}
 	
@@ -31,10 +41,9 @@ public class RacketIA extends Racket {
 				e.printStackTrace();
 			}
 			
-			vue.controlerRacket.decide(this.idJ);
+			this.field.decide(this.idJoueur);
 			
-			this.vue.revalidate();
-			this.vue.repaint();
+			this.field.notifyNewPosRacket(idJoueur, posX, posY);
 		}
 		
 	}

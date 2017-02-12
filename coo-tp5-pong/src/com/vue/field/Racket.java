@@ -7,7 +7,7 @@ import com.model.Direction;
  * @author loick
  *
  */
-public abstract class Racket extends Thread {
+public class Racket {
 
 	protected VueField vue;
 	protected int idJ;

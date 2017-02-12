@@ -1,4 +1,6 @@
-package com.vue.field;
+package com.model.field;
+
+import com.vue.field.VueField;
 
 /**
  * Thread des evenements. Demande l'apparition de bonus et l'augmentation de vitesse
@@ -8,11 +10,11 @@ package com.vue.field;
 public class GameTimer extends Thread {
 
 	protected boolean running=true;
-	protected VueField vue;
+	protected FieldModel field;
 	
-	public GameTimer(VueField vue)
+	public GameTimer(FieldModel field)
 	{
-		this.vue=vue;
+		this.field=field;
 	}
 	
 	/**
@@ -33,7 +35,7 @@ public class GameTimer extends Thread {
 				e.printStackTrace();
 			}
 			
-			vue.controlerTimer.setNouveauBonus(true);
+			field.ajoutBonus();
 			
 			try {
 				Thread.sleep(5000);
@@ -42,7 +44,7 @@ public class GameTimer extends Thread {
 				e.printStackTrace();
 			}
 			
-			vue.controlerTimer.setVitesse(true);
+			field.augmenteVitesse();
 			
 			
 		}

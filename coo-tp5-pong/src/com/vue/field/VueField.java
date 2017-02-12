@@ -14,6 +14,7 @@ import com.model.Constantes;
 import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.MyKeyAdapter;
+
 import com.vue.titre.Vue1;
 
 /**
@@ -25,30 +26,22 @@ public class VueField extends Fenetre implements Observer{
 
 	protected Vue1 menu;
 	protected Field f;
-	protected AbstractControler controlerBall;
 	protected AbstractControler controlerRacket;
-	protected AbstractControler controlerTimer;
 	protected MyKeyAdapter adapter;
-	
 	
 	/**
 	 * Constructeur
 	 * @param menu vue du menu
-	 * @param isIA type de joueur
 	 * @param controlerBall controler de la balle
 	 * @param controlerRacket controler de la raquette 
-	 * @param controlerTimer controler des evenements
 	 */
-	public VueField(Vue1 menu, boolean[] isIA, AbstractControler controlerBall, AbstractControler controlerRacket,
-			AbstractControler controlerTimer){
+	public VueField(Vue1 menu, AbstractControler controlerRacket){
 	
 		
-		this.controlerBall=controlerBall;
 		this.controlerRacket=controlerRacket;
-		this.controlerTimer=controlerTimer;
 		
 		this.menu=menu;
-		this.f=new Field(this,isIA);
+		this.f=new Field(this);
 		
 		this.setSize(Constantes.DIMENSION_X,Constantes.DIMENSION_Y);
 		this.setTitle("PONG");
@@ -69,16 +62,22 @@ public class VueField extends Fenetre implements Observer{
 			e.printStackTrace();
 		}
 		
-		adapter= new MyKeyAdapter();
+		adapter= new MyKeyAdapter(controlerRacket);
 		this.addKeyListener(adapter);
 		
 		
-		f.balls.get(f.balls.size()-1).start();
+		//Thread t=new Thread(adapter);
+		//t.start();
 		
-		f.rackets[0].start();
-		f.rackets[1].start();
 		
-		f.t.start();
+		
+		
+		//f.balls.get(f.balls.size()-1).start();
+		
+		//f.rackets[0].start();
+		//f.rackets[1].start();
+		
+		//f.t.start();
 		
 	}
 	
@@ -97,11 +96,9 @@ public class VueField extends Fenetre implements Observer{
 	public void updateReinit() {
 		// TODO Auto-generated method stub
 		
-		
 		for(int i=0; i<f.balls.size(); i++)
-		{
-			this.f.balls.get(i).arret();		
-		}
+			System.out.print("id: "+f.balls.get(i).id+" ");
+		System.out.println();
 		
 		try {
 			Thread.sleep(100);
@@ -138,6 +135,9 @@ public class VueField extends Fenetre implements Observer{
 			b.posY=posY;
 			b.diam=Constantes.DIAMETRE_BALLE;
 		}
+
+		this.revalidate();
+		this.repaint();
 		
 	}
 
@@ -212,7 +212,6 @@ public class VueField extends Fenetre implements Observer{
 	public void updateNewBalle(int idBalle, int posX, int posY) {
 		Ball b = new Ball(this,idBalle,posX,posY);
 		this.f.balls.add(b);
-		b.start();
 		
 		f.revalidate();
 		f.repaint();

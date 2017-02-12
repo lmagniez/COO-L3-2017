@@ -23,6 +23,7 @@ public abstract class AbstractModel implements Observable{
 	
 	public abstract void updateBall(int idB);
 	public abstract void updateRacket(int idR, Direction d);
+	public abstract void updateRacket(int idR, boolean up, boolean down);
 	
 	public abstract void ajoutBonus();
 	public abstract void augmenteVitesse();

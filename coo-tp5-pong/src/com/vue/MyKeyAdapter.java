@@ -2,91 +2,76 @@ package com.vue;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import com.controler.AbstractControler;
+import com.controler.RacketControler;
+
 /**
  * KeyAdapter gérant les actions claviers simultanées
  * @author loick
  *
  */
-public class MyKeyAdapter extends KeyAdapter {
+public class MyKeyAdapter extends KeyAdapter{
 
 	//this.addKeyListener(new MyKeyAdapter());
 	
-	private boolean isUPPressed = false;
-	private boolean isDownPressed = false;
-	private boolean isZPressed = false;
-	private boolean isSPressed = false;
-	private boolean isEnterPressed = false;
+	protected AbstractControler controler;
 	
+	
+	public MyKeyAdapter(AbstractControler controlerRacket){
+		super();
+		this.controler=controlerRacket;
+	}
 	
 	private boolean presser = false;
 
 	public void keyPressed(KeyEvent e) {
 		
+		
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			isUPPressed = true;
+			controler.setUp(1);
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			isDownPressed = true;
+			controler.setDown(1);
 		}
-
+		
+		
 		if (e.getKeyCode() == KeyEvent.VK_Z) {
-			isZPressed = true;
+			controler.setUp(0);
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_S) {
-			isSPressed = true;
+			controler.setDown(0);
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			isEnterPressed = true;
+			controler.setEnter();
 		}
 		
 		
 	}
 
 	public void keyReleased(KeyEvent e) {
+		
+		
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			isUPPressed = false;
+			controler.setReleasedUp(1);
 		}
 
 		if (e.getKeyCode() ==  KeyEvent.VK_DOWN) {
-			isDownPressed = false;
+			controler.setReleasedDown(1);
 		}
 		
 		if (e.getKeyCode() ==  KeyEvent.VK_Z) {
-			isZPressed = false;
+			controler.setReleasedUp(0);
 		}
 		
 		if (e.getKeyCode() ==  KeyEvent.VK_S) {
-			isSPressed = false;
+			controler.setReleasedDown(0);
 		}
 		
-		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			isEnterPressed = false;
-		}
 	}
 
-	public boolean doActionUP() {
-		return isUPPressed;
-	}
-	
-	public boolean doActionDOWN() {
-		return isDownPressed;
-	}
-	
-	public boolean doActionZ() {
-		return isZPressed;
-	}
-	
-	public boolean doEnter(){
-		return isEnterPressed;
-	}
-	
-	public boolean doActionS() {
-		return isSPressed;
-	}
-	
 	
 
 }

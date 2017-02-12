@@ -7,7 +7,7 @@ import com.model.Constantes;
  * @author loick
  *
  */
-public class Ball extends Thread {
+public class Ball {
 
 	public static int NB_BALL=0;
 	protected int nb;
@@ -16,7 +16,6 @@ public class Ball extends Thread {
 	protected volatile int posX;
 	protected volatile int posY;
 	protected int diam;
-	protected boolean running=true;
 	
 	/**
 	 * Constructeur
@@ -27,7 +26,6 @@ public class Ball extends Thread {
 	 */
 	public Ball(VueField vue, int id, int posX, int posY)
 	{
-		this.running=true;
 		this.id=NB_BALL++;
 		this.vue=vue;
 		this.posX=posX;
@@ -36,39 +34,5 @@ public class Ball extends Thread {
 		
 	}
 	
-	/**
-	 * Demande la mise à jour de la balle
-	 */
-	public void run()
-	{
-		
-		while(running)
-		{
-			//System.out.println("run "+id + " running "+running);
-			try {
-				Thread.sleep(15);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			//System.out.println("ok thread");
-			this.vue.controlerBall.setChange(id);
-			this.vue.revalidate();
-			this.vue.repaint();
-		}
-		
-		
-	}
-	/**
-	 * Stoppe le thread
-	 */
-	public void arret() { // Méthode 2
-		running = false;
-	}
-	/**
-	 * Reprend le thread
-	 */
-	public void reprendre() { // Méthode 2
-		running = true;
-	}
+	
 }
