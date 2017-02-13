@@ -1,0 +1,85 @@
+package Shifumi;
+
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+
+public class Serveur2{
+
+	protected JButton quit;
+	protected ServerSocket socket;
+	private PrintStream defaultOutStream = System.out;
+	
+	protected Choix choixJ1;
+	protected Choix choixJ2;
+	
+	
+	public Serveur2(){
+		choixJ1=Choix.NONE;
+		choixJ2=Choix.NONE;
+		initServeur();
+	}
+	
+	public void initServeur(){
+		try{
+			Runtime.getRuntime().addShutdownHook(new ServerSocketClosingThread());
+			socket = new ServerSocket(1791);
+			
+			Accepter_clients client1 = new Accepter_clients(this, socket,0);
+			Accepter_clients client2 = new Accepter_clients(this, socket,1);
+			
+			
+			Thread t=new Thread(client1);
+			Thread t2=new Thread(client2); 
+			t.start();
+			t2.start();
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	
+	private class ServerSocketClosingThread extends Thread {
+		
+		public void run() {
+			try {
+				socket.close();
+				defaultOutStream.println("(II) Closing TCP connection");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		Serveur2 serveur= new Serveur2();
+		Fenetre f1=new Fenetre();
+		f1.setVisible(true);
+		Fenetre f2=new Fenetre();
+		f1.setVisible(true);
+	}
+	
+}
+
+
+
+
+
+
+
+

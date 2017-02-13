@@ -1,0 +1,146 @@
+package reseau;
+
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class Serveur2 extends JFrame implements ActionListener{
+
+	protected JButton quit;
+	protected ServerSocket socket;
+	
+	public Serveur2(){
+		Toolkit.getDefaultToolkit().sync();
+		this.setSize(500, 500);
+		this.setTitle("Calculette");
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		this.quit=new JButton("Arreter le serveur");
+		this.add(quit);
+		
+		initServeur();
+	}
+	
+	public void initServeur(){
+		try{
+			socket = new ServerSocket(1791);
+			Thread t = new Thread (new Accepter_clients(socket,0));
+			Thread t2 = new Thread (new Accepter_clients(socket,1));
+			t.start();
+			t2.start();
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if(arg0.getSource()==quit)
+		{
+			try {
+				this.socket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			this.dispose();
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		Serveur2 serveur= new Serveur2();
+	}
+	
+}
+
+class Accepter_clients implements Runnable {
+	private ServerSocket socketserver;
+	private Socket socket;
+	private int nbrClient=1;
+	private int idJoueur;
+	
+	
+	PrintWriter out;
+	
+	public Accepter_clients(ServerSocket s, int idJoueur)
+	{
+		socketserver=s;
+		this.idJoueur=idJoueur;
+		
+	}
+	public void run()
+	{
+		BufferedReader in;
+		try{
+			System.out.println("Serveur lancé");
+			while(true){
+				socket=socketserver.accept();
+				System.out.println("Le client num "+nbrClient+" est connecte ! (Thread "+idJoueur+")");
+				nbrClient++;
+				
+				out=new PrintWriter(socket.getOutputStream());
+				out.println("Vous etes connecte joueur "+idJoueur+" !");
+				out.flush();
+				
+				out.println(nbrClient+"");
+				out.flush();
+				
+				while(true){
+					in=new BufferedReader (new InputStreamReader(socket.getInputStream()));
+					String msg = in.readLine();
+					System.out.println("Serveur: Message recu du Thread "+ idJoueur +" : "+msg);
+					
+					if(msg==null){
+						break;
+					}
+				    /*
+					if(msg.equalsIgnoreCase("quit")){
+				    	socketserver.close();
+				    	return;
+				    	
+				    }*/
+				    
+				}
+				socket.close();
+				
+			}
+			
+			
+			
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public void fermerServer(){
+		try {
+			System.out.println("Arret du serveur...");
+			socketserver.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+

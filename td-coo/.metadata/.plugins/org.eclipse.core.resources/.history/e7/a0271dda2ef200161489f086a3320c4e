@@ -1,0 +1,190 @@
+package Shifumi;
+
+
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import reseau.Client;
+
+public class Fenetre extends JFrame implements ActionListener{
+
+	private ImageIcon pierre2,feuille1,feuille2,ciseau1,ciseau2;
+	private ImageIcon pierre1;
+	
+	private Client c;
+	private Serveur2 s;
+	
+	private int id_joueur;
+	
+	private JButton b1,b2,b3,b4;
+	JLabel l1=new JLabel("J1: ");
+	
+	
+	protected Socket socket;
+	protected BufferedReader in;
+	protected PrintWriter out;
+	
+	public Fenetre()
+	{
+		Toolkit.getDefaultToolkit().sync();
+		this.setSize(700, 500);
+		this.setTitle("Shifumi");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setVisible(true);
+		this.setLayout(new GridLayout(1,5));
+		
+		
+		pierre1=transform(new ImageIcon("./img/pierre.png"),50,100);
+		feuille1=transform(new ImageIcon("./img/feuille.png"),50,100);
+		ciseau1=transform(new ImageIcon("./img/ciseau.png"),50,100);
+		
+		 b1=new JButton();
+		 b1.addActionListener(this);
+		b1.setIcon((Icon) pierre1);
+		
+		 b2=new JButton();
+		b2.addActionListener(this);
+		b2.setIcon((Icon) feuille1);
+		
+		b3=new JButton();
+		 b3.addActionListener(this);
+		b3.setIcon((Icon) ciseau1);
+		
+		b4=new JButton("QUITTER");
+		 b4.addActionListener(this);
+		
+		
+		
+		this.add(l1);
+		this.add(b1);
+		this.add(b2);
+		this.add(b3);
+		this.add(b4);
+		
+		lancerCommunication();
+	}	
+	
+	
+	public ImageIcon transform (ImageIcon img, int hx, int hy)
+	{
+		Image image=img.getImage();
+		Image newImg= image.getScaledInstance(hx, hy, java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(newImg);
+	}
+	
+	
+	
+
+	public void sendToServer(String msg){
+		
+		try {
+			out=new PrintWriter(socket.getOutputStream());
+			out.println(msg);
+			out.flush();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void afficherMsgFenetre(String msg_distant){
+			this.l1.setText(msg_distant);
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		
+		
+		// TODO Auto-generated method stub
+		if(arg0.getSource()==b1)
+		{
+			sendToServer("pierre");
+			
+		}
+		if(arg0.getSource()==b2)
+		{
+			sendToServer("feuille");
+		}
+		if(arg0.getSource()==b3)
+		{
+			sendToServer("ciseau");
+		}
+		if(arg0.getSource()==b4)
+		{
+			sendToServer("quit");
+			try {
+				this.socket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void lancerCommunication(){
+		try{
+			this.socket = new Socket(InetAddress.getLocalHost(),1791);
+			
+			System.out.println("Demande de connexion");
+			this.in=new BufferedReader (new InputStreamReader(this.socket.getInputStream()));
+			String message_distant = this.in.readLine();
+			System.out.println(message_distant);
+			
+			//String idJ = f.in.readLine();
+			//f.id_joueur=Integer.parseInt(idJ);
+			//System.out.println("id:"+f.id_joueur);	
+			
+			this.out=new PrintWriter(this.socket.getOutputStream());
+			this.out.println("La reponse du joueur");
+			this.out.flush();
+			
+			
+			
+			
+		}
+		catch(UnknownHostException e){
+			e.printStackTrace();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void main(String[] args) throws InterruptedException {
+		
+		Fenetre f = new Fenetre();
+		f.setVisible(true);
+		
+		
+		
+		
+	}
+	
+}

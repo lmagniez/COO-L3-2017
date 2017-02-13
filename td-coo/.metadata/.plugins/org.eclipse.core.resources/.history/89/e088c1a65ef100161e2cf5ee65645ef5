@@ -1,0 +1,85 @@
+package pingpong;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class PingPongServer {
+	
+	public static final int DEFAULT_LOCAL_PORT = 1989;
+	private PrintStream defaultOutStream = System.out;
+	private ServerSocket socketS;
+
+	
+	
+	private PingPongServer() throws IOException {
+		this(DEFAULT_LOCAL_PORT);
+	}
+	
+	public PingPongServer(Integer localPort) throws IOException {
+		this.socketS = new ServerSocket(localPort);
+		defaultOutStream.println("(II) waiting for connections on port "+localPort);
+		Runtime.getRuntime().addShutdownHook(new ServerSocketClosingThread());
+		for(;;) {
+			Socket clientS = socketS.accept();
+			defaultOutStream.println("(II) new connection from "+clientS.getInetAddress()+":"+clientS.getPort());
+			new ClientHandlingThread(clientS).start();
+		}
+	}
+
+	private class ServerSocketClosingThread extends Thread {
+		
+		public void run() {
+			try {
+				socketS.close();
+				defaultOutStream.println("(II) Closing TCP connection");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private class ClientHandlingThread extends Thread {
+		
+		private Socket clientS;
+
+		ClientHandlingThread(Socket clientS) {
+			this.clientS = clientS;
+		}
+		
+		public void run() {
+			try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(this.clientS.getInputStream()));
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(this.clientS.getOutputStream()));
+				String line;
+				while((line = reader.readLine()) != null) {
+					if(line.length() == 0) break;
+					if("ping".equals(line)) writer.write("pong\n");
+					else writer.write("pas pong\n");
+					writer.flush();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			defaultOutStream.println("(II) closing connection from "+clientS.getInetAddress()+":"+clientS.getPort());
+			try {
+				clientS.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void main(String args[]) throws IOException {
+		if(args.length > 0) {
+			new PingPongServer(Integer.valueOf(args[0]));
+		} else {
+			new PingPongServer();
+		}
+	}
+}

@@ -32,4 +32,5 @@
 <fullyQualifiedTypeName name="java.awt.GridLayout"/>
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="java.io.PrintStream"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,102 @@
+package Shifumi;
+
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+
+public class Serveur2{
+
+	protected JButton quit;
+	protected ServerSocket socket;
+	private PrintStream defaultOutStream = System.out;
+	
+	protected Choix choixJ1;
+	protected Choix choixJ2;
+	
+	protected Accepter_clients client1,client2;
+	
+	
+	public Serveur2(){
+		choixJ1=Choix.NONE;
+		choixJ2=Choix.NONE;
+		initServeur();
+	}
+	
+	public void initServeur(){
+		try{
+			Runtime.getRuntime().addShutdownHook(new ServerSocketClosingThread());
+			socket = new ServerSocket(1791);
+			client1 = new Accepter_clients(this, socket,0);
+			client2 = new Accepter_clients(this, socket,1);
+			
+			
+			Thread t=new Thread(client1);
+			Thread t2=new Thread(client2); 
+			t.start();
+			t2.start();
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+
+	
+	private class ServerSocketClosingThread extends Thread {
+		
+		public void run() {
+			try {
+				socket.close();
+				defaultOutStream.println("(II) Closing TCP connection");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void maj_affichage() throws IOException{
+		//J1 a joué, pas J2
+		if(choixJ1!=Choix.NONE&&choixJ2==Choix.NONE){
+			client1.envoyer_message("En attente de J2...");
+			client2.envoyer_message("J1 vous attend!");
+		}
+		//J2 a joué, pas J1
+		if(choixJ1==Choix.NONE&&choixJ2!=Choix.NONE){
+			client2.envoyer_message("En attente de J1...");
+			client1.envoyer_message("J2 vous attend!");
+		}
+		
+		if(choixJ1==choixJ2){
+			client2.envoyer_message(choixJ1+);
+			client1.envoyer_message("J2 vous attend!");
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		Serveur2 serveur= new Serveur2();
+		
+		
+	}
+	
+}
+
+
+
+
+
+
+
+

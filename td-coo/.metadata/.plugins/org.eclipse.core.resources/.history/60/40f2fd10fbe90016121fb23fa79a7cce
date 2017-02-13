@@ -1,9 +1,0 @@
-package reseau;
-
-public class Serveur {
-
-	public static void main(String[] arg){
-		
-	}
-	
-}

@@ -1,0 +1,55 @@
+package Shifumi;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+public class Recevoir_infos implements Runnable {
+
+	protected JLabel l1;
+	
+	public Recevoir_infos(){
+		
+	}
+	
+	public void run()
+	{
+		BufferedReader in;
+		try{
+			System.out.println("Serveur lancé");
+			while(true){
+				socket=socketserver.accept();
+				System.out.println("Le client num "+nbrClient+" est connecte ! (Thread "+idJoueur+")");
+				nbrClient++;
+				
+				out=new PrintWriter(socket.getOutputStream());
+				out.println("Vous etes connecte joueur "+idJoueur+" !");
+				out.flush();
+				
+				
+				while(true){
+					in=new BufferedReader (new InputStreamReader(socket.getInputStream()));
+					String msg = in.readLine();
+					System.out.println("Serveur: Message recu du Thread "+ idJoueur +" : "+msg);
+					
+					if(msg.equals("feuille")||msg.equals("ciseau")||msg.equals("pierre")){
+						set_value(msg,idJoueur);
+						message_joueur();
+					}
+					
+					
+					if(msg==null){
+						break;
+					}
+				}
+				socket.close();
+				
+			}
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+	}
+}

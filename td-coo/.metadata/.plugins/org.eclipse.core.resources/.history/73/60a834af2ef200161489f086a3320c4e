@@ -1,0 +1,5 @@
+package Shifumi;
+
+public class Recevoir_infos implements Runnable {
+
+}

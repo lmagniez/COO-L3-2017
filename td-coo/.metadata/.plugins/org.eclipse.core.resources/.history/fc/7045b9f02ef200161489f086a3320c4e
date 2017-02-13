@@ -1,0 +1,31 @@
+package Shifumi;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+import javax.swing.JLabel;
+
+public class Recevoir_infos implements Runnable {
+
+	protected JLabel l1;
+	
+	public Recevoir_infos(JLabel l1){
+		this.l1=l1;
+	}
+	
+	public void run()
+	{
+		BufferedReader in;
+		
+		System.out.println("A l'écoute...");
+		while(true){
+				
+				
+		}
+			
+		
+		
+	}
+}

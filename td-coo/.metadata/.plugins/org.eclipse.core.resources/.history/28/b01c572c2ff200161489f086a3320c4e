@@ -1,0 +1,42 @@
+package Shifumi;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
+import javax.swing.JLabel;
+
+public class Recevoir_infos implements Runnable {
+
+	protected JLabel l1;
+	protected Fenetre f;
+	private Serveur2 s;
+	protected Socket socket;
+	protected BufferedReader in;
+	protected PrintWriter out;
+	
+	
+	public Recevoir_infos(Fenetre f, Serveur2 s, JLabel l1){
+		this.l1=l1;
+	}
+	
+	public void run()
+	{
+		BufferedReader in;
+		
+		System.out.println("A l'écoute...");
+		
+		while(true){
+			
+			this.in=new BufferedReader (new InputStreamReader(this.socket.getInputStream()));
+			String msg_distant = this.in.readLine();
+			this.afficherMsgFenetre(msg_distant);
+			
+			
+		}
+		
+		
+	}
+}
