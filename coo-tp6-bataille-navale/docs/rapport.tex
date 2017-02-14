@@ -1,0 +1,56 @@
+\documentclass[a4paper,utf8]{article}
+\usepackage{rapport}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{MnSymbol,wasysym}
+\usepackage{hyperref}
+\usepackage[french]{babel}
+
+
+\formation{L3MI}
+\date{}
+\matiere{Conception Orientée Objet}
+\titre{Dots And Boxes - Compte Rendu}
+
+\newcommand\code[1]{\textsf{#1}}
+\newcommand\srdjan[1]{{\color{red} #1}}
+
+\begin{document}
+
+\entete
+
+\section{Ce qui a été réalisé}
+
+-Implémentation du jeu Puissance 4 en MVC\\%
+-Possibilité de choisir le nombre de lignes et de colonnes\\%
+-Possibilité de changer sa couleur de jeton\\%
+-Implémentation d\textquotesingle une IA (choix pour chaque joueur si il est humain ou IA)\\%
+-Menu de gestion du nombre de joueurs, du type de joueurs (Humain/IA), du nombre de cases. \\%
+
+
+\section{Détection des patterns de victoire.}
+
+-Difficulté pour mémoriser quel sont les jetons qui forment le pattern de victoire.
+
+-Difficulté pour l\textquotesingle implémentation des diagonales, ci-dessous le schéma résumant les nombreuses méthodes de vérifications.
+On a divisé la recherche de diagonale en 4 méthodes.
+
+
+
+On les regroupe ensuite dans une dernière méthode qui va se charger de mettre à jour les pions qui ont permis de gagner (en cas de victoire).
+
+
+\makebox[\textwidth]{\includegraphics[width=500pt]{img/1}}
+\makebox[\textwidth]{\includegraphics[width=500pt]{img/2}}
+
+
+\section{Méthode de décision de l\textquotesingle IA}
+
+
+Premièrement, on va tester pour chaque colonne si le joueur peut gagner.\\%
+Si aucune colonne ne permet de gagner, on va regarder où l\textquotesingle adversaire peut potentiellement gagner et le stopper.\\%
+Dans le cas contraire, on va essayer de bloquer l\textquotesingle adversaire au maximum en cherchant la valeur maximum.\\%
+
+
+\end{document}
