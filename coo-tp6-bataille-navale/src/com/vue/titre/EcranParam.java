@@ -113,38 +113,6 @@ public class EcranParam extends JPanel{
         this.add(startLabel);
 		this.add(Box.createRigidArea(new Dimension(5,40)));
 		
-		//Nombre de cases
-		JPanel p=new JPanel();
-		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
-		p.add(new JLabel("Nombre de lignes :"));
-		p.add(Box.createRigidArea(new Dimension(30,10)));
-		p.add(nbRow);
-		this.add(p);
-		this.add(Box.createRigidArea(new Dimension(5,40)));
-		
-		//Nombre de colonnes
-		JPanel p4=new JPanel();
-		p4.setLayout(new BoxLayout(p4,BoxLayout.LINE_AXIS));
-		p4.add(new JLabel("Nombre de colonnes :"));
-		p4.add(Box.createRigidArea(new Dimension(30,10)));
-		p4.add(nbCol);
-		this.add(p4);
-		this.add(Box.createRigidArea(new Dimension(5,40)));
-		
-		JPanel p5= new JPanel();
-		p5.setLayout(new BoxLayout(p5,BoxLayout.LINE_AXIS));
-		p5.add(new JLabel("Nombre de jetons a aligner :"));
-		p5.add(nbJetonsG);
-		this.add(p5);
-		this.add(Box.createRigidArea(new Dimension(5,40)));
-		
-		
-		String str4[]={"J1:ROUGE    J2:JAUNE","J1:JAUNE    J2:ROUGE"};
-        couleurJeton = new JComboBox(str4);
-        couleurJeton.setMaximumSize(new Dimension(200,50));
-        couleurJeton.setSelectedIndex(0);
-        this.add(couleurJeton);
-		this.add(Box.createRigidArea(new Dimension(5,40)));
 		
         	
 		

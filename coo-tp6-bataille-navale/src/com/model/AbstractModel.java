@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.observer.Observable;
 import com.observer.Observer;
+import com.vue.grid.CaseValueVue;
 
 /**
  * Classe abstraite des modèles 
@@ -29,7 +30,10 @@ public abstract class AbstractModel implements Observable{
 	public abstract boolean retirerJetonIA(int x);
 	*/
 	
-	public abstract boolean bomb(int x, int y);
+	public abstract void bombAdversaire(int x, int y);
+	public abstract void bombJoueur(int x, int y);
+	public abstract boolean isAlreadyShot(int x, int y);
+	public abstract void verifWin();
 	
 	
 	public abstract void reinit();
@@ -44,32 +48,28 @@ public abstract class AbstractModel implements Observable{
 
 	/**
 	 * Notifier quel est le prochain joueur
-	 * @param tour prochain joueur 
 	 */
-	public void notifyTour(int tour){
+	public void notifyTour(){
 		for(Observer obs : listObserver)
-			obs.updateTour(tour);
+			obs.updateTour();
 	}
 
 	
 	
-	@Override
-	public void notifyWinner(int tour) {
-		for(Observer obs : listObserver)
-			obs.updateWinner(tour);
-	}
 	
-	/**
-	 * Notifier un nouveau jeton
-	 * @x Abscisse de la case
-	 * @y Ordonnée de la case 
-	 * @v Valeur du jeton
-	 */
 	@Override
-	public void notifyNewChip(int x, int y, CaseValue v) {
+	public void notifyWinner() {
 		for(Observer obs : listObserver)
-			obs.updateChip(x, y, v);
+			obs.updateWinner();
 	}
+
+	@Override
+	public void notifyLoser() {
+		for(Observer obs : listObserver)
+			obs.updateLoser();
+	}
+
+	
 	
 	/**
 	 * Notifier la réinitialisation de la grille
@@ -89,14 +89,33 @@ public abstract class AbstractModel implements Observable{
 
 	}
 	
+	@Override
+	public void notifyBombJoueur(int x, int y, CaseValueVue v) {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateCaseJoueur(x, y, v);
+	}
+
+	/**
+	 * Notifier qu'une bombe a été lancé sur l'adversaire
+	 */
+	@Override
+	public void notifyBombAdversaire(int x, int y, CaseValueVue v) {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateCaseAdversaire(x, y, v);
+	}
+	
 	/**
 	 * Notifier Colonne pleine
 	 */
 	@Override
 	public void notifyFull() {
 		// TODO Auto-generated method stub
-		
+		for(Observer obs : listObserver)
+			obs.updateFull();
 	}
+	
 	
 	
 	

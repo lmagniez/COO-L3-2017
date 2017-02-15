@@ -3,6 +3,7 @@ package com.observer;
 import java.util.ArrayList;
 import com.model.CaseValue;
 import com.model.patternWin;
+import com.vue.grid.CaseValueVue;
 import com.vue.titre.Vue1;
 
 /**
@@ -15,10 +16,12 @@ public interface Observable {
 	public void removeObserver();
 	
 	public void notifyTour(int tour);
-	public void notifyNewBombJ1(int x, int y, CaseValue v);
-	public void notifyNewBombJ2(int x, int y, CaseValue v);
+	public void notifyBombJoueur(int x, int y, CaseValueVue v);
+	public void notifyBombAdversaire(int x, int y, CaseValueVue v);
 	
-	public void notifyWinner(int tour);
+	public void notifyWinner();
+	public void notifyLoser();
+	
 	public void notifyFull();
 	
 	

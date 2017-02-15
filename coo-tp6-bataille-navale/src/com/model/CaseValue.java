@@ -1,12 +1,13 @@
 package com.model;
 
+
 /**
  * Enum correspondant aux différentes valeurs que peut avoir une case
  * @author loick
  *
  */
 public enum CaseValue {
-	TOUCHE,NONE;
+	NONE,TOUCHE;
 	
 	/**
 	 * Accéder à la CaseValue en fonction d'un e,ntier
@@ -26,3 +27,4 @@ public enum CaseValue {
     }
 	
 }
+

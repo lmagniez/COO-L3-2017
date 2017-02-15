@@ -27,14 +27,15 @@ public class GridControler extends AbstractControler{
 	  */
 	public void control()
 	{
-		if(!this.calc.columnFull(x))
+		if(!this.calc.isAlreadyShot(x, y))
 		{
-			this.calc.ajoutJeton(x);
+			this.calc.bombJoueur(x, y);
 			this.calc.verifWin();
 		}
 		else
+		{
 			this.calc.notifyFull();
-		
+		}
 	}
 
 	 

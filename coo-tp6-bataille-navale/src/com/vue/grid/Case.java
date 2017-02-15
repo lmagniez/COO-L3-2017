@@ -22,7 +22,7 @@ public class Case
 	protected int posY;
 	protected int hX;
 	protected int hY;
-	protected Color c;
+	protected CaseValueVue c;
 	
 	public static int DIAMETRE_CASE;
 
@@ -35,23 +35,9 @@ public class Case
 	 */
 	public Case(int x, int y, int nbCol, int nbRow)
 	{
-		/*
-		int espacementX=(Grid.GRILLE_WIDTH-DIAMETRE_CASE*nbCol)/(nbCol+1);
-		int espacementY=(Grid.GRILLE_HEIGHT-DIAMETRE_CASE*nbRow)/(nbRow+1);
 		
-		
-		this.x=x;
-		this.y=y;
-		this.hX=DIAMETRE_CASE;
-		this.hY=DIAMETRE_CASE;
-		this.posX=espacementX*(x+1)+DIAMETRE_CASE*x;
-		this.posY=espacementY*(y+1)+DIAMETRE_CASE*y;
-		this.c=Color.WHITE;
-		*/
-		
-		int DIAMETRE_CASE1=(int) (Grid.GRILLE_WIDTH/nbCol-(30-(0.5*nbCol)));
-		int DIAMETRE_CASE2=(int) (Grid.GRILLE_WIDTH/nbRow-(30-(0.5*nbRow)));
-		
+		int DIAMETRE_CASE1=(int) (Grid.GRILLE_WIDTH/nbCol);
+		int DIAMETRE_CASE2=(int) (Grid.GRILLE_WIDTH/nbRow);
 		
 		
 		if(DIAMETRE_CASE1<DIAMETRE_CASE2)
@@ -71,7 +57,7 @@ public class Case
 		this.hY=DIAMETRE_CASE;
 		this.posX=espacementX*(x+1)+DIAMETRE_CASE*x;
 		this.posY=espacementY*(y+1)+DIAMETRE_CASE*y;
-		this.c=Color.WHITE;
+		this.c=CaseValueVue.NONE;
 		
 	}
 }

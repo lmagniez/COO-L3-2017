@@ -3,6 +3,8 @@ package com.model;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.vue.grid.CaseValueVue;
+
 /**
  * Classe correspondant au modèle de la grille
  * @author loick
@@ -13,8 +15,9 @@ public class GridModel extends AbstractModel{
 	protected int longueurX;
 	protected int longueurY;
 	
+	protected CaseModel casesJoueur[][];//cases où le joueur intéragit
+	protected CaseModel casesAdversaire[][];//cases où l'adversaire intéragit (contient les bateaux)
 	
-	protected CaseModel cases[][];
 	protected BateauModel bateaux[];
 	
 	
@@ -24,8 +27,10 @@ public class GridModel extends AbstractModel{
 	protected boolean isIA[]; 
 	private IA ia;
 
-	private int nbBateauxTouches;
-
+	private int nbBateauxTouchesJoueur,nbBateauxTouchesAdversaire;
+	
+	
+	
 	/**
 	 * Constructeur de la grille
 	 * @param rows nombre de lignes
@@ -37,29 +42,37 @@ public class GridModel extends AbstractModel{
 		this.longueurX=longueurX;
 		this.longueurY=longueurY;
 		this.bateaux=new BateauModel[Constantes.NB_BATEAUX];
-		this.nbBateauxTouches=0;
+		this.nbBateauxTouchesJoueur=0;
+		this.nbBateauxTouchesAdversaire=0;
 		
 		
-		this.cases=new CaseModel[longueurX][longueurY];
+		this.casesJoueur=new CaseModel[longueurX][longueurY];
+		this.casesAdversaire=new CaseModel[longueurX][longueurY];
 		for(int i=0; i<longueurX; i++){
 			for(int j=0; j<longueurY; j++){
-				cases[i][j]=new CaseModel();
+				casesJoueur[i][j]=new CaseModel();
+				casesAdversaire[i][j]=new CaseModel();
 			}
 		}
-		
 		placerBateau(TypeBateau.BATEAU_2);
 		placerBateau(TypeBateau.BATEAU_3);
 		placerBateau(TypeBateau.BATEAU_3);
 		placerBateau(TypeBateau.BATEAU_4);
 		placerBateau(TypeBateau.BATEAU_5);
+	
 		
+		/*
 		Random r=new Random();
 		int cpt=0;
 		while(cpt!=20){
+			System.out.println("cpt");
 			int posX=r.nextInt(longueurX);
 			int posY=r.nextInt(longueurY);
-			if(bomb(posX,posY))cpt++;
-		}
+			if(!this.isAlreadyShot(posX, posY)){
+				bombAdversaire(posX,posY);
+				cpt++;
+			}
+		}*/
 		
 		//ia= new IA(this);
 	}
@@ -79,7 +92,7 @@ public class GridModel extends AbstractModel{
 				positionY=r.nextInt(longueurY);
 				ok=true;
 				for(int x=positionX; x<positionX+tailleBateau; x++){
-					if(cases[x][positionY].idBateau!=-1)
+					if(casesJoueur[x][positionY].idBateau!=-1)
 						ok=false;		
 				}
 			}
@@ -89,7 +102,7 @@ public class GridModel extends AbstractModel{
 				//checker positions libres
 				ok=true;
 				for(int y=positionY; y<positionY+tailleBateau; y++){
-					if(cases[positionX][y].idBateau!=-1)
+					if(casesJoueur[positionX][y].idBateau!=-1)
 						ok=false;
 				}
 			}
@@ -102,18 +115,64 @@ public class GridModel extends AbstractModel{
 		
 	}
 	
+	@Override
+	public void verifWin() {
+		if(this.nbBateauxTouchesJoueur==Constantes.NB_COUPS_NECESSAIRES)
+			this.notifyWinner();
+		if(this.nbBateauxTouchesAdversaire==Constantes.NB_COUPS_NECESSAIRES)
+			this.notifyLoser();
+	}
 	
-	public boolean bomb(int x, int y){
-		if(cases[x][y].v!=CaseValue.TOUCHE){
+	public boolean isAlreadyShot(int x, int y){
+		return (casesJoueur[x][y].v==CaseValue.TOUCHE);
+	}
+	
+	/**
+	 * Se faire bombarder par l'adversaire
+	 * Recoit BOMB X Y du serveur
+	 * Renvoie au serveur TOUCHE ou MISSED
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public void bombAdversaire(int x, int y){
 			
-			int idB=cases[x][y].idBateau;
-			cases[x][y].v=CaseValue.TOUCHE;
-			if(idB!=-1){
-				bateaux[idB].setNbTouches(bateaux[idB].getNbTouches()+1);
-			}
-			return true;
+		int idB=casesJoueur[x][y].idBateau;
+		casesJoueur[x][y].v=CaseValue.TOUCHE;
+		if(idB!=-1){
+			bateaux[idB].setNbTouches(bateaux[idB].getNbTouches()+1);
+			this.nbBateauxTouchesAdversaire++;
+			this.notifyBombAdversaire(x, y, CaseValueVue.TOUCHE);
+			//renvoyer TOUCHE
 		}
-		return false;
+		else{
+			this.notifyBombAdversaire(x, y, CaseValueVue.PLOUF);
+			//renvoyer MISSED
+		}
+	}
+	
+	/**
+	 * Bombarder l'adversaire
+	 * Envoie BOMB X Y au serveur
+	 * Recoit MISSED/TOUCHE
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public void bombJoueur(int x, int y){
+		
+		//DEMANDER ET RECEVOIR REPONSE
+		String reponse="TOUCHE";
+		casesJoueur[x][y].v=CaseValue.TOUCHE;
+		if(reponse.equals("TOUCHE")){
+			this.notifyBombJoueur(x, y, CaseValueVue.TOUCHE);
+			this.nbBateauxTouchesJoueur++;
+		}
+		if(reponse.equals("MISSED")){
+			this.notifyBombJoueur(x, y, CaseValueVue.PLOUF);
+		}
+		this.notifyTour();
 	}
 	
 
@@ -124,7 +183,7 @@ public class GridModel extends AbstractModel{
 	public void reinit() {
 		for(int i=0; i<longueurX; i++){
 			for(int j=0; j<longueurY; j++){
-				cases[i][j].v=CaseValue.NONE;
+				casesJoueur[i][j].v=CaseValue.NONE;
 			}
 		}
 		this.notifyReinit();
@@ -141,16 +200,17 @@ public class GridModel extends AbstractModel{
 	{
 		for(int i=0; i<longueurX; i++){
 			for(int j=0; j<longueurY; j++){
-				int idB=cases[i][j].idBateau;
+				int idB=casesJoueur[i][j].idBateau;
 				if(idB!=-1)
-					System.out.print(bateaux[idB].getType()+"("+cases[j][i].v+")"+"\t");
+					System.out.print(bateaux[idB].getType()+"("+casesJoueur[j][i].v+")"+"\t");
 				else
-					System.out.print(TypeBateau.NONE.name()+"("+cases[j][i].v+")"+"\t");
+					System.out.print(TypeBateau.NONE.name()+"("+casesJoueur[j][i].v+")"+"\t");
 			}
 			System.out.println();
 		}
 	}
 
+	
 	public static void main(String[] args) {
 		System.out.println("dep");
 		
@@ -158,6 +218,11 @@ public class GridModel extends AbstractModel{
 		System.out.println("fin");
 		g.afficher();
 	}
+	 
+	
+	
+
+	
 
 
 

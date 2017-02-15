@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import com.model.Constantes;
+
 
 /**
  * JPanel du score de chaque joueur et du joueur courant.
@@ -31,9 +33,20 @@ public class Score extends JPanel {
 	private VueGrid vue;
 	
 	private ImageIcon title;
+	private int idJoueur;
 	
 	JTextArea textBox;
+	private String msgScore;
+	private String msgCoupsPris;
+	private String msgCoupsRates;
 	private String msgTour;
+	
+	
+	private int score;
+	private int coupsPris;
+	private int coupsRates;
+	
+	
 	
 	private JButton retour;
 	private JButton restart;
@@ -45,11 +58,13 @@ public class Score extends JPanel {
 	 * Constructeur, initialise le Jpanel
 	 * @param nbJoueur
 	 */
-	public Score(VueGrid vue, int nbJoueur)
+	public Score(VueGrid vue, int idJoueur)
 	{
 		this.vue=vue;
+		this.idJoueur=idJoueur;
 		
-		this.setMaximumSize(new Dimension(200,200));
+		this.setPreferredSize(new Dimension(Constantes.TAILLE_ECRAN_GRILLE,Constantes.TAILLE_ECRAN_SCORE));
+		this.setMaximumSize(new Dimension(Constantes.TAILLE_ECRAN_GRILLE,Constantes.TAILLE_ECRAN_SCORE));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -61,7 +76,6 @@ public class Score extends JPanel {
 		JLabel titre2 = new JLabel("test");
 		titre2.setIcon(title);
 		
-		msgTour="La textBox";
 		textBox=initTextArea(msgTour);
 		textBox.setEditable(false);
 		
@@ -78,7 +92,18 @@ public class Score extends JPanel {
 		p.add(restart);
 		p.add(retour);
 		this.add(p);
-		this.changeTour(0);
+		
+		this.coupsPris=0;
+		this.coupsRates=0;
+		this.score=0;
+		
+		this.msgCoupsPris= "Coups Pris: "+coupsPris;
+		this.msgCoupsRates= "Coups Rates: "+coupsRates;
+		this.msgScore= "Score: "+score;
+		this.changeJoueur(idJoueur);
+		
+		//this.majTextBox();
+		
 		
 		repaint();
 		
@@ -110,12 +135,44 @@ public class Score extends JPanel {
 	 * Changer le joueur courant (maj affichage)
 	 * @param tour joueur courant
 	 */
-	public void changeTour(int tour)
+	public void changeJoueur(int idJoueur)
 	{
-		msgTour="Au tour de: J"+(tour+1);
-		textBox.setText(msgTour);	
+		if(idJoueur==0)
+			msgTour="JOUEUR";
+		if(idJoueur==1)
+			msgTour="ADVERSAIRE";
+		
+		majTextBox();
 	}
 	
+	
+	public void changeScore(Score adversaire)
+	{
+		this.score=adversaire.coupsPris*1000+adversaire.coupsRates*100;
+		msgScore="Score: "+score;
+		majTextBox();
+	}
+	
+	public void addCoupsPris()
+	{
+		coupsPris++;
+		msgCoupsPris="Coups pris: "+coupsPris;
+		vue.score2.changeScore(this);
+		majTextBox();
+	}
+	
+	public void addCoupsRates()
+	{
+		coupsRates++;
+		msgCoupsRates="Coups rates: "+coupsRates;
+		vue.score2.changeScore(this);
+		majTextBox();
+	}
+	
+	public void majTextBox()
+	{
+		textBox.setText(msgTour+"\n"+msgScore+"\n"+msgCoupsPris+"\n"+msgCoupsRates);
+	}
 	
 	
 	class ButtonListener implements ActionListener
@@ -148,5 +205,15 @@ public class Score extends JPanel {
 		textBox.setText(msgTour);	
 	}
 	
+	
+	public void paintComponent(Graphics g)
+	{
+		super.paintComponent(g);
+		g.setColor(Color.GREEN);
+		if(this.vue.getTour()==idJoueur)
+			g.fillOval (10,Constantes.TAILLE_ECRAN_SCORE-20, 10, 10);
+		//if(this.vue.getTour()==1)
+		//	g.fillOval (10,Constantes.TAILLE_ECRAN_SCORE-20, 10, 10);
+	}
 	
 }

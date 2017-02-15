@@ -40,9 +40,10 @@ public abstract class AbstractControler {
 	 * Ajouter un jeton à l'abscisse x (appelle la méthode control).
 	 * @param x
 	 */
-	public void setJeton(int x){
+	public void setBomb(int x,int y){
 		
-		this.x=x;	
+		this.x=x;
+		this.y=y;
 		control();
 	}
 	
