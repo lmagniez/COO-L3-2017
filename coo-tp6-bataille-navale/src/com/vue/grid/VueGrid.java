@@ -2,11 +2,20 @@ package com.vue.grid;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.controler.AbstractControler;
 import com.controler.GridControler;
@@ -21,6 +30,9 @@ import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.titre.Vue1;
 
+import reseau.Shifumi.Recevoir_infos;
+import reseau.Shifumi.Serveur2;
+
 /**
  * Classe correspondant à la vue du jeu
  * @author loick
@@ -29,20 +41,24 @@ import com.vue.titre.Vue1;
 
 public class VueGrid extends Fenetre implements Observer {
 
-	// private JPanel container = new JPanel();
-
+	//elements de la vue
 	protected Vue1 vueMenu;
 	private Grid gridJoueur,gridAdversaire;
-	protected Score score,score2;
+	private Score score;
+	protected Score score2;
 	protected boolean swapColor;
 	private int idJoueur;
 	private int tour;
-
-
 	protected Bateau[] bateaux;
 	
-	// L'instance de notre objet controleur
-	protected AbstractControler controler;
+	//serveur
+	protected Recevoir_infos infos;
+	protected Socket socket;
+	protected BufferedReader in;
+	protected PrintWriter out;
+	
+	//controler
+	private AbstractControler controler;
 
 	/**
 	 * Constructeur de la vue de la grille.
@@ -56,10 +72,9 @@ public class VueGrid extends Fenetre implements Observer {
 	 */
 	
 	//ADD CONTROLEr
-	public VueGrid(AbstractControler gridControler, int nbRow, int nbCol, Vue1 vue1) {
+	public VueGrid(AbstractControler gridControler, Socket s, int nbRow, int nbCol, Vue1 vue1) {
 		
-		this.controler=gridControler;
-		this.vueMenu=vue1;
+		this.socket=s;
 		
 		this.setSize(Constantes.TAILLE_ECRAN_GRILLE*2+Constantes.TAILLE_SEPARATION, 
 				Constantes.TAILLE_ECRAN_GRILLE+Constantes.TAILLE_ECRAN_SCORE);
@@ -69,30 +84,19 @@ public class VueGrid extends Fenetre implements Observer {
 		this.setResizable(false);
 		this.setLayout(new BoxLayout(getContentPane(), BoxLayout.LINE_AXIS));
 		
+		this.setControler(gridControler);
+		this.vueMenu=vue1;
 		this.gridJoueur=new Grid(this, nbRow, nbCol, true);
 		this.gridAdversaire=new Grid(this, nbRow, nbCol, false);
-		
-		bateaux=new Bateau[Constantes.NB_BATEAUX];
-		this.bateaux[0]=new Bateau(3,3, TypeBateau.BATEAU_4, Orientation.VERTICAL);
-		this.bateaux[1]=new Bateau(2,5, TypeBateau.BATEAU_5, Orientation.VERTICAL);
-		this.bateaux[2]=new Bateau(7,7, TypeBateau.BATEAU_3, Orientation.HORIZONTAL);
-		this.bateaux[3]=new Bateau(0,0, TypeBateau.BATEAU_2, Orientation.HORIZONTAL);
-		this.bateaux[4]=new Bateau(0,2, TypeBateau.BATEAU_2, Orientation.HORIZONTAL);
-		
-		
-		
-		this.score= new Score(this,0);
+		this.setScore(new Score(this,0));
 		this.score2= new Score(this,1);
-		score.addCoupsPris();
-		
-		
-		
+		getScore().addCoupsPris();
 		
 		
 		
 		JPanel panelJ1=new JPanel();
 		panelJ1.setLayout(new BoxLayout(panelJ1,BoxLayout.PAGE_AXIS));
-		panelJ1.add(score);
+		panelJ1.add(getScore());
 		panelJ1.add(gridJoueur);
 		
 		JPanel panelJ2=new JPanel();
@@ -109,20 +113,79 @@ public class VueGrid extends Fenetre implements Observer {
 		getContentPane().setBackground(Color.LIGHT_GRAY);
 		this.repaint();
 	
+		bateaux=new Bateau[Constantes.NB_BATEAUX];
+		getControler().requestBateaux();
 		
-		}
+		this.lancerCommunication();
+		
+		
+		/*
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        System.out.println("yes!!");
+		    	try {
+					socket.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		});
+		*/
+		
+	}
 
-	private Component topJustify( JPanel panel )  {
-	    Box  b = Box.createVerticalBox();
-	    b.add( panel );
-	    b.add( Box.createVerticalGlue() );
-	    // (Note that you could throw a lot more components
-	    // and struts and glue in here.)
-	    return b;
+	public void lancerCommunication(){
+		try{
+			
+			System.out.println("Demande de connexion");
+			this.in=new BufferedReader (new InputStreamReader(this.socket.getInputStream()));
+			this.out=new PrintWriter(this.socket.getOutputStream());
+			String message_distant = this.in.readLine();
+			System.out.println(message_distant);
+			
+			
+			this.out.println("La reponse du joueur");
+			this.out.flush();
+			
+			/*
+			String msg_distant = in.readLine();
+			System.out.println("has red:");
+			System.out.println("Recevoir_infos: "+msg_distant);
+			
+			this.getScore().setMsg(msg_distant);
+			*/
+			
+			infos = new Recevoir_infos(this, socket, in, out);
+			Thread t=new Thread(infos);
+			t.start();
+			
+			
+		}
+		catch(UnknownHostException e){
+			e.printStackTrace();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 	
+	public void sendToServer(String msg){
+		
+		try {
+			out=new PrintWriter(socket.getOutputStream());
+			out.println(msg);
+			out.flush();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
-
 	
 	/**
 	 * Mettre à jour l'affichage du tour dans le panel.
@@ -133,7 +196,7 @@ public class VueGrid extends Fenetre implements Observer {
 	}
 
 	public void updateFull(){
-		this.score.textBox.setText("Déjà joué");
+		this.getScore().setMsg("Déjà joué");
 	}
 
 
@@ -149,7 +212,7 @@ public class VueGrid extends Fenetre implements Observer {
 		// TODO Auto-generated method stub
 		System.out.println("WINNER");
 		this.gridJoueur.actif=false;
-		this.score.displayWinner(1);
+		this.getScore().displayWinner(1);
 		
 	}
 	
@@ -158,7 +221,7 @@ public class VueGrid extends Fenetre implements Observer {
 		// TODO Auto-generated method stub
 		System.out.println("Loser..;");
 		this.gridJoueur.actif=false;
-		this.score.displayWinner(0);
+		this.getScore().displayWinner(0);
 		
 	}
 	
@@ -167,7 +230,14 @@ public class VueGrid extends Fenetre implements Observer {
 	@Override
 	public void updateReinit() {
 		// TODO Auto-generated method stub
-		
+		for(int i=0; i<this.gridAdversaire.nbRow; i++)
+		{
+			for(int j=0; j<this.gridAdversaire.nbCol; j++)
+			{	
+				this.gridAdversaire.cases[i][j].c=CaseValueVue.NONE;
+				this.gridJoueur.cases[i][j].c=CaseValueVue.NONE;
+			}
+		}
 	}
 
 	@Override
@@ -182,6 +252,12 @@ public class VueGrid extends Fenetre implements Observer {
 		this.repaint();
 	}
 
+	@Override
+	public void updateBateau(int x, int y, TypeBateau type, Orientation o, int idB) {
+		this.bateaux[idB]=new Bateau(x,y,type,o);
+	}
+	
+	/*
 	public static void main(String[] args) {
 		
 		//VueGrid vueJeu = new VueGrid(null, 10, 10, null);
@@ -198,12 +274,30 @@ public class VueGrid extends Fenetre implements Observer {
 		
 		vueJeu.setVisible(true);
 		
-	}
+	}*/
 
 	public int getTour() {
 		// TODO Auto-generated method stub
 		return tour;
 	}
+
+	public AbstractControler getControler() {
+		return controler;
+	}
+
+	public void setControler(AbstractControler controler) {
+		this.controler = controler;
+	}
+
+	public Score getScore() {
+		return score;
+	}
+
+	public void setScore(Score score) {
+		this.score = score;
+	}
+
+	
 	
 
 }

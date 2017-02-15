@@ -2,16 +2,15 @@ package com.model;
 
 public class BateauModel {
 
-	private int idJoueur;
 	private GridModel grid;
-	private int debutX;
-	private int debutY;
-	private TypeBateau type;
-	private int tailleBateau;
+	protected int debutX;
+	protected int debutY;
+	protected TypeBateau type;
+	protected int tailleBateau;
 	private int nbTouches;
-	private int id;
+	protected int id;
 	
-	private Orientation o;
+	protected Orientation o;
 	
 	
 	public BateauModel(GridModel grid, int id, int debutX, int debutY, TypeBateau type, Orientation d) {
@@ -24,8 +23,15 @@ public class BateauModel {
 		this.setNbTouches(0);
 		this.o = d;
 		placerBateau();
+		
 	}
 	
+	@Override
+	public String toString() {
+		return "BateauModel [grid=" + grid + ", debutX=" + debutX + ", debutY=" + debutY + ", type=" + type
+				+ ", tailleBateau=" + tailleBateau + ", nbTouches=" + nbTouches + ", id=" + id + ", o=" + o + "]";
+	}
+
 	public void placerBateau(){
 		
 		int tailleBateau=getType().fromType(this.getType());
@@ -37,7 +43,7 @@ public class BateauModel {
 		else if(o==Orientation.HORIZONTAL)
 			for(int y=debutY; y<debutY+tailleBateau;y++){
 				grid.casesAdversaire[debutX][y].v=CaseValue.NONE;
-				grid.casesAdversaire[debutX][y].idBateau=id;;
+				grid.casesAdversaire[debutX][y].idBateau=id;
 			}
 		
 	}

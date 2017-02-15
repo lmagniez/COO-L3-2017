@@ -25,7 +25,6 @@ public class GridModel extends AbstractModel{
 	
 	
 	protected boolean isIA[]; 
-	private IA ia;
 
 	private int nbBateauxTouchesJoueur,nbBateauxTouchesAdversaire;
 	
@@ -54,29 +53,25 @@ public class GridModel extends AbstractModel{
 				casesAdversaire[i][j]=new CaseModel();
 			}
 		}
+		genererBateaux();
+	}
+	
+	public void notifierBateaux(){
+		for(int i=0; i<Constantes.NB_BATEAUX; i++){
+			this.notifyNewBateau(bateaux[i].debutX,bateaux[i].debutY,bateaux[i].type,
+					bateaux[i].o,i);
+		}
+	}
+
+	public void genererBateaux(){
+		nb_bateaux=0;
 		placerBateau(TypeBateau.BATEAU_2);
 		placerBateau(TypeBateau.BATEAU_3);
 		placerBateau(TypeBateau.BATEAU_3);
 		placerBateau(TypeBateau.BATEAU_4);
 		placerBateau(TypeBateau.BATEAU_5);
-	
-		
-		/*
-		Random r=new Random();
-		int cpt=0;
-		while(cpt!=20){
-			System.out.println("cpt");
-			int posX=r.nextInt(longueurX);
-			int posY=r.nextInt(longueurY);
-			if(!this.isAlreadyShot(posX, posY)){
-				bombAdversaire(posX,posY);
-				cpt++;
-			}
-		}*/
-		
-		//ia= new IA(this);
 	}
-
+	
 	public void placerBateau(TypeBateau t){
 		int tailleBateau=TypeBateau.fromType(t);
 		
@@ -88,11 +83,12 @@ public class GridModel extends AbstractModel{
 		boolean ok=false;
 		while(!ok){
 			if(orientation==Orientation.VERTICAL){
+				
 				positionX=r.nextInt(longueurX-tailleBateau);
 				positionY=r.nextInt(longueurY);
 				ok=true;
 				for(int x=positionX; x<positionX+tailleBateau; x++){
-					if(casesJoueur[x][positionY].idBateau!=-1)
+					if(casesAdversaire[x][positionY].idBateau!=-1)
 						ok=false;		
 				}
 			}
@@ -102,16 +98,17 @@ public class GridModel extends AbstractModel{
 				//checker positions libres
 				ok=true;
 				for(int y=positionY; y<positionY+tailleBateau; y++){
-					if(casesJoueur[positionX][y].idBateau!=-1)
+					if(casesAdversaire[positionX][y].idBateau!=-1)
 						ok=false;
 				}
 			}
 		}
-		
 		bateaux[nb_bateaux]=new BateauModel(this,nb_bateaux,positionX,positionY,t,orientation);
+		this.notifyNewBateau(bateaux[nb_bateaux].debutX,bateaux[nb_bateaux].debutY,bateaux[nb_bateaux].type,
+				bateaux[nb_bateaux].o,nb_bateaux);
 		nb_bateaux++;
 		
-		
+
 		
 	}
 	
@@ -187,8 +184,6 @@ public class GridModel extends AbstractModel{
 			}
 		}
 		this.notifyReinit();
-		this.ia=new IA(this);
-		this.notifyTour(0);
 	}
 
 	
@@ -200,24 +195,28 @@ public class GridModel extends AbstractModel{
 	{
 		for(int i=0; i<longueurX; i++){
 			for(int j=0; j<longueurY; j++){
-				int idB=casesJoueur[i][j].idBateau;
-				if(idB!=-1)
-					System.out.print(bateaux[idB].getType()+"("+casesJoueur[j][i].v+")"+"\t");
-				else
-					System.out.print(TypeBateau.NONE.name()+"("+casesJoueur[j][i].v+")"+"\t");
+				int idB=casesAdversaire[i][j].idBateau;
+				if(idB!=-1){
+					System.out.print(bateaux[idB].getType()+"("+casesAdversaire[i][j].v+")"+"\t");
+				
+				}else
+					System.out.print(TypeBateau.NONE.name()+"("+casesAdversaire[i][j].v+")"+"\t");
 			}
 			System.out.println();
 		}
+		
+		for(int i=0; i<longueurX; i++){
+			for(int j=0; j<longueurY; j++){
+				int idB=casesAdversaire[i][j].idBateau;
+				System.out.print(idB+" ");
+				
+			}
+			System.out.println();
+		}
+		
 	}
 
 	
-	public static void main(String[] args) {
-		System.out.println("dep");
-		
-		GridModel g=new GridModel(10,10);
-		System.out.println("fin");
-		g.afficher();
-	}
 	 
 	
 	

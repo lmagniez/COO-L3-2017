@@ -32,15 +32,15 @@ public class Bateau {
 	public void placerBateau(){
 		
 		if(orientation==Orientation.VERTICAL){
-			this.posX=Case.DIAMETRE_CASE*debutX;
-			this.posY=Case.DIAMETRE_CASE*debutY;
+			this.posX=Case.DIAMETRE_CASE*debutY;
+			this.posY=Case.DIAMETRE_CASE*debutX;
 			this.hX=Case.DIAMETRE_CASE;
 			this.hY=Case.DIAMETRE_CASE*tailleBateau;
 							
 		}
 		if(orientation==Orientation.HORIZONTAL){
-			this.posX=Case.DIAMETRE_CASE*debutX;
-			this.posY=Case.DIAMETRE_CASE*debutY;
+			this.posX=Case.DIAMETRE_CASE*debutY;
+			this.posY=Case.DIAMETRE_CASE*debutX;
 			this.hX=Case.DIAMETRE_CASE*tailleBateau;
 			this.hY=Case.DIAMETRE_CASE;
 							

@@ -1,7 +1,10 @@
 package com.observer;
 
 import java.util.ArrayList;
+
 import com.model.CaseValue;
+import com.model.Orientation;
+import com.model.TypeBateau;
 import com.model.patternWin;
 import com.vue.grid.CaseValueVue;
 
@@ -15,6 +18,8 @@ public interface Observer {
 	
 	public void updateCaseJoueur(int x, int y, CaseValueVue v);
 	public void updateCaseAdversaire(int x, int y, CaseValueVue v);
+	public void updateBateau(int x, int y, TypeBateau type, Orientation o, int idB);
+	
 	
 	public void updateWinner();
 	public void updateLoser();

@@ -27,7 +27,11 @@ public class GridControler extends AbstractControler{
 	  */
 	public void control()
 	{
-		if(!this.calc.isAlreadyShot(x, y))
+		if(this.bateaux){
+			this.bateaux=false;
+			this.calc.notifierBateaux();
+		}
+		else if(!this.calc.isAlreadyShot(x, y))
 		{
 			this.calc.bombJoueur(x, y);
 			this.calc.verifWin();

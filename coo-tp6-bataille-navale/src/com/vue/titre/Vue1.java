@@ -1,6 +1,8 @@
 package com.vue.titre;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -54,21 +56,29 @@ public class Vue1 extends Fenetre{
 	
 	/**
 	 * Initialise une fenetre de jeu (et l'initialise)
-	 * @param swapColor 
 	 */
-	public void initFenetreEcranJeu(int nbRow, int nbCol, int nbJR, boolean[] isIA, boolean swapColor)
+	public void initFenetreEcranJeu(int nbRow, int nbCol, boolean[] isIA)
 	{
+		Socket socket = null;
+		try {
+			socket = new Socket(InetAddress.getLocalHost(),1791);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		//Creation du modele de grille
-		AbstractModel gridModel = new GridModel(nbRow, nbCol);
-		//Creation du controleur
-		AbstractControler gridControler = new GridControler(gridModel);
-		//Creation de notre fenetre avec le controleur en parametre
-		VueGrid vueJeu = new VueGrid(gridControler, nbRow, nbCol,this);
-		//Ajout de la fenetre comme observer de notre modele
-		gridModel.addObserver(vueJeu);
-		this.setVisible(false);
-		
+		if(socket!=null){
+			//Creation du modele de grille
+			AbstractModel gridModel = new GridModel(nbRow, nbCol);
+			//Creation du controleur
+			AbstractControler gridControler = new GridControler(gridModel);
+			//Creation de notre fenetre avec le controleur en parametre
+			VueGrid vueJeu = new VueGrid(gridControler, socket, nbRow, nbCol,this);
+			//Ajout de la fenetre comme observer de notre modele
+			gridModel.addObserver(vueJeu);
+			vueJeu.getControler().requestBateaux();
+			this.setVisible(false);
+		}
 	}
 	
 	

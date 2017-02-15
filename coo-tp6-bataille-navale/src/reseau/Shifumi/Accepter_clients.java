@@ -1,4 +1,4 @@
-package Shifumi;
+package reseau.Shifumi;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,16 +12,19 @@ class Accepter_clients implements Runnable {
 	private ServerSocket socketserver;
 	private Socket socket;
 	private int nbrClient=1;
-	private int idJoueur;
+	private int idClient;
 	
 	PrintWriter out;
 	
-	public Accepter_clients(Serveur2 serveur, ServerSocket s, int idJoueur)
+	public Accepter_clients(Serveur2 serveur, ServerSocket s, int idClient)
 	{
 		this.serveur=serveur;
 		this.socketserver=s;
-		this.idJoueur=idJoueur;
-		
+		this.idClient=idClient;
+		if(idClient==0)
+			this.serveur.hasClient1=true;
+		if(idClient==1)
+			this.serveur.hasClient2=true;
 	}
 	public void run()
 	{
@@ -30,29 +33,43 @@ class Accepter_clients implements Runnable {
 			System.out.println("Serveur lancé");
 			while(true){
 				socket=socketserver.accept();
-				System.out.println("Le client num "+nbrClient+" est connecte ! (Thread "+idJoueur+")");
+				System.out.println("Le client num "+nbrClient+" est connecte ! (Thread "+idClient+")");
 				nbrClient++;
 				
 				out=new PrintWriter(socket.getOutputStream());
-				out.println("Vous etes connecte joueur "+idJoueur+" !");
+				out.println("Vous etes connecte joueur "+idClient+" !");
 				out.flush();
 				
+				serveur.addText("ok");
+				if(!this.serveur.hasClient2||!this.serveur.hasClient1){
+					serveur.addText("ok1");
+					out.println("En attente de l'adversaire... "+idClient+" !");
+					out.flush();
+				}
+				serveur.addText("ok2");
+				
+				
+					
+				/*while(!this.serveur.hasClient2||!this.serveur.hasClient1){
+					Thread.sleep(1000);
+				}*/
 				
 				while(true){
 					in=new BufferedReader (new InputStreamReader(socket.getInputStream()));
 					String msg = in.readLine();
-					System.out.println("Serveur: Message recu du Thread "+ idJoueur +" : "+msg);
+					System.out.println("Serveur: Message recu du Thread "+ idClient +" : "+msg);
 					
-					if(msg!=null&&(msg.equals("feuille")||msg.equals("ciseau")||msg.equals("pierre"))){
-						set_value(msg,idJoueur);
-						serveur.maj_affichage();
-					}
 					
 					
 					if(msg==null){
 						break;
 					}
 				}
+				if(idClient==0)
+					this.serveur.hasClient1=false;
+				if(idClient==1)
+					this.serveur.hasClient2=false;
+				System.out.println("(II) closing connection from "+socket.getInetAddress()+":"+socket.getPort());
 				socket.close();
 				
 			}
@@ -63,26 +80,6 @@ class Accepter_clients implements Runnable {
 		
 	}
 	
-	public void set_value(String s, int id){
-		if(id==0){
-			if(s.equals("feuille"))
-				serveur.choixJ1=Choix.FEUILLE;
-			if(s.equals("pierre"))
-				serveur.choixJ1=Choix.PIERRE;
-			if(s.equals("ciseau"))
-				serveur.choixJ1=Choix.CISEAU;
-		}
-		
-		if(id==1){
-			if(s.equals("feuille"))
-				serveur.choixJ2=Choix.FEUILLE;
-			if(s.equals("pierre"))
-				serveur.choixJ2=Choix.PIERRE;
-			if(s.equals("ciseau"))
-				serveur.choixJ2=Choix.CISEAU;
-		}
-		
-	}
 	
 	public void envoyer_message(String msg) throws IOException{
 		out=new PrintWriter(socket.getOutputStream());

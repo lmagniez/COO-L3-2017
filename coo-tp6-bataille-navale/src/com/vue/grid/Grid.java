@@ -136,7 +136,8 @@ public class Grid extends JPanel implements MouseListener{
 				if(collide(i,j,arg0.getX(), arg0.getY()))
 				{
 					System.out.println("click!! "+i+" "+j);
-					vue.controler.setBomb(i, j);
+					vue.sendToServer("BOMB "+i+" "+j);
+					vue.getControler().setBomb(i, j);
 					//vue.controler.setJeton(i);
 					//this.repaint();
 					return 1;
@@ -208,6 +209,9 @@ public class Grid extends JPanel implements MouseListener{
 			for(int i=0; i<Constantes.NB_BATEAUX; i++){
 				g.setColor(Color.GRAY);
 				g.fillRect (bat[i].posX, bat[i].posY, bat[i].hX, bat[i].hY);
+				g.setColor(Color.BLACK);
+				g.drawRect(bat[i].posX, bat[i].posY, bat[i].hX, bat[i].hY);
+				
 			}
 		}
 		

@@ -67,24 +67,6 @@ public class EcranParam extends JPanel{
 		startLabel.setSize(new Dimension(150,50));
 		startLabel.setFont(new Font("Arial",Font.BOLD,20));
 		startLabel.setAlignmentX(this.CENTER_ALIGNMENT);
-		
-		//init slider nombre de lignes
-		nbRow = new JSlider(JSlider.HORIZONTAL, MIN_PARAM, MAX_PARAM, 7);
-		nbRow.setMinorTickSpacing(2);
-        nbRow.setMajorTickSpacing(2);
-        nbRow.setPaintTicks(true);
-        nbRow.setPaintLabels(true);
-        nbRow.setLabelTable(nbRow.createStandardLabels(1));
-		nbRow.setMaximumSize(new Dimension(300,50));
-        
-		//init slider nombre de colonne
-		nbCol = new JSlider(JSlider.HORIZONTAL, MIN_PARAM, MAX_PARAM, 6);
-		nbCol.setMinorTickSpacing(1);
-        nbCol.setMajorTickSpacing(3);
-        nbCol.setPaintTicks(true);
-        nbCol.setPaintLabels(true);
-        nbCol.setLabelTable(nbRow.createStandardLabels(1));
-		nbCol.setMaximumSize(new Dimension(300,50));
         
 		
 		//init combo box
@@ -100,10 +82,6 @@ public class EcranParam extends JPanel{
         	typeJoueurs[i].setMaximumSize(new Dimension(150,50));
         	typeJoueurs[i].setSelectedIndex(0);
         }
-        
-        nbJetonsG=new JComboBox(str3);
-        nbJetonsG.setMaximumSize(new Dimension(150,50));
-    	nbJetonsG.setSelectedIndex(1);
         
         
         /*
@@ -170,17 +148,11 @@ public class EcranParam extends JPanel{
 					}
 				}	
 				
-				int nbLigne=nbCol.getValue();
-				int nbColonne=nbRow.getValue();
-				String nbJRS=(String) nbJetonsG.getSelectedItem();
-				int nbJR=Integer.parseInt(nbJRS);
+				int nbLigne=10;
+				int nbColonne=10;
 				
-				boolean againstIA=false;
-				boolean swapColor=false;
-				if(couleurJeton.getSelectedIndex()==0)
-					swapColor=true;
 				
-				f.initFenetreEcranJeu(nbLigne, nbColonne, nbJR, isIA, swapColor);				
+				f.initFenetreEcranJeu(nbLigne, nbColonne, isIA);				
 			}
 			
 			

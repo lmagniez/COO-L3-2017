@@ -34,6 +34,8 @@ public abstract class AbstractModel implements Observable{
 	public abstract void bombJoueur(int x, int y);
 	public abstract boolean isAlreadyShot(int x, int y);
 	public abstract void verifWin();
+	public abstract void notifierBateaux();
+	
 	
 	
 	public abstract void reinit();
@@ -106,9 +108,13 @@ public abstract class AbstractModel implements Observable{
 			obs.updateCaseAdversaire(x, y, v);
 	}
 	
-	/**
-	 * Notifier Colonne pleine
-	 */
+	@Override
+	public void notifyNewBateau(int x, int y, TypeBateau type, Orientation o, int idB) {
+		for(Observer obs : listObserver)
+			obs.updateBateau(x,y,type,o,idB);
+	}
+
+	
 	@Override
 	public void notifyFull() {
 		// TODO Auto-generated method stub

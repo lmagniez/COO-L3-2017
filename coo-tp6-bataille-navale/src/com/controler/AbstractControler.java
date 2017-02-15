@@ -24,8 +24,9 @@ public abstract class AbstractControler {
 	//Coordonées du trait à ajouter
 	protected int x;
 	protected int y;
-	protected boolean vertical ;
-
+	protected boolean bateaux ;
+	
+	
 	/**
 	 * Constructeur avec modèle
 	 * @param cal modèle
@@ -44,6 +45,11 @@ public abstract class AbstractControler {
 		
 		this.x=x;
 		this.y=y;
+		control();
+	}
+	
+	public void requestBateaux(){
+		this.bateaux=true;
 		control();
 	}
 	

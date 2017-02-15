@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -40,6 +41,8 @@ public class Score extends JPanel {
 	private String msgCoupsPris;
 	private String msgCoupsRates;
 	private String msgTour;
+	private String msgPlus;
+	
 	
 	
 	private int score;
@@ -58,8 +61,8 @@ public class Score extends JPanel {
 	 * Constructeur, initialise le Jpanel
 	 * @param nbJoueur
 	 */
-	public Score(VueGrid vue, int idJoueur)
-	{
+	public Score(VueGrid vue, int idJoueur){
+		
 		this.vue=vue;
 		this.idJoueur=idJoueur;
 		
@@ -115,8 +118,7 @@ public class Score extends JPanel {
 	 * @return La JTextArea initialisé
 	 */
 	
-	public JTextArea initTextArea(String s)
-	{
+	public JTextArea initTextArea(String s){
 		
 		JTextArea textArea = new JTextArea();
         textArea.setRows(15);
@@ -135,8 +137,7 @@ public class Score extends JPanel {
 	 * Changer le joueur courant (maj affichage)
 	 * @param tour joueur courant
 	 */
-	public void changeJoueur(int idJoueur)
-	{
+	public void changeJoueur(int idJoueur){
 		if(idJoueur==0)
 			msgTour="JOUEUR";
 		if(idJoueur==1)
@@ -146,37 +147,38 @@ public class Score extends JPanel {
 	}
 	
 	
-	public void changeScore(Score adversaire)
-	{
+	public void changeScore(Score adversaire){
 		this.score=adversaire.coupsPris*1000+adversaire.coupsRates*100;
 		msgScore="Score: "+score;
 		majTextBox();
 	}
 	
-	public void addCoupsPris()
-	{
+	public void addCoupsPris(){
 		coupsPris++;
 		msgCoupsPris="Coups pris: "+coupsPris;
 		vue.score2.changeScore(this);
 		majTextBox();
 	}
 	
-	public void addCoupsRates()
-	{
+	public void addCoupsRates(){
 		coupsRates++;
 		msgCoupsRates="Coups rates: "+coupsRates;
 		vue.score2.changeScore(this);
 		majTextBox();
 	}
 	
-	public void majTextBox()
-	{
-		textBox.setText(msgTour+"\n"+msgScore+"\n"+msgCoupsPris+"\n"+msgCoupsRates);
+	public void setMsg(String s){
+		this.msgPlus=s;
+		majTextBox();
+	}
+	
+	public void majTextBox(){
+		textBox.setText(msgTour+"\n"+msgScore+"\n"+msgCoupsPris+"\n"+msgCoupsRates+"\n"+msgPlus);
 	}
 	
 	
-	class ButtonListener implements ActionListener
-	{ 
+	class ButtonListener implements ActionListener{
+		
 		public void actionPerformed(ActionEvent e) {
 			
 			
@@ -186,12 +188,19 @@ public class Score extends JPanel {
 			
 			if(command=="Recommencer")
 			{
-				vue.controler.reset();
+				vue.getControler().reset();
+				
 			}
 			
 			
 			if(command=="Retour")
 			{
+				try {
+					vue.socket.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				vue.vueMenu.setVisible(true);
 				vue.setVisible(false);
 			}
