@@ -35,7 +35,9 @@ public abstract class AbstractModel implements Observable{
 	public abstract boolean isAlreadyShot(int x, int y);
 	public abstract void verifWin();
 	public abstract void notifierBateaux();
-	
+	public abstract void closeSocket();
+	public abstract void sendToServer(String msg);
+	public abstract void lancerCommunication();
 	
 	
 	public abstract void reinit();
@@ -122,6 +124,11 @@ public abstract class AbstractModel implements Observable{
 			obs.updateFull();
 	}
 	
+	public void notifyMsgScore(String msg){
+		System.out.println("AbstractModel okay");
+		for(Observer obs : listObserver)
+			obs.updateMsgScore(msg);
+	}
 	
 	
 	

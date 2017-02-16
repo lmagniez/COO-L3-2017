@@ -24,7 +24,13 @@ public abstract class AbstractControler {
 	//Coordonées du trait à ajouter
 	protected int x;
 	protected int y;
+	protected String msg;
 	protected boolean bateaux ;
+	protected boolean closeSocket ;
+	protected boolean sendServer ;
+	
+	
+	
 	
 	
 	/**
@@ -53,6 +59,11 @@ public abstract class AbstractControler {
 		control();
 	}
 	
+	public void requestSendToServer(String msg){
+		this.sendServer=true;
+		this.msg=msg;
+		control();
+	}
 	
 	/**
 	 * Reinitialiser le modèle
@@ -64,4 +75,11 @@ public abstract class AbstractControler {
 	
 	//Methode de controle
 	abstract void control();
+
+	public void requestCloseSocket() {
+		this.closeSocket=true;
+		control();
+	}
+
+	
 }

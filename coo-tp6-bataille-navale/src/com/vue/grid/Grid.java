@@ -136,7 +136,7 @@ public class Grid extends JPanel implements MouseListener{
 				if(collide(i,j,arg0.getX(), arg0.getY()))
 				{
 					System.out.println("click!! "+i+" "+j);
-					vue.sendToServer("BOMB "+i+" "+j);
+					//vue.sendToServer("BOMB "+i+" "+j);
 					vue.getControler().setBomb(i, j);
 					//vue.controler.setJeton(i);
 					//this.repaint();

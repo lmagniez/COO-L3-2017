@@ -94,7 +94,7 @@ public class Score extends JPanel {
 		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
 		p.add(restart);
 		p.add(retour);
-		this.add(p);
+		//this.add(p);
 		
 		this.coupsPris=0;
 		this.coupsRates=0;
@@ -168,12 +168,15 @@ public class Score extends JPanel {
 	}
 	
 	public void setMsg(String s){
+		System.out.println("setMsg "+s);
 		this.msgPlus=s;
 		majTextBox();
+		System.out.println("maj done");
 	}
 	
 	public void majTextBox(){
 		textBox.setText(msgTour+"\n"+msgScore+"\n"+msgCoupsPris+"\n"+msgCoupsRates+"\n"+msgPlus);
+		this.repaint();
 	}
 	
 	
@@ -195,12 +198,8 @@ public class Score extends JPanel {
 			
 			if(command=="Retour")
 			{
-				try {
-					vue.socket.close();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				vue.getControler().requestCloseSocket();
+				//vue.socket.close();
 				vue.vueMenu.setVisible(true);
 				vue.setVisible(false);
 			}

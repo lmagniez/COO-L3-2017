@@ -20,6 +20,7 @@ public interface Observer {
 	public void updateCaseAdversaire(int x, int y, CaseValueVue v);
 	public void updateBateau(int x, int y, TypeBateau type, Orientation o, int idB);
 	
+	public void updateMsgScore(String msg);
 	
 	public void updateWinner();
 	public void updateLoser();

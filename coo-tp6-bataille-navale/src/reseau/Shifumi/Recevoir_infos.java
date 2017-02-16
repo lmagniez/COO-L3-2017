@@ -15,6 +15,10 @@ import java.net.UnknownHostException;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+import com.model.CaseModel;
+import com.model.CaseValue;
+import com.model.GridModel;
+import com.vue.grid.CaseValueVue;
 import com.vue.grid.Score;
 import com.vue.grid.VueGrid;
 
@@ -26,14 +30,16 @@ public class Recevoir_infos implements Runnable {
 	private InputStream defaultInStream = System.in;
 	
 	protected JTextArea l1;
-	protected VueGrid vue;
+	protected GridModel model;
 	protected Socket socket;
 	protected PrintWriter out;
 	protected BufferedReader in;
 	protected boolean running=true;
 	
-	public Recevoir_infos(VueGrid vueGrid,Socket socket, BufferedReader in, PrintWriter out){;
-		this.vue=vueGrid;
+	protected EtatClient etat;
+	
+	public Recevoir_infos(GridModel gridModel,Socket socket, BufferedReader in, PrintWriter out){;
+		this.model=gridModel;
 		this.socket=socket;
 		this.out=out;
 		this.in=in;
@@ -75,16 +81,58 @@ public class Recevoir_infos implements Runnable {
 			//this.in=new BufferedReader (new InputStreamReader(this.socket.getInputStream()));
 			//this.out=new PrintWriter(this.socket.getOutputStream());
 			
-			//while(running){
+			while(running){
 				System.out.println("va readline:");
 				String msg_distant = in.readLine();
-				System.out.println("has red:");
 				System.out.println("Recevoir_infos: "+msg_distant);
 				
-				vue.getScore().setMsg(msg_distant);
+				this.model.notifyMsgScore(msg_distant);
+				
+				if(msg_distant.equals("GO J1"))
+					this.etat=EtatClient.PLAYER_TURN;
+				if(msg_distant.equals("GO J2"))
+					this.etat=EtatClient.OPPONENT_TURN;
+				if(msg_distant.equals("CONNECTION LOST"))
+					this.etat=EtatClient.LOST_CONNECTION;
+				
+				
+				//Se faire bombarder
+				String[] msg_splited = msg_distant.split("\\s+");
+				if(msg_splited[0].equals("BOMB")){
+					int bombx=Integer.parseInt(msg_splited[1]);
+					int bomby=Integer.parseInt(msg_splited[2]);
+					CaseModel caseTmp=this.model.getCasesAdversaire()[bomby][bombx];
+					caseTmp.setV(CaseValue.TOUCHE);
+					if(caseTmp.getIdBateau()!=-1){
+						this.model.notifyBombAdversaire(bombx, bomby, CaseValueVue.TOUCHE);
+						this.model.sendToServer("TOUCHE "+bombx+" "+bomby);
+					}
+					else{
+						this.model.notifyBombAdversaire(bombx, bomby, CaseValueVue.PLOUF);
+						this.model.sendToServer("PLOUF "+bombx+" "+bomby);
+					}
+					
+					
+				}
+				
+				if(msg_splited[0].equals("TOUCHE")){
+					int bombx=Integer.parseInt(msg_splited[1]);
+					int bomby=Integer.parseInt(msg_splited[2]);
+					this.model.notifyBombJoueur(bombx, bomby, CaseValueVue.TOUCHE);
+				}
+				
+				if(msg_splited[0].equals("PLOUF")){
+					int bombx=Integer.parseInt(msg_splited[1]);
+					int bomby=Integer.parseInt(msg_splited[2]);
+					this.model.notifyBombJoueur(bombx, bomby, CaseValueVue.PLOUF);
+				}
+				
+				
+				
+				
 				
 				//vue.afficherMsgFenetre(msg_distant);
-			//}
+			}
 		} 
 		
 		catch (IOException e1) {

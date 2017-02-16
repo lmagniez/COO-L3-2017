@@ -7,14 +7,34 @@ package com.model;
  */
 public class CaseModel {
 
-	protected CaseValue v;
-	protected int idBateau;
+	private CaseValue v;
+	private int idBateau;
 	
 	
 	public CaseModel()
 	{
-		this.v=CaseValue.NONE;
-		this.idBateau=-1;
+		this.setV(CaseValue.NONE);
+		this.setIdBateau(-1);
+	}
+
+
+	public int getIdBateau() {
+		return idBateau;
+	}
+
+
+	public void setIdBateau(int idBateau) {
+		this.idBateau = idBateau;
+	}
+
+
+	public CaseValue getV() {
+		return v;
+	}
+
+
+	public void setV(CaseValue v) {
+		this.v = v;
 	}
 	
 }

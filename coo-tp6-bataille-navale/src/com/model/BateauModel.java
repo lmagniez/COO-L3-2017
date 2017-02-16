@@ -37,13 +37,13 @@ public class BateauModel {
 		int tailleBateau=getType().fromType(this.getType());
 		if(o==Orientation.VERTICAL)
 			for(int x=debutX; x<debutX+tailleBateau;x++){
-				grid.casesAdversaire[x][debutY].v=CaseValue.NONE;
-				grid.casesAdversaire[x][debutY].idBateau=id;
+				grid.getCasesAdversaire()[x][debutY].setV(CaseValue.NONE);
+				grid.getCasesAdversaire()[x][debutY].setIdBateau(id);
 			}
 		else if(o==Orientation.HORIZONTAL)
 			for(int y=debutY; y<debutY+tailleBateau;y++){
-				grid.casesAdversaire[debutX][y].v=CaseValue.NONE;
-				grid.casesAdversaire[debutX][y].idBateau=id;
+				grid.getCasesAdversaire()[debutX][y].setV(CaseValue.NONE);
+				grid.getCasesAdversaire()[debutX][y].setIdBateau(id);
 			}
 		
 	}

@@ -50,6 +50,7 @@ public class Serveur2 extends JFrame{
 		JButton b2=new JButton("Stopper serveur");
 		b2.addActionListener(new ButtonListener());
 		
+		
 		field=initTextArea("message");
 		
 		this.add(b1);

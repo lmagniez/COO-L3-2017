@@ -24,7 +24,7 @@ public interface Observable {
 	public void notifyBombAdversaire(int x, int y, CaseValueVue v);
 	
 	public void notifyNewBateau(int x, int y, TypeBateau type, Orientation o, int idB);
-	
+	public void notifyMsgScore(String msg);
 	
 	public void notifyWinner();
 	public void notifyLoser();

@@ -31,6 +31,15 @@ public class GridControler extends AbstractControler{
 			this.bateaux=false;
 			this.calc.notifierBateaux();
 		}
+		else if(this.sendServer)
+		{
+			this.sendServer=false;
+			this.calc.sendToServer(msg);
+		}
+		else if(this.closeSocket){
+			this.closeSocket=false;
+			this.calc.closeSocket();
+		}
 		else if(!this.calc.isAlreadyShot(x, y))
 		{
 			this.calc.bombJoueur(x, y);

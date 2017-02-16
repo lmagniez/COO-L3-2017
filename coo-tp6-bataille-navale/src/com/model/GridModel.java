@@ -1,9 +1,17 @@
 package com.model;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Random;
 
 import com.vue.grid.CaseValueVue;
+
+import reseau.Shifumi.Recevoir_infos;
 
 /**
  * Classe correspondant au modèle de la grille
@@ -16,17 +24,19 @@ public class GridModel extends AbstractModel{
 	protected int longueurY;
 	
 	protected CaseModel casesJoueur[][];//cases où le joueur intéragit
-	protected CaseModel casesAdversaire[][];//cases où l'adversaire intéragit (contient les bateaux)
-	
+	private CaseModel casesAdversaire[][];//cases où l'adversaire intéragit (contient les bateaux)
 	protected BateauModel bateaux[];
-	
-	
 	public static int nb_bateaux=0;
-	
-	
 	protected boolean isIA[]; 
 
 	private int nbBateauxTouchesJoueur,nbBateauxTouchesAdversaire;
+	
+	
+	//serveur
+	protected Recevoir_infos infos;
+	protected Socket socket;
+	protected BufferedReader in;
+	protected PrintWriter out;
 	
 	
 	
@@ -36,7 +46,7 @@ public class GridModel extends AbstractModel{
 	 * @param longueurY nombre de colonnes
 	 * @param nbJR nombre de jetons requis pour gagner
 	 */
-	public GridModel(int longueurX, int longueurY){
+	public GridModel(Socket s, int longueurX, int longueurY){
 		
 		this.longueurX=longueurX;
 		this.longueurY=longueurY;
@@ -46,15 +56,68 @@ public class GridModel extends AbstractModel{
 		
 		
 		this.casesJoueur=new CaseModel[longueurX][longueurY];
-		this.casesAdversaire=new CaseModel[longueurX][longueurY];
+		this.setCasesAdversaire(new CaseModel[longueurX][longueurY]);
 		for(int i=0; i<longueurX; i++){
 			for(int j=0; j<longueurY; j++){
 				casesJoueur[i][j]=new CaseModel();
-				casesAdversaire[i][j]=new CaseModel();
+				getCasesAdversaire()[i][j]=new CaseModel();
 			}
 		}
 		genererBateaux();
+		
+		this.socket=s;
 	}
+	
+	public void lancerCommunication(){
+		try{
+			
+			System.out.println("Demande de connexion");
+			this.in=new BufferedReader (new InputStreamReader(this.socket.getInputStream()));
+			this.out=new PrintWriter(this.socket.getOutputStream());
+			String message_distant = this.in.readLine();
+			System.out.println(message_distant);
+			
+			
+			this.out.println("Joueur: La reponse du joueur");
+			this.out.flush();
+			
+			/*
+			String msg_distant = in.readLine();
+			System.out.println("has red:");
+			System.out.println("Recevoir_infos: "+msg_distant);
+			
+			this.getScore().setMsg(msg_distant);
+			*/
+			
+			infos = new Recevoir_infos(this, socket, in, out);
+			Thread t=new Thread(infos);
+			t.start();
+			
+			
+		}
+		catch(UnknownHostException e){
+			e.printStackTrace();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendToServer(String msg){
+		
+		try {
+			out=new PrintWriter(socket.getOutputStream());
+			out.println(msg);
+			out.flush();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void notifierBateaux(){
 		for(int i=0; i<Constantes.NB_BATEAUX; i++){
@@ -88,7 +151,7 @@ public class GridModel extends AbstractModel{
 				positionY=r.nextInt(longueurY);
 				ok=true;
 				for(int x=positionX; x<positionX+tailleBateau; x++){
-					if(casesAdversaire[x][positionY].idBateau!=-1)
+					if(getCasesAdversaire()[x][positionY].getIdBateau()!=-1)
 						ok=false;		
 				}
 			}
@@ -98,7 +161,7 @@ public class GridModel extends AbstractModel{
 				//checker positions libres
 				ok=true;
 				for(int y=positionY; y<positionY+tailleBateau; y++){
-					if(casesAdversaire[positionX][y].idBateau!=-1)
+					if(getCasesAdversaire()[positionX][y].getIdBateau()!=-1)
 						ok=false;
 				}
 			}
@@ -121,7 +184,7 @@ public class GridModel extends AbstractModel{
 	}
 	
 	public boolean isAlreadyShot(int x, int y){
-		return (casesJoueur[x][y].v==CaseValue.TOUCHE);
+		return (casesJoueur[x][y].getV()==CaseValue.TOUCHE);
 	}
 	
 	/**
@@ -135,8 +198,8 @@ public class GridModel extends AbstractModel{
 	 */
 	public void bombAdversaire(int x, int y){
 			
-		int idB=casesJoueur[x][y].idBateau;
-		casesJoueur[x][y].v=CaseValue.TOUCHE;
+		int idB=casesJoueur[x][y].getIdBateau();
+		casesJoueur[x][y].setV(CaseValue.TOUCHE);
 		if(idB!=-1){
 			bateaux[idB].setNbTouches(bateaux[idB].getNbTouches()+1);
 			this.nbBateauxTouchesAdversaire++;
@@ -160,15 +223,19 @@ public class GridModel extends AbstractModel{
 	public void bombJoueur(int x, int y){
 		
 		//DEMANDER ET RECEVOIR REPONSE
+		
+		this.sendToServer("BOMB "+x+" "+y);
+		
+		/*
 		String reponse="TOUCHE";
-		casesJoueur[x][y].v=CaseValue.TOUCHE;
+		casesJoueur[x][y].setV(CaseValue.TOUCHE);
 		if(reponse.equals("TOUCHE")){
 			this.notifyBombJoueur(x, y, CaseValueVue.TOUCHE);
 			this.nbBateauxTouchesJoueur++;
 		}
 		if(reponse.equals("MISSED")){
 			this.notifyBombJoueur(x, y, CaseValueVue.PLOUF);
-		}
+		}*/
 		this.notifyTour();
 	}
 	
@@ -180,12 +247,21 @@ public class GridModel extends AbstractModel{
 	public void reinit() {
 		for(int i=0; i<longueurX; i++){
 			for(int j=0; j<longueurY; j++){
-				casesJoueur[i][j].v=CaseValue.NONE;
+				casesJoueur[i][j].setV(CaseValue.NONE);
 			}
 		}
 		this.notifyReinit();
 	}
 
+	public void closeSocket(){
+		try {
+			this.sendToServer("ABORT");
+			this.socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	
 	/**
@@ -195,25 +271,33 @@ public class GridModel extends AbstractModel{
 	{
 		for(int i=0; i<longueurX; i++){
 			for(int j=0; j<longueurY; j++){
-				int idB=casesAdversaire[i][j].idBateau;
+				int idB=getCasesAdversaire()[i][j].getIdBateau();
 				if(idB!=-1){
-					System.out.print(bateaux[idB].getType()+"("+casesAdversaire[i][j].v+")"+"\t");
+					System.out.print(bateaux[idB].getType()+"("+getCasesAdversaire()[i][j].getV()+")"+"\t");
 				
 				}else
-					System.out.print(TypeBateau.NONE.name()+"("+casesAdversaire[i][j].v+")"+"\t");
+					System.out.print(TypeBateau.NONE.name()+"("+getCasesAdversaire()[i][j].getV()+")"+"\t");
 			}
 			System.out.println();
 		}
 		
 		for(int i=0; i<longueurX; i++){
 			for(int j=0; j<longueurY; j++){
-				int idB=casesAdversaire[i][j].idBateau;
+				int idB=getCasesAdversaire()[i][j].getIdBateau();
 				System.out.print(idB+" ");
 				
 			}
 			System.out.println();
 		}
 		
+	}
+
+	public CaseModel[][] getCasesAdversaire() {
+		return casesAdversaire;
+	}
+
+	public void setCasesAdversaire(CaseModel casesAdversaire[][]) {
+		this.casesAdversaire = casesAdversaire;
 	}
 
 	

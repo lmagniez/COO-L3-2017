@@ -50,12 +50,14 @@ public class VueGrid extends Fenetre implements Observer {
 	private int idJoueur;
 	private int tour;
 	protected Bateau[] bateaux;
-	
+
+	/*
 	//serveur
 	protected Recevoir_infos infos;
 	protected Socket socket;
 	protected BufferedReader in;
 	protected PrintWriter out;
+	*/
 	
 	//controler
 	private AbstractControler controler;
@@ -72,9 +74,9 @@ public class VueGrid extends Fenetre implements Observer {
 	 */
 	
 	//ADD CONTROLEr
-	public VueGrid(AbstractControler gridControler, Socket s, int nbRow, int nbCol, Vue1 vue1) {
-		
-		this.socket=s;
+	//public VueGrid(AbstractControler gridControler, Socket s, int nbRow, int nbCol, Vue1 vue1) {
+	public VueGrid(AbstractControler gridControler, int nbRow, int nbCol, Vue1 vue1) {	
+		//this.socket=s;
 		
 		this.setSize(Constantes.TAILLE_ECRAN_GRILLE*2+Constantes.TAILLE_SEPARATION, 
 				Constantes.TAILLE_ECRAN_GRILLE+Constantes.TAILLE_ECRAN_SCORE);
@@ -88,7 +90,7 @@ public class VueGrid extends Fenetre implements Observer {
 		this.vueMenu=vue1;
 		this.gridJoueur=new Grid(this, nbRow, nbCol, true);
 		this.gridAdversaire=new Grid(this, nbRow, nbCol, false);
-		this.setScore(new Score(this,0));
+		this.score=new Score(this,0);
 		this.score2= new Score(this,1);
 		getScore().addCoupsPris();
 		
@@ -116,7 +118,18 @@ public class VueGrid extends Fenetre implements Observer {
 		bateaux=new Bateau[Constantes.NB_BATEAUX];
 		getControler().requestBateaux();
 		
-		this.lancerCommunication();
+		
+		/*
+		 mettre le code dans une classe contenue dans modele grille
+		 lancerCommunication déclaré dans abstract model
+		 appele via le controler quand on initie la fenetre (constructeur Vue? Après init?)
+		 
+		 Quand on clique sur une case, appelle le controler de la meme maniere que pour modele
+		 Check à partir de là...
+		 faire notifyMessage UpdateMessage pour la vue.
+		 
+		 */
+		//this.lancerCommunication();
 		
 		
 		/*
@@ -136,6 +149,7 @@ public class VueGrid extends Fenetre implements Observer {
 		
 	}
 
+	/*
 	public void lancerCommunication(){
 		try{
 			
@@ -149,13 +163,7 @@ public class VueGrid extends Fenetre implements Observer {
 			this.out.println("La reponse du joueur");
 			this.out.flush();
 			
-			/*
-			String msg_distant = in.readLine();
-			System.out.println("has red:");
-			System.out.println("Recevoir_infos: "+msg_distant);
 			
-			this.getScore().setMsg(msg_distant);
-			*/
 			
 			infos = new Recevoir_infos(this, socket, in, out);
 			Thread t=new Thread(infos);
@@ -170,7 +178,8 @@ public class VueGrid extends Fenetre implements Observer {
 			e.printStackTrace();
 		}
 	}
-	
+	*/
+	/*
 	public void sendToServer(String msg){
 		
 		try {
@@ -185,7 +194,7 @@ public class VueGrid extends Fenetre implements Observer {
 			e.printStackTrace();
 		}
 	}
-	
+	*/
 	
 	/**
 	 * Mettre à jour l'affichage du tour dans le panel.
@@ -255,6 +264,12 @@ public class VueGrid extends Fenetre implements Observer {
 	@Override
 	public void updateBateau(int x, int y, TypeBateau type, Orientation o, int idB) {
 		this.bateaux[idB]=new Bateau(x,y,type,o);
+	}
+	
+	public void updateMsgScore(String msg){
+		System.out.println("update VUE GRID " + msg);
+		this.score.setMsg(msg);		
+		this.score.repaint();
 	}
 	
 	/*

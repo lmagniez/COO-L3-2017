@@ -69,14 +69,16 @@ public class Vue1 extends Fenetre{
 		
 		if(socket!=null){
 			//Creation du modele de grille
-			AbstractModel gridModel = new GridModel(nbRow, nbCol);
+			AbstractModel gridModel = new GridModel(socket,nbRow, nbCol);
 			//Creation du controleur
 			AbstractControler gridControler = new GridControler(gridModel);
 			//Creation de notre fenetre avec le controleur en parametre
-			VueGrid vueJeu = new VueGrid(gridControler, socket, nbRow, nbCol,this);
+			VueGrid vueJeu = new VueGrid(gridControler, nbRow, nbCol,this);
 			//Ajout de la fenetre comme observer de notre modele
 			gridModel.addObserver(vueJeu);
 			vueJeu.getControler().requestBateaux();
+			gridModel.lancerCommunication();
+			
 			this.setVisible(false);
 		}
 	}

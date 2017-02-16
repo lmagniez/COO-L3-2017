@@ -21,10 +21,7 @@ class Accepter_clients implements Runnable {
 		this.serveur=serveur;
 		this.socketserver=s;
 		this.idClient=idClient;
-		if(idClient==0)
-			this.serveur.hasClient1=true;
-		if(idClient==1)
-			this.serveur.hasClient2=true;
+		
 	}
 	public void run()
 	{
@@ -32,34 +29,74 @@ class Accepter_clients implements Runnable {
 		try{
 			System.out.println("Serveur lancé");
 			while(true){
+				
 				socket=socketserver.accept();
 				System.out.println("Le client num "+nbrClient+" est connecte ! (Thread "+idClient+")");
-				nbrClient++;
 				
+				//Connection d'un client, on passe un booléen a vrai
+				if(idClient==0)
+					this.serveur.hasClient1=true;
+				else if(idClient==1)
+					this.serveur.hasClient2=true;
+				nbrClient++;
+				//envoie message connection
 				out=new PrintWriter(socket.getOutputStream());
 				out.println("Vous etes connecte joueur "+idClient+" !");
 				out.flush();
 				
 				serveur.addText("ok");
-				if(!this.serveur.hasClient2||!this.serveur.hasClient1){
-					serveur.addText("ok1");
-					out.println("En attente de l'adversaire... "+idClient+" !");
+				
+				
+				//Attente de la seconde connection
+				out.println("En attente de l'adversaire... ");
+				out.flush();
+				while(!this.serveur.hasClient2||!this.serveur.hasClient1){
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				//confirmation des deux joueurs connectés
+				serveur.addText("Let's go!");
+				if(idClient==0){
+					out.println("GO J1");
 					out.flush();
 				}
-				serveur.addText("ok2");
+				else if(idClient==1){
+					out.println("GO J2");
+					out.flush();
+				}
 				
 				
-					
-				/*while(!this.serveur.hasClient2||!this.serveur.hasClient1){
-					Thread.sleep(1000);
-				}*/
 				
 				while(true){
 					in=new BufferedReader (new InputStreamReader(socket.getInputStream()));
 					String msg = in.readLine();
+					
 					System.out.println("Serveur: Message recu du Thread "+ idClient +" : "+msg);
+					serveur.addText(msg);
 					
+					if(msg.equals("ABORT")){
+						serveur.addText("abort"+idClient);
+						break;
+					}
 					
+					String[] msg_splited = msg.split("\\s+");
+					if(msg_splited[0].equals("BOMB")||msg_splited[0].equals("PLOUF")||msg_splited[0].equals("TOUCHE")){
+						//int bombx=Integer.parseInt(msg_splited[1]);
+						//int bomby=Integer.parseInt(msg_splited[2]);
+						if(idClient==0){
+							this.serveur.client2.out.println(msg);
+							this.serveur.client2.out.flush();
+						}
+						else if(idClient==1){
+							this.serveur.client1.out.println(msg);
+							this.serveur.client1.out.flush();
+						}
+					}
 					
 					if(msg==null){
 						break;
