@@ -96,6 +96,14 @@ public class VueGrid extends Fenetre implements Observer {
 	
 		bateaux=new Bateau[Constantes.NB_BATEAUX];
 		getControler().requestBateaux();
+		
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        controler.requestSendToServer("ABORT");
+		    }
+		});
+		
 	}
 
 	
@@ -128,16 +136,23 @@ public class VueGrid extends Fenetre implements Observer {
 		this.gridJoueur.actif=false;
 		//this.getScore().displayWinner(1);
 		
-		
+		/*
+		this.removeAll();
 		PanelVictoire v=new PanelVictoire(0, this,true);
-		this.gridJoueur.add(v);
+		*/
+		
+		//this.score.setMsg("voila");
+		//this.gridJoueur.add(v);
+		//this.add(v);
+		//this.repaint();
 		
 		//PanelVictoire v2=new PanelVictoire(idJoueur, this,false);
 		//this.gridAdversaire.add(v2);
 		
+		/*
 		this.score.stop=true;
 		this.score2.stop=true;
-		
+		*/
 		
 	}
 	
@@ -151,13 +166,15 @@ public class VueGrid extends Fenetre implements Observer {
 		this.gridJoueur.actif=false;
 		//this.getScore().displayWinner(0);
 		
-		
+		//this.removeAll();
+		/*
 		PanelVictoire v=new PanelVictoire(1, this,true);
 		this.gridJoueur.add(v);
+		//this.add(v);
 		
 		//PanelVictoire v2=new PanelVictoire(idJoueur, this,false);
 		//this.gridAdversaire.add(v2);
-		
+		*/
 		this.score.stop=true;
 		this.score2.stop=true;
 		

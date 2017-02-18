@@ -42,6 +42,13 @@ public class Recevoir_infos implements Runnable {
 	protected BufferedReader in;
 	protected boolean running=true;
 	
+	/**
+	 * Constructeur
+	 * @param gridModel modele de la grille
+	 * @param socket socket du serveur
+	 * @param in 
+	 * @param out
+	 */
 	public Recevoir_infos(GridModel gridModel,Socket socket, BufferedReader in, PrintWriter out){;
 		this.model=gridModel;
 		this.socket=socket;
@@ -50,11 +57,17 @@ public class Recevoir_infos implements Runnable {
 		
 	}
 	
+	/**
+	 * Stopper le thread
+	 */
 	public void stopper()
 	{
 		this.running=false;
 	}
 	
+	/**
+	 * Reprendre le thread
+	 */
 	public void reprendre()
 	{
 		this.running=true;
@@ -68,17 +81,21 @@ public class Recevoir_infos implements Runnable {
 	public void run() 
 	{
 
-		System.out.println("A l'écoute...");
-		
 		try {
 		
 			while(running){
-				System.out.println("va readline:");
 				String msg_distant = in.readLine();
-				System.out.println("Recevoir_infos: "+msg_distant);
 				
-				if(msg_distant.contains("En attente de"))
+				if(msg_distant==null){
+					this.model.notifyMsgScore("Problème de communication serveur!");
+					this.model.notifyMsgScore2("Problème de communication serveur!");					
+					break;
+				}
+				
+				if(msg_distant.contains("En attente de")){
 					this.model.notifyMsgScore(msg_distant);
+					this.model.notifyMsgScore2(msg_distant);
+				}
 				
 				if(msg_distant.equals("GO J1")){
 					this.model.setEtat(EtatClient.PLAYER_TURN);
@@ -130,6 +147,7 @@ public class Recevoir_infos implements Runnable {
 					
 				}
 				
+				//L'adversaire indique qu'il est touché
 				if(msg_splited[0].equals("TOUCHED")){
 					int bombx=Integer.parseInt(msg_splited[1]);
 					int bomby=Integer.parseInt(msg_splited[2]);
@@ -144,6 +162,7 @@ public class Recevoir_infos implements Runnable {
 					this.model.verifWin();
 				}
 				
+				//L'adversaire indique qu'il n'est pas touché
 				if(msg_splited[0].equals("MISSED")){
 					int bombx=Integer.parseInt(msg_splited[1]);
 					int bomby=Integer.parseInt(msg_splited[2]);
@@ -154,11 +173,6 @@ public class Recevoir_infos implements Runnable {
 					
 				}
 				
-				
-				
-				
-				
-				//vue.afficherMsgFenetre(msg_distant);
 			}
 		} 
 		

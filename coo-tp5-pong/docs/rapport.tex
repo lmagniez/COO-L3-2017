@@ -22,45 +22,35 @@
 
 \section{Ce qui a été réalisé}
 
--Implémentation du jeu Pong.\\%
--Gestion des événements bonus/vitesse.\\%
--Implémentation d\textquotesingle une IA, paramétrage possible de la partie (Joueur/IA).\\%
+-Implémentation du jeu Puissance 4 en MVC\\%
+-Possibilité de choisir le nombre de lignes et de colonnes\\%
+-Possibilité de changer sa couleur de jeton\\%
+-Implémentation d\textquotesingle une IA (choix pour chaque joueur si il est humain ou IA)\\%
+-Menu de gestion du nombre de joueurs, du type de joueurs (Humain/IA), du nombre de cases. \\%
 
 
-\section{Difficultés rencontrées : gestion des collisions}
+\section{Détection des patterns de victoire.}
 
-Lors du début de l\textquotesingle implémentation, la balle avait tendance à rentrer dans les éléments et « rebondir » dedans.
-Le problème était du au coefficient de déplacement trop grands qui faisait rentrer la balle dans les éléments.\\%
-J?ai donc décidé de gérer les collisions par un ensemble de « blocs », si la balle arrive dans ce bloc, on la remet à l\textquotesingle extérieur, et on évite ainsi la collision.\\%
+-Difficulté pour mémoriser quel sont les jetons qui forment le pattern de victoire.
 
-Ci-dessous, l'ensemble des tests de collisions effectués par une balle.\\%
-
-\makebox[\textwidth]{\includegraphics[width=500pt]{img/collisions}}
-
-
-\newpage
-
-
-\section{Gestion des threads}
-
-Au final, 3 threads ont été implémentés :\\%
--Thread de la balle : Demande de déplacer la balle.\\%
--Thread de la raquette : Deux types de raquettes :
-\begin{description}
-    \item[IA :] Demande au modèle de déplacer la raquette en fonction des balles sur l\textquotesingle écran.
-    \item[Joueur :] En fonction des événements clavier, déplace le joueur sur l\textquotesingle écran.
-\end{description}
--Thread des événements : Demande de générer des bonus et/ou accélérer les balles.
-	
-(Petite confusion concernant l\textquotesingle emplacement des Threads, ils avaient été placés dans la vue initialement, le problème a été corrigé).
-
-\section{Implémentation de l\textquotesingle IA :}
+-Difficulté pour l\textquotesingle implémentation des diagonales, ci-dessous le schéma résumant les nombreuses méthodes de vérifications.
+On a divisé la recherche de diagonale en 4 méthodes.
 
 
 
-Le thread RaquetteIA fait appel à une méthode dans le modèle qui va décider si la raquette va se déplacer vers le haut ou vers le bas.\\%
-Assez facile à réaliser quand une seule balle est présente, il a fallu gérer le cas ou plusieurs balles apparaissaient. \\%
-J\textquotesingle ai donc mis en place une méthode récupérant la balle la plus proche de la raquette sur l\textquotesingle axe x. En fonction de cette balle, on va chercher à se rapprocher le plus d\textquotesingle elle sur l\textquotesingle axe y.\\%
+On les regroupe ensuite dans une dernière méthode qui va se charger de mettre à jour les pions qui ont permis de gagner (en cas de victoire).
+
+
+\makebox[\textwidth]{\includegraphics[width=500pt]{img/1}}
+\makebox[\textwidth]{\includegraphics[width=500pt]{img/2}}
+
+
+\section{Méthode de décision de l\textquotesingle IA}
+
+
+Premièrement, on va tester pour chaque colonne si le joueur peut gagner.\\%
+Si aucune colonne ne permet de gagner, on va regarder où l\textquotesingle adversaire peut potentiellement gagner et le stopper.\\%
+Dans le cas contraire, on va essayer de bloquer l\textquotesingle adversaire au maximum en cherchant la valeur maximum.\\%
 
 
 \end{document}

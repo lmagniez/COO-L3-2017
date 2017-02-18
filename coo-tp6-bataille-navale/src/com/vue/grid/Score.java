@@ -112,7 +112,6 @@ public class Score extends JPanel {
 		
 		//this.majTextBox();
 		
-		
 		repaint();
 		
 	}
@@ -198,8 +197,6 @@ public class Score extends JPanel {
 	 * @param s
 	 */
 	public void setMsg(String s){
-		System.out.println("setMsg "+s);
-		//majTextBox();
 		this.message.setText(s);
 		
 	}
@@ -227,19 +224,15 @@ public class Score extends JPanel {
 			
 			String command = ((JButton) e.getSource()).getActionCommand();
 			
-			System.out.println("recommencer");
-			
 			if(command=="Recommencer")
 			{
-				vue.getControler().reset();
-				
+				vue.getControler().reset();	
 			}
 			
 			
 			if(command=="Retour")
 			{
 				vue.getControler().requestCloseSocket();
-				//vue.socket.close();
 				vue.vueMenu.setVisible(true);
 				vue.setVisible(false);
 			}
@@ -261,17 +254,11 @@ public class Score extends JPanel {
 	{
 		super.paintComponent(g);
 		g.setColor(Color.GREEN);
-		//if(this.vue.getTour()==EtatClient.PLAYER_TURN)
 		if((this.vue.getTour()==EtatClient.PLAYER_TURN&&idJoueur==0)
 		||(this.vue.getTour()==EtatClient.OPPONENT_TURN&&idJoueur==1))
 		{
-			//g.fillOval (10,10, 100, 100);
 			g.fillOval (10,Constantes.TAILLE_ECRAN_SCORE-15, 10, 10);
-			System.out.println("my turn");
 		}
-		
-		//if(this.vue.getTour()==1)
-		//	g.fillOval (10,Constantes.TAILLE_ECRAN_SCORE-20, 10, 10);
 	}
 	
 }

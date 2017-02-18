@@ -11,7 +11,7 @@
 \formation{L3MI}
 \date{}
 \matiere{Conception Orientée Objet}
-\titre{Dots And Boxes - Compte Rendu}
+\titre{Bataille Navale - Compte Rendu}
 
 \newcommand\code[1]{\textsf{#1}}
 \newcommand\srdjan[1]{{\color{red} #1}}
@@ -22,35 +22,39 @@
 
 \section{Ce qui a été réalisé}
 
--Implémentation du jeu Puissance 4 en MVC\\%
--Possibilité de choisir le nombre de lignes et de colonnes\\%
--Possibilité de changer sa couleur de jeton\\%
--Implémentation d\textquotesingle une IA (choix pour chaque joueur si il est humain ou IA)\\%
--Menu de gestion du nombre de joueurs, du type de joueurs (Humain/IA), du nombre de cases. \\%
+-Implémentation du jeu Bataille Navale en réseau.\\%
+-Création d'un serveur réalisant la liaison entre deux clients.\\%
+-Possibilité de choisir son port.\\%
 
 
-\section{Détection des patterns de victoire.}
-
--Difficulté pour mémoriser quel sont les jetons qui forment le pattern de victoire.
-
--Difficulté pour l\textquotesingle implémentation des diagonales, ci-dessous le schéma résumant les nombreuses méthodes de vérifications.
-On a divisé la recherche de diagonale en 4 méthodes.
+\section{Difficultés rencontrées : gestion des erreurs de communication}
 
 
+Afin de réaliser les communications, on a créé un serveur et deux clients.\\%
 
-On les regroupe ensuite dans une dernière méthode qui va se charger de mettre à jour les pions qui ont permis de gagner (en cas de victoire).
+\begin{itemize}
+
+    \item \textbf{Au niveau du serveur:}\\% 
+    Après avoir indiqué le port, on initialise deux threads "AccepterClients", qui attendent la connexion de deux clients simultanés, pour ensuite confirmer le démarrage de la partie.
+    \item \textbf{Au niveau du client:}\\%
+    A la création du client, on tente la connexion au serveur. Si la connexion est réussie, on lance le thread "RecevoirInfos" qui récupère l'ensemble des messages envoyés par le serveur et les traitent.
+	\item \textbf{Au niveau de la vue (coté client):}\\% 
+	En fonction des événements souris, on va envoyer des messages au serveur. Celui-ci va faire la passerelle et l'envoyer au second client (qui va récupérer le message sur "RecevoirInfos").
+
+\end{itemize}
 
 
-\makebox[\textwidth]{\includegraphics[width=500pt]{img/1}}
-\makebox[\textwidth]{\includegraphics[width=500pt]{img/2}}
+\newpage
 
 
-\section{Méthode de décision de l\textquotesingle IA}
+\section{Description du protocole réseau}
 
+Quelques modifications ont été apporté sur le protocole initialement décrit dans le sujet, ceci étant du au fait que le serveur n'est pas un client.\\%
 
-Premièrement, on va tester pour chaque colonne si le joueur peut gagner.\\%
-Si aucune colonne ne permet de gagner, on va regarder où l\textquotesingle adversaire peut potentiellement gagner et le stopper.\\%
-Dans le cas contraire, on va essayer de bloquer l\textquotesingle adversaire au maximum en cherchant la valeur maximum.\\%
+Ci-dessous, une description du protocole:
+
+\makebox[\textwidth]{\includegraphics[width=300pt]{img/diag}}
+
 
 
 \end{document}

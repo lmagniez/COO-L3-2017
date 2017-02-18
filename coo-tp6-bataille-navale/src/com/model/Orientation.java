@@ -1,5 +1,10 @@
 package com.model;
 
+/**
+ * Enum concernant l'orientation d'un bateau
+ * @author loick
+ *
+ */
 public enum Orientation {
 	VERTICAL,HORIZONTAL;
 	

@@ -3,19 +3,12 @@ package com.reseau;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,11 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
-import com.vue.grid.VueGrid;
 
 /**
  * Frame du serveur 
@@ -144,6 +135,7 @@ public class Serveur2 extends JFrame{
 			
 			if(command=="Démarrer serveur"){
 				Serveur2.this.field.setText("");
+				Serveur2.this.countLine=0;
 				Serveur2.this.initServeur();
 				Serveur2.this.hasClient1=false;
 				Serveur2.this.hasClient2=false;
@@ -151,6 +143,7 @@ public class Serveur2 extends JFrame{
 			
 			if(command=="Stopper serveur"){
 				Serveur2.this.field.setText("Serveur stoppé");
+				Serveur2.this.countLine=0;
 				Serveur2.this.killServeur();
 				Serveur2.this.hasClient1=false;
 				Serveur2.this.hasClient2=false;
@@ -166,6 +159,8 @@ public class Serveur2 extends JFrame{
 	 */
 	public void initServeur(){
 		try{
+			
+			Serveur2.this.field.setText("");
 			
 			if(this.actualPort!=-1){
 				this.addText("Fermeture du serveur "+actualPort+"...");
@@ -198,6 +193,9 @@ public class Serveur2 extends JFrame{
 	 */
 	public void killServeur(){
 		try {
+			this.client1.arreter();
+			this.client2.arreter();
+			
 			this.socket.close();
 			this.actualPort=-1;
 		} catch (IOException e) {

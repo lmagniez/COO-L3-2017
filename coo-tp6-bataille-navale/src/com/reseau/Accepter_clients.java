@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 /** Thread du serveur faisant le pont entre les deux clients
  */
@@ -15,6 +16,7 @@ class Accepter_clients implements Runnable {
 	private Socket socket;
 	private int nbrClient=1;
 	private int idClient;
+	protected boolean running=true;
 	
 	PrintWriter out;
 	
@@ -32,6 +34,10 @@ class Accepter_clients implements Runnable {
 		
 	}
 	
+	public void arreter(){
+		this.running=false;
+	}
+	
 	/**
 	 * Méthode run, fait l'intérmédiaire entre deux données
 	 */
@@ -40,10 +46,10 @@ class Accepter_clients implements Runnable {
 		BufferedReader in;
 		try{
 			this.serveur.addText("Recherche client "+idClient+"...");
-			while(true){
+			while(running){
 				
 				socket=socketserver.accept();
-				System.out.println("Le client num "+nbrClient+" est connecte ! (Thread "+idClient+")");
+				//System.out.println("Le client num "+nbrClient+" est connecte ! (Thread "+idClient+")");
 				
 				//Connection d'un client, on passe un booléen a vrai
 				if(idClient==0)
@@ -114,18 +120,23 @@ class Accepter_clients implements Runnable {
 					
 					
 				}
-				if(idClient==0)
-					this.serveur.hasClient1=false;
-				if(idClient==1)
-					this.serveur.hasClient2=false;
-				System.out.println("(II) closing connection from "+socket.getInetAddress()+":"+socket.getPort());
+				
+				//System.out.println("(II) closing connection from "+socket.getInetAddress()+":"+socket.getPort());
 				socket.close();
+				this.serveur.initServeur();
+				this.serveur.hasClient1=false;
+				this.serveur.hasClient2=false;
 				
 			}
+		}
+		catch(IOException e){
+			this.serveur.initServeur();
+			this.serveur.hasClient1=false;
+			this.serveur.hasClient2=false;
 			
-		}catch(IOException e){
 			e.printStackTrace();
 		}
+		
 		
 	}
 	
@@ -145,7 +156,7 @@ class Accepter_clients implements Runnable {
 	 */
 	public void fermerServer(){
 		try {
-			System.out.println("Arret du serveur...");
+			//System.out.println("Arret du serveur...");
 			socketserver.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -22,9 +22,9 @@ public class PanelVictoire extends JPanel{
 	public PanelVictoire(int idJoueur, VueGrid vue, boolean boutons)
 	{
 		this.vue=vue;
-		this.setMaximumSize(new Dimension(Constantes.TAILLE_ECRAN_GRILLE,Constantes.TAILLE_ECRAN_GRILLE+Constantes.TAILLE_ECRAN_SCORE));
-		this.setPreferredSize(new Dimension(Constantes.TAILLE_ECRAN_GRILLE,Constantes.TAILLE_ECRAN_GRILLE+Constantes.TAILLE_ECRAN_SCORE));
-		this.setBackground(new Color(0,0,0,65));
+		//this.setMaximumSize(new Dimension(Constantes.TAILLE_ECRAN_GRILLE,Constantes.TAILLE_ECRAN_GRILLE+Constantes.TAILLE_ECRAN_SCORE));
+		//this.setPreferredSize(new Dimension(Constantes.TAILLE_ECRAN_GRILLE,Constantes.TAILLE_ECRAN_GRILLE+Constantes.TAILLE_ECRAN_SCORE));
+		//this.setBackground(new Color(0,0,0,65));
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		JPanel p2 = new JPanel();

@@ -123,16 +123,6 @@ public class GridModel extends AbstractModel{
 			this.out=new PrintWriter(this.socket.getOutputStream());
 			String message_distant = this.in.readLine();
 			System.out.println(message_distant);
-			//this.out.println("Joueur: La reponse du joueur");
-			//this.out.flush();
-			
-			/*
-			String msg_distant = in.readLine();
-			System.out.println("has red:");
-			System.out.println("Recevoir_infos: "+msg_distant);
-			
-			this.getScore().setMsg(msg_distant);
-			*/
 			
 			infos = new Recevoir_infos(this, socket, in, out);
 			Thread t=new Thread(infos);
@@ -238,10 +228,19 @@ public class GridModel extends AbstractModel{
 	 */
 	@Override
 	public void verifWin() {
+		
+		
+		
 		if(this.coupsPrisJ1==Constantes.NB_COUPS_NECESSAIRES){
+			System.out.println("WINNER");
+			this.notifyMsgScore("WINNER");
+			this.notifyMsgScore2("LOSER");
 			this.notifyWinner();
 		}
 		if(this.coupsPrisJ2==Constantes.NB_COUPS_NECESSAIRES){
+			System.out.println("LOSER");
+			this.notifyMsgScore("LOSER");
+			this.notifyMsgScore2("WINNER");
 			this.notifyLoser();
 		}
 	}

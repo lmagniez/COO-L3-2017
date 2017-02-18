@@ -2,6 +2,7 @@
 com.controler
 com.model
 com.observer
+com.reseau
 com.vue
 com.vue.grid
 com.vue.titre
