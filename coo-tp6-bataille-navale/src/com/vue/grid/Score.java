@@ -1,6 +1,7 @@
 package com.vue.grid;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -21,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 import com.model.Constantes;
+import com.reseau.EtatClient;
 
 
 /**
@@ -41,15 +43,15 @@ public class Score extends JPanel {
 	private String msgCoupsPris;
 	private String msgCoupsRates;
 	private String msgTour;
-	private String msgPlus;
+	private String msgNbBateaux;
+	protected boolean stop=false;
 	
-	
-	
+	private int nbBateauxCoules;
 	private int score;
 	private int coupsPris;
 	private int coupsRates;
 	
-	
+	private JLabel message;
 	
 	private JButton retour;
 	private JButton restart;
@@ -74,15 +76,10 @@ public class Score extends JPanel {
 		this.setBackground(Color.BLACK);
 		//this.setOpaque(true);
 		
-		title = new ImageIcon("./sprites/title.jpeg");
-		JLabel titre = new JLabel();
-		JLabel titre2 = new JLabel("test");
-		titre2.setIcon(title);
 		
 		textBox=initTextArea(msgTour);
 		textBox.setEditable(false);
 		
-		this.add(titre);
 		this.add(textBox);
 		
 		restart= new JButton("Recommencer");
@@ -90,19 +87,27 @@ public class Score extends JPanel {
 		retour= new JButton("Retour");
 		retour.addActionListener(new ButtonListener());
 		
-		JPanel p = new JPanel();
-		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
-		p.add(restart);
-		p.add(retour);
-		//this.add(p);
+		
+		
+		//this.add(this.add(Box.createRigidArea(new Dimension(5,50))));
+		
+		
+		this.message=new JLabel("Message J1");
+		this.message.setForeground(Color.WHITE);
+		message.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.add(message);
+		
+		
 		
 		this.coupsPris=0;
 		this.coupsRates=0;
 		this.score=0;
+		this.nbBateauxCoules=0;
 		
 		this.msgCoupsPris= "Coups Pris: "+coupsPris;
 		this.msgCoupsRates= "Coups Rates: "+coupsRates;
 		this.msgScore= "Score: "+score;
+		this.msgNbBateaux="Bateaux coulés: "+nbBateauxCoules;
 		this.changeJoueur(idJoueur);
 		
 		//this.majTextBox();
@@ -146,36 +151,71 @@ public class Score extends JPanel {
 		majTextBox();
 	}
 	
-	
+	/**
+	 * Changer le score 
+	 * @param adversaire score à changer
+	 */
 	public void changeScore(Score adversaire){
 		this.score=adversaire.coupsPris*1000+adversaire.coupsRates*100;
 		msgScore="Score: "+score;
 		majTextBox();
 	}
 	
-	public void addCoupsPris(){
-		coupsPris++;
+	/**
+	 * Changer le nombre de coups pris et mettre à jour le score
+	 * @param coupsPris nombre de coups pris
+	 */
+	public void changeCoupsPris(int coupsPris, int idJoueur){
+		this.coupsPris=coupsPris;
 		msgCoupsPris="Coups pris: "+coupsPris;
-		vue.score2.changeScore(this);
+		
+		if(this.idJoueur==0)
+			vue.score.changeScore(this);
+		if(this.idJoueur==1)
+			vue.score2.changeScore(this);
+		
 		majTextBox();
 	}
 	
-	public void addCoupsRates(){
-		coupsRates++;
+	/**
+	 * Changer le nombre de coups rates et mettre à jour le score
+	 * @param coupsPris nombre de coups rates
+	 */
+	public void changeCoupsRates(int coupsRates, int idJoueur){
+		this.coupsRates=coupsRates;
 		msgCoupsRates="Coups rates: "+coupsRates;
-		vue.score2.changeScore(this);
+		
+		if(this.idJoueur==0)
+			vue.score.changeScore(this);
+		if(this.idJoueur==1)
+			vue.score2.changeScore(this);
+		//vue.score2.changeScore(this);
 		majTextBox();
 	}
 	
+	/**
+	 * Mettre à jour le message d'information
+	 * @param s
+	 */
 	public void setMsg(String s){
 		System.out.println("setMsg "+s);
-		this.msgPlus=s;
-		majTextBox();
-		System.out.println("maj done");
+		//majTextBox();
+		this.message.setText(s);
+		
 	}
 	
+	public void changeNbBateau(int nbBateau){
+		this.msgNbBateaux="Bateaux coulés: "+nbBateau;
+		majTextBox();
+	}
+	
+	
+	
+	/**
+	 * Mettre à jour l'affichage de la textBox
+	 */
 	public void majTextBox(){
-		textBox.setText(msgTour+"\n"+msgScore+"\n"+msgCoupsPris+"\n"+msgCoupsRates+"\n"+msgPlus);
+		textBox.setText(msgTour+"\n"+msgScore+"\n"+msgCoupsPris+"\n"+msgCoupsRates+"\n"+msgNbBateaux);
 		this.repaint();
 	}
 	
@@ -206,7 +246,10 @@ public class Score extends JPanel {
 		} 
 	}
 
-
+	/**
+	 * Afficher le gagnant en fonction du tour
+	 * @param tour
+	 */
 	public void displayWinner(int tour) {
 		tour=(tour+1)%2;
 		msgTour="J"+(tour+1)+" a remporté la partie !!";
@@ -218,8 +261,15 @@ public class Score extends JPanel {
 	{
 		super.paintComponent(g);
 		g.setColor(Color.GREEN);
-		if(this.vue.getTour()==idJoueur)
-			g.fillOval (10,Constantes.TAILLE_ECRAN_SCORE-20, 10, 10);
+		//if(this.vue.getTour()==EtatClient.PLAYER_TURN)
+		if((this.vue.getTour()==EtatClient.PLAYER_TURN&&idJoueur==0)
+		||(this.vue.getTour()==EtatClient.OPPONENT_TURN&&idJoueur==1))
+		{
+			//g.fillOval (10,10, 100, 100);
+			g.fillOval (10,Constantes.TAILLE_ECRAN_SCORE-15, 10, 10);
+			System.out.println("my turn");
+		}
+		
 		//if(this.vue.getTour()==1)
 		//	g.fillOval (10,Constantes.TAILLE_ECRAN_SCORE-20, 10, 10);
 	}

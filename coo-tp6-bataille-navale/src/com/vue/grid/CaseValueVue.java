@@ -29,6 +29,11 @@ public enum CaseValueVue {
         return null;
     }
 	
+	/**
+	 * Acceder à la couleur en fonction du type
+	 * @param v Type
+	 * @return Couleur associée
+	 */
 	public static Color fromType(CaseValueVue v) {
         switch(v) {
         case NONE:

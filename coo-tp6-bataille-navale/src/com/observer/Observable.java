@@ -25,6 +25,11 @@ public interface Observable {
 	
 	public void notifyNewBateau(int x, int y, TypeBateau type, Orientation o, int idB);
 	public void notifyMsgScore(String msg);
+	public void notifyMsgScore2(String msg);
+	public void notifyScoreJ1(int coupsPris, int coupsRates, int nbBateauxCoules);
+	public void notifyScoreJ2(int coupsPris, int coupsRates, int nbBateauxCoules);
+	
+	
 	
 	public void notifyWinner();
 	public void notifyLoser();

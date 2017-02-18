@@ -66,7 +66,7 @@ public class EcranTitre extends JPanel{
 			
 			if(command=="Démarrer")
 			{
-				f.setSize(new Dimension(500,500));
+				f.setSize(new Dimension(350,350));
 				f.afficherPanneau(f.lePanneau2);
 				
 			}

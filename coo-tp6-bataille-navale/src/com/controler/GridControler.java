@@ -2,6 +2,7 @@ package com.controler;
 
 
 import com.model.AbstractModel;
+import com.reseau.EtatClient;
 import com.vue.titre.Vue1;
 
 /**
@@ -40,10 +41,10 @@ public class GridControler extends AbstractControler{
 			this.closeSocket=false;
 			this.calc.closeSocket();
 		}
-		else if(!this.calc.isAlreadyShot(x, y))
+		else if(!this.calc.isAlreadyShot(x, y)&&this.calc.getEtat()==EtatClient.PLAYER_TURN)
 		{
 			this.calc.bombJoueur(x, y);
-			this.calc.verifWin();
+			//this.calc.notifyTour();
 		}
 		else
 		{

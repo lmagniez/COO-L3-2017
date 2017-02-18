@@ -10,7 +10,9 @@ public class CaseModel {
 	private CaseValue v;
 	private int idBateau;
 	
-	
+	/**
+	 * Constructeur
+	 */
 	public CaseModel()
 	{
 		this.setV(CaseValue.NONE);

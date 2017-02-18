@@ -9,9 +9,9 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.reseau.EtatClient;
+import com.reseau.Recevoir_infos;
 import com.vue.grid.CaseValueVue;
-
-import reseau.Shifumi.Recevoir_infos;
 
 /**
  * Classe correspondant au modèle de la grille
@@ -25,12 +25,14 @@ public class GridModel extends AbstractModel{
 	
 	protected CaseModel casesJoueur[][];//cases où le joueur intéragit
 	private CaseModel casesAdversaire[][];//cases où l'adversaire intéragit (contient les bateaux)
-	protected BateauModel bateaux[];
+	private BateauModel bateaux[];
 	public static int nb_bateaux=0;
 	protected boolean isIA[]; 
 
-	private int nbBateauxTouchesJoueur,nbBateauxTouchesAdversaire;
 	
+	private int coupsPrisJ1,coupsPrisJ2;
+	private int coupsRatesJ1,coupsRatesJ2;
+	private int bateauxCoulesJ1, bateauxCoulesJ2;
 	
 	//serveur
 	protected Recevoir_infos infos;
@@ -42,18 +44,15 @@ public class GridModel extends AbstractModel{
 	
 	/**
 	 * Constructeur de la grille
-	 * @param rows nombre de lignes
-	 * @param longueurY nombre de colonnes
-	 * @param nbJR nombre de jetons requis pour gagner
+	 * @param s Socket du serveur 
+	 * @param longueurX longueur X de la grille
+	 * @param longueurY longueur Y de la grille
 	 */
 	public GridModel(Socket s, int longueurX, int longueurY){
 		
 		this.longueurX=longueurX;
 		this.longueurY=longueurY;
-		this.bateaux=new BateauModel[Constantes.NB_BATEAUX];
-		this.nbBateauxTouchesJoueur=0;
-		this.nbBateauxTouchesAdversaire=0;
-		
+		this.setBateaux(new BateauModel[Constantes.NB_BATEAUX]);
 		
 		this.casesJoueur=new CaseModel[longueurX][longueurY];
 		this.setCasesAdversaire(new CaseModel[longueurX][longueurY]);
@@ -68,18 +67,64 @@ public class GridModel extends AbstractModel{
 		this.socket=s;
 	}
 	
+	/**
+	 * Ajouter un coup pris pour le joueur 1 et mettre à jour son score
+	 */
+	public void addCoupsPrisJ1(){
+		this.coupsPrisJ1++;
+		this.notifyScoreJ1(coupsPrisJ1, coupsRatesJ1, bateauxCoulesJ1);
+	}
+	/**
+	 * Ajouter un coup raté pour le joueur 1 et mettre à jour son score
+	 */
+	public void addCoupsRatesJ1(){
+		this.coupsRatesJ1++;
+		this.notifyScoreJ1(coupsPrisJ1, coupsRatesJ1, bateauxCoulesJ1);
+	}
+	/**
+	 * Ajouter un coup pris pour le joueur 2 et mettre à jour son score
+	 */
+	public void addCoupsPrisJ2(){
+		this.coupsPrisJ2++;
+		this.notifyScoreJ2(coupsPrisJ2, coupsRatesJ2, bateauxCoulesJ2);
+	}
+	/**
+	 * Ajouter un coup raté pour le joueur 2 et mettre à jour son score
+	 */
+	public void addCoupsRatesJ2(){
+		this.coupsRatesJ2++;
+		this.notifyScoreJ2(coupsPrisJ2, coupsRatesJ2, bateauxCoulesJ2);
+	}
+	
+	/**
+	 * Ajouter un bateau coulé pour le joueur
+	 */
+	public void addBateauCouleJ1(){
+		this.bateauxCoulesJ1++;
+		this.notifyScoreJ1(coupsPrisJ1, coupsRatesJ1, bateauxCoulesJ1);
+	}
+	
+	/**
+	 * Ajouter un bateau coulés pour l'adversaire
+	 */
+	public void addBateauCouleJ2(){
+		this.bateauxCoulesJ2++;
+		this.notifyScoreJ2(coupsPrisJ1, coupsRatesJ1, bateauxCoulesJ1);
+	}
+	
+	/**
+	 * Lancer la communication entre le modèle et le serveur
+	 */
 	public void lancerCommunication(){
 		try{
 			
-			System.out.println("Demande de connexion");
+			//Demande de connexion
 			this.in=new BufferedReader (new InputStreamReader(this.socket.getInputStream()));
 			this.out=new PrintWriter(this.socket.getOutputStream());
 			String message_distant = this.in.readLine();
 			System.out.println(message_distant);
-			
-			
-			this.out.println("Joueur: La reponse du joueur");
-			this.out.flush();
+			//this.out.println("Joueur: La reponse du joueur");
+			//this.out.flush();
 			
 			/*
 			String msg_distant = in.readLine();
@@ -103,6 +148,10 @@ public class GridModel extends AbstractModel{
 		}
 	}
 	
+	/**
+	 * Envoyer au serveur une chaine
+	 * @param msg chaine a envoyer au serveur
+	 */
 	public void sendToServer(String msg){
 		
 		try {
@@ -118,14 +167,19 @@ public class GridModel extends AbstractModel{
 		}
 	}
 	
-	
+	/**
+	 * Notifier les bateaux à la vue
+	 */
 	public void notifierBateaux(){
 		for(int i=0; i<Constantes.NB_BATEAUX; i++){
-			this.notifyNewBateau(bateaux[i].debutX,bateaux[i].debutY,bateaux[i].type,
-					bateaux[i].o,i);
+			this.notifyNewBateau(getBateaux()[i].debutX,getBateaux()[i].debutY,getBateaux()[i].type,
+					getBateaux()[i].o,i);
 		}
 	}
 
+	/**
+	 * Générer l'ensemble des bateaux sur la grille
+	 */
 	public void genererBateaux(){
 		nb_bateaux=0;
 		placerBateau(TypeBateau.BATEAU_2);
@@ -135,6 +189,10 @@ public class GridModel extends AbstractModel{
 		placerBateau(TypeBateau.BATEAU_5);
 	}
 	
+	/**
+	 * Placer un bateau en fonction de son type sur la grille
+	 * @param t type du bateau
+	 */
 	public void placerBateau(TypeBateau t){
 		int tailleBateau=TypeBateau.fromType(t);
 		
@@ -166,77 +224,52 @@ public class GridModel extends AbstractModel{
 				}
 			}
 		}
-		bateaux[nb_bateaux]=new BateauModel(this,nb_bateaux,positionX,positionY,t,orientation);
-		this.notifyNewBateau(bateaux[nb_bateaux].debutX,bateaux[nb_bateaux].debutY,bateaux[nb_bateaux].type,
-				bateaux[nb_bateaux].o,nb_bateaux);
+		getBateaux()[nb_bateaux]=new BateauModel(this,nb_bateaux,positionX,positionY,t,orientation);
+		this.notifyNewBateau(getBateaux()[nb_bateaux].debutX,getBateaux()[nb_bateaux].debutY,getBateaux()[nb_bateaux].type,
+				getBateaux()[nb_bateaux].o,nb_bateaux);
 		nb_bateaux++;
 		
 
 		
 	}
 	
+	/**
+	 * Vérifier si un joueur a gagné (en fonction du nombre de coups pris
+	 */
 	@Override
 	public void verifWin() {
-		if(this.nbBateauxTouchesJoueur==Constantes.NB_COUPS_NECESSAIRES)
+		if(this.coupsPrisJ1==Constantes.NB_COUPS_NECESSAIRES){
 			this.notifyWinner();
-		if(this.nbBateauxTouchesAdversaire==Constantes.NB_COUPS_NECESSAIRES)
+		}
+		if(this.coupsPrisJ2==Constantes.NB_COUPS_NECESSAIRES){
 			this.notifyLoser();
+		}
 	}
 	
+	/**
+	 * Notifier qu'une case a déjà été bombardée
+	 * @param x abscisse de la case
+	 * @param y ordonnée de la case
+	 */
 	public boolean isAlreadyShot(int x, int y){
 		return (casesJoueur[x][y].getV()==CaseValue.TOUCHE);
 	}
 	
-	/**
-	 * Se faire bombarder par l'adversaire
-	 * Recoit BOMB X Y du serveur
-	 * Renvoie au serveur TOUCHE ou MISSED
-	 * 
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public void bombAdversaire(int x, int y){
-			
-		int idB=casesJoueur[x][y].getIdBateau();
-		casesJoueur[x][y].setV(CaseValue.TOUCHE);
-		if(idB!=-1){
-			bateaux[idB].setNbTouches(bateaux[idB].getNbTouches()+1);
-			this.nbBateauxTouchesAdversaire++;
-			this.notifyBombAdversaire(x, y, CaseValueVue.TOUCHE);
-			//renvoyer TOUCHE
-		}
-		else{
-			this.notifyBombAdversaire(x, y, CaseValueVue.PLOUF);
-			//renvoyer MISSED
-		}
-	}
+
 	
 	/**
 	 * Bombarder l'adversaire
 	 * Envoie BOMB X Y au serveur
-	 * Recoit MISSED/TOUCHE
+	 * Reçoit MISSED/TOUCHE
 	 * @param x
 	 * @param y
-	 * @return
 	 */
 	public void bombJoueur(int x, int y){
-		
 		//DEMANDER ET RECEVOIR REPONSE
 		
+		this.casesJoueur[x][y].setV(CaseValue.TOUCHE);
 		this.sendToServer("BOMB "+x+" "+y);
-		
-		/*
-		String reponse="TOUCHE";
-		casesJoueur[x][y].setV(CaseValue.TOUCHE);
-		if(reponse.equals("TOUCHE")){
-			this.notifyBombJoueur(x, y, CaseValueVue.TOUCHE);
-			this.nbBateauxTouchesJoueur++;
-		}
-		if(reponse.equals("MISSED")){
-			this.notifyBombJoueur(x, y, CaseValueVue.PLOUF);
-		}*/
-		this.notifyTour();
+		this.setEtat(EtatClient.OPPONENT_TURN);
 	}
 	
 
@@ -253,6 +286,9 @@ public class GridModel extends AbstractModel{
 		this.notifyReinit();
 	}
 
+	/**
+	 * Fermer la socket du serveur
+	 */
 	public void closeSocket(){
 		try {
 			this.sendToServer("ABORT");
@@ -273,7 +309,7 @@ public class GridModel extends AbstractModel{
 			for(int j=0; j<longueurY; j++){
 				int idB=getCasesAdversaire()[i][j].getIdBateau();
 				if(idB!=-1){
-					System.out.print(bateaux[idB].getType()+"("+getCasesAdversaire()[i][j].getV()+")"+"\t");
+					System.out.print(getBateaux()[idB].getType()+"("+getCasesAdversaire()[i][j].getV()+")"+"\t");
 				
 				}else
 					System.out.print(TypeBateau.NONE.name()+"("+getCasesAdversaire()[i][j].getV()+")"+"\t");
@@ -292,12 +328,28 @@ public class GridModel extends AbstractModel{
 		
 	}
 
+	/**
+	 * Getter
+	 * @return
+	 */
 	public CaseModel[][] getCasesAdversaire() {
 		return casesAdversaire;
 	}
 
+	/**
+	 * Setter
+	 * @param casesAdversaire
+	 */
 	public void setCasesAdversaire(CaseModel casesAdversaire[][]) {
 		this.casesAdversaire = casesAdversaire;
+	}
+
+	public BateauModel[] getBateaux() {
+		return bateaux;
+	}
+
+	public void setBateaux(BateauModel bateaux[]) {
+		this.bateaux = bateaux;
 	}
 
 	

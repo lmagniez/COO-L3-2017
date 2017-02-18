@@ -54,11 +54,18 @@ public abstract class AbstractControler {
 		control();
 	}
 	
+	/**
+	 * Demander l'ensemble des bateaux du joueur au controler
+	 */
 	public void requestBateaux(){
 		this.bateaux=true;
 		control();
 	}
 	
+	/**
+	 * Demander l'envoi d'une chaine de caractere au serveur
+	 * @param msg chaine de caractere a envoyer
+	 */
 	public void requestSendToServer(String msg){
 		this.sendServer=true;
 		this.msg=msg;
@@ -76,6 +83,9 @@ public abstract class AbstractControler {
 	//Methode de controle
 	abstract void control();
 
+	/**
+	 * Demander la fermeture du socket vers le serveur
+	 */
 	public void requestCloseSocket() {
 		this.closeSocket=true;
 		control();

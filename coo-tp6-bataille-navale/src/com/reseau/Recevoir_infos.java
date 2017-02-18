@@ -1,4 +1,4 @@
-package reseau.Shifumi;
+package com.reseau;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+import com.model.BateauModel;
 import com.model.CaseModel;
 import com.model.CaseValue;
 import com.model.GridModel;
@@ -22,6 +23,11 @@ import com.vue.grid.CaseValueVue;
 import com.vue.grid.Score;
 import com.vue.grid.VueGrid;
 
+/**
+ * Thread du client, recoit l'ensemble des infos et les traite si besoin pour les renvoyer au serveur
+ * @author loick
+ *
+ */
 public class Recevoir_infos implements Runnable {
 
 	private static final String LO_ADDR = "127.0.0.1";
@@ -36,8 +42,6 @@ public class Recevoir_infos implements Runnable {
 	protected BufferedReader in;
 	protected boolean running=true;
 	
-	protected EtatClient etat;
-	
 	public Recevoir_infos(GridModel gridModel,Socket socket, BufferedReader in, PrintWriter out){;
 		this.model=gridModel;
 		this.socket=socket;
@@ -46,54 +50,48 @@ public class Recevoir_infos implements Runnable {
 		
 	}
 	
+	public void stopper()
+	{
+		this.running=false;
+	}
+	
+	public void reprendre()
+	{
+		this.running=true;
+	}
+	
+	/**
+	 * Attend la connection de deux joueurs
+	 * Décide de qui commence la partie
+	 * Si se fait bombarder -> Vérifie son modèle et renvoie la réponse positive ou négative
+	 */
 	public void run() 
 	{
-		
-		/*
-		try{
-			
-			Socket socket = new Socket(InetAddress.getByName(LO_ADDR), DEFAULT_LOCAL_PORT);
-			BufferedReader cliReader = new BufferedReader(new InputStreamReader(defaultInStream));
-			BufferedReader socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			BufferedWriter socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			String line;
-			while((line = cliReader.readLine()) != null) {
-				if(line.length() == 0) break;
-				System.out.println("line! "+line);
-				socketWriter.write(line+"\n");
-				socketWriter.flush();
-				defaultOutStream.println("RECV: "+socketReader.readLine());
-			}
-			System.out.println("le close");
-			socket.close();
-		
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-		*/
-		
-		
-		
+
 		System.out.println("A l'écoute...");
 		
 		try {
-			
-			//this.in=new BufferedReader (new InputStreamReader(this.socket.getInputStream()));
-			//this.out=new PrintWriter(this.socket.getOutputStream());
-			
+		
 			while(running){
 				System.out.println("va readline:");
 				String msg_distant = in.readLine();
 				System.out.println("Recevoir_infos: "+msg_distant);
 				
-				this.model.notifyMsgScore(msg_distant);
+				if(msg_distant.contains("En attente de"))
+					this.model.notifyMsgScore(msg_distant);
 				
-				if(msg_distant.equals("GO J1"))
-					this.etat=EtatClient.PLAYER_TURN;
-				if(msg_distant.equals("GO J2"))
-					this.etat=EtatClient.OPPONENT_TURN;
+				if(msg_distant.equals("GO J1")){
+					this.model.setEtat(EtatClient.PLAYER_TURN);
+					this.model.notifyMsgScore("A vous de commencer!");
+					this.model.notifyMsgScore2("En attente...");
+				}
+				if(msg_distant.equals("GO J2")){
+					this.model.setEtat(EtatClient.OPPONENT_TURN);
+					this.model.notifyMsgScore2("A vous de commencer!");
+					this.model.notifyMsgScore("En attente...");
+				}
 				if(msg_distant.equals("CONNECTION LOST"))
-					this.etat=EtatClient.LOST_CONNECTION;
+					this.model.setEtat(EtatClient.LOST_CONNECTION);
 				
 				
 				//Se faire bombarder
@@ -102,29 +100,58 @@ public class Recevoir_infos implements Runnable {
 					int bombx=Integer.parseInt(msg_splited[1]);
 					int bomby=Integer.parseInt(msg_splited[2]);
 					CaseModel caseTmp=this.model.getCasesAdversaire()[bomby][bombx];
-					caseTmp.setV(CaseValue.TOUCHE);
+					caseTmp.setV(CaseValue.TOUCHE);					
 					if(caseTmp.getIdBateau()!=-1){
+						
+						BateauModel b =this.model.getBateaux()[caseTmp.getIdBateau()];
+						b.setNbVie(b.getNbVie() - 1);
+						String coules="";
+						if(b.getNbVie()==0){
+							this.model.addBateauCouleJ2();
+							coules=" SINKED";
+						}
+						
 						this.model.notifyBombAdversaire(bombx, bomby, CaseValueVue.TOUCHE);
-						this.model.sendToServer("TOUCHE "+bombx+" "+bomby);
+						this.model.sendToServer("TOUCHED "+bombx+" "+bomby+coules);
+						this.model.notifyMsgScore2("Touché !!");
+						this.model.notifyMsgScore("A votre tour...");
+						this.model.addCoupsPrisJ2();
+						this.model.verifWin();
+						
 					}
 					else{
 						this.model.notifyBombAdversaire(bombx, bomby, CaseValueVue.PLOUF);
-						this.model.sendToServer("PLOUF "+bombx+" "+bomby);
+						this.model.sendToServer("MISSED "+bombx+" "+bomby);
+						this.model.notifyMsgScore2("Raté !!");
+						this.model.notifyMsgScore("A votre tour...");
+						this.model.addCoupsRatesJ2();
 					}
-					
+					model.setEtat(EtatClient.PLAYER_TURN);
 					
 				}
 				
-				if(msg_splited[0].equals("TOUCHE")){
+				if(msg_splited[0].equals("TOUCHED")){
 					int bombx=Integer.parseInt(msg_splited[1]);
 					int bomby=Integer.parseInt(msg_splited[2]);
+					if(msg_splited.length==4)
+						if(msg_splited[3].equals("SINKED"))
+							this.model.addBateauCouleJ1();
+					
 					this.model.notifyBombJoueur(bombx, bomby, CaseValueVue.TOUCHE);
+					this.model.notifyMsgScore("Touché !!");
+					this.model.notifyMsgScore2("A votre tour...");
+					this.model.addCoupsPrisJ1();
+					this.model.verifWin();
 				}
 				
-				if(msg_splited[0].equals("PLOUF")){
+				if(msg_splited[0].equals("MISSED")){
 					int bombx=Integer.parseInt(msg_splited[1]);
 					int bomby=Integer.parseInt(msg_splited[2]);
 					this.model.notifyBombJoueur(bombx, bomby, CaseValueVue.PLOUF);
+					this.model.notifyMsgScore("Raté !");
+					this.model.notifyMsgScore2("A votre tour...");
+					this.model.addCoupsRatesJ1();
+					
 				}
 				
 				

@@ -5,6 +5,11 @@ import com.model.GridModel;
 import com.model.Orientation;
 import com.model.TypeBateau;
 
+/**
+ * Vue représentant un bateau
+ * @author loick
+ *
+ */
 public class Bateau {
 
 	private VueGrid vue;
@@ -19,6 +24,13 @@ public class Bateau {
 	protected int posX,posY;
 	protected int hX,hY;
 	
+	/**
+	 * Constructeur
+	 * @param debutX début X du bateau
+ 	 * @param debutY début Y du bateau
+	 * @param t type du bateau
+	 * @param o orientation du bateau
+	 */
 	public Bateau(int debutX,int debutY, TypeBateau t, Orientation o){
 		this.debutX=debutX;
 		this.debutY=debutY;
@@ -29,6 +41,9 @@ public class Bateau {
 		placerBateau();
 	}
 	
+	/**
+	 * Placer un bateau sur la vue en fonction de son orientation, sa position de départ et sa taille
+	 */
 	public void placerBateau(){
 		
 		if(orientation==Orientation.VERTICAL){

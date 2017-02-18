@@ -1,4 +1,4 @@
-package reseau.Shifumi;
+package com.reseau;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/** Thread du serveur faisant le pont entre les deux clients
+ */
 class Accepter_clients implements Runnable {
 	private Serveur2 serveur;
 	private ServerSocket socketserver;
@@ -16,6 +18,12 @@ class Accepter_clients implements Runnable {
 	
 	PrintWriter out;
 	
+	/**
+	 * Constructeur
+	 * @param serveur serveur
+	 * @param s socket du serveur
+	 * @param idClient id du client 
+	 */
 	public Accepter_clients(Serveur2 serveur, ServerSocket s, int idClient)
 	{
 		this.serveur=serveur;
@@ -23,11 +31,15 @@ class Accepter_clients implements Runnable {
 		this.idClient=idClient;
 		
 	}
+	
+	/**
+	 * Méthode run, fait l'intérmédiaire entre deux données
+	 */
 	public void run()
 	{
 		BufferedReader in;
 		try{
-			System.out.println("Serveur lancé");
+			this.serveur.addText("Recherche client "+idClient+"...");
 			while(true){
 				
 				socket=socketserver.accept();
@@ -44,7 +56,7 @@ class Accepter_clients implements Runnable {
 				out.println("Vous etes connecte joueur "+idClient+" !");
 				out.flush();
 				
-				serveur.addText("ok");
+				serveur.addText("Connection joueur "+idClient);
 				
 				
 				//Attente de la seconde connection
@@ -60,7 +72,7 @@ class Accepter_clients implements Runnable {
 				}
 				
 				//confirmation des deux joueurs connectés
-				serveur.addText("Let's go!");
+				serveur.addText("Lancement partie");
 				if(idClient==0){
 					out.println("GO J1");
 					out.flush();
@@ -76,7 +88,10 @@ class Accepter_clients implements Runnable {
 					in=new BufferedReader (new InputStreamReader(socket.getInputStream()));
 					String msg = in.readLine();
 					
-					System.out.println("Serveur: Message recu du Thread "+ idClient +" : "+msg);
+					if(msg==null){
+						break;
+					}
+					
 					serveur.addText(msg);
 					
 					if(msg.equals("ABORT")){
@@ -85,9 +100,8 @@ class Accepter_clients implements Runnable {
 					}
 					
 					String[] msg_splited = msg.split("\\s+");
-					if(msg_splited[0].equals("BOMB")||msg_splited[0].equals("PLOUF")||msg_splited[0].equals("TOUCHE")){
-						//int bombx=Integer.parseInt(msg_splited[1]);
-						//int bomby=Integer.parseInt(msg_splited[2]);
+					if(msg_splited[0].equals("BOMB")||msg_splited[0].equals("MISSED")||msg_splited[0].equals("TOUCHED")){
+
 						if(idClient==0){
 							this.serveur.client2.out.println(msg);
 							this.serveur.client2.out.flush();
@@ -98,9 +112,7 @@ class Accepter_clients implements Runnable {
 						}
 					}
 					
-					if(msg==null){
-						break;
-					}
+					
 				}
 				if(idClient==0)
 					this.serveur.hasClient1=false;
@@ -117,14 +129,20 @@ class Accepter_clients implements Runnable {
 		
 	}
 	
-	
+	/**
+	 * Envoyer un message vers un client
+	 * @param msg message du client
+	 * @throws IOException
+	 */
 	public void envoyer_message(String msg) throws IOException{
 		out=new PrintWriter(socket.getOutputStream());
 		out.println(msg);
 		out.flush();
 	}
 	
-	
+	/**
+	 * Fermer la socket du serveur
+	 */
 	public void fermerServer(){
 		try {
 			System.out.println("Arret du serveur...");

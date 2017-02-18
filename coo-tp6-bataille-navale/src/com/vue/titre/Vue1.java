@@ -56,12 +56,13 @@ public class Vue1 extends Fenetre{
 	
 	/**
 	 * Initialise une fenetre de jeu (et l'initialise)
+	 * @param numPort 
 	 */
-	public void initFenetreEcranJeu(int nbRow, int nbCol, boolean[] isIA)
+	public void initFenetreEcranJeu(int nbRow, int nbCol, int numPort)
 	{
 		Socket socket = null;
 		try {
-			socket = new Socket(InetAddress.getLocalHost(),1791);
+			socket = new Socket(InetAddress.getLocalHost(),numPort);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

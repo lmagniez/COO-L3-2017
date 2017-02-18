@@ -102,6 +102,12 @@ public class Grid extends JPanel implements MouseListener{
 		}*/
 	}
 	
+	/**
+	 * Bombarder la case x y
+	 * @param x abscisse à bombarder
+	 * @param y ordonnée à bombarder
+	 * @param touche touché ou non
+	 */
 	public void bomb(int x, int y, boolean touche)
 	{
 		if(touche)
@@ -125,6 +131,11 @@ public class Grid extends JPanel implements MouseListener{
 		
 	}
 	
+	/**
+	 * Test de collision général, si collision, envoie au controler le lancement d'une bombe
+	 * @param arg0 MouseEvent
+	 * @return 1 si collision -1 sinon
+	 */
 	public int collision(MouseEvent arg0)
 	{
 		if(actif&&joueur)
@@ -186,7 +197,9 @@ public class Grid extends JPanel implements MouseListener{
 		
 	}
 	
-	
+	/**
+	 * Méthode paint, draw la grille, les bateaux, puis les coups.
+	 */
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
