@@ -244,7 +244,8 @@ public class EcranRegle extends Ecran implements ActionListener{
 	        	break;
 	       
 	        case KeyEvent.VK_H:
-	        	vue.afficherPanneau(vue.lePanneau);
+	        	vue.initFenetreEcranJeu();
+	        	//vue.afficherPanneau(vue.lePanneau);
 	        	break;
 	        case KeyEvent.VK_ESCAPE:
 	        	this.focusNouvelEcran(vue.lePanneau3);

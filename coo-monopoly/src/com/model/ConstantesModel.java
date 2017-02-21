@@ -1,6 +1,6 @@
 package com.model;
 
-public abstract class Constantes {
+public abstract class ConstantesModel {
 
 	
 	public static final int NB_CASES=40;

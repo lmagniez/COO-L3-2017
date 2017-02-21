@@ -1,6 +1,6 @@
 package com.model.plateau;
 
-import com.model.Constantes;
+import com.model.ConstantesModel;
 import com.model.plateau.cases.CaseModel;
 import com.model.plateau.cases.CommunauteChanceModel;
 import com.model.plateau.cases.CouleurTerrain;
@@ -46,7 +46,7 @@ public class PlateauModel {
 	{
 		int nb_cases=0;
 		int nb_terrain=0;
-		CaseModel cases[]=new CaseModel[Constantes.NB_CASES];
+		CaseModel cases[]=new CaseModel[ConstantesModel.NB_CASES];
 		
 		
 		int tabLoyers[][]={

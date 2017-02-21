@@ -20,15 +20,15 @@ import javax.swing.JPanel;
 import com.controler.AbstractControler;
 import com.controler.GrilleControler;
 import com.model.AbstractModel;
+import com.model.ConstantesVue;
 import com.model.GrilleModel;
 import com.observer.Observer;
 import com.vue.Fenetre;
+import com.vue.plateau.EcranJeu;
+import com.vue.plateau.VueJeu;
 
 public class VueMenu extends Fenetre implements Observer{
 	
-	private JPanel container = new JPanel();
-	
-	protected EcranJeu lePanneau;
 	protected EcranFinDePartie lePanneau2;
 	protected EcranStart lePanneau3;
 	protected EcranRegle lePanneau4;
@@ -47,14 +47,12 @@ public class VueMenu extends Fenetre implements Observer{
 		this.controler=controler;
 		
 		this.setTitle("Monopoly");
-		this.setSize(1200, 700);
+		this.setSize(ConstantesVue.DIMENSION_FENETRE_X, ConstantesVue.DIMENSION_FENETRE_Y);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setFocusable(false);
 		
-		
-		lePanneau= new EcranJeu(this);
 		lePanneau2 = new EcranFinDePartie(this);
 		lePanneau3 = new EcranStart(this);
 		lePanneau4 = new EcranRegle(this);
@@ -71,11 +69,7 @@ public class VueMenu extends Fenetre implements Observer{
 		this.add(lePanneau3);
 		
 		
-		lePanneau.addKeyListener(new KeyAdapter(){
-			public void keyPressed(KeyEvent e){
-				VueMenu.this.lePanneau.gestion(e);
-			}
-		});
+		
 		
 		
 		
@@ -85,22 +79,18 @@ public class VueMenu extends Fenetre implements Observer{
 	}
 	
 
-	/**
-	 * Réinitialise un écran de jeu (Toutes les cases à zéro sauf une)
-	 */
-	public void initFenetreEcranJeu()
-	{
-		lePanneau.reinit();
-		afficherPanneau(lePanneau);
-		
-	}
 	
 	/**
 	 * Réinitialise un écran de jeu (Toutes les cases à zéro)
 	 */
-	public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
+	public void initFenetreEcranJeu()
+	//public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
 	{
 	
+		VueJeu jeu=new VueJeu();
+		jeu.setVisible(true);
+		this.setVisible(false);
+		
 		/*
 		
 		//Creation du modele de grille
@@ -114,6 +104,7 @@ public class VueMenu extends Fenetre implements Observer{
 		this.setVisible(false);
 		
 		*/
+		
 		
 	}
 	

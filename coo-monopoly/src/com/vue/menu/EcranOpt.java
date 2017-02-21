@@ -255,7 +255,8 @@ public class EcranOpt extends Ecran implements ActionListener{
 		
 		if(command=="Démarrer")
 		{
-			vue.afficherPanneau(vue.lePanneau);
+			vue.initFenetreEcranJeu();
+			//afficherPanneau(vue.lePanneau);
 		}
 		
 		if(command=="Règles additionnelles")

@@ -1,6 +1,6 @@
 package com.model.plateau.pioche;
 
-import com.model.Constantes;
+import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 
 public class CarteModel {
@@ -67,7 +67,7 @@ public class CarteModel {
 		
 		//effets divers
 		if(allerPrison)
-			j.setPositionSansArgent(Constantes.POS_PRISON);
+			j.setPositionSansArgent(ConstantesModel.POS_PRISON);
 		
 		if(sortirPrison)
 			j.ajoutCartePrison();

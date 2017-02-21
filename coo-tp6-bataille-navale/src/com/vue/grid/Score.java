@@ -79,7 +79,6 @@ public class Score extends JPanel {
 		
 		textBox=initTextArea(msgTour);
 		textBox.setEditable(false);
-		
 		this.add(textBox);
 		
 		restart= new JButton("Recommencer");

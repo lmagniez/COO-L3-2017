@@ -2,7 +2,7 @@ package com.model.plateau.pioche;
 
 import java.util.Random;
 
-import com.model.Constantes;
+import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
@@ -20,13 +20,13 @@ public class PiocheModel {
 		this.type=type;
 		this.p=p;
 		this.carteActuelle=0;
-		this.cartes=new CarteModel[Constantes.NB_CARTES_CHANCE];
+		this.cartes=new CarteModel[ConstantesModel.NB_CARTES_CHANCE];
 		if(type==TypePioche.CHANCE)
 			genererCartesChance();
 		else if(type==TypePioche.COMMUNAUTE)
 			genererCartesCommunaute();
 		
-		melangerPaquet(Constantes.NB_SWAP);
+		melangerPaquet(ConstantesModel.NB_SWAP);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class PiocheModel {
 	 */
 	public boolean piocheVide()
 	{
-		return(carteActuelle==Constantes.NB_CARTES_CHANCE-1);
+		return(carteActuelle==ConstantesModel.NB_CARTES_CHANCE-1);
 	}
 	
 	/**
@@ -47,8 +47,8 @@ public class PiocheModel {
 		Random r=new Random();
 		for(int i=0; i<nbSwap; i++)
 		{
-			int i1=r.nextInt(Constantes.NB_CARTES_CHANCE);
-			int i2=r.nextInt(Constantes.NB_CARTES_CHANCE);
+			int i1=r.nextInt(ConstantesModel.NB_CARTES_CHANCE);
+			int i2=r.nextInt(ConstantesModel.NB_CARTES_CHANCE);
 			CarteModel tmp=cartes[i1];
 			cartes[i1]=cartes[i2];
 			cartes[i2]=tmp;
@@ -85,7 +85,7 @@ public class PiocheModel {
 				"Vous êtes libérés de prison.");
 		cartes[nbCarte++]=new CarteModel(0, 0, this.p.getIdCaseByName("Avenue Henri-Martin"), false, false, 0, 0,0, false,
 				"Rendez-vous à l’Avenue Henri-Martin.");
-		cartes[nbCarte++]=new CarteModel(0, 0, Constantes.POS_DEPART, false, false, 0, 0,0, false,
+		cartes[nbCarte++]=new CarteModel(0, 0, ConstantesModel.POS_DEPART, false, false, 0, 0,0, false,
 				"Avancez jusqu’à la case ≪ Départ ≫ .");
 		cartes[nbCarte++]=new CarteModel(0, 0, this.p.getIdCaseByName("Boulevard de la Vilette"), false, false, 0, 0,0, false,
 				"Avancez au Boulevard de la Villette.");

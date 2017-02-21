@@ -1,13 +1,13 @@
 package com.model.plateau.cases;
 
-import com.model.Constantes;
+import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
 public class GareModel extends CaseModel{
 
 	public static int[] tabAssoGareJoueur=initTab();
-	public static int posGares[]=new int[Constantes.NB_GARES];
+	public static int posGares[]=new int[ConstantesModel.NB_GARES];
 	protected int idGare;
 	protected static int nb_gare=0;
 	
@@ -18,8 +18,8 @@ public class GareModel extends CaseModel{
 	
 	public static int[] initTab()
 	{
-		int[] tabAsso=new int[Constantes.NB_GARES];
-		for(int i=0; i<Constantes.NB_GARES; i++){
+		int[] tabAsso=new int[ConstantesModel.NB_GARES];
+		for(int i=0; i<ConstantesModel.NB_GARES; i++){
 			tabAssoGareJoueur[i]=-1;
 		}
 		return tabAsso;
@@ -38,7 +38,7 @@ public class GareModel extends CaseModel{
 	public int getNbGareMemeJoueur()
 	{
 		int nb=0;
-		for(int i=0; i<Constantes.NB_GARES; i++)
+		for(int i=0; i<ConstantesModel.NB_GARES; i++)
 			if(tabAssoGareJoueur[i]==tabAssoGareJoueur[idGare])
 				nb++;
 		return nb;

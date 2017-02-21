@@ -400,7 +400,8 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 		
 		if(command=="Démarrer")
 		{
-			vue.afficherPanneau(vue.lePanneau);
+			vue.initFenetreEcranJeu();
+			//vue.afficherPanneau(vue.lePanneau);
 		}
 		
 		

@@ -1,6 +1,6 @@
 package com.model.plateau.cases;
 
-import com.model.Constantes;
+import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
@@ -25,8 +25,8 @@ public class TerrainModel extends CaseModel{
 	
 	public static int[] initTab()
 	{
-		int[] tabAsso=new int[Constantes.NB_CASES_TERRAIN];
-		for(int i=0; i<Constantes.NB_CASES_TERRAIN; i++){
+		int[] tabAsso=new int[ConstantesModel.NB_CASES_TERRAIN];
+		for(int i=0; i<ConstantesModel.NB_CASES_TERRAIN; i++){
 			tabAssoTerrainJoueur[i]=-1;
 		}
 		return tabAsso;
@@ -82,7 +82,7 @@ public class TerrainModel extends CaseModel{
 	
 	public boolean resteDesHotels()
 	{
-		if(this.p.getNbHotelsTotal()==Constantes.NB_HOTELS)
+		if(this.p.getNbHotelsTotal()==ConstantesModel.NB_HOTELS)
 			return false;
 		return true;
 	}
@@ -90,7 +90,7 @@ public class TerrainModel extends CaseModel{
 	
 	public boolean resteDesMaisons()
 	{
-		if(this.p.getNbMaisonsTotal()==Constantes.NB_MAISONS)
+		if(this.p.getNbMaisonsTotal()==ConstantesModel.NB_MAISONS)
 			return false;
 		return true;
 	}

@@ -1,0 +1,123 @@
+package com.vue.plateau;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import com.model.ConstantesVue;
+import com.vue.ButtonMenu;
+import com.vue.Colors;
+
+public class Choix extends JPanel{
+
+	protected ButtonMenu confirmer;
+	protected ButtonMenu annuler;
+	protected JTextArea textBox;
+	
+	public Choix(){
+		
+		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X));
+		this.setSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X));
+		this.setMinimumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X));
+		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X));
+		
+		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		this.setBackground(new Color(200,200,200,90));
+		
+		
+		JLabel l=new JLabel("Choix: ");
+		l.setBackground(Color.BLACK);
+		l.setForeground(Color.BLACK);
+		l.setAlignmentX(CENTER_ALIGNMENT);
+		this.add(l);
+		
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
+		
+		JLabel l2 = new JLabel();
+		Icon image=new ImageIcon("Sprites/pieces/BOTTOM/"+1+".png");
+		image=transform((ImageIcon) image,ConstantesVue.CASE_WIDTH/2,ConstantesVue.CASE_HEIGHT/2);
+		l2.setIcon(image);
+		l2.setAlignmentY(TOP_ALIGNMENT);
+		p.add(l2);
+		
+		textBox=initTextArea("Message");
+		textBox.setEditable(false);
+		textBox.setSize(new Dimension(ConstantesVue.DIMENSION_CHOIX_X-50,ConstantesVue.DIMENSION_CHOIX_Y/2));
+		p.add(textBox);
+		
+		confirmer=new ButtonMenu("Accepter",Colors.textColor2,Colors.case8);
+		confirmer.addActionListener(new ButtonListener());
+		
+		annuler=new ButtonMenu("Refuser",Colors.textColor2,Colors.case8);
+		annuler.addActionListener(new ButtonListener());
+		
+		JPanel p2 = new JPanel();
+		p2.setLayout(new BoxLayout(p2,BoxLayout.LINE_AXIS));
+		p2.add(confirmer);
+		p2.add(annuler);
+		
+		this.add(p);
+		this.add(p2);
+		
+		
+	}
+	
+	class ButtonListener implements ActionListener
+	{ 
+		public void actionPerformed(ActionEvent e) {
+			String command = ((JButton) e.getSource()).getActionCommand();
+			
+			if(command=="Accepter")
+			{
+				Choix.this.setVisible(false);
+			}
+			
+			
+			if(command=="Refuser")
+				Choix.this.setVisible(false);
+		} 
+	}
+	
+	/**
+	 * Initialisation de la zone de texte.
+	 * @param s Le contenu de la JTextArea
+	 * @return La JTextArea initialisé
+	 */
+	
+	public JTextArea initTextArea(String s){
+		
+		JTextArea textArea = new JTextArea();
+        textArea.setRows(5);
+        textArea.setColumns(20);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setFont(new Font("Arial", Font.PLAIN, 16));
+        textArea.setBackground(Color.lightGray);
+		textArea.append(s);
+		textArea.setMargin(new Insets(10,10,10,10));
+		return textArea;
+
+	}
+	
+	public ImageIcon transform (ImageIcon img, int hx, int hy)
+	{
+		Image image=img.getImage();
+		Image newImg= image.getScaledInstance(hx, hy, java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(newImg);
+	}
+}

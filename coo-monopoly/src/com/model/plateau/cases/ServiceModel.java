@@ -1,6 +1,6 @@
 package com.model.plateau.cases;
 
-import com.model.Constantes;
+import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
@@ -27,8 +27,8 @@ public class ServiceModel extends CaseModel{
 	
 	public static int[] initTab()
 	{
-		int[] tabAsso=new int[Constantes.NB_CASES_SERVICES];
-		for(int i=0; i<Constantes.NB_CASES_SERVICES; i++){
+		int[] tabAsso=new int[ConstantesModel.NB_CASES_SERVICES];
+		for(int i=0; i<ConstantesModel.NB_CASES_SERVICES; i++){
 			tabAssoServiceJoueur[i]=-1;
 		}
 		return tabAsso;
@@ -37,7 +37,7 @@ public class ServiceModel extends CaseModel{
 	public int getNbServiceMemeJoueur()
 	{
 		int nb=0;
-		for(int i=0; i<Constantes.NB_GARES; i++)
+		for(int i=0; i<ConstantesModel.NB_GARES; i++)
 			if(tabAssoServiceJoueur[i]==tabAssoServiceJoueur[idService])
 				nb++;
 		return nb;
