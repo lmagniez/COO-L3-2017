@@ -8,7 +8,7 @@ public class GendarmeModel extends CaseModel{
 	{
 		this.setNom("Gendarme");
 		this.idCase=idCase;
-		this.position=position;
+		this.setPosition(position);
 	}
 	
 	@Override

@@ -6,10 +6,10 @@ import com.model.plateau.PlateauModel;
 
 public class GareModel extends CaseModel{
 
-	public static int[] tabAssoGareJoueur=initTab();
+	public static int[] tabAssoGareJoueur;
 	public static int posGares[]=new int[ConstantesModel.NB_GARES];
 	protected int idGare;
-	protected static int nb_gare=0;
+	public static int nb_gare=0;
 	
 	protected int prixAchat;
 	protected static int[] loyers={2500,5000,10000,20000};
@@ -20,7 +20,7 @@ public class GareModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_GARES];
 		for(int i=0; i<ConstantesModel.NB_GARES; i++){
-			tabAssoGareJoueur[i]=-1;
+			tabAsso[i]=-1;
 		}
 		return tabAsso;
 	}
@@ -29,7 +29,8 @@ public class GareModel extends CaseModel{
 	{
 		this.p=p;
 		this.idCase=idCase;
-		this.position=position;
+		this.setNom(nom);
+		this.setPosition(position);
 		this.idGare=nb_gare++;
 		this.prixAchat=prixAchat;
 		GareModel.posGares[idGare]=position;

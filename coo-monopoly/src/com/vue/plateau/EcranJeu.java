@@ -35,7 +35,7 @@ import com.vue.menu.VueMenu;
 
 public class EcranJeu extends Ecran{
 
-	private VueJeu vue;
+	protected VueJeu vue;
 	private JLabel title;
 	
 	protected JPanel menu;
@@ -155,6 +155,11 @@ public class EcranJeu extends Ecran{
 	     }
 	    
 	   
+	}
+
+	public void initTour(int tour) {
+		// TODO Auto-generated method stub
+		this.s.initTour(tour);
 	}
 
 

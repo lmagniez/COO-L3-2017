@@ -91,8 +91,8 @@ public class Plateau extends JPanel{
 			//pions[i].setLocation(50*i,50*i);
 			//pions[i].setSize(50,50);
 			
-			pions[i].setLocation(pions[i].posX,pions[i].posY);
-			pions[i].setSize(pions[i].hX,pions[i].hY);
+		//	pions[i].setLocation(pions[i].posX,pions[i].posY);
+		//	pions[i].setSize(pions[i].hX,pions[i].hY);
 			
 		}
 		

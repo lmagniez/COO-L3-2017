@@ -74,6 +74,9 @@ public class Pion extends JLabel {
 		//this.posX=50;
 		//this.posY=50;
 		
+		this.setLocation(posX,posY);
+		this.setSize(hX,hY);
+		
 		
 		
 	}

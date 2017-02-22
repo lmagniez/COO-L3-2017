@@ -15,8 +15,8 @@ public class Case extends JLabel {
 
 	protected Plateau p;
 	private Icon image;
-	private int idCase;
-	private int position;
+	protected int idCase;
+	protected int position;
 	protected int posX;
 	protected int posY;
 	protected int hX,hY;

@@ -5,7 +5,7 @@ import com.model.plateau.JoueurModel;
 public abstract class CaseModel {
 
 	protected int idCase;
-	protected int position;
+	private int position;
 	protected String nom;
 	
 	public abstract void action(JoueurModel j);
@@ -16,6 +16,14 @@ public abstract class CaseModel {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 	
 	

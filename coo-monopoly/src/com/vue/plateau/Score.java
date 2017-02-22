@@ -9,6 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import com.model.ConstantesModel;
 import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 
@@ -20,6 +21,8 @@ public class Score extends JPanel{
 	protected InfoJeu infos;
 	
 	public Score(EcranJeu e){
+		
+		
 		this.ecran=e;
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_Y));
 		this.setSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_Y));
@@ -49,5 +52,13 @@ public class Score extends JPanel{
 	public void paintComponent(Graphics g) {
         g.drawImage(fond, 0, 0, getWidth(), getHeight(), this);
     }
+
+
+	public void initTour(int tour) {
+		// TODO Auto-generated method stub
+		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++)
+			joueurs[i].lanceDes.setEnabled(false);
+		joueurs[tour].lanceDes.setEnabled(true);
+	}
 	
 }

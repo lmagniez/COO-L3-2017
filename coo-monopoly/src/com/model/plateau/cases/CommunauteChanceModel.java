@@ -19,7 +19,7 @@ public class CommunauteChanceModel extends CaseModel{
 		this.p=p;
 		this.setNom(nom);
 		this.idCase=idCase;
-		this.position=position;
+		this.setPosition(position);
 		this.nom=nom;
 		this.type=type;
 	}

@@ -8,7 +8,7 @@ public class PrisonModel extends CaseModel{
 	{
 		this.setNom("Prison");
 		this.idCase=idCase;
-		this.position=position;
+		this.setPosition(position);
 	}
 	
 	@Override

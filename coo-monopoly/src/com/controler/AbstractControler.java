@@ -10,10 +10,9 @@ public abstract class AbstractControler {
 
 	protected AbstractModel calc;
 
-	protected int x;
-	protected int y;
+	protected boolean lancerDes;
+	protected int idJoueur;
 	
-	protected ArrayList<String> tabSymbole= new ArrayList<String>();
 	
 	public AbstractControler(){
 	
@@ -21,20 +20,14 @@ public abstract class AbstractControler {
 
 	public AbstractControler(AbstractModel cal){
 		this.calc = cal;
-		tabSymbole.add("x");
-		tabSymbole.add("o");
-		tabSymbole.add("");
 		
 		//On initialise toutes les variables utiles
 		//...
 	}
 	//Definir toutes les methodes de modifications (les setters)
-	public void setCase(int x, int y){
-		//...
-		this.x=x;
-		this.y=y;
-		//this.s=s;
-		
+	public void requestLancerDes(int idJoueur){
+		this.lancerDes=true;
+		this.idJoueur=idJoueur;
 		control();
 	}
 	

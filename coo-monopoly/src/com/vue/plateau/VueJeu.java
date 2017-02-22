@@ -5,7 +5,10 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
+import com.controler.AbstractControler;
+import com.model.ConstantesModel;
 import com.model.ConstantesVue;
+import com.model.plateau.cases.CaseModel;
 import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.menu.VueMenu;
@@ -13,10 +16,11 @@ import com.vue.menu.VueMenu;
 public class VueJeu extends Fenetre implements Observer{
 
 	protected EcranJeu lePanneau;
+	protected AbstractControler controler;
 	
-	public VueJeu(){
+	public VueJeu(AbstractControler controler){
 		
-		
+		this.controler=controler;
 		
 		this.setTitle("Monopoly");
 		this.setSize(ConstantesVue.DIMENSION_FENETRE_X, ConstantesVue.DIMENSION_FENETRE_Y);
@@ -57,6 +61,45 @@ public class VueJeu extends Fenetre implements Observer{
 	public void updateWinner(String s) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void updateArgentJoueur(int idJoueur, int argent) {
+		// TODO Auto-generated method stub
+		lePanneau.s.joueurs[idJoueur].argent=argent;
+	}
+
+	@Override
+	public void updateAjoutMaison(int position) {
+		// TODO Auto-generated method stub
+		lePanneau.p.cases[position].addMaison();
+	}
+
+	@Override
+	public void updateAcquisitionJoueur(int idJoueur, int position) {
+		// TODO Auto-generated method stub
+		lePanneau.s.joueurs[idJoueur].acquisition[position]=true;
+	}
+
+	@Override
+	public void updatePosJoueur(int idJoueur, int position) {
+		// TODO Auto-generated method stub
+		lePanneau.p.pions[idJoueur].changePosition(position);
+	}
+
+	@Override
+	public void updateCases(CaseModel[] cases) {
+		// TODO Auto-generated method stub
+		for(int i=0; i<ConstantesModel.NB_CASES; i++){
+			lePanneau.p.cases[i].position=cases[i].getPosition();
+		}
+	}
+
+	@Override
+	public void updateTour(int tour) {
+		// TODO Auto-generated method stub
+		lePanneau.tour=tour;
+		lePanneau.initTour(tour);
 	}
 
 }

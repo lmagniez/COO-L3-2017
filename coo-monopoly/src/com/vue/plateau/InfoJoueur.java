@@ -4,14 +4,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.model.ConstantesModel;
 import com.model.ConstantesVue;
 
 public class InfoJoueur extends JPanel{
@@ -20,14 +24,19 @@ public class InfoJoueur extends JPanel{
 	protected JLabel nomJoueur;
 	protected JLabel argentJoueur;
 	protected JLabel pionJoueur;
+	protected JButton lanceDes;
 	
 	protected int idJoueur;
 	protected int argent;
 	protected int idIcon;
-	
+	protected boolean[] acquisition;
 	
 	
 	public InfoJoueur(Score s,int idJoueur, int argent, int idIcon){
+		
+		this.acquisition=new boolean[ConstantesModel.NB_CASES];
+		for(int i=0; i<ConstantesModel.NB_CASES; i++)
+			this.acquisition[i]=false;
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));
 		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));
@@ -59,10 +68,13 @@ public class InfoJoueur extends JPanel{
 		pionJoueur.setIcon((Icon) items[idJoueur]);
 		nomJoueur=new JLabel("Joueur "+idJoueur);
 		argentJoueur=new JLabel("Argent : "+argent);
+		lanceDes=new JButton("Lancer dés");
+		lanceDes.addActionListener(new ButtonListener());
 		
 		this.add(pionJoueur);
 		this.add(nomJoueur);
 		this.add(argentJoueur);
+		this.add(lanceDes);
 		
 		pionJoueur.setLocation(50,50);
 		pionJoueur.setSize(50,50);
@@ -70,9 +82,23 @@ public class InfoJoueur extends JPanel{
 		nomJoueur.setLocation(ConstantesVue.DIMENSION_INFO_X/4,ConstantesVue.DIMENSION_INFO_Y*1/4);
 		argentJoueur.setSize(argentJoueur.getPreferredSize());
 		argentJoueur.setLocation(ConstantesVue.DIMENSION_INFO_X/4,ConstantesVue.DIMENSION_INFO_Y*2/4);
-		
-		
-		
+		lanceDes.setSize(lanceDes.getPreferredSize());
+		lanceDes.setLocation(ConstantesVue.DIMENSION_INFO_X/4,ConstantesVue.DIMENSION_INFO_Y*3/4);
+		lanceDes.setEnabled(false);
+	}
+	
+	class ButtonListener implements ActionListener
+	{ 
+		public void actionPerformed(ActionEvent e) {
+			String command = ((JButton) e.getSource()).getActionCommand();
+			
+			if(command=="Lancer dés")
+			{
+				//Choix.this.setVisible(false);
+				InfoJoueur.this.score.ecran.vue.controler.requestLancerDes(InfoJoueur.this.idJoueur);
+			}
+			
+		} 
 	}
 	
 	public ImageIcon transform (ImageIcon img, int hx, int hy)

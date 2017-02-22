@@ -18,16 +18,17 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.controler.AbstractControler;
-import com.controler.GrilleControler;
+import com.controler.GameControler;
 import com.model.AbstractModel;
+import com.model.ConstantesParam;
 import com.model.ConstantesVue;
-import com.model.GrilleModel;
+import com.model.plateau.JeuModel;
 import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.plateau.EcranJeu;
 import com.vue.plateau.VueJeu;
 
-public class VueMenu extends Fenetre implements Observer{
+public class VueMenu extends Fenetre {
 	
 	protected EcranFinDePartie lePanneau2;
 	protected EcranStart lePanneau3;
@@ -38,13 +39,10 @@ public class VueMenu extends Fenetre implements Observer{
 	// l'ensemble des objets de vue
 	//private 
 	
-	//L'instance de notre objet controleur
-	private AbstractControler controler;
 	
 	
-	public VueMenu(AbstractControler controler){
+	public VueMenu(){
 		
-		this.controler=controler;
 		
 		this.setTitle("Monopoly");
 		this.setSize(ConstantesVue.DIMENSION_FENETRE_X, ConstantesVue.DIMENSION_FENETRE_Y);
@@ -87,7 +85,13 @@ public class VueMenu extends Fenetre implements Observer{
 	//public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
 	{
 	
-		VueJeu jeu=new VueJeu();
+		JeuModel jeuModel = new JeuModel(ConstantesParam.NB_JOUEURS,0 , 5000);
+		AbstractControler jeuControler = new GameControler(jeuModel);
+		VueJeu jeu=new VueJeu(jeuControler);
+		jeuModel.addObserver(jeu);
+		
+		jeuModel.getP().genererCases();
+		
 		jeu.setVisible(true);
 		this.setVisible(false);
 		
@@ -108,28 +112,4 @@ public class VueMenu extends Fenetre implements Observer{
 		
 	}
 	
-	
-	
-	class ResetListener implements ActionListener{
-		public void actionPerformed(ActionEvent arg0) {
-			controler.reset();
-		}               
-	}
-	
-
-	@Override
-	public void updateWinner(String s) {
-		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(this, "Le gagnant est"+s);
-		//System.out.println("Le gagnant est"+s);
-		controler.reset();
-	}
-
-
-	@Override
-	public void update(int x, int y, String s) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

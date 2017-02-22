@@ -6,7 +6,7 @@ import com.model.plateau.PlateauModel;
 
 public class ServiceModel extends CaseModel{
 
-	public static int[] tabAssoServiceJoueur=initTab();
+	public static int[] tabAssoServiceJoueur;
 	protected int idService;
 	protected static int nb_service=0;
 	
@@ -20,7 +20,7 @@ public class ServiceModel extends CaseModel{
 		this.p=p;
 		this.setNom(nom);
 		this.idCase=idCase;
-		this.position=position;
+		this.setPosition(position);
 		this.idService=nb_service++;
 		this.prixAchat=prixAchat;
 	}
@@ -29,7 +29,7 @@ public class ServiceModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_SERVICES];
 		for(int i=0; i<ConstantesModel.NB_CASES_SERVICES; i++){
-			tabAssoServiceJoueur[i]=-1;
+			tabAsso[i]=-1;
 		}
 		return tabAsso;
 	}

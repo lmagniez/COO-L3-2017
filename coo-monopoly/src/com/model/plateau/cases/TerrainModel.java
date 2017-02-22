@@ -7,7 +7,7 @@ import com.model.plateau.PlateauModel;
 public class TerrainModel extends CaseModel{
 
 	
-	public static int[] tabAssoTerrainJoueur=initTab();
+	public static int[] tabAssoTerrainJoueur;
 	protected CouleurTerrain couleurTerrain;
 	protected int idTerrain;
 	protected int nbMaisons;
@@ -17,9 +17,7 @@ public class TerrainModel extends CaseModel{
 	protected int prixMaison;//5000 marron, 10000 violet, orange 15000 rouge et jaune, 20000 vert
 	
 	
-	
 	protected PlateauModel p;
-	
 	protected static int nbTerrain=0;
 	
 	
@@ -27,10 +25,12 @@ public class TerrainModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_TERRAIN];
 		for(int i=0; i<ConstantesModel.NB_CASES_TERRAIN; i++){
-			tabAssoTerrainJoueur[i]=-1;
+			tabAsso[i]=-1;
 		}
 		return tabAsso;
 	}
+	
+	
 	
 	public TerrainModel(PlateauModel p, int idCase, int position, CouleurTerrain couleurTerrain, String nom
 			,int prixAchat, int[] loyers, int prixMaison)
@@ -39,7 +39,7 @@ public class TerrainModel extends CaseModel{
 		this.p=p;
 		this.couleurTerrain=couleurTerrain;
 		this.idCase=idCase;
-		this.position=position;
+		this.setPosition(position);
 		this.nom=nom;
 		this.prixAchat=prixAchat;
 		this.loyers=loyers;

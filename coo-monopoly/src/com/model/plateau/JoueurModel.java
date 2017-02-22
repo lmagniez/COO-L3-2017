@@ -2,15 +2,15 @@ package com.model.plateau;
 
 public class JoueurModel {
 
-	private int idJoueur;
-	private int position;
-	private int argent;
+	protected int idJoueur;
+	protected int position;
+	protected int argent;
 	protected int cartePrison;
 	protected boolean enPrison;
-	private int nbMaison;
-	private int nbHotel;
+	protected int nbMaison;
+	protected int nbHotel;
 	
-	private int lastSumDes;//utile pour le loyer service public
+	protected int lastSumDes;//utile pour le loyer service public
 	
 	public JoueurModel(int idJ, int pos, int arg)
 	{

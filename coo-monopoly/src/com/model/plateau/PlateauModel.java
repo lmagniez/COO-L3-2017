@@ -16,33 +16,33 @@ import com.model.plateau.pioche.TypePioche;
 
 public class PlateauModel {
 
-	private CaseModel[] cases;
-	private JoueurModel[] joueurs;
-	private int nbJoueur;
+	protected CaseModel[] cases;
+	protected JoueurModel[] joueurs;
+	protected int nbJoueur;
 	
 	protected PiocheModel piocheCommunaute;
 	protected PiocheModel piocheChance;
+	protected JeuModel model;
 	
 	
-	
-	public PlateauModel(int nbJoueur, int posDepart, int sommeDepart)
+	public PlateauModel(JeuModel model, int nbJoueur, int posDepart, int sommeDepart)
 	{
+		this.model=model;
 		this.setNbJoueur(nbJoueur);
 		this.setJoueurs(new JoueurModel[nbJoueur]);
 		for(int i=0; i<nbJoueur; i++){
 			this.getJoueurs()[i]=new JoueurModel(i, posDepart, sommeDepart);
 		}
 		
-		this.setCases(genererCases());
 		
-		this.piocheCommunaute=new PiocheModel(this,TypePioche.COMMUNAUTE);
-		this.piocheChance=new PiocheModel(this,TypePioche.CHANCE);
+		
+		
 		
 	}
 	
 
 
-	public CaseModel[] genererCases()
+	public void genererCases()
 	{
 		int nb_cases=0;
 		int nb_terrain=0;
@@ -99,11 +99,15 @@ public class PlateauModel {
 		};
 		
 		
-		cases[nb_cases]=new DepartImpotTaxeModel(nb_cases,nb_cases++,0,"Depart");//case depart (octroyer 20000 dans le setPos)
+		TerrainModel.tabAssoTerrainJoueur=TerrainModel.initTab();
+		GareModel.tabAssoGareJoueur=GareModel.initTab();
+		ServiceModel.tabAssoServiceJoueur=ServiceModel.initTab();
+		
+		cases[nb_cases]=new DepartImpotTaxeModel(this,nb_cases,nb_cases++,0,"Depart");//case depart (octroyer 20000 dans le setPos)
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.MARRON,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.MARRON.ordinal()]);
 		cases[nb_cases]=new CommunauteChanceModel(this,nb_cases,nb_cases++,"Caisse Communauté",TypePioche.COMMUNAUTE);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.MARRON,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.MARRON.ordinal()]);
-		cases[nb_cases]=new DepartImpotTaxeModel(nb_cases,nb_cases++,-20000,"Impot sur le revenu");
+		cases[nb_cases]=new DepartImpotTaxeModel(this,nb_cases,nb_cases++,-20000,"Impot sur le revenu");
 		cases[nb_cases]=new GareModel(this,nb_cases,nb_cases++,"Gare de MontParnasse",20000);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.BLEU_CLAIR,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.BLEU_CLAIR.ordinal()]);
 		cases[nb_cases]=new CommunauteChanceModel(this,nb_cases,nb_cases++,"Chance",TypePioche.CHANCE);
@@ -137,10 +141,17 @@ public class PlateauModel {
 		cases[nb_cases]=new GareModel(this,nb_cases,nb_cases++,"Gare Saint-Lazare",20000);
 		cases[nb_cases]=new CommunauteChanceModel(this,nb_cases,nb_cases++,"Chance",TypePioche.CHANCE);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.BLEU_FONCE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.BLEU_FONCE.ordinal()]);
-		cases[nb_cases]=new DepartImpotTaxeModel(nb_cases,nb_cases++,-10000,"Taxe de Luxe");
+		cases[nb_cases]=new DepartImpotTaxeModel(this,nb_cases,nb_cases++,-10000,"Taxe de Luxe");
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.BLEU_FONCE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.BLEU_FONCE.ordinal()]);
 		
-		return cases;
+		this.setCases(cases);
+		this.model.notifyCases(this.cases);
+		this.model.lancerTour();
+	}
+	
+	public void genererPioche(){
+		this.piocheCommunaute=new PiocheModel(this,TypePioche.COMMUNAUTE);
+		this.piocheChance=new PiocheModel(this,TypePioche.CHANCE);
 	}
 	
 	/**

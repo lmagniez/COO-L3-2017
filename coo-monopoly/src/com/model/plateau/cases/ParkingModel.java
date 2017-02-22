@@ -8,7 +8,7 @@ public class ParkingModel extends CaseModel{
 	{
 		this.setNom("Parking Gratuit");
 		this.idCase=idCase;
-		this.position=position;
+		this.setPosition(position);
 	}
 	
 	@Override
