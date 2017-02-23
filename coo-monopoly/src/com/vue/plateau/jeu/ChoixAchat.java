@@ -23,9 +23,11 @@ import com.model.plateau.cases.CouleurTerrain;
 import com.vue.ButtonMenu;
 import com.vue.Colors;
 import com.vue.plateau.CarteAchat;
+import com.vue.plateau.EcranJeu;
 
 public class ChoixAchat extends JPanel{
 
+	protected EcranJeu ecran;
 	protected ButtonMenu confirmer;
 	protected ButtonMenu annuler;
 	protected JTextArea textBox;
@@ -33,8 +35,9 @@ public class ChoixAchat extends JPanel{
 	
 	protected CarteAchat carte;
 	
-	public ChoixAchat(){
+	public ChoixAchat(EcranJeu e){
 		
+		this.ecran=e;
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
 		this.setSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
 		this.setMinimumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
@@ -92,15 +95,22 @@ public class ChoixAchat extends JPanel{
 		this.add(p);
 		this.add(p2);
 		
+		this.setVisible(false);
+		
 		
 	}
 	
-	public void genererChoixAchat(int idJoueur, int idCase, String nom, CouleurTerrain couleur, int prixAchat,
-			int[] loyers, int prixMaison){
+	public void genererChoixAchat(int idJoueur, int position){
 		
 		panneauLateral.removeAll();
-		this.carte=new CarteAchat(idCase, nom, couleur, prixAchat,loyers, prixMaison);
+		
+		Case c = this.ecran.getP().getCases()[position];
+		this.carte=new CarteAchat(c.idCase, c.nom, c.couleurTerrain, c.prixAchat, c.loyers, c.prixMaison);
 		panneauLateral.add(carte);
+		
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
 		
 	}
 	

@@ -135,6 +135,7 @@ public class TerrainModel extends CaseModel{
 		int idPossesseur=tabAssoTerrainJoueur[this.idTerrain];
 		
 		if(idPossesseur!=-1){
+			
 			JoueurModel possesseur=this.p.getJoueurs()[idPossesseur];
 			//joueur different du possesseur de la case: transfert argent
 			if(j.getIdJoueur()!=idPossesseur){
@@ -142,6 +143,10 @@ public class TerrainModel extends CaseModel{
 				j.setArgent(j.getArgent()-loyers[nbMaisons]);
 			}
 		}
+		else{
+			this.p.getModel().notifyAchatCase(j.getIdJoueur(), j.getPosition());
+		}
+		
 	}
 
 

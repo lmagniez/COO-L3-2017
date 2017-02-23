@@ -109,6 +109,13 @@ public class VueJeu extends Fenetre implements Observer{
 		lePanneau.setTour(tour);
 		lePanneau.initTour(tour);
 	}
+	
+	@Override
+	public void updateAchatCase(int idJoueur, int position) {
+		// TODO Auto-generated method stub
+		lePanneau.c.genererChoixAchat(idJoueur, position);
+	}
+	
 
 	public AbstractControler getControler() {
 		return controler;
@@ -117,5 +124,7 @@ public class VueJeu extends Fenetre implements Observer{
 	public void setControler(AbstractControler controler) {
 		this.controler = controler;
 	}
+
+	
 
 }

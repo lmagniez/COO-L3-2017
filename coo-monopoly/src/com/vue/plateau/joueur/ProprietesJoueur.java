@@ -82,6 +82,8 @@ public class ProprietesJoueur extends JPanel{
 		
 		for(int i=0; i<cases.length; i++){
 			JButton b=new JButton(cases[i].getNom());
+			if(!infos.getAcquisition()[i])
+				b.setEnabled(false);
 			b.addActionListener(new ButtonListener());
 			if(cases[i].getCouleurTerrain()==CouleurTerrain.MARRON)
 				couleurs[0].add(b);

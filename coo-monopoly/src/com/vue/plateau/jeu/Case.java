@@ -26,7 +26,7 @@ public class Case extends JLabel {
 	protected CouleurTerrain couleurTerrain;
 	
 
-	private int prixAchat;
+	protected int prixAchat;
 	protected int[] loyers;
 	protected int prixMaison;//5000 marron, 10000 violet, orange 15000 rouge et jaune, 20000 vert
 	protected String nom;

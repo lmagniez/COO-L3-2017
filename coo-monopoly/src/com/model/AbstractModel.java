@@ -96,5 +96,9 @@ public abstract class AbstractModel implements Observable{
 		
 	}
 	
+	public void notifyAchatCase(int idJoueur, int position){
+		for(Observer obs : listObserver)
+			obs.updateAchatCase(idJoueur, position);
+	}
 	
 }

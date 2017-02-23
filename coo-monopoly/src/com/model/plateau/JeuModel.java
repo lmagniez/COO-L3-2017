@@ -43,7 +43,10 @@ public class JeuModel extends AbstractModel{
 		
 		j.lastSumDes=des;
 		j.position=(j.position+des)%ConstantesModel.NB_CASES;
+		
 		this.notifyPosJoueur(j.idJoueur, j.position);
+		this.p.cases[j.position].action(j);
+		
 		
 		
 		tour=(tour+1)%ConstantesParam.NB_JOUEURS;

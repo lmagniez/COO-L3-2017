@@ -12,8 +12,11 @@ public interface Observable {
 	public void notifyCases(CaseModel[] cases);
 	public void notifyPosJoueur(int idJoueur, int position);
 	public void notifyArgentJoueur(int idJoueur, int argent);
-	public void notifyAcquisitionJoueur(int idJoueur, int position);
 	public void notifyAjoutMaison(int position);
+	
+	public void notifyAchatCase(int idJoueur, int position);
+	public void notifyAcquisitionJoueur(int idJoueur, int position);
+	
 	
 	
 	

@@ -70,12 +70,12 @@ public class EcranJeu extends Ecran{
 		this.setTour(0);
 		this.changeTour();
 		
-		c=new ChoixAchat();
+		c=new ChoixAchat(this);
 		c.setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
 		c.setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
 		
-		int loyerTest[]={10,200,2000,3000,3000,4000};
-		c.genererChoixAchat(1, 2, "Case test", CouleurTerrain.MARRON, 500, loyerTest, 3000);
+		//int loyerTest[]={10,200,2000,3000,3000,4000};
+		//c.genererChoixAchat(1, 2, "Case test", CouleurTerrain.MARRON, 500, loyerTest, 3000);
 		
 		
 		setP(new Plateau());

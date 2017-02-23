@@ -22,12 +22,12 @@ public class PlateauModel {
 	
 	protected PiocheModel piocheCommunaute;
 	protected PiocheModel piocheChance;
-	protected JeuModel model;
+	private JeuModel model;
 	
 	
 	public PlateauModel(JeuModel model, int nbJoueur, int posDepart, int sommeDepart)
 	{
-		this.model=model;
+		this.setModel(model);
 		this.setNbJoueur(nbJoueur);
 		this.setJoueurs(new JoueurModel[nbJoueur]);
 		for(int i=0; i<nbJoueur; i++){
@@ -145,8 +145,8 @@ public class PlateauModel {
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.BLEU_FONCE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.BLEU_FONCE.ordinal()]);
 		
 		this.setCases(cases);
-		this.model.notifyCases(this.cases);
-		this.model.lancerTour();
+		this.getModel().notifyCases(this.cases);
+		this.getModel().lancerTour();
 	}
 	
 	public void genererPioche(){
@@ -231,5 +231,17 @@ public class PlateauModel {
 
 	public void setPiocheChance(PiocheModel piocheChance) {
 		this.piocheChance = piocheChance;
+	}
+
+
+
+	public JeuModel getModel() {
+		return model;
+	}
+
+
+
+	public void setModel(JeuModel model) {
+		this.model = model;
 	}
 }

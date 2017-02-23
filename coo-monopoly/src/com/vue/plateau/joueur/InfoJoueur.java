@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -38,6 +39,13 @@ public class InfoJoueur extends JPanel{
 		this.setAcquisition(new boolean[ConstantesModel.NB_CASES]);
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
 			this.getAcquisition()[i]=false;
+		
+		Random r = new Random();
+		for(int i=0; i<10;i++)
+		{
+			int res=r.nextInt(ConstantesModel.NB_CASES);
+			this.acquisition[res]=true;
+		}
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));
 		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));
