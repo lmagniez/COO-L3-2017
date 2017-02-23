@@ -1,4 +1,4 @@
-package com.vue.plateau;
+package com.vue.plateau.jeu;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,21 +19,26 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import com.model.ConstantesVue;
+import com.model.plateau.cases.CouleurTerrain;
 import com.vue.ButtonMenu;
 import com.vue.Colors;
+import com.vue.plateau.CarteAchat;
 
-public class Choix extends JPanel{
+public class ChoixAchat extends JPanel{
 
 	protected ButtonMenu confirmer;
 	protected ButtonMenu annuler;
 	protected JTextArea textBox;
+	protected JPanel panneauLateral ;
 	
-	public Choix(){
+	protected CarteAchat carte;
+	
+	public ChoixAchat(){
 		
-		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X));
-		this.setSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X));
-		this.setMinimumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X));
-		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X));
+		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
+		this.setSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
+		this.setMinimumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
+		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
 		
 		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -45,20 +51,31 @@ public class Choix extends JPanel{
 		l.setAlignmentX(CENTER_ALIGNMENT);
 		this.add(l);
 		
-		JPanel p = new JPanel();
+		JPanel p=new JPanel();
 		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
 		
+		panneauLateral = new JPanel();
+		panneauLateral.setLayout(new BoxLayout(panneauLateral,BoxLayout.PAGE_AXIS));
+		
+		
+		/*
 		JLabel l2 = new JLabel();
 		Icon image=new ImageIcon("Sprites/pieces/BOTTOM/"+1+".png");
 		image=transform((ImageIcon) image,ConstantesVue.CASE_WIDTH/2,ConstantesVue.CASE_HEIGHT/2);
 		l2.setIcon(image);
 		l2.setAlignmentY(TOP_ALIGNMENT);
-		p.add(l2);
+		panneauLateral.add(l2);
+		*/
+		
 		
 		textBox=initTextArea("Message");
 		textBox.setEditable(false);
-		textBox.setSize(new Dimension(ConstantesVue.DIMENSION_CHOIX_X-50,ConstantesVue.DIMENSION_CHOIX_Y/2));
+		
+		p.add(Box.createRigidArea(new Dimension(5,5)));
+		p.add(panneauLateral);
+		p.add(Box.createRigidArea(new Dimension(5,5)));
 		p.add(textBox);
+		
 		
 		confirmer=new ButtonMenu("Accepter",Colors.textColor2,Colors.case8);
 		confirmer.addActionListener(new ButtonListener());
@@ -71,11 +88,23 @@ public class Choix extends JPanel{
 		p2.add(confirmer);
 		p2.add(annuler);
 		
+		
 		this.add(p);
 		this.add(p2);
 		
 		
 	}
+	
+	public void genererChoixAchat(int idJoueur, int idCase, String nom, CouleurTerrain couleur, int prixAchat,
+			int[] loyers, int prixMaison){
+		
+		panneauLateral.removeAll();
+		this.carte=new CarteAchat(idCase, nom, couleur, prixAchat,loyers, prixMaison);
+		panneauLateral.add(carte);
+		
+	}
+	
+	
 	
 	class ButtonListener implements ActionListener
 	{ 
@@ -84,12 +113,12 @@ public class Choix extends JPanel{
 			
 			if(command=="Accepter")
 			{
-				Choix.this.setVisible(false);
+				ChoixAchat.this.setVisible(false);
 			}
 			
 			
 			if(command=="Refuser")
-				Choix.this.setVisible(false);
+				ChoixAchat.this.setVisible(false);
 		} 
 	}
 	

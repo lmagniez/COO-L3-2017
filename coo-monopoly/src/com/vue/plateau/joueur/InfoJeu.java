@@ -1,4 +1,4 @@
-package com.vue.plateau;
+package com.vue.plateau.joueur;
 
 import java.awt.Color;
 import java.awt.Dimension;

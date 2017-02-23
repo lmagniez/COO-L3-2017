@@ -89,7 +89,6 @@ public class VueMenu extends Fenetre {
 		AbstractControler jeuControler = new GameControler(jeuModel);
 		VueJeu jeu=new VueJeu(jeuControler);
 		jeuModel.addObserver(jeu);
-		
 		jeuModel.getP().genererCases();
 		
 		jeu.setVisible(true);

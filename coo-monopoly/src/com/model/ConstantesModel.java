@@ -3,6 +3,7 @@ package com.model;
 public abstract class ConstantesModel {
 
 	
+	public static final int NB_COULEUR=8;
 	public static final int NB_CASES=40;
 	public static final int NB_CASES_AMOVIBLE=36;
 	public static final int NB_CASES_TERRAIN=22;

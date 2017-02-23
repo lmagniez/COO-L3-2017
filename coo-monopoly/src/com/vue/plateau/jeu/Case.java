@@ -1,4 +1,4 @@
-package com.vue.plateau;
+package com.vue.plateau.jeu;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.model.ConstantesVue;
+import com.model.plateau.cases.CouleurTerrain;
 import com.vue.plateau.RotatedIcon.Rotate;
 
 public class Case extends JLabel {
@@ -16,11 +17,19 @@ public class Case extends JLabel {
 	protected Plateau p;
 	private Icon image;
 	protected int idCase;
-	protected int position;
+	private int position;
 	protected int posX;
 	protected int posY;
 	protected int hX,hY;
 	protected int nbMaisons;
+	
+	protected CouleurTerrain couleurTerrain;
+	
+
+	private int prixAchat;
+	protected int[] loyers;
+	protected int prixMaison;//5000 marron, 10000 violet, orange 15000 rouge et jaune, 20000 vert
+	protected String nom;
 	
 	protected JLabel maison1;
 	protected JLabel maison2;
@@ -134,18 +143,18 @@ public class Case extends JLabel {
 		image = transform((ImageIcon) image,hX,hY);
 		this.setIcon(image);
 	    this.idCase=idCase;
-	    this.position=position;
+	    this.setPosition(position);
 	    
 	}
 	
 	public void addMaison(){
 		this.nbMaisons++;
-		this.p.addMaison(this.position, this.nbMaisons);
+		this.p.addMaison(this.getPosition(), this.nbMaisons);
 	}
 	
 	public void removeMaison(){
 		this.nbMaisons--;
-		this.p.removeMaison(this.position, this.nbMaisons);
+		this.p.removeMaison(this.getPosition(), this.nbMaisons);
 		
 		
 	}
@@ -158,7 +167,54 @@ public class Case extends JLabel {
 		Image newImg= image.getScaledInstance(hx, hy, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(newImg);
 	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	public int getPrixAchat() {
+		return prixAchat;
+	}
+
+	public void setPrixAchat(int prixAchat) {
+		this.prixAchat = prixAchat;
+	}
+
+	public int[] getLoyers() {
+		return loyers;
+	}
+
+	public void setLoyers(int[] loyers) {
+		this.loyers = loyers;
+	}
+
+	public int getPrixMaison() {
+		return prixMaison;
+	}
+
+	public void setPrixMaison(int prixMaison) {
+		this.prixMaison = prixMaison;
+	}
 	
+	public CouleurTerrain getCouleurTerrain() {
+		return couleurTerrain;
+	}
+
+	public void setCouleurTerrain(CouleurTerrain couleurTerrain) {
+		this.couleurTerrain = couleurTerrain;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 	
 	
 

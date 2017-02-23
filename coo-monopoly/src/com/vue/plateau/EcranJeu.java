@@ -24,8 +24,12 @@ import javax.swing.JPanel;
 
 import com.model.ConstantesParam;
 import com.model.ConstantesVue;
+import com.model.plateau.cases.CouleurTerrain;
 import com.vue.menu.Ecran;
 import com.vue.menu.VueMenu;
+import com.vue.plateau.jeu.ChoixAchat;
+import com.vue.plateau.jeu.Plateau;
+import com.vue.plateau.joueur.Score;
 
 /**
  * JPanel correspondant à une partie, l'utilisateur clique sur des lettres pour essayer de deviner le mot
@@ -35,15 +39,15 @@ import com.vue.menu.VueMenu;
 
 public class EcranJeu extends Ecran{
 
-	protected VueJeu vue;
+	private VueJeu vue;
 	private JLabel title;
 	
 	protected JPanel menu;
-	protected Plateau p;
+	private Plateau p;
 	protected Score s;
-	protected Choix c;
+	protected ChoixAchat c;
 	
-	protected int tour;
+	private int tour;
 	
 	
 	
@@ -59,22 +63,25 @@ public class EcranJeu extends Ecran{
 		
 		this.setLayout(null);
 		
-		this.vue=vue;
+		this.setVue(vue);
 		this.setFocusable(true);
 		this.requestFocus();
 		
-		this.tour=0;
+		this.setTour(0);
 		this.changeTour();
 		
-		c=new Choix();
+		c=new ChoixAchat();
 		c.setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
 		c.setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
 		
+		int loyerTest[]={10,200,2000,3000,3000,4000};
+		c.genererChoixAchat(1, 2, "Case test", CouleurTerrain.MARRON, 500, loyerTest, 3000);
 		
-		p=new Plateau();
+		
+		setP(new Plateau());
 		s=new Score(this);
-		p.setLocation(0,0);
-		p.setSize(ConstantesVue.DIMENSION_PLATEAU_X,ConstantesVue.DIMENSION_PLATEAU_Y);
+		getP().setLocation(0,0);
+		getP().setSize(ConstantesVue.DIMENSION_PLATEAU_X,ConstantesVue.DIMENSION_PLATEAU_Y);
 		s.setLocation(ConstantesVue.DIMENSION_PLATEAU_X,0);
 		s.setSize(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_Y);
 		
@@ -85,7 +92,7 @@ public class EcranJeu extends Ecran{
 		//menu.add(title);
 
 		this.add(c);
-		this.add(p);
+		this.add(getP());
 		this.add(s);
 		
 		//this.add(menu);
@@ -98,7 +105,7 @@ public class EcranJeu extends Ecran{
 	}
 	
 	public void changeTour(){
-		tour+=1%ConstantesParam.NB_JOUEURS;
+		setTour(getTour() + 1%ConstantesParam.NB_JOUEURS);
 	}
 	
 	
@@ -160,6 +167,30 @@ public class EcranJeu extends Ecran{
 	public void initTour(int tour) {
 		// TODO Auto-generated method stub
 		this.s.initTour(tour);
+	}
+
+	public VueJeu getVue() {
+		return vue;
+	}
+
+	public void setVue(VueJeu vue) {
+		this.vue = vue;
+	}
+
+	public int getTour() {
+		return tour;
+	}
+
+	public void setTour(int tour) {
+		this.tour = tour;
+	}
+
+	public Plateau getP() {
+		return p;
+	}
+
+	public void setP(Plateau p) {
+		this.p = p;
 	}
 
 

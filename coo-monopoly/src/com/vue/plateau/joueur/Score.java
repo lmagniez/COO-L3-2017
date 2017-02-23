@@ -1,4 +1,4 @@
-package com.vue.plateau;
+package com.vue.plateau.joueur;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -12,13 +12,16 @@ import javax.swing.JPanel;
 import com.model.ConstantesModel;
 import com.model.ConstantesParam;
 import com.model.ConstantesVue;
+import com.vue.plateau.EcranJeu;
 
 public class Score extends JPanel{
 
 	protected EcranJeu ecran;
 	protected Image fond;
-	protected InfoJoueur[] joueurs;
+	private InfoJoueur[] joueurs;
 	protected InfoJeu infos;
+	protected ProprietesJoueur proprietes;
+	
 	
 	public Score(EcranJeu e){
 		
@@ -33,19 +36,35 @@ public class Score extends JPanel{
 	
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
-		this.add(Box.createRigidArea(new Dimension(5,25)));
-		joueurs=new InfoJoueur[ConstantesParam.NB_JOUEURS];
-		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
-			joueurs[i]=new InfoJoueur(this, i,5000,i);
-			this.add(joueurs[i]);
+		setJoueurs(new InfoJoueur[ConstantesParam.NB_JOUEURS]);
+		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++)
+			getJoueurs()[i]=new InfoJoueur(this, i,5000,i);
 			
-		}
 		infos=new InfoJeu();
-		this.add(infos);
 		
 		
+		afficherInfosJoueur();
 		
 
+	}
+	
+	public void afficherProprietes(){
+		this.removeAll();
+		this.add(Box.createRigidArea(new Dimension(5,25)));
+		this.add(proprietes);
+		this.revalidate();
+		this.repaint();
+	}
+	
+	public void afficherInfosJoueur(){
+		this.removeAll();
+		this.add(Box.createRigidArea(new Dimension(5,25)));
+		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
+			this.add(getJoueurs()[i]);
+		}
+		this.add(infos);
+		this.revalidate();
+		this.repaint();
 	}
 	
 	
@@ -57,8 +76,16 @@ public class Score extends JPanel{
 	public void initTour(int tour) {
 		// TODO Auto-generated method stub
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++)
-			joueurs[i].lanceDes.setEnabled(false);
-		joueurs[tour].lanceDes.setEnabled(true);
+			getJoueurs()[i].lanceDes.setEnabled(false);
+		getJoueurs()[tour].lanceDes.setEnabled(true);
+	}
+
+	public InfoJoueur[] getJoueurs() {
+		return joueurs;
+	}
+
+	public void setJoueurs(InfoJoueur[] joueurs) {
+		this.joueurs = joueurs;
 	}
 	
 }

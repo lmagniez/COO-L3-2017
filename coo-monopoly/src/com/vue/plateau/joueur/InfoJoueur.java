@@ -1,4 +1,4 @@
-package com.vue.plateau;
+package com.vue.plateau.joueur;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,18 +25,19 @@ public class InfoJoueur extends JPanel{
 	protected JLabel argentJoueur;
 	protected JLabel pionJoueur;
 	protected JButton lanceDes;
+	protected JButton prop;
 	
 	protected int idJoueur;
-	protected int argent;
+	private int argent;
 	protected int idIcon;
-	protected boolean[] acquisition;
+	private boolean[] acquisition;
 	
 	
 	public InfoJoueur(Score s,int idJoueur, int argent, int idIcon){
 		
-		this.acquisition=new boolean[ConstantesModel.NB_CASES];
+		this.setAcquisition(new boolean[ConstantesModel.NB_CASES]);
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
-			this.acquisition[i]=false;
+			this.getAcquisition()[i]=false;
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));
 		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));
@@ -47,7 +48,7 @@ public class InfoJoueur extends JPanel{
 		
 		this.score=s;
 		this.idIcon=idIcon;
-		this.argent=argent;
+		this.setArgent(argent);
 		this.idJoueur=idJoueur;
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -70,11 +71,15 @@ public class InfoJoueur extends JPanel{
 		argentJoueur=new JLabel("Argent : "+argent);
 		lanceDes=new JButton("Lancer dés");
 		lanceDes.addActionListener(new ButtonListener());
+		prop=new JButton("Propriétés du joueur");
+		prop.addActionListener(new ButtonListener());
+		
 		
 		this.add(pionJoueur);
 		this.add(nomJoueur);
 		this.add(argentJoueur);
 		this.add(lanceDes);
+		this.add(prop);
 		
 		pionJoueur.setLocation(50,50);
 		pionJoueur.setSize(50,50);
@@ -85,6 +90,10 @@ public class InfoJoueur extends JPanel{
 		lanceDes.setSize(lanceDes.getPreferredSize());
 		lanceDes.setLocation(ConstantesVue.DIMENSION_INFO_X/4,ConstantesVue.DIMENSION_INFO_Y*3/4);
 		lanceDes.setEnabled(false);
+		prop.setSize(prop.getPreferredSize());
+		prop.setLocation(ConstantesVue.DIMENSION_INFO_X/2,ConstantesVue.DIMENSION_INFO_Y*1/4);
+		
+		
 	}
 	
 	class ButtonListener implements ActionListener
@@ -92,11 +101,16 @@ public class InfoJoueur extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			String command = ((JButton) e.getSource()).getActionCommand();
 			
-			if(command=="Lancer dés")
-			{
+			if(command=="Lancer dés"){
 				//Choix.this.setVisible(false);
-				InfoJoueur.this.score.ecran.vue.controler.requestLancerDes(InfoJoueur.this.idJoueur);
+				InfoJoueur.this.score.ecran.getVue().getControler().requestLancerDes(InfoJoueur.this.idJoueur);
 			}
+			if(command=="Propriétés du joueur"){
+				InfoJoueur.this.score.proprietes=new ProprietesJoueur(InfoJoueur.this.idJoueur,InfoJoueur.this,
+						InfoJoueur.this.score.ecran.getP().getCases());
+				InfoJoueur.this.score.afficherProprietes();
+			}
+			
 			
 		} 
 	}
@@ -110,9 +124,25 @@ public class InfoJoueur extends JPanel{
 	
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.green);
-		if(this.score.ecran.tour==this.idJoueur)
+		if(this.score.ecran.getTour()==this.idJoueur)
 			g.fillOval(20, 20, 10, 10);
     }
+
+	public boolean[] getAcquisition() {
+		return acquisition;
+	}
+
+	public void setAcquisition(boolean[] acquisition) {
+		this.acquisition = acquisition;
+	}
+
+	public int getArgent() {
+		return argent;
+	}
+
+	public void setArgent(int argent) {
+		this.argent = argent;
+	}
 	
 	
 }

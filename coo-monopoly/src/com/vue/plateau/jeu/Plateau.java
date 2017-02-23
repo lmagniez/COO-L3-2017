@@ -1,4 +1,4 @@
-package com.vue.plateau;
+package com.vue.plateau.jeu;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -18,8 +18,8 @@ import com.model.ConstantesVue;
 public class Plateau extends JPanel{
 
 	
-	protected Case[] cases;
-	protected Pion[] pions;
+	private Case[] cases;
+	private Pion[] pions;
 	
 	protected Image bgImage;
 	
@@ -38,56 +38,56 @@ public class Plateau extends JPanel{
 		bgImage=new ImageIcon("./Sprites/plateautest.jpg").getImage();
 		
 		this.setLayout(null);
-		this.cases=new Case[ConstantesModel.NB_CASES];
+		this.setCases(new Case[ConstantesModel.NB_CASES]);
 		int nbCases=0;
 		
 		//cases[nbCases]=new Case(nbCases,nbCases);
 		
 		for(int i=0;i<ConstantesModel.NB_CASES; i++){
-			cases[i]=new Case(this, i,i);
+			getCases()[i]=new Case(this, i,i);
 		}
 		
-		cases[4].addMaison();
-		cases[4].addMaison();
-		cases[4].addMaison();
-		cases[4].addMaison();
-		cases[4].addMaison();
-		cases[4].removeMaison();
+		getCases()[4].addMaison();
+		getCases()[4].addMaison();
+		getCases()[4].addMaison();
+		getCases()[4].addMaison();
+		getCases()[4].addMaison();
+		getCases()[4].removeMaison();
 		
-		cases[14].addMaison();
-		cases[14].addMaison();
-		cases[14].addMaison();
-		cases[14].addMaison();
-		cases[14].addMaison();
-		cases[14].removeMaison();
-		cases[14].removeMaison();
+		getCases()[14].addMaison();
+		getCases()[14].addMaison();
+		getCases()[14].addMaison();
+		getCases()[14].addMaison();
+		getCases()[14].addMaison();
+		getCases()[14].removeMaison();
+		getCases()[14].removeMaison();
 		
 
-		cases[24].addMaison();
-		cases[24].addMaison();
-		cases[24].addMaison();
-		cases[24].addMaison();
-		cases[24].addMaison();
-		cases[24].removeMaison();
-		cases[24].removeMaison();
-		cases[24].removeMaison();
+		getCases()[24].addMaison();
+		getCases()[24].addMaison();
+		getCases()[24].addMaison();
+		getCases()[24].addMaison();
+		getCases()[24].addMaison();
+		getCases()[24].removeMaison();
+		getCases()[24].removeMaison();
+		getCases()[24].removeMaison();
 		
 		
 		
 		
-		cases[34].addMaison();
-		cases[34].addMaison();
-		cases[34].addMaison();
-		cases[34].addMaison();
-		cases[34].addMaison();
-		cases[34].removeMaison();
+		getCases()[34].addMaison();
+		getCases()[34].addMaison();
+		getCases()[34].addMaison();
+		getCases()[34].addMaison();
+		getCases()[34].addMaison();
+		getCases()[34].removeMaison();
 		
 		
 		
-		pions=new Pion[ConstantesParam.NB_JOUEURS];
+		setPions(new Pion[ConstantesParam.NB_JOUEURS]);
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
-			pions[i]=new Pion(this,12,i,i);
-			this.add(pions[i]);
+			getPions()[i]=new Pion(this,12,i,i);
+			this.add(getPions()[i]);
 			//pions[i].setLocation(50*i,50*i);
 			//pions[i].setSize(50,50);
 			
@@ -99,9 +99,9 @@ public class Plateau extends JPanel{
 		
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
 		{
-			this.add(cases[i]);
-			cases[i].setLocation(cases[i].posX,cases[i].posY);
-			cases[i].setSize(cases[i].hX,cases[i].hY);
+			this.add(getCases()[i]);
+			getCases()[i].setLocation(getCases()[i].posX,getCases()[i].posY);
+			getCases()[i].setSize(getCases()[i].hX,getCases()[i].hY);
 			
 		}
 		
@@ -113,7 +113,7 @@ public class Plateau extends JPanel{
 	}
 	
 	public void removeMaison(int position, int nbMaison){
-		Case c =cases[position];
+		Case c =getCases()[position];
 		
 		if(nbMaison==4){
 			this.remove(c.hotel);
@@ -132,7 +132,7 @@ public class Plateau extends JPanel{
 	
 	public void addMaison(int position, int nbMaison){
 		
-		Case c =cases[position];
+		Case c =getCases()[position];
 		
 		
 		if(nbMaison==5){
@@ -250,6 +250,22 @@ public class Plateau extends JPanel{
 		Image image=img.getImage();
 		Image newImg= image.getScaledInstance(hx, hy, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(newImg);
+	}
+
+	public Case[] getCases() {
+		return cases;
+	}
+
+	public void setCases(Case[] cases) {
+		this.cases = cases;
+	}
+
+	public Pion[] getPions() {
+		return pions;
+	}
+
+	public void setPions(Pion[] pions) {
+		this.pions = pions;
 	}
 	
 	

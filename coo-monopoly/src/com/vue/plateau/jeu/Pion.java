@@ -1,4 +1,4 @@
-package com.vue.plateau;
+package com.vue.plateau.jeu;
 
 import java.awt.Image;
 
@@ -53,22 +53,22 @@ public class Pion extends JLabel {
 	public void changePosition(int position){
 		
 		this.position=position;
-		posX=this.p.cases[position].posX;
-		posY=this.p.cases[position].posY;
+		posX=this.p.getCases()[position].posX;
+		posY=this.p.getCases()[position].posY;
 		
 		if(idJoueur==0){
 			
 		}
 		if(idJoueur==1){
-			posY=posY+this.p.cases[position].hY*1/3;
+			posY=posY+this.p.getCases()[position].hY*1/3;
 		}
 		if(idJoueur==2){
-			posX=posX+this.p.cases[position].hX*1/2;
+			posX=posX+this.p.getCases()[position].hX*1/2;
 			
 		}
 		if(idJoueur==3){
-			posY=posY+this.p.cases[position].hY*1/3;
-			posX=posX+this.p.cases[position].hX*1/2;
+			posY=posY+this.p.getCases()[position].hY*1/3;
+			posX=posX+this.p.getCases()[position].hX*1/2;
 		}
 		
 		//this.posX=50;

@@ -9,6 +9,7 @@ import com.controler.AbstractControler;
 import com.model.ConstantesModel;
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CaseModel;
+import com.model.plateau.cases.TerrainModel;
 import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.menu.VueMenu;
@@ -16,11 +17,11 @@ import com.vue.menu.VueMenu;
 public class VueJeu extends Fenetre implements Observer{
 
 	protected EcranJeu lePanneau;
-	protected AbstractControler controler;
+	private AbstractControler controler;
 	
 	public VueJeu(AbstractControler controler){
 		
-		this.controler=controler;
+		this.setControler(controler);
 		
 		this.setTitle("Monopoly");
 		this.setSize(ConstantesVue.DIMENSION_FENETRE_X, ConstantesVue.DIMENSION_FENETRE_Y);
@@ -66,40 +67,55 @@ public class VueJeu extends Fenetre implements Observer{
 	@Override
 	public void updateArgentJoueur(int idJoueur, int argent) {
 		// TODO Auto-generated method stub
-		lePanneau.s.joueurs[idJoueur].argent=argent;
+		lePanneau.s.getJoueurs()[idJoueur].setArgent(argent);
 	}
 
 	@Override
 	public void updateAjoutMaison(int position) {
 		// TODO Auto-generated method stub
-		lePanneau.p.cases[position].addMaison();
+		lePanneau.getP().getCases()[position].addMaison();
 	}
 
 	@Override
 	public void updateAcquisitionJoueur(int idJoueur, int position) {
 		// TODO Auto-generated method stub
-		lePanneau.s.joueurs[idJoueur].acquisition[position]=true;
+		lePanneau.s.getJoueurs()[idJoueur].getAcquisition()[position]=true;
 	}
 
 	@Override
 	public void updatePosJoueur(int idJoueur, int position) {
 		// TODO Auto-generated method stub
-		lePanneau.p.pions[idJoueur].changePosition(position);
+		lePanneau.getP().getPions()[idJoueur].changePosition(position);
 	}
 
 	@Override
 	public void updateCases(CaseModel[] cases) {
 		// TODO Auto-generated method stub
 		for(int i=0; i<ConstantesModel.NB_CASES; i++){
-			lePanneau.p.cases[i].position=cases[i].getPosition();
+			lePanneau.getP().getCases()[i].setPosition(cases[i].getPosition());
+			if(cases[i] instanceof TerrainModel){
+				lePanneau.getP().getCases()[i].setPrixAchat(((TerrainModel) cases[i]).getPrixAchat());
+				lePanneau.getP().getCases()[i].setLoyers(((TerrainModel) cases[i]).getLoyers());
+				lePanneau.getP().getCases()[i].setPrixMaison(((TerrainModel) cases[i]).getPrixMaison());
+				lePanneau.getP().getCases()[i].setCouleurTerrain(((TerrainModel) cases[i]).getCouleurTerrain());
+				lePanneau.getP().getCases()[i].setNom(((TerrainModel) cases[i]).getNom());
+			}
 		}
 	}
 
 	@Override
 	public void updateTour(int tour) {
 		// TODO Auto-generated method stub
-		lePanneau.tour=tour;
+		lePanneau.setTour(tour);
 		lePanneau.initTour(tour);
+	}
+
+	public AbstractControler getControler() {
+		return controler;
+	}
+
+	public void setControler(AbstractControler controler) {
+		this.controler = controler;
 	}
 
 }

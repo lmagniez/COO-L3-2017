@@ -9,6 +9,18 @@ public class TerrainModel extends CaseModel{
 	
 	public static int[] tabAssoTerrainJoueur;
 	protected CouleurTerrain couleurTerrain;
+	public CouleurTerrain getCouleurTerrain() {
+		return couleurTerrain;
+	}
+
+
+
+	public void setCouleurTerrain(CouleurTerrain couleurTerrain) {
+		this.couleurTerrain = couleurTerrain;
+	}
+
+
+
 	protected int idTerrain;
 	protected int nbMaisons;
 	
@@ -130,6 +142,42 @@ public class TerrainModel extends CaseModel{
 				j.setArgent(j.getArgent()-loyers[nbMaisons]);
 			}
 		}
+	}
+
+
+
+	public int getPrixAchat() {
+		return prixAchat;
+	}
+
+
+
+	public void setPrixAchat(int prixAchat) {
+		this.prixAchat = prixAchat;
+	}
+
+
+
+	public int[] getLoyers() {
+		return loyers;
+	}
+
+
+
+	public void setLoyers(int[] loyers) {
+		this.loyers = loyers;
+	}
+
+
+
+	public int getPrixMaison() {
+		return prixMaison;
+	}
+
+
+
+	public void setPrixMaison(int prixMaison) {
+		this.prixMaison = prixMaison;
 	}
 	
 	
