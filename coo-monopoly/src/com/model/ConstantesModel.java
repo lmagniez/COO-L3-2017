@@ -7,7 +7,7 @@ public abstract class ConstantesModel {
 	public static final int NB_CASES=40;
 	public static final int NB_CASES_AMOVIBLE=36;
 	public static final int NB_CASES_TERRAIN=22;
-	public static final int NB_GARES=22;
+	public static final int NB_GARES=4;
 	public static final int NB_CASES_COMMUNAUTE=3;
 	public static final int NB_CASES_CHANCE=3;
 	public static final int NB_CASES_SERVICES=2;

@@ -27,11 +27,13 @@ public class CommunauteChanceModel extends CaseModel{
 	@Override
 	public void action(JoueurModel j) {
 		
+		/*
 		if(type==TypePioche.CHANCE)
 			p.getPiocheChance().piocherCarte(j);
 		if(type==TypePioche.COMMUNAUTE)
 			p.getPiocheCommunaute().piocherCarte(j);
-			
+			*/
+		this.p.getModel().tourSuivant();
 		
 	}
 

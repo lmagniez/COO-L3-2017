@@ -40,12 +40,21 @@ public class InfoJoueur extends JPanel{
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
 			this.getAcquisition()[i]=false;
 		
+		if(idJoueur==1){
+			for(int i=0; i<ConstantesModel.NB_CASES; i++)
+				this.getAcquisition()[i]=true;
+			
+		}
+		
+//---->		
+		/*
 		Random r = new Random();
 		for(int i=0; i<10;i++)
 		{
 			int res=r.nextInt(ConstantesModel.NB_CASES);
 			this.acquisition[res]=true;
 		}
+		*/
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));
 		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));
@@ -56,7 +65,7 @@ public class InfoJoueur extends JPanel{
 		
 		this.score=s;
 		this.idIcon=idIcon;
-		this.setArgent(argent);
+		this.argent=argent;
 		this.idJoueur=idJoueur;
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -112,6 +121,7 @@ public class InfoJoueur extends JPanel{
 			if(command=="Lancer dés"){
 				//Choix.this.setVisible(false);
 				InfoJoueur.this.score.ecran.getVue().getControler().requestLancerDes(InfoJoueur.this.idJoueur);
+				InfoJoueur.this.lanceDes.setEnabled(false);
 			}
 			if(command=="Propriétés du joueur"){
 				InfoJoueur.this.score.proprietes=new ProprietesJoueur(InfoJoueur.this.idJoueur,InfoJoueur.this,
@@ -122,6 +132,7 @@ public class InfoJoueur extends JPanel{
 			
 		} 
 	}
+	
 	
 	public ImageIcon transform (ImageIcon img, int hx, int hy)
 	{
@@ -150,7 +161,33 @@ public class InfoJoueur extends JPanel{
 
 	public void setArgent(int argent) {
 		this.argent = argent;
+		this.argentJoueur.setText("Argent: "+argent);
 	}
+
+	public JLabel getNomJoueur() {
+		return nomJoueur;
+	}
+
+	public void setNomJoueur(JLabel nomJoueur) {
+		this.nomJoueur = nomJoueur;
+	}
+
+	public JLabel getArgentJoueur() {
+		return argentJoueur;
+	}
+
+	public void setArgentJoueur(JLabel argentJoueur) {
+		this.argentJoueur = argentJoueur;
+	}
+
+	public int getIdJoueur() {
+		return idJoueur;
+	}
+
+	public void setIdJoueur(int idJoueur) {
+		this.idJoueur = idJoueur;
+	}
+	
 	
 	
 }

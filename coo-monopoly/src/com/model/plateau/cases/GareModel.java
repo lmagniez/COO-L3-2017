@@ -20,7 +20,8 @@ public class GareModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_GARES];
 		for(int i=0; i<ConstantesModel.NB_GARES; i++){
-			tabAsso[i]=-1;
+			tabAsso[i]=1;
+////////
 		}
 		return tabAsso;
 	}
@@ -65,11 +66,50 @@ public class GareModel extends CaseModel{
 			JoueurModel possesseur=this.p.getJoueurs()[idPossesseur];
 			//joueur different du possesseur de la case: transfert argent
 			if(j.getIdJoueur()!=idPossesseur){
+				/*
 				possesseur.setArgent(possesseur.getArgent()+loyers[nbGareJ]);
 				j.setArgent(j.getArgent()-loyers[nbGareJ]);
+				this.p.getModel().tourSuivant();
+				*/
+				this.p.getModel().notifyPaiementCase(j.getIdJoueur(), idPossesseur, this.getPosition());
+				
+			}
+			else
+			{
+				this.p.getModel().tourSuivant();
 			}
 		}
-		
+		else{
+			
+			System.out.println("GareModel notifie case");
+			this.p.getModel().notifyAchatCase(j.getIdJoueur(), j.getPosition());
+		}
 	}
+
+	public int getPrixAchat() {
+		return prixAchat;
+	}
+
+	public void setPrixAchat(int prixAchat) {
+		this.prixAchat = prixAchat;
+	}
+
+	public static int[] getLoyers() {
+		return loyers;
+	}
+
+	public static void setLoyers(int[] loyers) {
+		GareModel.loyers = loyers;
+	}
+
+	public int getIdGare() {
+		return idGare;
+	}
+
+	public void setIdGare(int idGare) {
+		this.idGare = idGare;
+	}
+	
+	
 	
 }

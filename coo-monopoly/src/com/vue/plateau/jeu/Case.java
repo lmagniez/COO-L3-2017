@@ -22,6 +22,7 @@ public class Case extends JLabel {
 	protected int posY;
 	protected int hX,hY;
 	protected int nbMaisons;
+	protected TypeCase type;
 	
 	protected CouleurTerrain couleurTerrain;
 	
@@ -214,6 +215,14 @@ public class Case extends JLabel {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public TypeCase getType() {
+		return type;
+	}
+
+	public void setType(TypeCase type) {
+		this.type = type;
 	}
 	
 	

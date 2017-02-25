@@ -28,6 +28,7 @@ import com.model.plateau.cases.CouleurTerrain;
 import com.vue.menu.Ecran;
 import com.vue.menu.VueMenu;
 import com.vue.plateau.jeu.ChoixAchat;
+import com.vue.plateau.jeu.ChoixPaiement;
 import com.vue.plateau.jeu.Plateau;
 import com.vue.plateau.joueur.Score;
 
@@ -43,9 +44,11 @@ public class EcranJeu extends Ecran{
 	private JLabel title;
 	
 	protected JPanel menu;
-	private Plateau p;
+	protected Plateau p;
 	protected Score s;
-	protected ChoixAchat c;
+	protected ChoixAchat choixA;
+	protected ChoixPaiement choixP;
+	
 	
 	private int tour;
 	
@@ -68,11 +71,16 @@ public class EcranJeu extends Ecran{
 		this.requestFocus();
 		
 		this.setTour(0);
-		this.changeTour();
 		
-		c=new ChoixAchat(this);
-		c.setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
-		c.setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
+		
+		choixA=new ChoixAchat(this);
+		choixA.setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
+		choixA.setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
+		
+		choixP=new ChoixPaiement(this);
+		choixP.setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
+		choixP.setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
+		
 		
 		//int loyerTest[]={10,200,2000,3000,3000,4000};
 		//c.genererChoixAchat(1, 2, "Case test", CouleurTerrain.MARRON, 500, loyerTest, 3000);
@@ -86,12 +94,12 @@ public class EcranJeu extends Ecran{
 		s.setSize(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_Y);
 		
 		
-		
-		
 		//this.add(Box.createRigidArea(new Dimension(0,15)));
 		//menu.add(title);
 
-		this.add(c);
+		this.add(choixA);
+		this.add(choixP);
+		
 		this.add(getP());
 		this.add(s);
 		
@@ -164,9 +172,9 @@ public class EcranJeu extends Ecran{
 	   
 	}
 
-	public void initTour(int tour) {
+	public void initTour() {
 		// TODO Auto-generated method stub
-		this.s.initTour(tour);
+		this.s.initTour(this.tour);
 	}
 
 	public VueJeu getVue() {
@@ -193,5 +201,21 @@ public class EcranJeu extends Ecran{
 		this.p = p;
 	}
 
+	public Score getS() {
+		return s;
+	}
+
+	public void setS(Score s) {
+		this.s = s;
+	}
+
+	public ChoixAchat getC() {
+		return choixA;
+	}
+
+	public void setC(ChoixAchat c) {
+		this.choixA = c;
+	}
+	
 
 }

@@ -14,9 +14,11 @@ import javax.swing.border.EmptyBorder;
 
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CouleurTerrain;
+import com.model.plateau.cases.GareModel;
 
-public class CarteAchat extends JPanel{
+public class CarteAchatService extends JPanel{
 
+	
 	protected int idCase;
 	protected CouleurTerrain couleurTerrain;
 	protected int prixAchat;
@@ -28,11 +30,9 @@ public class CarteAchat extends JPanel{
 	protected JLabel labelNom;
 	protected JLabel labelLoyers[];
 	protected JLabel labelHypotheque;
-	protected JLabel labelPrixMaison;
 	
 	
-	public CarteAchat(int idCase, String nom, CouleurTerrain couleur, int prixAchat,
-			int[] loyers, int prixMaison){
+	public CarteAchatService(int idCase, String nom, int prixAchat, int[] loyers){
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.CASE_WIDTH*4/3,ConstantesVue.CASE_HEIGHT*2/3));
 		this.setSize(new Dimension(ConstantesVue.CASE_WIDTH*4/3,ConstantesVue.CASE_HEIGHT*2/3));
@@ -45,13 +45,10 @@ public class CarteAchat extends JPanel{
 		
 		this.nom=nom;
 		this.idCase=idCase;
-		this.couleurTerrain=couleur;
 		this.prixAchat=prixAchat;
 		this.prixMaison=prixMaison;
 		
 		this.labelNom=new JLabel(nom+" (achat:"+prixAchat+")");
-		System.out.println("couleur!!");
-		System.out.println(CouleurTerrain.getColorFromEnum(couleurTerrain));
 		
 		Border border = labelNom.getBorder();
 		Border margin = new EmptyBorder(10,25,10,10);
@@ -60,34 +57,37 @@ public class CarteAchat extends JPanel{
 		labelNom.setMaximumSize(new Dimension(ConstantesVue.CASE_WIDTH*4/3,30));
 		
 		labelNom.setOpaque(true);
-		labelNom.setBackground(CouleurTerrain.getColorFromEnum(couleurTerrain));
-		labelNom.setForeground(CouleurTerrain.getForegroundColorFromEnum(couleurTerrain));
-		
 		
 		this.add(labelNom);
 		
-		this.labelLoyers=new JLabel[6];
+		this.labelLoyers=new JLabel[4];
 		
 		
-		labelLoyers[0]=new JLabel("LOYER: "+loyers[0]+"M");
+		labelLoyers[0]=new JLabel("LOYER: ");
 		border = labelLoyers[0].getBorder();
-		margin = new EmptyBorder(2,60,2,2);
+		margin = new EmptyBorder(2,2,2,2);
 		labelLoyers[0].setBorder(new CompoundBorder(border, margin));
 		this.add(labelLoyers[0]);
 		
-		for(int i=1; i<5; i++){
-			
-			labelLoyers[i]=new JLabel("Avec "+(i+1)+" Maison:     "+loyers[i]+"M");
-			border = labelLoyers[i].getBorder();
-			margin = new EmptyBorder(2,10,2,2);
-			labelLoyers[i].setBorder(new CompoundBorder(border, margin));
-			this.add(labelLoyers[i]);
-		}
-		labelLoyers[5]=new JLabel("Avec HÔTEL:     "+loyers[5]+"M");
-		border = labelLoyers[5].getBorder();
-		margin = new EmptyBorder(2,10,2,2);
-		labelLoyers[5].setBorder(new CompoundBorder(border, margin));
-		this.add(labelLoyers[5]);
+		labelLoyers[1]=new JLabel(loyers[0]+"M x somme dés");
+		border = labelLoyers[1].getBorder();
+		margin = new EmptyBorder(2,2,2,2);
+		labelLoyers[1].setBorder(new CompoundBorder(border, margin));
+		this.add(labelLoyers[1]);
+		
+		labelLoyers[2]=new JLabel("Avec 2 services: ");
+		border = labelLoyers[2].getBorder();
+		margin = new EmptyBorder(2,2,2,2);
+		labelLoyers[2].setBorder(new CompoundBorder(border, margin));
+		this.add(labelLoyers[2]);
+		
+		labelLoyers[3]=new JLabel(loyers[1]+"M x somme dés");
+		border = labelLoyers[3].getBorder();
+		margin = new EmptyBorder(2,2,2,2);
+		labelLoyers[3].setBorder(new CompoundBorder(border, margin));
+		this.add(labelLoyers[3]);
+		
+		
 		
 
 		this.add(Box.createRigidArea(new Dimension(5,10)));
@@ -96,11 +96,7 @@ public class CarteAchat extends JPanel{
 		labelHypotheque.setFont(labelHypotheque.getFont().deriveFont(10.0f));
 		this.add(labelHypotheque);
 		
-		this.labelPrixMaison=new JLabel("Prix des Maisons: "+this.prixMaison+"M chacune");
-		labelPrixMaison.setFont(labelPrixMaison.getFont().deriveFont(10.0f));
-		this.add(labelPrixMaison);
-		
-		
 	}
+	
 	
 }

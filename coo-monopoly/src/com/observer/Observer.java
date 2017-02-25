@@ -14,7 +14,8 @@ public interface Observer {
 	
 	public void updateAcquisitionJoueur(int idJoueur, int position);
 	public void updateAchatCase(int idJoueur, int position);
+	public void updatePaiementCase(int idJoueur, int idJoueur2, int position);
+	public void updateMessageChoix(String msg);
 	
-	
-	
+	public void updateInitTour();
 }

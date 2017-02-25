@@ -15,10 +15,13 @@ public interface Observable {
 	public void notifyAjoutMaison(int position);
 	
 	public void notifyAchatCase(int idJoueur, int position);
+	public void notifyPaiementCase(int idJoueur, int idJoueur2, int position);
+	
+	
 	public void notifyAcquisitionJoueur(int idJoueur, int position);
+	public void notifyMessageChoix(String msg);
 	
-	
-	
+	public void notifyInitTour();
 	
 	
 }

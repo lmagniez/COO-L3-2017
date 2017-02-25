@@ -2,6 +2,7 @@ package com.model.plateau;
 
 public class JoueurModel {
 
+	protected PlateauModel p;
 	protected int idJoueur;
 	protected int position;
 	protected int argent;
@@ -9,11 +10,14 @@ public class JoueurModel {
 	protected boolean enPrison;
 	protected int nbMaison;
 	protected int nbHotel;
+	protected int nbProprietes;
+	
 	
 	protected int lastSumDes;//utile pour le loyer service public
 	
-	public JoueurModel(int idJ, int pos, int arg)
+	public JoueurModel(PlateauModel p, int idJ, int pos, int arg)
 	{
+		this.p=p;
 		this.setIdJoueur(idJ);
 		this.position=pos;
 		this.argent=arg;
@@ -21,8 +25,11 @@ public class JoueurModel {
 		this.cartePrison=0;
 		this.nbMaison=0;
 		this.nbHotel=0;
+		this.nbProprietes=0;
 		
 		this.setLastSumDes(0);
+		
+		
 		
 	}
 
@@ -30,10 +37,16 @@ public class JoueurModel {
 		if(this.position>position)
 			this.argent+=20000;
 		this.position = position;
+		p.getModel().notifyPosJoueur(idJoueur,position);
 	}
 	
+	/**
+	 * Exemple: Aller en prison
+	 * @param posPrison
+	 */
 	public void setPositionSansArgent(int posPrison) {
 		this.position = posPrison;
+		p.getModel().notifyPosJoueur(idJoueur,position);
 	}
 	
 	public void ajoutCartePrison(){
@@ -47,6 +60,7 @@ public class JoueurModel {
 
 	public void setArgent(int argent) {
 		this.argent = argent;
+		p.getModel().notifyArgentJoueur(idJoueur, argent);
 	}
 
 

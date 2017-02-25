@@ -22,7 +22,7 @@ public class PlateauModel {
 	
 	protected PiocheModel piocheCommunaute;
 	protected PiocheModel piocheChance;
-	private JeuModel model;
+	protected JeuModel model;
 	
 	
 	public PlateauModel(JeuModel model, int nbJoueur, int posDepart, int sommeDepart)
@@ -31,7 +31,7 @@ public class PlateauModel {
 		this.setNbJoueur(nbJoueur);
 		this.setJoueurs(new JoueurModel[nbJoueur]);
 		for(int i=0; i<nbJoueur; i++){
-			this.getJoueurs()[i]=new JoueurModel(i, posDepart, sommeDepart);
+			this.getJoueurs()[i]=new JoueurModel(this, i, posDepart, sommeDepart);
 		}
 		
 		
@@ -113,7 +113,7 @@ public class PlateauModel {
 		cases[nb_cases]=new CommunauteChanceModel(this,nb_cases,nb_cases++,"Chance",TypePioche.CHANCE);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.BLEU_CLAIR,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.BLEU_CLAIR.ordinal()]);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.BLEU_CLAIR,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.BLEU_CLAIR.ordinal()]);
-		cases[nb_cases]=new PrisonModel(nb_cases,nb_cases++);
+		cases[nb_cases]=new PrisonModel(this, nb_cases,nb_cases++);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.VIOLET,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.VIOLET.ordinal()]);
 		cases[nb_cases]=new ServiceModel(this, nb_cases, nb_cases++, "Compagnie d'électricité", 15000);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.VIOLET,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.VIOLET.ordinal()]);
@@ -123,7 +123,7 @@ public class PlateauModel {
 		cases[nb_cases]=new CommunauteChanceModel(this,nb_cases,nb_cases++,"Caisse Communauté",TypePioche.COMMUNAUTE);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.ORANGE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.ORANGE.ordinal()]);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.ORANGE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.ORANGE.ordinal()]);
-		cases[nb_cases]=new ParkingModel(nb_cases,nb_cases++);
+		cases[nb_cases]=new ParkingModel(this, nb_cases,nb_cases++);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.ROUGE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.ROUGE.ordinal()]);
 		cases[nb_cases]=new CommunauteChanceModel(this,nb_cases,nb_cases++,"Chance",TypePioche.CHANCE);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.ROUGE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.ROUGE.ordinal()]);
@@ -133,7 +133,7 @@ public class PlateauModel {
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.JAUNE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.JAUNE.ordinal()]);
 		cases[nb_cases]=new ServiceModel(this, nb_cases, nb_cases++, "Compagnie des eaux", 15000);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.JAUNE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.JAUNE.ordinal()]);
-		cases[nb_cases]=new GendarmeModel(nb_cases,nb_cases++);
+		cases[nb_cases]=new GendarmeModel(this, nb_cases,nb_cases++);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.VERT,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.VERT.ordinal()]);
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.VERT,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.VERT.ordinal()]);
 		cases[nb_cases]=new CommunauteChanceModel(this,nb_cases,nb_cases++,"Caisse Communauté",TypePioche.COMMUNAUTE);
@@ -146,7 +146,7 @@ public class PlateauModel {
 		
 		this.setCases(cases);
 		this.getModel().notifyCases(this.cases);
-		this.getModel().lancerTour();
+		this.getModel().notifyInitTour();
 	}
 	
 	public void genererPioche(){

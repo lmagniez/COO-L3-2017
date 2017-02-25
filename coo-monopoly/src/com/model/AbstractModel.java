@@ -20,7 +20,14 @@ public abstract class AbstractModel implements Observable{
 	public abstract void lancerDes(int idJoueur);
 	public abstract void lancerEnchere();
 	public abstract void lancerNegociation();
-	public abstract void comblerDette(JoueurModel j);
+	public abstract void tourSuivant();
+	
+	
+	public abstract void comblerDette(int idJoueur);
+	public abstract boolean hasEnoughMoney(int idJoueur, int positionAchat);
+	public abstract boolean isInDebt(int idJoueur);
+	public abstract void achatCase(int idJoueur, int positionAchat);
+	public abstract void paiementJoueur(int idJoueur1, int idJoueur2, int position);
 	
 	
 	// Implementation du pattern observer
@@ -99,6 +106,23 @@ public abstract class AbstractModel implements Observable{
 	public void notifyAchatCase(int idJoueur, int position){
 		for(Observer obs : listObserver)
 			obs.updateAchatCase(idJoueur, position);
+	}
+	
+	public void notifyMessageChoix(String message){
+		for(Observer obs : listObserver)
+			obs.updateMessageChoix(message);
+	}
+	
+	@Override
+	public void notifyInitTour() {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateInitTour();
+	}
+	
+	public void notifyPaiementCase(int idJoueur, int idJoueur2, int position){
+		for(Observer obs : listObserver)
+			obs.updatePaiementCase(idJoueur, idJoueur2, position);
 	}
 	
 }

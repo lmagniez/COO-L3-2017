@@ -85,7 +85,7 @@ public class VueMenu extends Fenetre {
 	//public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
 	{
 	
-		JeuModel jeuModel = new JeuModel(ConstantesParam.NB_JOUEURS,0 , 5000);
+		JeuModel jeuModel = new JeuModel(ConstantesParam.NB_JOUEURS,0 , ConstantesParam.SOMME_DEPART);
 		AbstractControler jeuControler = new GameControler(jeuModel);
 		VueJeu jeu=new VueJeu(jeuControler);
 		jeuModel.addObserver(jeu);

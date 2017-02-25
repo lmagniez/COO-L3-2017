@@ -26,6 +26,7 @@ public class DepartImpotTaxeModel extends CaseModel{
 	@Override
 	public void action(JoueurModel j) {
 		j.setArgent(j.getArgent() + value);
+		this.p.getModel().tourSuivant();
 	}
 
 	

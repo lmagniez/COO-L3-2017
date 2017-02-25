@@ -37,7 +37,8 @@ public class TerrainModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_TERRAIN];
 		for(int i=0; i<ConstantesModel.NB_CASES_TERRAIN; i++){
-			tabAsso[i]=-1;
+			tabAsso[i]=1;
+//
 		}
 		return tabAsso;
 	}
@@ -139,14 +140,37 @@ public class TerrainModel extends CaseModel{
 			JoueurModel possesseur=this.p.getJoueurs()[idPossesseur];
 			//joueur different du possesseur de la case: transfert argent
 			if(j.getIdJoueur()!=idPossesseur){
+				
+				/*
 				possesseur.setArgent(possesseur.getArgent()+loyers[nbMaisons]);
 				j.setArgent(j.getArgent()-loyers[nbMaisons]);
+				this.p.getModel().tourSuivant();
+				*/
+				this.p.getModel().notifyPaiementCase(j.getIdJoueur(), idPossesseur, this.getPosition());
+				
+			}
+			else
+			{
+				this.p.getModel().tourSuivant();
 			}
 		}
 		else{
+			System.out.println("TerrainModel notifie case");
 			this.p.getModel().notifyAchatCase(j.getIdJoueur(), j.getPosition());
 		}
 		
+	}
+
+
+
+	public int getIdTerrain() {
+		return idTerrain;
+	}
+
+
+
+	public void setIdTerrain(int idTerrain) {
+		this.idTerrain = idTerrain;
 	}
 
 
@@ -184,6 +208,20 @@ public class TerrainModel extends CaseModel{
 	public void setPrixMaison(int prixMaison) {
 		this.prixMaison = prixMaison;
 	}
+
+
+
+	public int getNbMaisons() {
+		return nbMaisons;
+	}
+
+
+
+	public void setNbMaisons(int nbMaisons) {
+		this.nbMaisons = nbMaisons;
+	}
+
+
 	
 	
 }

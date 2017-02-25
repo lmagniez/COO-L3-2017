@@ -18,7 +18,7 @@ public class Score extends JPanel{
 
 	protected EcranJeu ecran;
 	protected Image fond;
-	private InfoJoueur[] joueurs;
+	protected InfoJoueur[] joueurs;
 	protected InfoJeu infos;
 	protected ProprietesJoueur proprietes;
 	
@@ -38,7 +38,7 @@ public class Score extends JPanel{
 		
 		setJoueurs(new InfoJoueur[ConstantesParam.NB_JOUEURS]);
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++)
-			getJoueurs()[i]=new InfoJoueur(this, i,5000,i);
+			getJoueurs()[i]=new InfoJoueur(this, i,ConstantesParam.SOMME_DEPART,i);
 			
 		infos=new InfoJeu();
 		
@@ -74,10 +74,14 @@ public class Score extends JPanel{
 
 
 	public void initTour(int tour) {
+		System.out.println("init tour "+tour);
 		// TODO Auto-generated method stub
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++)
 			getJoueurs()[i].lanceDes.setEnabled(false);
 		getJoueurs()[tour].lanceDes.setEnabled(true);
+		this.revalidate();
+		this.repaint();
+		
 	}
 
 	public InfoJoueur[] getJoueurs() {

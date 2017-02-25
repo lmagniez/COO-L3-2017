@@ -59,10 +59,46 @@ public class ServiceModel extends CaseModel{
 			JoueurModel possesseur=this.p.getJoueurs()[idPossesseur];
 			//joueur different du possesseur de la case: transfert argent
 			if(j.getIdJoueur()!=idPossesseur){
+				
+				this.p.getModel().notifyPaiementCase(j.getIdJoueur(), idPossesseur, this.getPosition());
+				/*
 				possesseur.setArgent(possesseur.getArgent()+j.getLastSumDes()*loyers[nbServJ]);
-				j.setArgent(j.getArgent()-j.getLastSumDes()*loyers[nbServJ]);
+				j.setArgent(j.getArgent()-j.getLastSumDes()*loyers[nbServJ]);*/
 			}
+			this.p.getModel().tourSuivant();
 		}
+		else{
+			
+			System.out.println("Service notifie case");
+			this.p.getModel().notifyAchatCase(j.getIdJoueur(), j.getPosition());
+		}
+		
 	}
 
+	public int getPrixAchat() {
+		return prixAchat;
+	}
+
+	public void setPrixAchat(int prixAchat) {
+		this.prixAchat = prixAchat;
+	}
+
+	public static int[] getLoyers() {
+		return loyers;
+	}
+
+	public static void setLoyers(int[] loyers) {
+		ServiceModel.loyers = loyers;
+	}
+
+	public int getIdService() {
+		return idService;
+	}
+
+	public void setIdService(int idService) {
+		this.idService = idService;
+	}
+
+	
+	
 }

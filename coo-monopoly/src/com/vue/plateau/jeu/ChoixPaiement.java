@@ -1,3 +1,4 @@
+
 package com.vue.plateau.jeu;
 
 import java.awt.Color;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import com.model.ConstantesModel;
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CouleurTerrain;
 import com.vue.ButtonMenu;
@@ -28,7 +30,7 @@ import com.vue.plateau.CarteAchatTerrain;
 import com.vue.plateau.EcranJeu;
 import com.vue.plateau.joueur.InfoJoueur;
 
-public class ChoixAchat extends JPanel{
+public class ChoixPaiement extends JPanel{
 
 	protected EcranJeu ecran;
 	protected ButtonMenu confirmer;
@@ -36,10 +38,17 @@ public class ChoixAchat extends JPanel{
 	protected JTextArea textBox;
 	protected JPanel panneauLateral ;
 	protected String messagePrincipal;
+	protected int idJ1, idJ2;
+	
+	protected int prixAPayer;
+	
 	
 	protected JPanel carte;
 	
-	public ChoixAchat(EcranJeu e){
+	public ChoixPaiement(EcranJeu e){
+		
+		//afficher case en question + prix a payer
+		//appuyer sur ok
 		
 		this.ecran=e;
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
@@ -65,16 +74,6 @@ public class ChoixAchat extends JPanel{
 		panneauLateral.setLayout(new BoxLayout(panneauLateral,BoxLayout.PAGE_AXIS));
 		
 		
-		/*
-		JLabel l2 = new JLabel();
-		Icon image=new ImageIcon("Sprites/pieces/BOTTOM/"+1+".png");
-		image=transform((ImageIcon) image,ConstantesVue.CASE_WIDTH/2,ConstantesVue.CASE_HEIGHT/2);
-		l2.setIcon(image);
-		l2.setAlignmentY(TOP_ALIGNMENT);
-		panneauLateral.add(l2);
-		*/
-		
-		
 		textBox=initTextArea("Message");
 		textBox.setEditable(false);
 		
@@ -84,41 +83,66 @@ public class ChoixAchat extends JPanel{
 		p.add(textBox);
 		
 		
-		confirmer=new ButtonMenu("Accepter",Colors.textColor2,Colors.case8);
+		confirmer=new ButtonMenu("Payer",Colors.textColor2,Colors.case8);
 		confirmer.addActionListener(new ButtonListener());
 		
-		annuler=new ButtonMenu("Refuser",Colors.textColor2,Colors.case8);
-		annuler.addActionListener(new ButtonListener());
 		
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2,BoxLayout.LINE_AXIS));
 		p2.add(confirmer);
-		p2.add(annuler);
 		
 		
 		this.add(p);
 		this.add(p2);
+		
+		this.revalidate();
+		this.repaint();
 		
 		this.setVisible(false);
 		
 		
 	}
 	
-	public void genererChoixAchat(int idJoueur, int position){
+	public void genererPaiement(int idJoueur, int idJoueur2, int position){
 		
+		System.out.println("GENERER PAIEMENT");
 		panneauLateral.removeAll();
 		
+		idJ1=idJoueur;
+		idJ2=idJoueur2;
+		
+		InfoJoueur j2=this.ecran.getS().getJoueurs()[idJoueur2];
+		
 		Case c = this.ecran.getP().getCases()[position];
-		if(c.type==TypeCase.TERRAIN)
+		Case[] cases= this.ecran.getP().getCases();
+		if(c.type==TypeCase.TERRAIN){
 			this.carte=new CarteAchatTerrain(c.idCase, c.nom, c.couleurTerrain, c.prixAchat, c.loyers, c.prixMaison);
-		else if(c.type==TypeCase.GARE)
+			prixAPayer=c.loyers[c.nbMaisons];
+		}
+		else if(c.type==TypeCase.GARE){
 			this.carte=new CarteAchatGare(c.idCase, c.nom, c.prixAchat, c.loyers);
-		else if(c.type==TypeCase.SERVICE)
+			
+			int cpt=0;
+			for(int i=0; i<ConstantesModel.NB_CASES; i++){
+				if(j2.getAcquisition()[i]&&cases[i].type==TypeCase.GARE)
+					cpt++;
+			}			
+			prixAPayer=c.loyers[cpt-1];
+		}
+		else if(c.type==TypeCase.SERVICE){
 			this.carte=new CarteAchatService(c.idCase, c.nom, c.prixAchat, c.loyers);
 		
+			int cpt=0;
+			for(int i=0; i<ConstantesModel.NB_CASES; i++){
+				if(j2.getAcquisition()[i]&&cases[i].type==TypeCase.SERVICE)
+					cpt++;
+			}			
+			prixAPayer=c.loyers[cpt-1];
+			
+		}
 		panneauLateral.add(carte);
 		
-		this.messagePrincipal="Acheter \n'"+c.nom+"\npour "+c.prixAchat+" ?";
+		this.messagePrincipal="Payer au joueur "+idJoueur2+"\n"+prixAPayer+" !";
 		this.textBox.setText(messagePrincipal);
 		
 		this.revalidate();
@@ -134,23 +158,15 @@ public class ChoixAchat extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 			String command = ((JButton) e.getSource()).getActionCommand();
 			
-			InfoJoueur info=ChoixAchat.this.ecran.getS().getJoueurs()[ChoixAchat.this.ecran.getTour()];
-			int idJoueur=ChoixAchat.this.ecran.getTour();
-			int posJoueur=ChoixAchat.this.ecran.getP().getPions()[idJoueur].position;
+			InfoJoueur info=ChoixPaiement.this.ecran.getS().getJoueurs()[ChoixPaiement.this.ecran.getTour()];
+			int idJoueur=ChoixPaiement.this.ecran.getTour();
+			int posJoueur=ChoixPaiement.this.ecran.getP().getPions()[idJoueur].position;
 			
-			if(command=="Accepter")
+			if(command=="Payer")
 			{
 				System.out.println("ACCEPTER");
-				ChoixAchat.this.ecran.getVue().getControler().requestAchat(idJoueur,posJoueur);
+				ChoixPaiement.this.ecran.getVue().getControler().requestPaiement(idJ1,idJ2,posJoueur);
 				//ChoixAchat.this.setVisible(false);
-			}
-			
-			
-			if(command=="Refuser")
-			{
-				
-				ChoixAchat.this.ecran.getVue().getControler().requestEnchere(idJoueur,posJoueur);
-				ChoixAchat.this.setVisible(false);
 			}
 		} 
 	}

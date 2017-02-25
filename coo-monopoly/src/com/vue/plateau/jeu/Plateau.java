@@ -86,7 +86,7 @@ public class Plateau extends JPanel{
 		
 		setPions(new Pion[ConstantesParam.NB_JOUEURS]);
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
-			getPions()[i]=new Pion(this,12,i,i);
+			getPions()[i]=new Pion(this,0,i,i);
 			this.add(getPions()[i]);
 			//pions[i].setLocation(50*i,50*i);
 			//pions[i].setSize(50,50);
