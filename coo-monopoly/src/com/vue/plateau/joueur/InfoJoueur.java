@@ -40,11 +40,12 @@ public class InfoJoueur extends JPanel{
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
 			this.getAcquisition()[i]=false;
 		
+		/*
 		if(idJoueur==1){
 			for(int i=0; i<ConstantesModel.NB_CASES; i++)
 				this.getAcquisition()[i]=true;
 			
-		}
+		}*/
 		
 //---->		
 		/*

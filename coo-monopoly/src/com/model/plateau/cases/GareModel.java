@@ -20,7 +20,7 @@ public class GareModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_GARES];
 		for(int i=0; i<ConstantesModel.NB_GARES; i++){
-			tabAsso[i]=1;
+			tabAsso[i]=-1;
 ////////
 		}
 		return tabAsso;

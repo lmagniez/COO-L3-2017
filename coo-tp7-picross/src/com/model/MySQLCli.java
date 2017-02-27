@@ -64,12 +64,29 @@ public class MySQLCli {
     public ResultSet exec(String sql) {
         try {
             ResultSet rs = this.dbStatement.executeQuery(sql);
+            
+            
             return rs;
         } catch (SQLException ex) {
             Logger.getLogger(MySQLCli.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
+    
+    
+    public int execUpdate(String sql){
+    	try{
+    		int rs = this.dbStatement.executeUpdate(sql);
+            return rs;
+    	}
+    	catch (SQLException ex) {
+            Logger.getLogger(MySQLCli.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    
+    
     
     /**
      * Recuper l'ensemble des ids des puzzles
@@ -94,6 +111,8 @@ public class MySQLCli {
     	return result;
     	
     }
+    
+    
     
     /**
      * Récupérer le nombre de colonne pour un puzzle
@@ -236,6 +255,145 @@ public class MySQLCli {
     	
     }
     
+    /**
+     * Pour l'insertion de puzzle
+     * @param nomPuzzle nom du puzzle
+     * @param numLigne numéro de la ligne
+     * @param indice indice de la ligne
+     */
+    public void ajoutIndiceLigne(int idPuzzle, int numLigne, int indice){
+    	
+    	
+    	String insertLigne="insert into Picross.Ligne(indices) values("+indice+");";
+    	this.execUpdate(insertLigne);
+    	
+    	String insertJeuLigne=
+    	"insert into Picross.IndiceJeuLigne(idPuzzle,idLigne,numLigne) values"
+    	+"("
+    	+"(SELECT idPuzzle FROM Picross.Jeu WHERE nom=\""+idPuzzle+"\"),"
+    	+"(SELECT MAX(idLigne) FROM Picross.Ligne),"+numLigne
+    	+");";
+    	this.execUpdate(insertJeuLigne);
+    	
+    }
+    
+    /**
+     * Pour l'insertion de puzzle
+     * @param nomPuzzle nom du puzzle
+     * @param numLigne numéro de la ligne
+     * @param indice indice de la ligne
+     */
+    public void ajoutIndiceColonne(int idPuzzle, int numColonne, int indice){
+    	
+    	System.out.println("AJOUT INDICE COLONNE "+numColonne + " "+indice);
+    	
+    	String insertColonne="insert into Picross.Colonne(indices) values("+indice+");";
+    	this.execUpdate(insertColonne);
+    	
+    	String insertJeuColonne=
+    	"insert into Picross.IndiceJeuColonne(idPuzzle,idColonne,numColonne) values"
+    	+"("
+    	+"(SELECT idPuzzle FROM Picross.Jeu WHERE idPuzzle=\""+idPuzzle+"\"),"
+    	+"(SELECT MAX(idColonne) FROM Picross.Colonne),"+numColonne
+    	+");";
+    	this.execUpdate(insertJeuColonne);
+    	
+    }
+    
+    public void ajoutPuzzleToDatabase(String nomPuzzle, int nbLigne, int nbColonne, 
+    		int[] indicesLigne, int[] indicesColonne) throws SQLException{
+    	String insertJeu="insert into Picross.Jeu(nom,nbLigne,nbColonne,reussite) values(\""
+    		+nomPuzzle+"\","+nbLigne+","+nbColonne+",false);";
+    	this.execUpdate(insertJeu);
+    	
+    	String getIdPuzzle="(SELECT MAX(idPuzzle) FROM Picross.Jeu)"; 
+    	ResultSet rs=this.exec(getIdPuzzle);
+    	rs.next();
+    	int idPuzzle=rs.getInt(1);
+    	
+    	
+    	for(int i=0; i<nbLigne; i++)
+    		ajoutIndiceLigne(idPuzzle, i, indicesLigne[i]);
+    	for(int i=0; i<nbColonne; i++)
+    		ajoutIndiceColonne(idPuzzle, i, indicesColonne[i]);
+    	
+    }
+    
+    public int getIdPuzzleFromName(String nomPuzzle) throws SQLException{
+    	int id=-1;
+    	String getId="Select idPuzzle from Picross.Jeu where nom=\""+nomPuzzle+"\"";
+    	ResultSet rs=this.exec(getId);
+    	if (rs != null) {
+        	rs.next();
+        	id=rs.getInt(1);
+    		
+        }
+    	return id;
+    }
+    
+    /**
+     * Récuperer l'ensemble des ids des lignes concernées par un puzzle (pour suppression)
+     * @param idPuzzle
+     * @return ensemble des ids
+     * @throws SQLException
+     */
+    public ArrayList<Integer> getIdLignesFromIdPuzzle(int idPuzzle) throws SQLException{
+    	ArrayList<Integer> res=new ArrayList<Integer>();
+    	String getId="Select idLigne from Picross.IndiceJeuLigne where idPuzzle=\""+idPuzzle+"\"";
+    	ResultSet rs=this.exec(getId);
+    	if (rs != null) {
+        	while(rs.next())
+        	{
+        		int id=rs.getInt(1);
+        		res.add(id);
+        	}
+    		
+        }
+    	return res;
+    }
+    
+    public ArrayList<Integer> getIdColonnesFromIdPuzzle(int idPuzzle) throws SQLException{
+    	ArrayList<Integer> res=new ArrayList<Integer>();
+    	String getId="Select idColonne from Picross.IndiceJeuColonne where idPuzzle=\""+idPuzzle+"\"";
+    	ResultSet rs=this.exec(getId);
+    	if (rs != null) {
+        	while(rs.next())
+        	{
+        		int id=rs.getInt(1);
+        		res.add(id);
+        	}
+    		
+        }
+    	return res;
+    }
+    
+    public void deletePuzzleFromDatabase(int idPuzzle) throws SQLException{
+    	
+    	
+    	ArrayList<Integer> idsLigne= getIdLignesFromIdPuzzle(idPuzzle);
+    	ArrayList<Integer> idsColonne= getIdColonnesFromIdPuzzle(idPuzzle);
+    	
+    	
+    	String delJeu ="delete from Picross.IndiceJeuColonne where idPuzzle="+idPuzzle;
+    	int id=this.execUpdate(delJeu);
+    	delJeu ="delete from Picross.IndiceJeuLigne where idPuzzle="+idPuzzle;
+    	id=this.execUpdate(delJeu);
+    	
+    	
+    	for(int i=0; i<idsLigne.size(); i++){
+    		String delLigne ="delete from Picross.Ligne where idLigne="+idsLigne.get(i);
+    		id=this.execUpdate(delLigne);
+    	}
+    	
+    	for(int i=0; i<idsColonne.size(); i++){
+    		String delColonne ="delete from Picross.Colonne where idColonne="+idsColonne.get(i);
+    		id=this.execUpdate(delColonne);
+    	}
+    	
+    	delJeu ="delete from Picross.Jeu where idPuzzle="+idPuzzle;
+    	id=this.execUpdate(delJeu);
+    	
+    }
     
  
     /**
@@ -254,20 +412,23 @@ public class MySQLCli {
     /**
      * Exemple d'utilisation de la class
      * @param args
+     * @throws SQLException 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         MySQLCli mysqlCli = new MySQLCli("//localhost:3306/db", "", "");
         if (mysqlCli.connect()) {
             
-        	
+        	/*
         	try {
             	
+        		
+        		
             	/*
             	DatabaseMetaData md = (DatabaseMetaData) mysqlCli.dbConnect.getMetaData();
             	ResultSet rs = md.getTables(null, null, "%", null);
             	while (rs.next()) {
             	  System.out.println(rs.getString(3));
-            	}*/
+            	}
             	
             	//java.sql.PreparedStatement prep=mysqlCli.dbConnect.prepareStatement("SELECT * FROM Jeu");
             	//ResultSet rs = mysqlCli.exec("SELECT * FROM Jeu");
@@ -290,9 +451,31 @@ public class MySQLCli {
                     }
                 }
                 
+                
+               
+                
+                
             } catch (SQLException ex) {
                 Logger.getLogger(MySQLCli.class.getName()).log(Level.SEVERE, null, ex);
             }
+        	*/
+        	
+        	 System.out.println(mysqlCli.execUpdate(ConstantesRequetes.createDataBase));
+        	 System.out.println(mysqlCli.execUpdate(ConstantesRequetes.createJeu));
+        	 System.out.println(mysqlCli.execUpdate(ConstantesRequetes.createLigne));
+        	 System.out.println(mysqlCli.execUpdate(ConstantesRequetes.createColonne));
+        	 System.out.println(mysqlCli.execUpdate(ConstantesRequetes.createIndiceJeuColonne));
+        	 System.out.println(mysqlCli.execUpdate(ConstantesRequetes.createIndiceJeuLigne));
+        	 
+        	 
+        	 mysqlCli.ajoutPuzzleToDatabase(ConstantesRequetes.nomStar, 
+        			 ConstantesRequetes.nbLigneStar, ConstantesRequetes.nbColonneStar, 
+        			 ConstantesRequetes.indicesLigneStar, ConstantesRequetes.indicesLigneStar);
+
+         	int idPuzzle=mysqlCli.getIdPuzzleFromName("star");
+        	mysqlCli.deletePuzzleFromDatabase(idPuzzle);
+             
+        	
         } else {
             System.out.println("Mysql connection failed !!!");
         }
