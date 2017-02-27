@@ -97,7 +97,7 @@ public class MySQLCli {
     	ArrayList<Integer> result=new ArrayList<Integer>();
     	try {
         	
-        	ResultSet rs = this.exec("SELECT idPuzzle FROM db.Jeu;");
+        	ResultSet rs = this.exec("SELECT idPuzzle FROM Picross.Jeu;");
             if (rs != null) {
                 while (rs.next()) {
                 	result.add(rs.getInt(1));
@@ -113,6 +113,33 @@ public class MySQLCli {
     }
     
     
+    public String getNomFromIdPuzzle(int idPuzzle){
+
+    	String res="";
+    	
+    	try {
+        	
+    		String requete="SELECT nbColonne FROM db.Jeu WHERE idPuzzle=?";
+    		
+    		PreparedStatement prepare=(PreparedStatement) this.dbConnect.prepareStatement(requete);
+    		prepare.setInt(1, idPuzzle);
+    		
+    		System.out.println(prepare.toString());
+    		
+    		ResultSet rs= prepare.executeQuery();
+    		
+        	if (rs != null) {
+        		while (rs.next()) {
+                	res= rs.getString(1);
+                }
+            }
+        	
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLCli.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    	return res;
+    }
+    
     
     /**
      * Récupérer le nombre de colonne pour un puzzle
@@ -124,10 +151,9 @@ public class MySQLCli {
 
     	int res=-1;
     	
-    	ArrayList<Integer> result=new ArrayList<Integer>();
     	try {
         	
-    		String requete="SELECT nbColonne FROM db.Jeu WHERE idPuzzle=?";
+    		String requete="SELECT nbColonne FROM Picross.Jeu WHERE idPuzzle=?";
     		
     		PreparedStatement prepare=(PreparedStatement) this.dbConnect.prepareStatement(requete);
     		prepare.setInt(1, idPuzzle);
@@ -160,7 +186,7 @@ public class MySQLCli {
     	ArrayList<Integer> result=new ArrayList<Integer>();
     	try {
         	
-    		String requete="SELECT nbLigne FROM db.Jeu WHERE idPuzzle=?";
+    		String requete="SELECT nbLigne FROM Picross.Jeu WHERE idPuzzle=?";
     		
     		PreparedStatement prepare=(PreparedStatement) this.dbConnect.prepareStatement(requete);
     		prepare.setInt(1, idPuzzle);
@@ -207,7 +233,7 @@ public class MySQLCli {
             if (rs != null) {
                 while (rs.next()) {
                 	result[cpt++]=rs.getString(1);
-                    System.out.println("Valeur: " + rs.getString(1));
+                    System.out.println("Row Valeur: " + rs.getString(1));
                 }
             }
             
@@ -230,10 +256,10 @@ public class MySQLCli {
     	try {
         	
     		String requete=
-    				"SELECT indices FROM Colonne "
-    				+ "JOIN IndiceJeuColonne ON Colonne.idColonne=IndiceJeuColonne.idColonne "
-    				+ "JOIN Jeu ON Jeu.idPuzzle=IndiceJeuColonne.idPuzzle "
-    				+ "WHERE Jeu.idPuzzle=?";
+    				"SELECT indices FROM Picross.Colonne "
+    				+ "JOIN Picross.IndiceJeuColonne ON Picross.Colonne.idColonne=Picross.IndiceJeuColonne.idColonne "
+    				+ "JOIN Picross.Jeu ON Picross.Jeu.idPuzzle=Picross.IndiceJeuColonne.idPuzzle "
+    				+ "WHERE Picross.Jeu.idPuzzle=?";
     		
     		PreparedStatement prepare=(PreparedStatement) this.dbConnect.prepareStatement(requete);
     		prepare.setInt(1, idPuzzle);
@@ -243,8 +269,9 @@ public class MySQLCli {
         	int cpt=0;
             if (rs != null) {
                 while (rs.next()) {
+                	System.out.println("Col Valeur: " + rs.getString(1));
                 	result[cpt++]=rs.getString(1);
-                    System.out.println("Valeur: " + rs.getString(1));
+                    
                 }
             }
             
@@ -270,7 +297,7 @@ public class MySQLCli {
     	String insertJeuLigne=
     	"insert into Picross.IndiceJeuLigne(idPuzzle,idLigne,numLigne) values"
     	+"("
-    	+"(SELECT idPuzzle FROM Picross.Jeu WHERE nom=\""+idPuzzle+"\"),"
+    	+"(SELECT idPuzzle FROM Picross.Jeu WHERE idPuzzle=\""+idPuzzle+"\"),"
     	+"(SELECT MAX(idLigne) FROM Picross.Ligne),"+numLigne
     	+");";
     	this.execUpdate(insertJeuLigne);
@@ -324,8 +351,8 @@ public class MySQLCli {
     	String getId="Select idPuzzle from Picross.Jeu where nom=\""+nomPuzzle+"\"";
     	ResultSet rs=this.exec(getId);
     	if (rs != null) {
-        	rs.next();
-        	id=rs.getInt(1);
+        	if(rs.next())
+        		id=rs.getInt(1);
     		
         }
     	return id;
@@ -475,6 +502,7 @@ public class MySQLCli {
          	int idPuzzle=mysqlCli.getIdPuzzleFromName("star");
         	mysqlCli.deletePuzzleFromDatabase(idPuzzle);
              
+        	System.out.println(mysqlCli.getIdPuzzleFromName("abc"));
         	
         } else {
             System.out.println("Mysql connection failed !!!");
