@@ -1,4 +1,6 @@
 
+import java.sql.SQLException;
+
 import com.vue.titre.Vue1;
 
 /**
@@ -9,7 +11,7 @@ import com.vue.titre.Vue1;
  */
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		
 		Vue1 vue= new Vue1();
 

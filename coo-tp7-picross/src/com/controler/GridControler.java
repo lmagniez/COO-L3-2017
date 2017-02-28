@@ -27,6 +27,23 @@ public class GridControler extends AbstractControler{
 	  */
 	public void control()
 	{
+		
+		if(this.requestGrilles){
+			this.calc.requestGrilles();
+			this.requestGrilles=false;
+		}
+		else if(this.requestGrilleDetail){
+			this.calc.requestGrilleDetail(idPuzzle);
+			this.requestGrilleDetail=false;
+		}
+		else if(this.requestVerifWin){
+			this.calc.verifWin(idPuzzle);
+			this.requestVerifWin=false;
+		}
+		else
+			this.calc.changeValue(idPuzzle, x, y);
+		
+		/*
 		if(!this.calc.columnFull(x))
 		{
 			this.calc.ajoutJeton(x);
@@ -34,7 +51,7 @@ public class GridControler extends AbstractControler{
 		}
 		else
 			this.calc.notifyFull();
-		
+		*/
 	}
 
 	 

@@ -23,14 +23,18 @@ public class JeuModel extends AbstractModel{
        		if(client.getIdPuzzleFromName(ConstantesRequetes.nomStar)==-1){
        			client.ajoutPuzzleToDatabase(ConstantesRequetes.nomStar, 
        					ConstantesRequetes.nbLigneStar, ConstantesRequetes.nbColonneStar, 
-       					ConstantesRequetes.indicesLigneStar, ConstantesRequetes.indicesLigneStar);
+       					ConstantesRequetes.indicesLigneStar, ConstantesRequetes.indicesColonnesStar);
        		}
        		if(client.getIdPuzzleFromName(ConstantesRequetes.nomToad)==-1){
        			client.ajoutPuzzleToDatabase(ConstantesRequetes.nomToad, 
        					ConstantesRequetes.nbLigneToad, ConstantesRequetes.nbColonneToad, 
-       					ConstantesRequetes.indicesLigneToad, ConstantesRequetes.indicesLigneToad);
+       					ConstantesRequetes.indicesLigneToad, ConstantesRequetes.indicesColonnesToad);
        		}
-       		
+       		if(client.getIdPuzzleFromName(ConstantesRequetes.nomEasy)==-1){
+       			client.ajoutPuzzleToDatabase(ConstantesRequetes.nomEasy, 
+       					ConstantesRequetes.nbLigneEasy, ConstantesRequetes.nbColonneEasy, 
+       					ConstantesRequetes.indicesLigneEasy, ConstantesRequetes.indicesColonnesEasy);
+       		}
        		
         	//client.deletePuzzleFromDatabase(idPuzzle);
        		//int idPuzzle=client.getIdPuzzleFromName("star");
@@ -53,7 +57,11 @@ public class JeuModel extends AbstractModel{
 		
 	}
 
-	
+	/**
+	 * Pour le constructeur, en fonction d'un id, va récuperer dans la base chaque attribut nécessaire
+	 * @param idPuzzle
+	 * @return
+	 */
 	public GrilleModel recupGrille(int idPuzzle){
 		
 		GrilleModel g=null;
@@ -63,7 +71,10 @@ public class JeuModel extends AbstractModel{
 			int nbColonne=client.getNbColonne(idPuzzle);
 			int nbLigne=client.getNbLigne(idPuzzle);
 			String nom =client.getNomFromIdPuzzle(idPuzzle);
-			String[] infoLigne=client.getAllIndiceColonne(idPuzzle, nbLigne);
+			
+			System.out.println(nbLigne);
+			
+			String[] infoLigne=client.getAllIndiceLigne(idPuzzle, nbLigne);
 			String[] infoColonne=client.getAllIndiceColonne(idPuzzle, nbColonne);
 			g=new GrilleModel(this,idPuzzle,nom,nbLigne,nbColonne,infoLigne,infoColonne);
 			
@@ -78,37 +89,49 @@ public class JeuModel extends AbstractModel{
 	}
 	
 	
+	/**
+	 * Envoie l'ensemble des informations de grille à la vue
+	 */
+	public void requestGrilles(){
+		int nbGrille=this.grilles.size();
+		int id[]=new int[nbGrille];
+		String nom[]=new String[nbGrille];
+		boolean reussite[]=new boolean[nbGrille];
+		
+		for(int i=0; i<nbGrille; i++){
+			id[i]=this.grilles.get(i).idPuzzle;
+			nom[i]=this.grilles.get(i).nom;
+			reussite[i]=this.grilles.get(i).reussite;
+		}
+		this.notifyInfosGrilles(nbGrille, id, nom, reussite);
+	}
+	
+	
+	public void requestGrilleDetail(int idPuzzle){
+		
+		
+		for(int i=0; i<grilles.size(); i++){		
+			if(this.grilles.get(i).idPuzzle==idPuzzle){
+				GrilleModel grid=this.grilles.get(i);
+				this.notifyGrilleDetail(grid.idPuzzle, grid.nom, grid.infoLigne, grid.infoColonne, grid.reussite);
+				return;
+			}
+		}
+		
+	}
+	
+	
 	
 	
 	@Override
-	public boolean ajoutJeton(int x) {
+	public void verifWin(int idGrille) {
 		// TODO Auto-generated method stub
-		return false;
+		
+		this.getGrilleById(idGrille).verifWin();
+		//grilles.get(idGrille).verifWin();
+		
 	}
 
-	@Override
-	public boolean columnFull(int x) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean verifWin() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean ajoutJetonIA(int x, CaseValue v) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean retirerJetonIA(int x) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	@Override
 	public void reinit() {
@@ -116,9 +139,34 @@ public class JeuModel extends AbstractModel{
 		
 	}
 	
+	
+	public GrilleModel getGrilleById(int idGrille){
+		for(int i=0; i<grilles.size(); i++){
+			if(grilles.get(i).idPuzzle==idGrille)
+				return grilles.get(i);
+		}
+		return null;
+	}
+	
+
+
+	@Override
+	public void changeValue(int idGrille, int x, int y) {
+		// TODO Auto-generated method stub
+		GrilleModel g = this.getGrilleById(idGrille);
+		g.change(x, y);
+		//this.grilles.get(idGrille).change(x,y);
+	}
+
+
+	/*
 	public static void main(String[] args) throws SQLException {
 		JeuModel m=new JeuModel();
-	}
+	}*/
+
+
+	
+
 	
 	
 }

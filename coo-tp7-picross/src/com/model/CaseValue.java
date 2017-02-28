@@ -1,12 +1,14 @@
 package com.model;
 
+import java.awt.Color;
+
 /**
  * Enum correspondant aux différentes valeurs que peut avoir une case
  * @author loick
  *
  */
 public enum CaseValue {
-	J1,J2,WIN,NONE;
+	CHECKED,UNCHECKED;
 	
 	/**
 	 * Accéder à la CaseValue en fonction d'un entier
@@ -15,12 +17,22 @@ public enum CaseValue {
 	 */
 	public static CaseValue fromInteger(int x) {
         switch(x) {
-        case 1:
-            return J1;
         case 0:
-            return J2;
+            return CHECKED;
+        case 1:
+            return UNCHECKED;
         }
         return null;
     }
+	
+	public static Color getColorFromValue(CaseValue c){
+		switch(c){
+			case CHECKED:
+				return Color.black;
+			case UNCHECKED:
+				return Color.white;
+		}
+		return null;
+	}
 	
 }

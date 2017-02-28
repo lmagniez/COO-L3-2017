@@ -14,12 +14,14 @@ public interface Observable {
 	public void addObserver(Observer obs);
 	public void removeObserver();
 	
-	public void notifyTour(int tour);
-	public void notifyNewChip(int x, int y, CaseValue v);
-	public void notifyWinner(int tour);
 	public void notifyFull();
 	
+	public void notifyChangeValue(int x, int y);
+	public void notifyWin();
+	public void notifyLose();
 	
-	public void notifyReinit();
+	public void notifyInfosGrilles(int nbGrille, int id[], String nom[], boolean reussite[]);
+	public void notifyGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne, boolean reussite);
+	
 	
 }

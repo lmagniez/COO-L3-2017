@@ -28,9 +28,11 @@ public class VueGrid extends Fenetre implements Observer {
 	private Grid grid;
 	protected Score score;
 	protected boolean swapColor;
-
-	public static final int TAILLE_ECRAN_GRILLE=600;
-	public static final int TAILLE_ECRAN_SCORE=300;
+	
+	public static final int TAILLE_ECRAN_GRILLE_X=500;
+	public static final int TAILLE_ECRAN_GRILLE_Y=500-Grid.ESPACEMENT_SIZE-Grid.ESPACEMENT2_SIZE;
+	
+	public static final int TAILLE_ECRAN_SCORE=150;
 	
 
 	// L'instance de notre objet controleur
@@ -46,32 +48,29 @@ public class VueGrid extends Fenetre implements Observer {
 	 */
 	
 	//ADD CONTROLEr
-	public VueGrid(AbstractControler controler, int nbRow, int nbCol, boolean swapColor, Vue1 menu) {
+	public VueGrid(AbstractControler controler, Vue1 menu) {
 		
 		this.swapColor=swapColor;
 		this.controler=controler;
 		this.vueMenu=menu;
-		this.setSize(TAILLE_ECRAN_GRILLE+TAILLE_ECRAN_SCORE, TAILLE_ECRAN_GRILLE);
-		this.setTitle("Connect 4");
+		this.setSize(TAILLE_ECRAN_GRILLE_X, TAILLE_ECRAN_GRILLE_Y+TAILLE_ECRAN_SCORE);
+		this.setTitle("PICROSS");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		this.setLayout(new BoxLayout(getContentPane(), BoxLayout.LINE_AXIS));
+		this.setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		
 		this.controler = controler;
-		this.grid=new Grid(this, nbRow, nbCol);
+		//this.grid=new Grid(this, nbRow, nbCol);
 		this.score= new Score(this,2);
 		
-		this.add(grid);
-		this.add(score);
 		this.setVisible(true);
 		
 		getContentPane().setBackground(Color.LIGHT_GRAY);
 		//grid.setBackground(Color.BLUE);
 		//repaint();
 		this.repaint();
-	
-		}
+	}
 
 	private Component topJustify( JPanel panel )  {
 	    Box  b = Box.createVerticalBox();
@@ -82,86 +81,64 @@ public class VueGrid extends Fenetre implements Observer {
 	    return b;
 	}
 	
-	/**
-	 * Recuperer la couleur correspondant au joueur
-	 * @param v
-	 * @return
-	 */
-	public Color getColorByCaseValue(CaseValue v)
-	{
-		if(v==CaseValue.J1)
-		{
-			if(!swapColor)
-				return Color.YELLOW;
-			else
-				return Color.RED;
-		}
-		if(v==CaseValue.J2)
-		{
-			if(!swapColor)
-				return Color.RED;
-			else
-				return Color.YELLOW;
-		}
-		if(v==CaseValue.WIN)
-			return Color.GREEN;
-		if(v==CaseValue.NONE)
-			return Color.WHITE;
-
-		return Color.PINK;
-	}
-
-	
-	/**
-	 * Mettre à jour l'affichage du tour dans le panel.
-	 */
-	public void updateTour(int tour){
-		score.changeTour(tour);
-	}
 
 	/**
 	 * Réinitialise la grille
 	 */
 	public void updateReinit() {
-		for(int i=0; i<grid.cases.length; i++){
-			for(int j=0; j<grid.cases[0].length; j++){
-				grid.cases[i][j].c=getColorByCaseValue(CaseValue.NONE);
+		for(int i=0; i<getGrid().cases.length; i++){
+			for(int j=0; j<getGrid().cases[0].length; j++){
+				getGrid().cases[i][j].color=CaseValue.getColorFromValue(CaseValue.UNCHECKED);
 			}
 		}
-		grid.repaint();
-		this.grid.actif=true;
+		getGrid().repaint();
+		this.getGrid().actif=true;
 		
 	}
 
-	/**
-	 * Mettre à jour la grille suite à l'ajout d'un jeton dans le modèle.
-	 * @param x abscisse de la case
-	 * @param y ordonnée de la case 
-	 * @param v Valeur de la case 
-	 */
 	@Override
-	public void updateChip(int x, int y, CaseValue v) {
-		
-		this.grid.cases[x][y].c=this.getColorByCaseValue(v);
-		this.repaint();
-		
+	public void updateChangeValue(int x, int y) {
+		// TODO Auto-generated method stub
+		this.getGrid().cases[x][y].changeValue();
 	}
 
-	/**
-	 * Mettre à jour l'affichage et stopper la partie suite à la détection d'un
-	 * pattern de victoire.
-	 * @param x abscisse de la case
-	 * @param y ordonnée de la case
-	 * @param tour tour du joueur
-	 */
 	@Override
-	public void updateWinner(int tour) {
+	public void updateWin() {
 		// TODO Auto-generated method stub
 		System.out.println("WINNER");
-		this.grid.actif=false;
-		this.score.displayWinner(tour);
+	}
+
+	@Override
+	public void updateLose() {
+		// TODO Auto-generated method stub
+		System.out.println("LOSER");
+	}
+
+
+	@Override
+	public void updateInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite) {
+		//pour VueMenu
+	}
+
+	@Override
+	public void updateGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne,
+			boolean reussite) {
+		// TODO Auto-generated method stub
+		System.out.println("update Grille !");
 		
+		this.setGrid(new Grid(this, id, indicesLigne.length, indicesColonne.length, nom, 
+				indicesLigne, indicesColonne, reussite));
+		this.add(score);
+		this.add(getGrid());
 		
+	}
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	public void setGrid(Grid grid) {
+		this.grid = grid;
 	}
 
 }

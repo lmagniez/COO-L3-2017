@@ -2,6 +2,7 @@ package com.vue.grid;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -24,25 +25,43 @@ public class Grid extends JPanel implements MouseListener{
 	
 	protected Case[][] cases;
 	protected int nbRow, nbCol;
-	
-	protected int lignePosX, lignePosY;
+	protected int idGrid;
+	protected String nom;
+	protected String[] infosLigne;
+	protected String[] infosColonne;
+	protected boolean reussite;
 	
 	
 	public static int GRILLE_POSX;
 	public static int GRILLE_POSY;
-	public static final int GRILLE_WIDTH=VueGrid.TAILLE_ECRAN_GRILLE;
-	public static final int GRILLE_HEIGHT=VueGrid.TAILLE_ECRAN_GRILLE;
+	
+	public static final int INDICE_SIZE=50;
+	public static final int ESPACEMENT_SIZE=15;
+	public static final int ESPACEMENT2_SIZE=15;
+	
+	
+	public static final int GRILLE_WIDTH=VueGrid.TAILLE_ECRAN_GRILLE_X-INDICE_SIZE-ESPACEMENT_SIZE*2;
+	public static final int GRILLE_HEIGHT=VueGrid.TAILLE_ECRAN_GRILLE_Y-INDICE_SIZE;
 	
 
 	protected boolean actif=true;
+	
 	
 	/**
 	 * Constructeur créant la grille et l'intégrant à la vue.
 	 * @param v vue 
 	 * @param nbLigne nombre de ligne de la grille
 	 */
-	public Grid(VueGrid v, int nbRow, int nbCol)
+	public Grid(VueGrid v, int idGrid, int nbRow, int nbCol, String nom, String[] infosLigne, String[] infosColonne, boolean reussite)
 	{
+		this.idGrid=idGrid;
+		this.nbRow=nbRow;
+		this.nbCol=nbCol;
+		this.nom=nom;
+		this.infosColonne=infosColonne;
+		this.infosLigne=infosLigne;
+		this.reussite=reussite;
+		
 		setBackground(Color.BLUE);
 		this.setOpaque(true);
 		this.setVisible(true);
@@ -50,12 +69,12 @@ public class Grid extends JPanel implements MouseListener{
 		//this.setBorder(BorderFactory.createLineBorder(Color.white));
 		
 		
-		GRILLE_POSX=(VueGrid.TAILLE_ECRAN_GRILLE
+		GRILLE_POSX=(VueGrid.TAILLE_ECRAN_GRILLE_X
 				-(GRILLE_WIDTH/2));
 		GRILLE_POSY=GRILLE_POSY;
 		
-		this.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE,VueGrid.TAILLE_ECRAN_GRILLE));
-		this.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE,VueGrid.TAILLE_ECRAN_GRILLE));
+		this.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_GRILLE_Y));
+		this.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_GRILLE_Y));
 		this.setVisible(true);
 		
 		
@@ -102,12 +121,12 @@ public class Grid extends JPanel implements MouseListener{
 	 * @return Coté si on en trouve un qui concorde avec la position de souris
 	 */
 	
-	public boolean collide(int x, int mouseX, int mouseY)
+	public boolean collide(int x, int y, int mouseX, int mouseY)
 	{
-		return(mouseX>=cases[x][0].posX 
-				&&mouseX<=cases[x][0].posX+Case.DIAMETRE_CASE
-				&&mouseY>=cases[x][0].posY
-				&&mouseY<=cases[x][nbCol-1].posY+Case.DIAMETRE_CASE);
+		return(mouseX>=cases[x][y].posX 
+				&&mouseX<=cases[x][y].posX+Case.DIAMETRE_CASE
+				&&mouseY>=cases[x][y].posY
+				&&mouseY<=cases[x][y].posY+Case.DIAMETRE_CASE);
 		
 	}
 	
@@ -116,12 +135,14 @@ public class Grid extends JPanel implements MouseListener{
 		if(actif)
 		for(int i=0; i<nbRow; i++)
 		{	
-				if(collide(i,arg0.getX(), arg0.getY()))
+			for(int j=0; j<nbCol; j++){
+				if(collide(i,j,arg0.getX(), arg0.getY()))
 				{
-					vue.controler.setJeton(i);
+					vue.controler.changeValue(idGrid,i,j);
 					this.repaint();
 					return 1;
 				}
+			}
 				
 				
 		}
@@ -170,22 +191,50 @@ public class Grid extends JPanel implements MouseListener{
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		//g.clearRect(0, 0, VueGrille.TAILLE_ECRAN_GRILLE, VueGrille.TAILLE_ECRAN_GRILLE);
 		
-		int epaisseurTrait=10;
 		
 		for(int i=0; i<nbRow; i++)
 			for(int j=0; j<nbCol; j++)
 			{
 				g.setColor(new Color(0, 0, 128));
-				g.fillOval (cases[i][j].posX-epaisseurTrait/2, cases[i][j].posY-epaisseurTrait/2
-						, cases[i][j].hX+epaisseurTrait, cases[i][j].hY+epaisseurTrait);
+				g.fillRect (cases[i][j].posX, cases[i][j].posY
+						, cases[i][j].hX, cases[i][j].hY);
 				
 				
-				g.setColor(cases[i][j].c);
+				
+				g.setColor(cases[i][j].color);
 				//System.out.println(cases[i][j].c);
 				//g.clearRect(cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
-				g.fillOval (cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
+				g.fillRect (cases[i][j].posX+2, cases[i][j].posY+2, cases[i][j].hX-4, cases[i][j].hY-4);
+				
+				
+				g.setFont(new Font("Arial", Font.BOLD, 15)); 
+				
+				
+				for(int k=0; k<this.infosLigne.length; k++){
+					g.setColor(Color.LIGHT_GRAY);
+					g.fillRect(ESPACEMENT_SIZE, cases[0][k].posY, INDICE_SIZE, Case.DIAMETRE_CASE);
+					g.setColor(Color.BLACK);
+					g.drawRect(ESPACEMENT_SIZE, cases[0][k].posY, INDICE_SIZE, Case.DIAMETRE_CASE);
+					g.drawString(infosLigne[k], ESPACEMENT_SIZE, cases[0][k].posY+cases[0][k].hY/2);
+				}
+				
+				for(int k=0; k<this.infosColonne.length; k++){
+					g.setColor(Color.LIGHT_GRAY);
+					g.fillRect(cases[k][0].posX,0, Case.DIAMETRE_CASE,INDICE_SIZE);
+					g.setColor(Color.BLACK);
+					g.drawRect(cases[k][0].posX,0, Case.DIAMETRE_CASE,INDICE_SIZE);
+					for(int l=0; l<this.infosColonne[k].length(); l++){
+						
+						g.drawString(""+infosColonne[k].charAt(l),cases[k][0].posX+cases[k][0].hX/2,15+15*l);
+						
+						
+						
+					}
+					
+					
+				}
+				
 				
 			}
 		

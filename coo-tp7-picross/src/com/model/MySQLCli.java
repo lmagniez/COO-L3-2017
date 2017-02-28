@@ -219,10 +219,10 @@ public class MySQLCli {
     	try {
         	
     		String requete=
-    				"SELECT indices FROM Ligne "
-    				+ "JOIN IndiceJeuLigne ON Ligne.idLigne=IndiceJeuLigne.idLigne "
-    				+ "JOIN Jeu ON Jeu.idPuzzle=IndiceJeuLigne.idPuzzle "
-    				+ "WHERE Jeu.idPuzzle=?";
+    				"SELECT indices FROM Picross.Ligne "
+    				+ "JOIN Picross.IndiceJeuLigne ON Picross.Ligne.idLigne=Picross.IndiceJeuLigne.idLigne "
+    				+ "JOIN Picross.Jeu ON Picross.Jeu.idPuzzle=Picross.IndiceJeuLigne.idPuzzle "
+    				+ "WHERE Picross.Jeu.idPuzzle=?";
     		
     		PreparedStatement prepare=(PreparedStatement) this.dbConnect.prepareStatement(requete);
     		prepare.setInt(1, idPuzzle);
@@ -441,6 +441,7 @@ public class MySQLCli {
      * @param args
      * @throws SQLException 
      */
+    /*
     public static void main(String[] args) throws SQLException {
         MySQLCli mysqlCli = new MySQLCli("//localhost:3306/db", "", "");
         if (mysqlCli.connect()) {
@@ -485,7 +486,7 @@ public class MySQLCli {
             } catch (SQLException ex) {
                 Logger.getLogger(MySQLCli.class.getName()).log(Level.SEVERE, null, ex);
             }
-        	*/
+        	
         	
         	 System.out.println(mysqlCli.execUpdate(ConstantesRequetes.createDataBase));
         	 System.out.println(mysqlCli.execUpdate(ConstantesRequetes.createJeu));
@@ -508,5 +509,5 @@ public class MySQLCli {
             System.out.println("Mysql connection failed !!!");
         }
         mysqlCli.close();
-    }
+    }*/
 }

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -184,35 +185,14 @@ public class EcranParam extends JPanel{
 			
 			if(command=="Démarrer")
 			{
-				int nbJoueurs=2;
-				boolean isIA[];
 				
-				isIA=new boolean[nbJoueurs];
-				int cpt=0;//si une case a none puis une ia
-				for(int i=0; i<2; i++){
-					if("IA".equals(typeJoueurs[i].getSelectedItem()))
-					{
-						isIA[cpt]=true;
-						cpt++;
-					}
-					if("JOUEUR".equals(typeJoueurs[i].getSelectedItem())) 
-					{	
-						isIA[cpt]=false;
-						cpt++;
-					}
-				}	
-				
-				int nbLigne=nbCol.getValue();
-				int nbColonne=nbRow.getValue();
-				String nbJRS=(String) nbJetonsG.getSelectedItem();
-				int nbJR=Integer.parseInt(nbJRS);
-				
-				boolean againstIA=false;
-				boolean swapColor=false;
-				if(couleurJeton.getSelectedIndex()==0)
-					swapColor=true;
-				
-				f.initFenetreEcranJeu(nbLigne, nbColonne, nbJR, isIA, swapColor);				
+				//f.initFenetreEcranJeu(nbLigne, nbColonne, nbJR, isIA, swapColor);				
+				try {
+					f.initFenetreEcranJeu(2);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			
 			

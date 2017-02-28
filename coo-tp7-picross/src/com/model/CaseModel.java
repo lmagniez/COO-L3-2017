@@ -11,7 +11,7 @@ public class CaseModel {
 	
 	public CaseModel()
 	{
-		this.v=CaseValue.NONE;
+		this.v=CaseValue.UNCHECKED;
 	}
 	
 }

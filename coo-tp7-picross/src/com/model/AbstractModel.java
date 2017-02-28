@@ -20,11 +20,10 @@ public abstract class AbstractModel implements Observable{
 	private ArrayList<Observer> listObserver = new ArrayList<Observer>();
 	
 	//Vos methodes abstraites
-	public abstract boolean ajoutJeton(int x);
-	public abstract boolean columnFull(int x);
-	public abstract boolean verifWin();
-	public abstract boolean ajoutJetonIA(int x, CaseValue v);
-	public abstract boolean retirerJetonIA(int x);
+	public abstract void verifWin(int idGrille);
+	public abstract void changeValue(int idGrille, int x, int y);
+	public abstract void requestGrilles();
+	public abstract void requestGrilleDetail(int idPuzzle);
 	
 	public abstract void reinit();
 	
@@ -35,34 +34,6 @@ public abstract class AbstractModel implements Observable{
 	}
 	
 
-	/**
-	 * Notifier quel est le prochain joueur
-	 * @param tour prochain joueur 
-	 */
-	public void notifyTour(int tour){
-		for(Observer obs : listObserver)
-			obs.updateTour(tour);
-	}
-
-	
-	
-	@Override
-	public void notifyWinner(int tour) {
-		for(Observer obs : listObserver)
-			obs.updateWinner(tour);
-	}
-	
-	/**
-	 * Notifier un nouveau jeton
-	 * @x Abscisse de la case
-	 * @y Ordonnée de la case 
-	 * @v Valeur du jeton
-	 */
-	@Override
-	public void notifyNewChip(int x, int y, CaseValue v) {
-		for(Observer obs : listObserver)
-			obs.updateChip(x, y, v);
-	}
 	
 	/**
 	 * Notifier la réinitialisation de la grille
@@ -92,5 +63,44 @@ public abstract class AbstractModel implements Observable{
 	}
 	
 	
+	@Override
+	public void notifyChangeValue(int x, int y) {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateChangeValue(x, y);
+	}
+
+
+	@Override
+	public void notifyWin() {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateWin();
+	}
+
+
+	@Override
+	public void notifyLose() {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateLose();
+	}
+	
+	@Override
+	public void notifyInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite) {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateInfosGrilles(nbGrille, id, nom, reussite);
+	}
+	
+	
+	@Override
+	public void notifyGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne,
+			boolean reussite) {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateGrilleDetail(id, nom, indicesLigne, indicesColonne, reussite);
+		
+	}
 	
 }

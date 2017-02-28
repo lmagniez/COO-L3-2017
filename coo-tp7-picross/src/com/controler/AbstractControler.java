@@ -24,8 +24,13 @@ public abstract class AbstractControler {
 	//Coordonées du trait à ajouter
 	protected int x;
 	protected int y;
-	protected boolean vertical ;
-
+	protected boolean requestGrilles ;
+	protected boolean requestGrilleDetail ;
+	protected boolean requestVerifWin;
+	protected int idPuzzle;
+	
+	
+	
 	/**
 	 * Constructeur avec modèle
 	 * @param cal modèle
@@ -54,7 +59,35 @@ public abstract class AbstractControler {
 		calc.reinit();
 	}
 	
+	public void requestGrilles(){
+		this.requestGrilles=true;
+		control();
+	}
+	
 	
 	//Methode de controle
 	abstract void control();
+
+	public void changeValue(int idPuzzle, int i, int j) {
+		// TODO Auto-generated method stub
+		this.idPuzzle=idPuzzle;
+		this.x=i;
+		this.y=j;
+		control();
+		
+	}
+
+	public void requestGrilleDetail(int idPuzzle) {
+		// TODO Auto-generated method stub
+		this.requestGrilleDetail=true;
+		this.idPuzzle=idPuzzle;
+		control();
+	}
+	
+	public void requestVerif(int idPuzzle){
+		this.requestVerifWin=true;
+		this.idPuzzle=idPuzzle;
+		control();
+	}
+	
 }

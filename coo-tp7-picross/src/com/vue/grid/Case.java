@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import com.model.CaseValue;
+
 /**
  * Case de la grille
  * @author loick
@@ -22,7 +24,9 @@ public class Case
 	protected int posY;
 	protected int hX;
 	protected int hY;
-	protected Color c;
+	protected CaseValue c;
+	protected Color color;
+	
 	
 	public static int DIAMETRE_CASE;
 
@@ -35,22 +39,9 @@ public class Case
 	 */
 	public Case(int x, int y, int nbCol, int nbRow)
 	{
-		/*
-		int espacementX=(Grid.GRILLE_WIDTH-DIAMETRE_CASE*nbCol)/(nbCol+1);
-		int espacementY=(Grid.GRILLE_HEIGHT-DIAMETRE_CASE*nbRow)/(nbRow+1);
 		
-		
-		this.x=x;
-		this.y=y;
-		this.hX=DIAMETRE_CASE;
-		this.hY=DIAMETRE_CASE;
-		this.posX=espacementX*(x+1)+DIAMETRE_CASE*x;
-		this.posY=espacementY*(y+1)+DIAMETRE_CASE*y;
-		this.c=Color.WHITE;
-		*/
-		
-		int DIAMETRE_CASE1=(int) (Grid.GRILLE_WIDTH/nbCol-(30-(0.5*nbCol)));
-		int DIAMETRE_CASE2=(int) (Grid.GRILLE_WIDTH/nbRow-(30-(0.5*nbRow)));
+		int DIAMETRE_CASE1=(int) (Grid.GRILLE_WIDTH/nbCol);
+		int DIAMETRE_CASE2=(int) (Grid.GRILLE_WIDTH/nbRow);
 		
 		
 		
@@ -59,19 +50,26 @@ public class Case
 		else
 			DIAMETRE_CASE=DIAMETRE_CASE2;
 		
-		
-		
-		int espacementX=(Grid.GRILLE_WIDTH-DIAMETRE_CASE*nbCol)/(nbCol+1);
-		int espacementY=(Grid.GRILLE_HEIGHT-DIAMETRE_CASE*nbRow)/(nbRow+1);
-		
-		
 		this.x=x;
 		this.y=y;
 		this.hX=DIAMETRE_CASE;
 		this.hY=DIAMETRE_CASE;
-		this.posX=espacementX*(x+1)+DIAMETRE_CASE*x;
-		this.posY=espacementY*(y+1)+DIAMETRE_CASE*y;
-		this.c=Color.WHITE;
+		this.posX=Grid.ESPACEMENT_SIZE+Grid.INDICE_SIZE+DIAMETRE_CASE*x;
+		this.posY=Grid.INDICE_SIZE+DIAMETRE_CASE*y;
+		this.c=CaseValue.UNCHECKED;
+		this.color=CaseValue.getColorFromValue(c);
 		
 	}
+	
+	public void changeValue(){
+		if(this.c==CaseValue.CHECKED){
+			this.c=CaseValue.UNCHECKED;
+		}
+		else{
+			this.c=CaseValue.CHECKED;
+		}
+		this.color=CaseValue.getColorFromValue(c);
+			
+	}
+	
 }

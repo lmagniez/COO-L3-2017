@@ -67,6 +67,13 @@ public abstract class ConstantesRequetes {
 	public static int[] indicesLigneToad={6,44,55,66,66,66,55,33,181,1111,111111,211112,33,121,11,8,2222,1331,1331,1441};
 	public static int[] indicesColonnesToad={0,0,8,522,612,6511,6123,615,4125,1111,1111,5125,615,6123,6511,612,522,8,0,0};
 
-
+	public static String nomEasy="easy";
+	public static int nbLigneEasy=4;
+	public static int nbColonneEasy=4;
+	
+	public static int[] indicesLigneEasy={2,11,2,1};
+	public static int[] indicesColonnesEasy={0,2,12,2};
+	
+	
 			
 }

@@ -35,7 +35,7 @@ public class Score extends JPanel {
 	JTextArea textBox;
 	private String msgTour;
 	
-	private JButton retour;
+	private JButton retour,confirmer;
 	private JButton restart;
 	
 	
@@ -49,7 +49,12 @@ public class Score extends JPanel {
 	{
 		this.vue=vue;
 		
-		this.setMaximumSize(new Dimension(200,200));
+		this.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE));
+		this.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE));
+		this.setSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE));
+		this.setMinimumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE));
+		
+		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -64,6 +69,10 @@ public class Score extends JPanel {
 		msgTour="La textBox";
 		textBox=initTextArea(msgTour);
 		textBox.setEditable(false);
+		textBox.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		textBox.setSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		textBox.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		
 		
 		this.add(titre);
 		this.add(textBox);
@@ -72,11 +81,16 @@ public class Score extends JPanel {
 		restart.addActionListener(new ButtonListener());
 		retour= new JButton("Retour");
 		retour.addActionListener(new ButtonListener());
+		confirmer= new JButton("Confirmer");
+		confirmer.addActionListener(new ButtonListener());
+		
 		
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
+		p.add(confirmer);
 		p.add(restart);
 		p.add(retour);
+		
 		this.add(p);
 		this.changeTour(0);
 		
@@ -95,7 +109,7 @@ public class Score extends JPanel {
 		
 		JTextArea textArea = new JTextArea();
         textArea.setRows(15);
-        textArea.setColumns(20);
+        textArea.setColumns(10);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -126,6 +140,11 @@ public class Score extends JPanel {
 			String command = ((JButton) e.getSource()).getActionCommand();
 			
 			System.out.println("recommencer");
+			
+			if(command=="Confirmer")
+			{
+				vue.controler.requestVerif(Score.this.vue.getGrid().idGrid);
+			}
 			
 			if(command=="Recommencer")
 			{
