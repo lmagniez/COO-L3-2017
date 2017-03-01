@@ -13,8 +13,11 @@ import com.model.AbstractModel;
 import com.model.GrilleModel;
 import com.model.JeuModel;
 import com.observer.Observer;
+import com.vue.ButtonMenu;
+import com.vue.Colors;
 import com.vue.Fenetre;
 import com.vue.grid.VueGrid;
+import com.vue.grid.VueGridCreation;
 
 /**
  * Vue correspondant à un écran titre et un écran de parametrage.
@@ -25,22 +28,31 @@ import com.vue.grid.VueGrid;
 
 public class Vue1 extends Fenetre implements Observer{
 
-	protected EcranTitre lePanneau;
-	protected EcranParam lePanneau2; 
+	protected EcranTitre panneauTitre;
+	protected EcranParam panneauParam;
+	protected EcranParam2 panneauParam2;
+	
 	
 	protected int nbGrille; 
 	protected int[] ids;
+	protected int[] nbLignes;
+	protected int[] nbColonnes;
+	
 	protected String[] noms; 
 	protected boolean[] reussites;
 	
-	protected AbstractModel jeuModel;
+	
+	
+	
 	protected AbstractControler gridControler;
 	/**
 	 * Contructeur de la vue (appelé une fois)
 	 * @param controler
 	 * @throws SQLException 
 	 */
-	public Vue1() throws SQLException{
+	public Vue1(AbstractControler controler) throws SQLException{
+		
+		this.gridControler=controler;
 		
 		this.setTitle("CONNECT 4");
 		this.setSize(400, 400);
@@ -49,17 +61,23 @@ public class Vue1 extends Fenetre implements Observer{
 		this.setResizable(false);
 		this.setFocusable(false);
 		
-		lePanneau= new EcranTitre(this);
-		lePanneau2 = new EcranParam(this);
 		
-		this.add(lePanneau);
+		
+		panneauTitre= new EcranTitre(this);
+		
+		
+		
+		
+		this.add(panneauTitre);
 		this.setVisible(true);
 		
+		/*
 		//Creation du modele de grille
 		jeuModel = new JeuModel();
 		jeuModel.addObserver(this);
 		//Creation du controleur
 		gridControler = new GridControler(jeuModel);
+		*/
 		
 		
 	}
@@ -80,9 +98,8 @@ public class Vue1 extends Fenetre implements Observer{
 		VueGrid vueJeu = new VueGrid(gridControler, this);
 		
 		//Ajout de la fenetre comme observer de notre modele
-		jeuModel.addObserver(vueJeu);
-		
-		this.gridControler.requestGrilleDetail(1);
+		this.gridControler.addObserverModel(vueJeu);
+		this.gridControler.requestGrilleDetail(idPuzzle);
 		
 		//((JeuModel) jeuModel).recupGrille(idPuzzle);
 		
@@ -91,7 +108,23 @@ public class Vue1 extends Fenetre implements Observer{
 		
 	}
 
-
+	public void initFenetreCreation(String nom, int nbRow, int nbCol) throws SQLException
+	{
+		
+		//Creation de notre fenetre avec le controleur en parametre
+		VueGridCreation vueJeu = new VueGridCreation(nom,nbRow,nbCol,gridControler, this);
+		
+		//Ajout de la fenetre comme observer de notre modele
+		this.gridControler.addObserverModel(vueJeu);
+		this.gridControler.requestCreationGrille(nom,nbRow,nbCol);
+		
+		//((JeuModel) jeuModel).recupGrille(idPuzzle);
+		
+		
+		this.setVisible(false);
+		
+	}
+	
 
 	@Override
 	public void updateReinit() {
@@ -105,6 +138,7 @@ public class Vue1 extends Fenetre implements Observer{
 		
 	}
 
+	
 
 
 	@Override
@@ -120,14 +154,25 @@ public class Vue1 extends Fenetre implements Observer{
 	}
 
 
+	public void updateStart(){
+
+	}
 
 	@Override
-	public void updateInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite) {
+	public void updateInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite, int[] nbLignes, int[] nbColonnes) {
 		// TODO Auto-generated method stub
+		System.out.println("infos grille!!");
 		this.nbGrille=nbGrille;
 		this.ids=id;
+		
+		for(int i=0; i< nbGrille; i++)
+			System.out.println("<<<< "+ids[i]);
+		
 		this.noms=nom;
 		this.reussites=reussite;
+		this.nbLignes=nbLignes;
+		this.nbColonnes=nbColonnes;
+		
 	}
 
 

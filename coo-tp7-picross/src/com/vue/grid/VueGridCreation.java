@@ -20,13 +20,13 @@ import com.vue.titre.Vue1;
  *
  */
 
-public class VueGrid extends Fenetre implements Observer {
+public class VueGridCreation extends Fenetre implements Observer {
 
 	// private JPanel container = new JPanel();
 
 	protected Vue1 vueMenu;
-	private Grid grid;
-	protected Score score;
+	private GridCreation grid;
+	protected ScoreCreation score;
 	protected boolean swapColor;
 	
 	public static final int TAILLE_ECRAN_GRILLE_X=500;
@@ -40,6 +40,9 @@ public class VueGrid extends Fenetre implements Observer {
 
 	/**
 	 * Constructeur de la vue de la grille.
+	 * @param nbCol 
+	 * @param nbRow 
+	 * @param nom 
 	 * @param controler Controler de la grille
 	 * @param nbRow nombre de lignes
 	 * @param nbCol nombre de colonnes
@@ -48,7 +51,7 @@ public class VueGrid extends Fenetre implements Observer {
 	 */
 	
 	//ADD CONTROLEr
-	public VueGrid(AbstractControler controler, Vue1 menu) {
+	public VueGridCreation(String nom, int nbRow, int nbCol, AbstractControler controler, Vue1 menu) {
 		
 		this.swapColor=swapColor;
 		this.controler=controler;
@@ -62,14 +65,23 @@ public class VueGrid extends Fenetre implements Observer {
 		
 		this.controler = controler;
 		//this.grid=new Grid(this, nbRow, nbCol);
-		this.score= new Score(this,2);
+		this.score= new ScoreCreation(this,2);
 		
 		this.setVisible(true);
 		
 		getContentPane().setBackground(Color.LIGHT_GRAY);
 		//grid.setBackground(Color.BLUE);
 		//repaint();
+		
+		
+		this.grid=new GridCreation(this, nbRow, nbCol, nom);
+		
+		this.add(score);
+		this.add(grid);
+		
+		
 		this.repaint();
+		
 	}
 
 	private Component topJustify( JPanel panel )  {
@@ -123,21 +135,14 @@ public class VueGrid extends Fenetre implements Observer {
 	@Override
 	public void updateGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne,
 			boolean reussite) {
-		// TODO Auto-generated method stub
-		System.out.println("update Grille !");
-		
-		this.setGrid(new Grid(this, id, indicesLigne.length, indicesColonne.length, nom, 
-				indicesLigne, indicesColonne, reussite));
-		this.add(score);
-		this.add(getGrid());
 		
 	}
 
-	public Grid getGrid() {
+	public GridCreation getGrid() {
 		return grid;
 	}
 
-	public void setGrid(Grid grid) {
+	public void setGrid(GridCreation grid) {
 		this.grid = grid;
 	}
 

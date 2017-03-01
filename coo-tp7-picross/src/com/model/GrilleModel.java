@@ -18,6 +18,20 @@ public class GrilleModel {
 	protected boolean reussite;
 	
 	
+	public GrilleModel(JeuModel model, String nom, int nbLigne, int nbColonne){
+		this.model=model;
+		this.nom=nom;
+		this.nbLigne=nbLigne;
+		this.nbColonne=nbColonne;
+		this.reussite=false;
+		this.grille=new boolean[nbLigne][nbColonne];
+		for(int i=0; i<nbLigne; i++){
+			for(int j=0; j<nbColonne; j++){
+				grille[i][j]=false;
+			}
+		}
+	}
+	
 	/*
 	 On va d'abord recuperer chaque id dans une classe principale (jeu?)
 	 
@@ -184,6 +198,7 @@ public boolean patternHorizontalCorrect(int ligne){
 			this.grille[x][y]=true;
 		
 		this.model.notifyChangeValue(x, y);
+		this.afficherGrille();
 	}
 	
 	public void afficherGrille(){

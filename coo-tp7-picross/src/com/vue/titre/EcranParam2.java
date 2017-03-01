@@ -23,9 +23,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 
 import com.vue.Colors;
+import com.vue.titre.EcranParam.ButtonListener;
 import com.vue.ButtonMenu;
 
 /**
@@ -35,7 +37,7 @@ import com.vue.ButtonMenu;
  *
  */
 
-public class EcranParam extends JPanel{
+public class EcranParam2 extends JPanel{
 
 	protected Vue1 f;
 	
@@ -44,13 +46,9 @@ public class EcranParam extends JPanel{
 	
 	protected JLabel startLabel;
 	
-	protected JSlider nbRow,nbCol;
-	protected JComboBox typeJoueurs[],nbJetonsG,couleurJeton;
-	protected ButtonGroup bG;
-    
 	
-	
-	
+	protected JSlider nbRow;
+	protected JTextArea inputNom;
 	
 	
 	public static final int MIN_PARAM=3;
@@ -65,7 +63,7 @@ public class EcranParam extends JPanel{
 	 * Initialisation du JPanel (1 fois)
 	 * @param f Fenetre utilisé pour les ActionListener
 	 */
-	public EcranParam(Vue1 f)
+	public EcranParam2(Vue1 f)
 	{
 		this.f=f;
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -80,7 +78,6 @@ public class EcranParam extends JPanel{
 		start.setEnabled(true);
 		start.addActionListener(new ButtonListener());
 		
-		
 		//init bouton quitter
 		quit=new ButtonMenu("Retour",Colors.textColor2,Colors.case16);	
 		quit.addActionListener(new ButtonListener());
@@ -91,17 +88,18 @@ public class EcranParam extends JPanel{
 		startLabel.setFont(new Font("Arial",Font.BOLD,20));
 		startLabel.setAlignmentX(this.CENTER_ALIGNMENT);
 		
-		bG=new ButtonGroup();
-		/*
-		 protected int nbGrille; 
-		
-		protected int[] ids;
-		protected String[] noms; 
-		protected boolean[] reussites;
-        */
-		
-		
 	    
+		//init slider nombre de lignes
+		nbRow = new JSlider(JSlider.HORIZONTAL, MIN_PARAM, MAX_PARAM, 7);
+		nbRow.setMinorTickSpacing(2);
+	    nbRow.setMajorTickSpacing(2);
+		nbRow.setPaintTicks(true);
+		nbRow.setPaintLabels(true);
+		nbRow.setLabelTable(nbRow.createStandardLabels(1));
+		nbRow.setMaximumSize(new Dimension(300,50));
+		
+		this.inputNom=this.initTextArea("grille");
+		
 	    /*
          * Placement des composants
          */
@@ -118,50 +116,7 @@ public class EcranParam extends JPanel{
 		
         System.out.println(f.nbGrille);
 		
-        for(int j=0; j<5; j++)
-        for(int i=0; i<f.nbGrille; i++){
-
-			JLabel checkedLabel=new JLabel();
-			JToggleButton button = new JToggleButton(""+i);
-			if(i==0)button.setSelected(true);
-			bG.add(button);
-			if(f.reussites[i])
-				checkedLabel.setIcon(checked);
-			else
-				checkedLabel.setIcon(unchecked);
-			
-			
-			JPanel p=new JPanel();
-			p.setPreferredSize(new Dimension(400,50));
-			p.setMaximumSize(new Dimension(400,50));
-			
-			
-			p.setBorder(BorderFactory.createLineBorder(Color.black));
-			
-			p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
-			p.add(Box.createRigidArea(new Dimension(20,5)));
-			p.add(button);
-			p.add(Box.createRigidArea(new Dimension(40,5)));
-			p.add(new JLabel("Nom: "+f.noms[i]));
-			p.add(Box.createRigidArea(new Dimension(40,5)));
-			p.add(new JLabel("Dimension: "+f.nbLignes[i]+"x"+f.nbColonnes[i]));
-			
-			p.add(Box.createRigidArea(new Dimension(20,5)));
-			p.add(checkedLabel);
-			//this.add(p);
-			p2.add(p);
-		}
-		
-		
-		
-		JScrollPane scroll= new JScrollPane(p2,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setPreferredSize(new Dimension(425,400));
-		scroll.setSize(new Dimension(425,400));
-		scroll.setMaximumSize(new Dimension(425,400));
-		scroll.getVerticalScrollBar().setUnitIncrement(10);
-		
-		this.add(scroll);
+        this.add(nbRow);
 		
 		
        
@@ -181,6 +136,20 @@ public class EcranParam extends JPanel{
 		
 	}
 	
+	public JTextArea initTextArea(String s)
+	{
+		
+		JTextArea textArea = new JTextArea();
+        textArea.setRows(15);
+        textArea.setColumns(10);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.setFont(new Font("Arial", Font.PLAIN, 16));
+        textArea.setBackground(Color.lightGray);
+		textArea.append(s);
+		return textArea;
+
+	}
 	
 	public ImageIcon transform (ImageIcon img, int hx, int hy)
 	{
@@ -219,13 +188,13 @@ public class EcranParam extends JPanel{
 				
 				//f.initFenetreEcranJeu(nbLigne, nbColonne, nbJR, isIA, swapColor);				
 				try {
-					int indice=Integer.parseInt(EcranParam.this.getSelectedButtonText(bG));
-					System.out.println(indice);
 					
-					int id= EcranParam.this.f.ids[indice];
-					System.out.println(id);
+					String nom=EcranParam2.this.inputNom.getText();
+					int nbRow=EcranParam2.this.nbRow.getValue();
+					int nbCol=nbRow;
 					
-					f.initFenetreEcranJeu(id);
+					
+					f.initFenetreCreation(nom, nbRow, nbCol);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

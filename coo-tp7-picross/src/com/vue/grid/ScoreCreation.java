@@ -25,10 +25,10 @@ import javax.swing.border.EmptyBorder;
  * @author loick
  *
  */
-public class Score extends JPanel {
+public class ScoreCreation extends JPanel {
 	
 	
-	private VueGrid vue;
+	private VueGridCreation vue;
 	
 	private ImageIcon title;
 	
@@ -45,7 +45,7 @@ public class Score extends JPanel {
 	 * Constructeur, initialise le Jpanel
 	 * @param nbJoueur
 	 */
-	public Score(VueGrid vue, int nbJoueur)
+	public ScoreCreation(VueGridCreation vue, int nbJoueur)
 	{
 		this.vue=vue;
 		
@@ -143,7 +143,7 @@ public class Score extends JPanel {
 			
 			if(command=="Confirmer")
 			{
-				vue.controler.requestVerif(Score.this.vue.getGrid().idGrid);
+				//vue.controler.requestVerif(ScoreCreation.this.vue.getGrid().idGrid);
 			}
 			
 			if(command=="Recommencer")
@@ -154,9 +154,12 @@ public class Score extends JPanel {
 			
 			if(command=="Retour")
 			{
-				Score.this.vue.controler.removeObserverModel();
+				
+				ScoreCreation.this.vue.controler.removeObserverModel();
 				vue.vueMenu.setVisible(true);
 				vue.setVisible(false);
+				
+				
 			}
 		} 
 	}

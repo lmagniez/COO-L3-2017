@@ -17,8 +17,9 @@ public interface Observer {
 	public void updateChangeValue(int x, int y);
 	public void updateWin();
 	public void updateLose();
+	public void updateStart();
 	
-	public void updateInfosGrilles(int nbGrille, int id[], String nom[], boolean reussite[]);
+	public void updateInfosGrilles(int nbGrille, int id[], String nom[], boolean reussite[], int[] nbLignes, int[] nbColonnes);
 	public void updateGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne, boolean reussite);
 	
 	

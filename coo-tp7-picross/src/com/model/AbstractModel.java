@@ -22,8 +22,11 @@ public abstract class AbstractModel implements Observable{
 	//Vos methodes abstraites
 	public abstract void verifWin(int idGrille);
 	public abstract void changeValue(int idGrille, int x, int y);
+	public abstract void changeValueCreation(int x, int y);
 	public abstract void requestGrilles();
 	public abstract void requestGrilleDetail(int idPuzzle);
+	public abstract void createGrille(String nom, int nbRow, int nbCol);
+	
 	
 	public abstract void reinit();
 	
@@ -87,10 +90,10 @@ public abstract class AbstractModel implements Observable{
 	}
 	
 	@Override
-	public void notifyInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite) {
+	public void notifyInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite, int[] nbLignes, int[] nbColonnes) {
 		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
-			obs.updateInfosGrilles(nbGrille, id, nom, reussite);
+			obs.updateInfosGrilles(nbGrille, id, nom, reussite, nbLignes, nbColonnes);
 	}
 	
 	
@@ -100,6 +103,12 @@ public abstract class AbstractModel implements Observable{
 		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updateGrilleDetail(id, nom, indicesLigne, indicesColonne, reussite);
+		
+	}
+	
+	public void notifyStart(){
+		for(Observer obs : listObserver)
+			obs.updateStart();
 		
 	}
 	

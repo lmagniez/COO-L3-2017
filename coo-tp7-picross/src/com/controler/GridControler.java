@@ -40,6 +40,14 @@ public class GridControler extends AbstractControler{
 			this.calc.verifWin(idPuzzle);
 			this.requestVerifWin=false;
 		}
+		else if(this.creation){
+			this.calc.changeValueCreation(x, y);
+			this.creation=false;
+		}
+		else if(this.creationGrille){
+			this.calc.createGrille(nom,nbRow,nbCol);
+			this.creationGrille=false;
+		}
 		else
 			this.calc.changeValue(idPuzzle, x, y);
 		

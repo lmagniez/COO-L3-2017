@@ -19,17 +19,13 @@ import com.model.patternWin;
  * @author loick
  *
  */
-public class Grid extends JPanel implements MouseListener{
+public class GridCreation extends JPanel implements MouseListener{
 	
-	private VueGrid vue;
+	private VueGridCreation vue;
 	
 	protected Case[][] cases;
 	protected int nbRow, nbCol;
-	protected int idGrid;
 	protected String nom;
-	protected String[] infosLigne;
-	protected String[] infosColonne;
-	protected boolean reussite;
 	
 	
 	public static int GRILLE_POSX;
@@ -52,15 +48,11 @@ public class Grid extends JPanel implements MouseListener{
 	 * @param v vue 
 	 * @param nbLigne nombre de ligne de la grille
 	 */
-	public Grid(VueGrid v, int idGrid, int nbRow, int nbCol, String nom, String[] infosLigne, String[] infosColonne, boolean reussite)
+	public GridCreation(VueGridCreation v, int nbRow, int nbCol, String nom)
 	{
-		this.idGrid=idGrid;
 		this.nbRow=nbRow;
 		this.nbCol=nbCol;
 		this.nom=nom;
-		this.infosColonne=infosColonne;
-		this.infosLigne=infosLigne;
-		this.reussite=reussite;
 		
 		setBackground(Color.BLUE);
 		this.setOpaque(true);
@@ -138,7 +130,7 @@ public class Grid extends JPanel implements MouseListener{
 			for(int j=0; j<nbCol; j++){
 				if(collide(i,j,arg0.getX(), arg0.getY()))
 				{
-					vue.controler.changeValue(idGrid,i,j);
+					vue.controler.changeValueCreate(i,j);
 					this.repaint();
 					return 1;
 				}
@@ -211,38 +203,21 @@ public class Grid extends JPanel implements MouseListener{
 				g.setFont(new Font("Arial", Font.BOLD, 15)); 
 				
 				
-				for(int k=0; k<this.infosLigne.length; k++){
+				for(int k=0; k<this.nbRow; k++){
 					
-					if(infosLigne[k].length()>4)
-						g.setFont(new Font("Arial", Font.BOLD, 10)); 
-					else
-						g.setFont(new Font("Arial", Font.BOLD, 15));
 					
 					g.setColor(Color.LIGHT_GRAY);
 					g.fillRect(ESPACEMENT_SIZE, cases[0][k].posY, INDICE_SIZE, Case.DIAMETRE_CASE);
 					g.setColor(Color.BLACK);
 					g.drawRect(ESPACEMENT_SIZE, cases[0][k].posY, INDICE_SIZE, Case.DIAMETRE_CASE);
-					g.drawString(infosLigne[k], ESPACEMENT_SIZE+3, cases[0][k].posY+cases[0][k].hY*3/4);
 				}
 				
-				for(int k=0; k<this.infosColonne.length; k++){
-					int size;
-					if(infosColonne[k].length()>3){
-						size=10;
-					}
-					else{
-						size=15;
-					}
-					g.setFont(new Font("Arial", Font.BOLD, size));
-					
+				for(int k=0; k<nbCol; k++){
 					
 					g.setColor(Color.LIGHT_GRAY);
 					g.fillRect(cases[k][0].posX,0, Case.DIAMETRE_CASE,INDICE_SIZE);
 					g.setColor(Color.BLACK);
 					g.drawRect(cases[k][0].posX,0, Case.DIAMETRE_CASE,INDICE_SIZE);
-					for(int l=0; l<this.infosColonne[k].length(); l++){
-						g.drawString(""+infosColonne[k].charAt(l),cases[k][0].posX+cases[k][0].hX/2,size+size*l);
-					}
 					
 					
 				}

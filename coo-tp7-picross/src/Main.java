@@ -1,6 +1,10 @@
 
 import java.sql.SQLException;
 
+import com.controler.AbstractControler;
+import com.controler.GridControler;
+import com.model.AbstractModel;
+import com.model.JeuModel;
 import com.vue.titre.Vue1;
 
 /**
@@ -13,7 +17,13 @@ import com.vue.titre.Vue1;
 public class Main {
 	public static void main(String[] args) throws SQLException {
 		
-		Vue1 vue= new Vue1();
+		//Creation du modele de grille
+		AbstractModel jeuModel = new JeuModel();
+		//Creation du controleur
+		AbstractControler gridControler = new GridControler(jeuModel);
+		Vue1 vue= new Vue1(gridControler);
 
+		jeuModel.addObserver(vue);
+		vue.requestGrilles();
 	}
 }

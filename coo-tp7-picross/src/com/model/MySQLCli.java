@@ -119,7 +119,7 @@ public class MySQLCli {
     	
     	try {
         	
-    		String requete="SELECT nbColonne FROM db.Jeu WHERE idPuzzle=?";
+    		String requete="SELECT nom FROM Picross.Jeu WHERE idPuzzle=?";
     		
     		PreparedStatement prepare=(PreparedStatement) this.dbConnect.prepareStatement(requete);
     		prepare.setInt(1, idPuzzle);

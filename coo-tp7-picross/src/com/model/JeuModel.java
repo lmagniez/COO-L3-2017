@@ -7,6 +7,7 @@ public class JeuModel extends AbstractModel{
 
 	MySQLCli client;
 	ArrayList<GrilleModel> grilles;
+	GrilleModel creation;
 	
 	public JeuModel() throws SQLException{
 		this.client=new MySQLCli("//localhost:3306/db", "", "");
@@ -97,13 +98,25 @@ public class JeuModel extends AbstractModel{
 		int id[]=new int[nbGrille];
 		String nom[]=new String[nbGrille];
 		boolean reussite[]=new boolean[nbGrille];
+		int nbLignes[]=new int[nbGrille];
+		int nbColonnes[]=new int[nbGrille];
+		
 		
 		for(int i=0; i<nbGrille; i++){
 			id[i]=this.grilles.get(i).idPuzzle;
 			nom[i]=this.grilles.get(i).nom;
 			reussite[i]=this.grilles.get(i).reussite;
+			nbLignes[i]=this.grilles.get(i).nbLigne;
+			nbColonnes[i]=this.grilles.get(i).nbColonne;
+			
 		}
-		this.notifyInfosGrilles(nbGrille, id, nom, reussite);
+		
+		
+		System.out.println("notifyinfosGrille");
+		
+		System.out.println(nom[0]);
+		
+		this.notifyInfosGrilles(nbGrille, id, nom, reussite, nbLignes, nbColonnes);
 	}
 	
 	
@@ -156,6 +169,18 @@ public class JeuModel extends AbstractModel{
 		GrilleModel g = this.getGrilleById(idGrille);
 		g.change(x, y);
 		//this.grilles.get(idGrille).change(x,y);
+	}
+
+	@Override
+	public void changeValueCreation(int x, int y) {
+		// TODO Auto-generated method stub
+		this.creation.change(x, y);
+	}
+
+	@Override
+	public void createGrille(String nom, int nbRow, int nbCol) {
+		// TODO Auto-generated method stub
+		this.creation=new GrilleModel(this,nom,nbRow,nbCol);
 	}
 
 

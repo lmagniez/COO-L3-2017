@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.model.AbstractModel;
 import com.model.patternWin;
+import com.observer.Observer;
 import com.vue.titre.Vue1;
 
 /**
@@ -27,8 +28,13 @@ public abstract class AbstractControler {
 	protected boolean requestGrilles ;
 	protected boolean requestGrilleDetail ;
 	protected boolean requestVerifWin;
-	protected int idPuzzle;
+	protected boolean creationGrille;
 	
+	protected boolean creation;
+	
+	protected int idPuzzle;
+	protected String nom;
+	protected int nbRow,nbCol;
 	
 	
 	/**
@@ -90,4 +96,27 @@ public abstract class AbstractControler {
 		control();
 	}
 	
+	public void addObserverModel(Observer obs){
+		this.calc.addObserver(obs);
+	}
+	
+	public void removeObserverModel(){
+		this.calc.removeObserver();
+	}
+
+	public void changeValueCreate(int i, int j) {
+		// TODO Auto-generated method stub
+		this.creation=true;
+		this.x=i;
+		this.y=j;
+		control();
+	}
+
+	public void requestCreationGrille(String nom, int nbRow, int nbCol) {
+		this.creationGrille=true;
+		this.nom=nom;
+		this.nbRow=nbRow;
+		this.nbCol=nbCol;
+		control();
+	}
 }

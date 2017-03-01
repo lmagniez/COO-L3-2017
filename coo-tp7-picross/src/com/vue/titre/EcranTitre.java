@@ -20,6 +20,7 @@ public class EcranTitre extends JPanel{
 	protected Vue1 f;
 	
 	protected ButtonMenu start;
+	protected ButtonMenu creation;	
 	protected ButtonMenu quit;
 	
 	protected JPanel p;
@@ -41,7 +42,10 @@ public class EcranTitre extends JPanel{
 		quit=new ButtonMenu("Quitter",Colors.textColor2,Colors.case16);	
 		quit.addActionListener(new ButtonListener());
 		
-		startLabel=new JLabel("Connect 4");
+		creation=new ButtonMenu("Création",Colors.textColor2,Colors.case16);	
+		creation.addActionListener(new ButtonListener());
+		
+		startLabel=new JLabel("Picross");
 		startLabel.setSize(new Dimension(150,50));
 		startLabel.setFont(new Font("Arial",Font.BOLD,40));
 		startLabel.setAlignmentX(this.CENTER_ALIGNMENT);
@@ -50,6 +54,8 @@ public class EcranTitre extends JPanel{
 		this.add(startLabel);
 		this.add(Box.createRigidArea(new Dimension(5,50)));
 		this.add(start);
+		this.add(Box.createRigidArea(new Dimension(5,50)));
+		this.add(creation);
 		this.add(Box.createRigidArea(new Dimension(5,50)));
 		this.add(quit);
 	}
@@ -66,8 +72,17 @@ public class EcranTitre extends JPanel{
 			
 			if(command=="Démarrer")
 			{
+				f.panneauParam=new EcranParam(f);
 				f.setSize(new Dimension(500,500));
-				f.afficherPanneau(f.lePanneau2);
+				f.afficherPanneau(f.panneauParam);
+				
+			}
+			
+			if(command=="Création")
+			{
+				f.panneauParam2=new EcranParam2(f);
+				f.setSize(new Dimension(500,500));
+				f.afficherPanneau(f.panneauParam2);
 				
 			}
 			
