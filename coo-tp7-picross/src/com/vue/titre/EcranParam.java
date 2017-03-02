@@ -118,7 +118,6 @@ public class EcranParam extends JPanel{
 		
         System.out.println(f.nbGrille);
 		
-        for(int j=0; j<5; j++)
         for(int i=0; i<f.nbGrille; i++){
 
 			JLabel checkedLabel=new JLabel();
@@ -150,6 +149,7 @@ public class EcranParam extends JPanel{
 			p.add(checkedLabel);
 			//this.add(p);
 			p2.add(p);
+			
 		}
 		
 		
@@ -234,7 +234,7 @@ public class EcranParam extends JPanel{
 			
 			
 			if(command=="Retour")
-				f.afficherPanneau(f.panneauTitre);
+				f.afficherPanneau(f.getPanneauTitre());
 		} 
 	}
 	

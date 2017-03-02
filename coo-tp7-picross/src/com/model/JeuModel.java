@@ -10,54 +10,63 @@ public class JeuModel extends AbstractModel{
 	GrilleModel creation;
 	
 	public JeuModel() throws SQLException{
-		this.client=new MySQLCli("//localhost:3306/db", "", "");
-		this.grilles=new ArrayList<GrilleModel>();
-		if (client.connect()) {
-			
-			System.out.println(client.execUpdate(ConstantesRequetes.createDataBase));
-       		System.out.println(client.execUpdate(ConstantesRequetes.createJeu));
-       		System.out.println(client.execUpdate(ConstantesRequetes.createLigne));
-       		System.out.println(client.execUpdate(ConstantesRequetes.createColonne));
-       		System.out.println(client.execUpdate(ConstantesRequetes.createIndiceJeuColonne));
-       		System.out.println(client.execUpdate(ConstantesRequetes.createIndiceJeuLigne));
-       	 
-       		if(client.getIdPuzzleFromName(ConstantesRequetes.nomStar)==-1){
-       			client.ajoutPuzzleToDatabase(ConstantesRequetes.nomStar, 
-       					ConstantesRequetes.nbLigneStar, ConstantesRequetes.nbColonneStar, 
-       					ConstantesRequetes.indicesLigneStar, ConstantesRequetes.indicesColonnesStar);
-       		}
-       		if(client.getIdPuzzleFromName(ConstantesRequetes.nomToad)==-1){
-       			client.ajoutPuzzleToDatabase(ConstantesRequetes.nomToad, 
-       					ConstantesRequetes.nbLigneToad, ConstantesRequetes.nbColonneToad, 
-       					ConstantesRequetes.indicesLigneToad, ConstantesRequetes.indicesColonnesToad);
-       		}
-       		if(client.getIdPuzzleFromName(ConstantesRequetes.nomEasy)==-1){
-       			client.ajoutPuzzleToDatabase(ConstantesRequetes.nomEasy, 
-       					ConstantesRequetes.nbLigneEasy, ConstantesRequetes.nbColonneEasy, 
-       					ConstantesRequetes.indicesLigneEasy, ConstantesRequetes.indicesColonnesEasy);
-       		}
-       		
-        	//client.deletePuzzleFromDatabase(idPuzzle);
-       		//int idPuzzle=client.getIdPuzzleFromName("star");
-       		ArrayList<Integer> res= client.getAllIds();
-       		System.out.println("res "+res.size());
-       		
-       		for(int i=0; i<res.size(); i++){
-       			GrilleModel g = recupGrille(res.get(i));
-       			if(g!=null)
-       				grilles.add(g);
-       		}
-       		
-       	
-       } else {
-           System.out.println("Mysql connection failed !!!");
-       }
-       client.close();
+		this.client=new MySQLCli("//localhost:3306/", "", "");
+		
+		this.genererGrilles();
        
        System.out.println(grilles.size());
 		
 	}
 
+	public void genererGrilles(){
+		this.grilles=new ArrayList<GrilleModel>();
+		if (client.connect()) {
+				
+				System.out.println(client.execUpdate(ConstantesRequetes.createDataBase));
+	       		System.out.println(client.execUpdate(ConstantesRequetes.createJeu));
+	       		System.out.println(client.execUpdate(ConstantesRequetes.createLigne));
+	       		System.out.println(client.execUpdate(ConstantesRequetes.createColonne));
+	       		System.out.println(client.execUpdate(ConstantesRequetes.createIndiceJeuColonne));
+	       		System.out.println(client.execUpdate(ConstantesRequetes.createIndiceJeuLigne));
+	       	 
+	       		try {
+					if(client.getIdPuzzleFromName(ConstantesRequetes.nomStar)==-1){
+						client.ajoutPuzzleToDatabase(ConstantesRequetes.nomStar, 
+								ConstantesRequetes.nbLigneStar, ConstantesRequetes.nbColonneStar, 
+								ConstantesRequetes.indicesLigneStar, ConstantesRequetes.indicesColonnesStar);
+					}
+				
+		       		if(client.getIdPuzzleFromName(ConstantesRequetes.nomToad)==-1){
+		       			client.ajoutPuzzleToDatabase(ConstantesRequetes.nomToad, 
+		       					ConstantesRequetes.nbLigneToad, ConstantesRequetes.nbColonneToad, 
+		       					ConstantesRequetes.indicesLigneToad, ConstantesRequetes.indicesColonnesToad);
+		       		}
+		       		if(client.getIdPuzzleFromName(ConstantesRequetes.nomEasy)==-1){
+		       			client.ajoutPuzzleToDatabase(ConstantesRequetes.nomEasy, 
+		       					ConstantesRequetes.nbLigneEasy, ConstantesRequetes.nbColonneEasy, 
+		       					ConstantesRequetes.indicesLigneEasy, ConstantesRequetes.indicesColonnesEasy);
+		       		}
+	       		} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        	//client.deletePuzzleFromDatabase(idPuzzle);
+	       		//int idPuzzle=client.getIdPuzzleFromName("star");
+	       		ArrayList<Integer> res= client.getAllIds();
+	       		System.out.println("res "+res.size());
+	       		
+	       		for(int i=0; i<res.size(); i++){
+	       			GrilleModel g = recupGrille(res.get(i));
+	       			if(g!=null)
+	       				grilles.add(g);
+	       		}
+	       		
+	       } else {
+	           System.out.println("Mysql connection failed !!!");
+	       }
+	       client.close();
+	}
+	
 	/**
 	 * Pour le constructeur, en fonction d'un id, va récuperer dans la base chaque attribut nécessaire
 	 * @param idPuzzle
@@ -182,6 +191,40 @@ public class JeuModel extends AbstractModel{
 		// TODO Auto-generated method stub
 		this.creation=new GrilleModel(this,nom,nbRow,nbCol);
 	}
+
+	@Override
+	public void saveTable() {
+		// TODO Auto-generated method stub
+		int[] infoLigne=creation.generateInfoLigne();
+		int[] infoColonne=creation.generateInfoColonne();
+		try {
+			if (client.connect()) {
+				client.ajoutPuzzleToDatabase(this.creation.nom, this.creation.nbLigne, this.creation.nbColonne, 
+						infoLigne, infoColonne);
+			} else {
+				System.out.println("Mysql connection failed !!!");
+			}
+			client.close();
+			
+			this.notifyReinitWindow();
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	@Override
+	public void setReussiteGrille(int idGrille) {
+		// TODO Auto-generated method stub
+		GrilleModel g = this.getGrilleById(idGrille);
+		g.reussite=true;
+	}
+
+	
 
 
 	/*

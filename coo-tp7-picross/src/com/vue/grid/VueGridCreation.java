@@ -1,6 +1,7 @@
 package com.vue.grid;
 import java.awt.Color;
 import java.awt.Component;
+import java.sql.SQLException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -150,6 +151,27 @@ public class VueGridCreation extends Fenetre implements Observer {
 	public void updateStart() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public void updateReinitWindow() {
+		// TODO Auto-generated method stub
+		this.controler.removeObserverModel();
+		try {
+			vueMenu= new Vue1(vueMenu.getGridControler());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.controler.addObserverModel(vueMenu);
+		this.controler.requestGenererGrilles();
+		vueMenu.requestGrilles();
+		
+		//this.vueMenu.setVisible(true);
+		
+		
+		this.setVisible(false);
 	}
 
 }

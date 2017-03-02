@@ -28,8 +28,12 @@ public abstract class AbstractControler {
 	protected boolean requestGrilles ;
 	protected boolean requestGrilleDetail ;
 	protected boolean requestVerifWin;
-	protected boolean creationGrille;
+	protected boolean requestSave;
+	protected boolean requestGenererGrille;
 	
+	protected boolean reussiteGrille;
+	
+	protected boolean creationGrille;
 	protected boolean creation;
 	
 	protected int idPuzzle;
@@ -119,4 +123,21 @@ public abstract class AbstractControler {
 		this.nbCol=nbCol;
 		control();
 	}
+
+	
+	public void requestSave() {
+		// TODO Auto-generated method stub
+		this.requestSave=true;
+		control();
+		
+	}
+	
+	public void requestGenererGrilles() {
+		// TODO Auto-generated method stub
+		this.requestGenererGrille=true;
+		control();
+		
+	}
+	
+	
 }

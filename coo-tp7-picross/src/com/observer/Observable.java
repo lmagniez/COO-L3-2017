@@ -25,5 +25,7 @@ public interface Observable {
 	public void notifyInfosGrilles(int nbGrille, int id[], String nom[], boolean reussite[], int[] nbLignes, int[] nbColonnes);
 	public void notifyGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne, boolean reussite);
 	
+	public void notifyReinitWindow();
+	
 	
 }

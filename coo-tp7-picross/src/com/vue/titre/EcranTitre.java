@@ -72,9 +72,9 @@ public class EcranTitre extends JPanel{
 			
 			if(command=="Démarrer")
 			{
-				f.panneauParam=new EcranParam(f);
+				f.setPanneauParam(new EcranParam(f));
 				f.setSize(new Dimension(500,500));
-				f.afficherPanneau(f.panneauParam);
+				f.afficherPanneau(f.getPanneauParam());
 				
 			}
 			

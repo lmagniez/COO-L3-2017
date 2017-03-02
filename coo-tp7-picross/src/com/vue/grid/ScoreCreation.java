@@ -144,6 +144,11 @@ public class ScoreCreation extends JPanel {
 			if(command=="Confirmer")
 			{
 				//vue.controler.requestVerif(ScoreCreation.this.vue.getGrid().idGrid);
+				vue.controler.requestSave();
+				ScoreCreation.this.confirmer.setEnabled(false);
+				ScoreCreation.this.restart.setEnabled(false);
+				ScoreCreation.this.retour.setEnabled(false);
+				
 			}
 			
 			if(command=="Recommencer")

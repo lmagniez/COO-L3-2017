@@ -203,7 +203,7 @@ public class EcranParam2 extends JPanel{
 			
 			
 			if(command=="Retour")
-				f.afficherPanneau(f.panneauTitre);
+				f.afficherPanneau(f.getPanneauTitre());
 		} 
 	}
 	

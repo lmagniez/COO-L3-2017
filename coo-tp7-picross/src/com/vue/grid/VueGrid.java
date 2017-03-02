@@ -1,6 +1,8 @@
 package com.vue.grid;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.sql.SQLException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -12,6 +14,7 @@ import com.model.CaseValue;
 import com.model.patternWin;
 import com.observer.Observer;
 import com.vue.Fenetre;
+import com.vue.titre.EcranParam;
 import com.vue.titre.Vue1;
 
 /**
@@ -105,7 +108,10 @@ public class VueGrid extends Fenetre implements Observer {
 	@Override
 	public void updateWin() {
 		// TODO Auto-generated method stub
+		
+
 		System.out.println("WINNER");
+		updateReinitWindow();
 	}
 
 	@Override
@@ -144,6 +150,28 @@ public class VueGrid extends Fenetre implements Observer {
 	@Override
 	public void updateStart() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateReinitWindow() {
+		// TODO Auto-generated method stub
+		//this
+		
+		
+		this.controler.removeObserverModel();
+		
+		this.controler.addObserverModel(vueMenu);
+		//this.controler.requestGenererGrilles();
+		vueMenu.requestGrilles();
+		this.vueMenu.setVisible(true);
+		//this.vueMenu.afficherPanneau(this.vueMenu.getPanneauTitre());
+		
+		this.vueMenu.setPanneauParam(new EcranParam(vueMenu));
+		vueMenu.setSize(new Dimension(500,500));
+		vueMenu.afficherPanneau(vueMenu.getPanneauParam());
+		
+		this.setVisible(false);
 		
 	}
 

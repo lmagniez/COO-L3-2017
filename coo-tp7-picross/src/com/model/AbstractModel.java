@@ -26,7 +26,9 @@ public abstract class AbstractModel implements Observable{
 	public abstract void requestGrilles();
 	public abstract void requestGrilleDetail(int idPuzzle);
 	public abstract void createGrille(String nom, int nbRow, int nbCol);
-	
+	public abstract void saveTable();
+	public abstract void genererGrilles();
+	public abstract void setReussiteGrille(int idGrille);
 	
 	public abstract void reinit();
 	
@@ -109,6 +111,14 @@ public abstract class AbstractModel implements Observable{
 	public void notifyStart(){
 		for(Observer obs : listObserver)
 			obs.updateStart();
+		
+	}
+	
+	@Override
+	public void notifyReinitWindow() {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updateReinitWindow();
 		
 	}
 	

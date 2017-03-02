@@ -187,6 +187,7 @@ public boolean patternHorizontalCorrect(int ligne){
 			}
 		}
 		
+		this.model.setReussiteGrille(this.idPuzzle);
 		this.model.notifyWin();
 	}
 
@@ -210,6 +211,63 @@ public boolean patternHorizontalCorrect(int ligne){
 			System.out.println();
 		}
 		
+	}
+
+	
+	public String generateUneLigne(int indice){
+		int cpt=0;
+		String res="";
+		for(int i=0; i<nbLigne; i++){
+			while(i<nbLigne&&this.grille[indice][i]){
+				cpt++;i++;
+			};
+			if(cpt!=0)
+				res=res+cpt;
+			cpt=0;
+		}
+		if(res.equals(""))
+			res="0";
+		return res;
+	}
+	
+	public String generateUneColonne(int indice){
+		int cpt=0;
+		String res="";
+		for(int i=0; i<nbColonne; i++){
+			while(i<nbColonne&&this.grille[i][indice]){
+				cpt++;i++;
+			};
+			if(cpt!=0)
+				res=res+cpt;
+			cpt=0;
+		}
+		if(res.equals(""))
+			res="0";
+		return res;
+	}
+	
+	
+	public int[] generateInfoLigne(){
+		// TODO Auto-generated method stub
+		int[] res = new int[nbColonne];
+		for(int i=0; i<nbColonne; i++){
+			String ligne;
+			ligne=this.generateUneLigne(i);
+			res[i]=Integer.parseInt(ligne);
+		}
+		return res;
+	}
+	
+	
+	public int[] generateInfoColonne(){
+		// TODO Auto-generated method stub
+		int[] res = new int[nbLigne];
+		for(int i=0; i<nbLigne; i++){
+			String ligne;
+			ligne=this.generateUneColonne(i);
+			res[i]=Integer.parseInt(ligne);
+		}
+		return res;
 	}
 	
 	

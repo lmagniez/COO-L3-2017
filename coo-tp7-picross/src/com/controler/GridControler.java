@@ -32,6 +32,10 @@ public class GridControler extends AbstractControler{
 			this.calc.requestGrilles();
 			this.requestGrilles=false;
 		}
+		else if(this.requestGenererGrille){
+			this.calc.genererGrilles();
+			this.requestGenererGrille=false;
+		}
 		else if(this.requestGrilleDetail){
 			this.calc.requestGrilleDetail(idPuzzle);
 			this.requestGrilleDetail=false;
@@ -48,9 +52,17 @@ public class GridControler extends AbstractControler{
 			this.calc.createGrille(nom,nbRow,nbCol);
 			this.creationGrille=false;
 		}
+		else if(this.requestSave){
+			this.calc.saveTable();
+			this.requestSave=false;
+		}
+		else if(this.requestGenererGrille){
+			this.calc.genererGrilles();
+			this.requestGenererGrille=false;			
+		}
 		else
 			this.calc.changeValue(idPuzzle, x, y);
-		
+			
 		/*
 		if(!this.calc.columnFull(x))
 		{

@@ -28,8 +28,8 @@ import com.vue.grid.VueGridCreation;
 
 public class Vue1 extends Fenetre implements Observer{
 
-	protected EcranTitre panneauTitre;
-	protected EcranParam panneauParam;
+	private EcranTitre panneauTitre;
+	private EcranParam panneauParam;
 	protected EcranParam2 panneauParam2;
 	
 	
@@ -44,7 +44,7 @@ public class Vue1 extends Fenetre implements Observer{
 	
 	
 	
-	protected AbstractControler gridControler;
+	private AbstractControler gridControler;
 	/**
 	 * Contructeur de la vue (appelé une fois)
 	 * @param controler
@@ -52,7 +52,7 @@ public class Vue1 extends Fenetre implements Observer{
 	 */
 	public Vue1(AbstractControler controler) throws SQLException{
 		
-		this.gridControler=controler;
+		this.setGridControler(controler);
 		
 		this.setTitle("CONNECT 4");
 		this.setSize(400, 400);
@@ -63,12 +63,12 @@ public class Vue1 extends Fenetre implements Observer{
 		
 		
 		
-		panneauTitre= new EcranTitre(this);
+		setPanneauTitre(new EcranTitre(this));
 		
 		
 		
 		
-		this.add(panneauTitre);
+		this.add(getPanneauTitre());
 		this.setVisible(true);
 		
 		/*
@@ -83,7 +83,7 @@ public class Vue1 extends Fenetre implements Observer{
 	}
 
 	public void requestGrilles(){
-		this.gridControler.requestGrilles();
+		this.getGridControler().requestGrilles();
 	}
 	
 	/**
@@ -95,11 +95,11 @@ public class Vue1 extends Fenetre implements Observer{
 	{
 		
 		//Creation de notre fenetre avec le controleur en parametre
-		VueGrid vueJeu = new VueGrid(gridControler, this);
+		VueGrid vueJeu = new VueGrid(getGridControler(), this);
 		
 		//Ajout de la fenetre comme observer de notre modele
-		this.gridControler.addObserverModel(vueJeu);
-		this.gridControler.requestGrilleDetail(idPuzzle);
+		this.getGridControler().addObserverModel(vueJeu);
+		this.getGridControler().requestGrilleDetail(idPuzzle);
 		
 		//((JeuModel) jeuModel).recupGrille(idPuzzle);
 		
@@ -112,11 +112,11 @@ public class Vue1 extends Fenetre implements Observer{
 	{
 		
 		//Creation de notre fenetre avec le controleur en parametre
-		VueGridCreation vueJeu = new VueGridCreation(nom,nbRow,nbCol,gridControler, this);
+		VueGridCreation vueJeu = new VueGridCreation(nom,nbRow,nbCol,getGridControler(), this);
 		
 		//Ajout de la fenetre comme observer de notre modele
-		this.gridControler.addObserverModel(vueJeu);
-		this.gridControler.requestCreationGrille(nom,nbRow,nbCol);
+		this.getGridControler().addObserverModel(vueJeu);
+		this.getGridControler().requestCreationGrille(nom,nbRow,nbCol);
 		
 		//((JeuModel) jeuModel).recupGrille(idPuzzle);
 		
@@ -185,7 +185,35 @@ public class Vue1 extends Fenetre implements Observer{
 		
 	}
 
-	
+	@Override
+	public void updateReinitWindow() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public AbstractControler getGridControler() {
+		return gridControler;
+	}
+
+	public void setGridControler(AbstractControler gridControler) {
+		this.gridControler = gridControler;
+	}
+
+	public EcranParam getPanneauParam() {
+		return panneauParam;
+	}
+
+	public void setPanneauParam(EcranParam panneauParam) {
+		this.panneauParam = panneauParam;
+	}
+
+	public EcranTitre getPanneauTitre() {
+		return panneauTitre;
+	}
+
+	public void setPanneauTitre(EcranTitre panneauTitre) {
+		this.panneauTitre = panneauTitre;
+	}
 	
 	
 	
