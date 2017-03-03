@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -52,11 +53,11 @@ public class EcranTitre extends JPanel{
 		
 		this.add(Box.createRigidArea(new Dimension(5,50)));
 		this.add(startLabel);
-		this.add(Box.createRigidArea(new Dimension(5,50)));
+		this.add(Box.createRigidArea(new Dimension(5,30)));
 		this.add(start);
-		this.add(Box.createRigidArea(new Dimension(5,50)));
+		this.add(Box.createRigidArea(new Dimension(5,30)));
 		this.add(creation);
-		this.add(Box.createRigidArea(new Dimension(5,50)));
+		this.add(Box.createRigidArea(new Dimension(5,30)));
 		this.add(quit);
 	}
 
@@ -87,7 +88,8 @@ public class EcranTitre extends JPanel{
 			}
 			
 			if(command=="Quitter")
-				f.dispose();
+				f.dispatchEvent(new WindowEvent(f, WindowEvent.WINDOW_CLOSING));
+				//f.dispose();
 		} 
 	}
 	

@@ -25,6 +25,11 @@ public enum CaseValue {
         return null;
     }
 	
+	/**
+	 * Récupérer une couleur en fonction de la valeur
+	 * @param c valeur de la case
+	 * @return couleur associé à la valeur
+	 */
 	public static Color getColorFromValue(CaseValue c){
 		switch(c){
 			case CHECKED:

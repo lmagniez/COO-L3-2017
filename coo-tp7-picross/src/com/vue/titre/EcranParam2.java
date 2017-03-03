@@ -24,6 +24,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 import com.vue.Colors;
@@ -31,7 +32,7 @@ import com.vue.titre.EcranParam.ButtonListener;
 import com.vue.ButtonMenu;
 
 /**
- * Classe correspondant à l'écran de paramétrage de la partie.
+ * Classe correspondant à l'écran de paramétrage de la partie pour une création .
  * Intervient dans la vue du menu.
  * @author loick
  *
@@ -48,11 +49,10 @@ public class EcranParam2 extends JPanel{
 	
 	
 	protected JSlider nbRow;
-	protected JTextArea inputNom;
-	
+	protected JTextField inputNom;
 	
 	public static final int MIN_PARAM=3;
-	public static final int MAX_PARAM=15;
+	public static final int MAX_PARAM=20;
 	
 	public ImageIcon checked= transform(new ImageIcon("./sprites/checked.png"),40,40);
 	public ImageIcon unchecked= transform(new ImageIcon("./sprites/unchecked.png"),40,40);
@@ -96,14 +96,17 @@ public class EcranParam2 extends JPanel{
 		nbRow.setPaintTicks(true);
 		nbRow.setPaintLabels(true);
 		nbRow.setLabelTable(nbRow.createStandardLabels(1));
-		nbRow.setMaximumSize(new Dimension(300,50));
+		nbRow.setMaximumSize(new Dimension(450,50));
 		
-		this.inputNom=this.initTextArea("grille");
+		this.inputNom=new JTextField(15);
+		inputNom.setMaximumSize(new Dimension(200,25));
+		inputNom.setText("Grille perso");
+		
 		
 	    /*
          * Placement des composants
          */
-        
+		this.add(Box.createRigidArea(new Dimension(5,50)));
         this.add(startLabel);
 		this.add(Box.createRigidArea(new Dimension(5,40)));
 		
@@ -112,9 +115,12 @@ public class EcranParam2 extends JPanel{
 		
 				
 		JPanel p2=new JPanel();
-		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
+		p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
+		p2.add(new JLabel("Nom de la grille:"));
 		
-        System.out.println(f.nbGrille);
+        p2.add(inputNom);
+        this.add(p2);
+        this.add(Box.createRigidArea(new Dimension(5,30)));
 		
         this.add(nbRow);
 		
@@ -126,7 +132,7 @@ public class EcranParam2 extends JPanel{
 		
 		
         //Boutons start et quitter
-        
+		
 		this.add(start);
 		this.add(Box.createRigidArea(new Dimension(5,30)));
 		this.add(quit);

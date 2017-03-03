@@ -18,6 +18,13 @@ public class GrilleModel {
 	protected boolean reussite;
 	
 	
+	/**
+	 * Constructeur grille simple (pour création de grille)
+	 * @param model modele de la grille
+	 * @param nom nom de la grille
+	 * @param nbLigne nombre de ligne
+	 * @param nbColonne nombre de colonne
+	 */
 	public GrilleModel(JeuModel model, String nom, int nbLigne, int nbColonne){
 		this.model=model;
 		this.nom=nom;
@@ -32,15 +39,20 @@ public class GrilleModel {
 		}
 	}
 	
-	/*
-	 On va d'abord recuperer chaque id dans une classe principale (jeu?)
-	 
-	 Pour chaque id, on va lancer le constructeur de GrilleModel et récuperer chaque donnée
-	 
-	 */
 	
+	/**
+	 * Constructeur grille complet (quand on récupère une grille)
+	 * @param model modele de la grille
+	 * @param idPuzzle id du puzzle
+	 * @param nom nom du puzzle
+	 * @param nbLigne nombre de ligne
+	 * @param nbColonne nombre de colonne
+	 * @param infoLigne tableau des indices de ligne
+	 * @param infoColonne tableau des indices de colonnes
+	 * @param reussite 
+	 */
 	public GrilleModel(JeuModel model, int idPuzzle, String nom, int nbLigne, int nbColonne, 
-			String infoLigne[], String infoColonne[]){
+			String infoLigne[], String infoColonne[], boolean reussite){
 		this.model=model;
 		this.idPuzzle=idPuzzle;
 		this.nom=nom;
@@ -48,7 +60,7 @@ public class GrilleModel {
 		this.nbColonne=nbColonne;
 		this.infoColonne=infoColonne;
 		this.infoLigne=infoLigne;
-		this.reussite=false;
+		this.reussite=reussite;
 		this.grille=new boolean[nbLigne][nbColonne];
 		for(int i=0; i<nbLigne; i++){
 			for(int j=0; j<nbColonne; j++){
@@ -58,31 +70,24 @@ public class GrilleModel {
 		
 	}
 	
+	/**
+	 * Verifie pour une colonne donnée si il n'y a pas de conflits avec les indices donnés
+	 * @param colonne colonne a tester
+	 * @return conflit ou pas
+	 */
 	public boolean patternVerticalCorrect(int colonne){
 		
 		//convertit en tab de int
-		String info=infoColonne[colonne];
-		int indices[]= new int[info.length()];
-		for(int i=0; i<info.length(); i++){
-			indices[i]=Integer.parseInt(""+info.charAt(i));
+		String[] info=infoColonne[colonne].split(",");
+		int indices[]= new int[info.length];
+				
+				
+		for(int i=0; i<info.length; i++){
+			indices[i]=Integer.parseInt(info[i]);
 		}
-		
-		for(int i=0; i<info.length(); i++)
-		{
-			System.out.println(indices[i]);
-		}
-		
-		/*
-		for(int i=info.length()-1; i>=0; i++){
-			indices[cpt++]=Integer.parseInt(""+info.charAt(i));
-		}*/
-		
-		//on parcoure la chaine
+						
 		int nbPattern=0;
-		
-		
 		if(indices[nbPattern]==0){
-			System.out.println("ici");
 			for(int i=0; i<nbLigne; i++){
 				if(grille[colonne][i])
 					return false;
@@ -91,20 +96,18 @@ public class GrilleModel {
 		}
 		else{
 			for(int i=0; i<nbLigne; i++){
-				System.out.println(">>>"+i);
-				//demarre pattern
+				
 				if(grille[colonne][i]){
+					if(nbPattern==indices.length)return false;
 					int cptPattern=indices[nbPattern];
 					while(cptPattern!=0&&i<=nbLigne){
 						if(!grille[colonne][i]){
-							System.out.println("aouch");
 							return false;
 						}
 						i++; cptPattern--;
-						System.out.println("et de un : i:"+i +" cptPattern:"+cptPattern);
 					}
-					System.out.println("ok pattern");
 					nbPattern++;
+					//if(nbPattern>indices.length)return false;
 				}
 					
 			}
@@ -114,25 +117,26 @@ public class GrilleModel {
 		
 	}
 	
-	
-public boolean patternHorizontalCorrect(int ligne){
+	/**
+	 * Verifie pour une ligne donnée si il n'y a pas de conflits avec les indices donnés
+	 * @param ligne ligne a tester
+	 * @return conflit ou pas
+	 */
+	public boolean patternHorizontalCorrect(int ligne){
 		
 		//convertit en tab de int
-		String info=infoLigne[ligne];
-		int indices[]= new int[info.length()];
-		for(int i=0; i<info.length(); i++){
-			indices[i]=Integer.parseInt(""+info.charAt(i));
+		String[] info=infoLigne[ligne].split(",");
+		int indices[]= new int[info.length];
+					
+					
+		for(int i=0; i<info.length; i++){
+			indices[i]=Integer.parseInt(info[i]);
 		}
-		
-		for(int i=0; i<info.length(); i++)
-			System.out.println(indices[i]);
-		
 		
 		//on parcoure la chaine
 		int nbPattern=0;
 		
 		if(indices[nbPattern]==0){
-			System.out.println("ici");
 			for(int i=0; i<nbLigne; i++){
 				if(grille[i][ligne])
 					return false;
@@ -141,20 +145,18 @@ public boolean patternHorizontalCorrect(int ligne){
 		}
 		else{
 			for(int i=0; i<nbLigne; i++){
-				System.out.println(">>>"+i);
 				//demarre pattern
 				if(grille[i][ligne]){
+					if(nbPattern==indices.length)return false;
 					int cptPattern=indices[nbPattern];
 					while(cptPattern!=0&&i<=nbLigne){
 						if(!grille[i][ligne]){
-							System.out.println("aouch");
 							return false;
 						}
 						i++; cptPattern--;
-						System.out.println("et de un : i:"+i +" cptPattern:"+cptPattern);
 					}
-					System.out.println("ok pattern");
 					nbPattern++;
+					
 				}
 					
 			}
@@ -164,24 +166,20 @@ public boolean patternHorizontalCorrect(int ligne){
 		
 	}
 	
+	/**
+	 * Vérifier si une grille est correcte ou non
+	 */
 	public void verifWin(){
 		
-		afficherGrille();
-		
-		
 		for(int i=0; i<nbColonne; i++){
-			System.out.println("patternV"+i);
 			if(!this.patternVerticalCorrect(i)){
-				System.out.println("non...");
 				this.model.notifyLose();
 				return;
 			}
 		}
 		
 		for(int i=0; i<nbLigne; i++){
-			System.out.println("patternH"+i);
 			if(!this.patternHorizontalCorrect(i)){
-				System.out.println("non...");
 				this.model.notifyLose();
 				return;
 			}
@@ -192,6 +190,11 @@ public boolean patternHorizontalCorrect(int ligne){
 	}
 
 	
+	/**
+	 * Changer une valeur dans la grille
+	 * @param x abscisse de la grille
+	 * @param y ordonnée de la grille
+	 */
 	public void change(int x, int y){
 		if(this.grille[x][y])
 			this.grille[x][y]=false;
@@ -199,9 +202,11 @@ public boolean patternHorizontalCorrect(int ligne){
 			this.grille[x][y]=true;
 		
 		this.model.notifyChangeValue(x, y);
-		this.afficherGrille();
 	}
 	
+	/**
+	 * Affichage
+	 */
 	public void afficherGrille(){
 		
 		for(int i=0; i<nbColonne; i++){
@@ -213,16 +218,24 @@ public boolean patternHorizontalCorrect(int ligne){
 		
 	}
 
-	
-	public String generateUneLigne(int indice){
+	/**
+	 * Générer les indices pour une colonne donnée
+	 * @param indice indice de la colonne
+	 * @return indices générés
+	 */
+	public String generateUneCol(int indice){
 		int cpt=0;
 		String res="";
 		for(int i=0; i<nbLigne; i++){
 			while(i<nbLigne&&this.grille[indice][i]){
 				cpt++;i++;
 			};
-			if(cpt!=0)
-				res=res+cpt;
+			if(cpt!=0){
+				if(res.equals(""))
+					res=""+cpt;
+				else
+					res=res+","+cpt;
+			}
 			cpt=0;
 		}
 		if(res.equals(""))
@@ -230,15 +243,24 @@ public boolean patternHorizontalCorrect(int ligne){
 		return res;
 	}
 	
-	public String generateUneColonne(int indice){
+	/**
+	 * Générer les indices pour une ligne donnée
+	 * @param indice indice de la ligne
+	 * @return indices générés
+	 */
+	public String generateUneLigne(int indice){
 		int cpt=0;
 		String res="";
 		for(int i=0; i<nbColonne; i++){
 			while(i<nbColonne&&this.grille[i][indice]){
 				cpt++;i++;
 			};
-			if(cpt!=0)
-				res=res+cpt;
+			if(cpt!=0){
+				if(res.equals(""))
+					res=""+cpt;
+				else
+					res=res+","+cpt;
+			}
 			cpt=0;
 		}
 		if(res.equals(""))
@@ -246,30 +268,45 @@ public boolean patternHorizontalCorrect(int ligne){
 		return res;
 	}
 	
-	
-	public int[] generateInfoLigne(){
+	/**
+	 * Générer l'ensemble des indices de ligne
+	 * @return ensemble des indices de ligne
+	 */
+	public String[] generateInfoLigne(){
 		// TODO Auto-generated method stub
-		int[] res = new int[nbColonne];
+		String[] res = new String[nbColonne];
 		for(int i=0; i<nbColonne; i++){
 			String ligne;
 			ligne=this.generateUneLigne(i);
-			res[i]=Integer.parseInt(ligne);
+			res[i]=ligne;
+			//res[i]=Integer.parseInt(ligne);
 		}
 		return res;
 	}
 	
-	
-	public int[] generateInfoColonne(){
+	/**
+	 * Générer l'ensemble des indices de colonne
+	 * @return ensemble des indices de colonne
+	 */
+	public String[] generateInfoColonne(){
 		// TODO Auto-generated method stub
-		int[] res = new int[nbLigne];
+		String[] res = new String[nbLigne];
 		for(int i=0; i<nbLigne; i++){
 			String ligne;
-			ligne=this.generateUneColonne(i);
-			res[i]=Integer.parseInt(ligne);
+			ligne=this.generateUneCol(i);
+			res[i]=ligne;
 		}
 		return res;
 	}
 	
+	public void reinit(){
+		for(int i=0; i<nbLigne; i++){
+			for(int j=0; j<nbColonne; j++){
+				grille[i][j]=false;
+			}
+		}
+		this.model.notifyReinit();
+	}
 	
 	/*
 	public static void main(String[] args) {

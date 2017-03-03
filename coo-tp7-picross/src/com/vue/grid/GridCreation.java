@@ -14,7 +14,7 @@ import com.model.patternWin;
 
 
 /**
- * Classe représentant une Grille
+ * Classe représentant une Grille de création
  * Dispose d'un tableau de traits horizontaux, un tableau de traits verticaux, et un tableau de cases 
  * @author loick
  *
@@ -31,7 +31,7 @@ public class GridCreation extends JPanel implements MouseListener{
 	public static int GRILLE_POSX;
 	public static int GRILLE_POSY;
 	
-	public static final int INDICE_SIZE=50;
+	public static final int INDICE_SIZE=75;
 	public static final int ESPACEMENT_SIZE=15;
 	public static final int ESPACEMENT2_SIZE=15;
 	
@@ -46,7 +46,9 @@ public class GridCreation extends JPanel implements MouseListener{
 	/**
 	 * Constructeur créant la grille et l'intégrant à la vue.
 	 * @param v vue 
-	 * @param nbLigne nombre de ligne de la grille
+	 * @param nbRow nombre de ligne de la grille
+	 * @param nbCol nombre de colonne de la grille
+	 * @param nom nom de la grille
 	 */
 	public GridCreation(VueGridCreation v, int nbRow, int nbCol, String nom)
 	{
@@ -108,9 +110,12 @@ public class GridCreation extends JPanel implements MouseListener{
 	
 	
 	/**
-	 * Test de collision sur les différents traits
-	 * @param arg0 Souris 
-	 * @return Coté si on en trouve un qui concorde avec la position de souris
+	 * test de collision de la souris sur une case
+	 * @param x abscisse case
+	 * @param y ordonée case
+	 * @param mouseX posX souris
+	 * @param mouseY posY souris
+	 * @return collision ou non
 	 */
 	
 	public boolean collide(int x, int y, int mouseX, int mouseY)
@@ -122,6 +127,11 @@ public class GridCreation extends JPanel implements MouseListener{
 		
 	}
 	
+	/**
+	 * Test de collision
+	 * @param arg0
+	 * @return collision ou non
+	 */
 	public int collision(MouseEvent arg0)
 	{
 		if(actif)
@@ -130,7 +140,7 @@ public class GridCreation extends JPanel implements MouseListener{
 			for(int j=0; j<nbCol; j++){
 				if(collide(i,j,arg0.getX(), arg0.getY()))
 				{
-					vue.controler.changeValueCreate(i,j);
+					vue.getControler().changeValueCreate(i,j);
 					this.repaint();
 					return 1;
 				}

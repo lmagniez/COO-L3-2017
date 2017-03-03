@@ -20,10 +20,14 @@ public class GridControler extends AbstractControler{
 	 }
 
 	 /**
-	  * Ajout d'un jeton.
-	  * Appeler le modèle pour vérifier si la colonne d'abscisse x est pleine
-	  * Si celle-ci n'est pas pleine, on ajoute le jeton.
-	  * On vérifie ensuite si il y a un pattern impliquant la victoire du joueur. 
+	  * Controle
+	  * RequestGrille: demande au modèle de notifier les grilles
+	  * RequestGenererGrille: demande au modele de générer les grilles
+	  * RequestGrilleDetail: demande de notifier une grille a la vue
+	  * RequestVerifWin: demande au modèle de vérifier la grille (victoire?)
+	  * Creation: Change la valeur d'une case de la grille de création
+	  * CreationGrille: Demande la création de la grille de création
+	  * requestSave: Demande la sauvegarde de la grille de création
 	  */
 	public void control()
 	{
@@ -56,22 +60,13 @@ public class GridControler extends AbstractControler{
 			this.calc.saveTable();
 			this.requestSave=false;
 		}
-		else if(this.requestGenererGrille){
-			this.calc.genererGrilles();
-			this.requestGenererGrille=false;			
+		else if(this.requestUpdateReussite){
+			this.calc.updateReussite();
+			this.requestUpdateReussite=false;
 		}
 		else
 			this.calc.changeValue(idPuzzle, x, y);
 			
-		/*
-		if(!this.calc.columnFull(x))
-		{
-			this.calc.ajoutJeton(x);
-			this.calc.verifWin();
-		}
-		else
-			this.calc.notifyFull();
-		*/
 	}
 
 	 

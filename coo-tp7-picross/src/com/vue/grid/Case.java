@@ -61,6 +61,9 @@ public class Case
 		
 	}
 	
+	/**
+	 * Changer la valeur de la case
+	 */
 	public void changeValue(){
 		if(this.c==CaseValue.CHECKED){
 			this.c=CaseValue.UNCHECKED;

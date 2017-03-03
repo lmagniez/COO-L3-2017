@@ -29,8 +29,10 @@ public abstract class AbstractModel implements Observable{
 	public abstract void saveTable();
 	public abstract void genererGrilles();
 	public abstract void setReussiteGrille(int idGrille);
+	public abstract void updateReussite();
 	
-	public abstract void reinit();
+	public abstract void reinit(int idGrille);
+	public abstract void reinitCreation();
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur
@@ -58,16 +60,10 @@ public abstract class AbstractModel implements Observable{
 
 	}
 	
+	
 	/**
-	 * Notifier Colonne pleine
+	 * Notifier la modification d'une valeur
 	 */
-	@Override
-	public void notifyFull() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
 	@Override
 	public void notifyChangeValue(int x, int y) {
 		// TODO Auto-generated method stub
@@ -76,6 +72,9 @@ public abstract class AbstractModel implements Observable{
 	}
 
 
+	/**
+	 * Notifier la victoire 
+	 */
 	@Override
 	public void notifyWin() {
 		// TODO Auto-generated method stub
@@ -83,7 +82,9 @@ public abstract class AbstractModel implements Observable{
 			obs.updateWin();
 	}
 
-
+	/**
+	 * Notifier grille non résolue
+	 */
 	@Override
 	public void notifyLose() {
 		// TODO Auto-generated method stub
@@ -91,6 +92,15 @@ public abstract class AbstractModel implements Observable{
 			obs.updateLose();
 	}
 	
+	/**
+	 * Notifier l'ensemble des informations des grilles (Menu selection)
+	 * @param nbGrille nombre de grille
+	 * @param id ensemble des ids
+	 * @param nom ensemble des noms 
+	 * @param reussite ensemble des reussites de grille
+	 * @param nbLignes ensemble des nombres de lignes
+	 * @param nbColonnes ensemble des nombres de colonnes
+	 */
 	@Override
 	public void notifyInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite, int[] nbLignes, int[] nbColonnes) {
 		// TODO Auto-generated method stub
@@ -99,6 +109,13 @@ public abstract class AbstractModel implements Observable{
 	}
 	
 	
+	/**
+	 * Notifier l'ensemble des informations d'une grilles (Jeu)
+	 * @param id id du puzzle
+	 * @param nom Nom du puzzle 
+	 * @param indicesLigne ensemble des indices de ligne
+	 * @param indicesColonne ensemble des indices de colonne
+	 */
 	@Override
 	public void notifyGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne,
 			boolean reussite) {
@@ -108,12 +125,10 @@ public abstract class AbstractModel implements Observable{
 		
 	}
 	
-	public void notifyStart(){
-		for(Observer obs : listObserver)
-			obs.updateStart();
-		
-	}
 	
+	/**
+	 * Notifier la réinitialisation d'une fenetre
+	 */
 	@Override
 	public void notifyReinitWindow() {
 		// TODO Auto-generated method stub

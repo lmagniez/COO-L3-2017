@@ -59,6 +59,7 @@ public class EcranParam extends JPanel{
 	public ImageIcon checked= transform(new ImageIcon("./sprites/checked.png"),40,40);
 	public ImageIcon unchecked= transform(new ImageIcon("./sprites/unchecked.png"),40,40);
 	
+
 	
 	
 	/**
@@ -91,15 +92,7 @@ public class EcranParam extends JPanel{
 		startLabel.setFont(new Font("Arial",Font.BOLD,20));
 		startLabel.setAlignmentX(this.CENTER_ALIGNMENT);
 		
-		bG=new ButtonGroup();
-		/*
-		 protected int nbGrille; 
-		
-		protected int[] ids;
-		protected String[] noms; 
-		protected boolean[] reussites;
-        */
-		
+		bG=new ButtonGroup();		
 		
 	    
 	    /*
@@ -109,14 +102,8 @@ public class EcranParam extends JPanel{
         this.add(startLabel);
 		this.add(Box.createRigidArea(new Dimension(5,40)));
 		
-		
-		
-		
-				
 		JPanel p2=new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.PAGE_AXIS));
-		
-        System.out.println(f.nbGrille);
 		
         for(int i=0; i<f.nbGrille; i++){
 
@@ -138,11 +125,11 @@ public class EcranParam extends JPanel{
 			p.setBorder(BorderFactory.createLineBorder(Color.black));
 			
 			p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
-			p.add(Box.createRigidArea(new Dimension(20,5)));
+			p.add(Box.createRigidArea(new Dimension(10,5)));
 			p.add(button);
-			p.add(Box.createRigidArea(new Dimension(40,5)));
+			p.add(Box.createRigidArea(new Dimension(20,5)));
 			p.add(new JLabel("Nom: "+f.noms[i]));
-			p.add(Box.createRigidArea(new Dimension(40,5)));
+			p.add(Box.createRigidArea(new Dimension(20,5)));
 			p.add(new JLabel("Dimension: "+f.nbLignes[i]+"x"+f.nbColonnes[i]));
 			
 			p.add(Box.createRigidArea(new Dimension(20,5)));
@@ -162,13 +149,7 @@ public class EcranParam extends JPanel{
 		scroll.getVerticalScrollBar().setUnitIncrement(10);
 		
 		this.add(scroll);
-		
-		
-       
-		
 		this.add(Box.createRigidArea(new Dimension(5,40)));
-		
-		
 		
         //Boutons start et quitter
         
@@ -220,10 +201,7 @@ public class EcranParam extends JPanel{
 				//f.initFenetreEcranJeu(nbLigne, nbColonne, nbJR, isIA, swapColor);				
 				try {
 					int indice=Integer.parseInt(EcranParam.this.getSelectedButtonText(bG));
-					System.out.println(indice);
-					
 					int id= EcranParam.this.f.ids[indice];
-					System.out.println(id);
 					
 					f.initFenetreEcranJeu(id);
 				} catch (SQLException e1) {

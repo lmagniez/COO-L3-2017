@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -18,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import com.controler.AbstractControler;
+
 
 /**
  * 
@@ -26,9 +30,31 @@ import javax.swing.JScrollPane;
  *
  */
 
+
 public abstract class Fenetre extends JFrame {
 	
+	// L'instance de notre objet controleur
+	private AbstractControler controler;
 	
+	public Fenetre(AbstractControler controler){
+		this.setControler(controler);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosing(WindowEvent we)
+		    { 
+		        String ObjButtons[] = {"Yes","No"};
+		        int PromptResult = JOptionPane.showOptionDialog(null,"Sauvegarder la partie?","Confirmation",JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,ObjButtons,ObjButtons[1]);
+		        if(PromptResult==JOptionPane.YES_OPTION)
+		        {
+		        	Fenetre.this.controler.requestUpdateReussite();
+		            
+		        }
+		        System.exit(0);
+		    }
+		});
+	}
 	
 	/**
 	 * Méthode générique affichant un panneau sur la fenêtre
@@ -44,6 +70,17 @@ public abstract class Fenetre extends JFrame {
 		getContentPane().validate();
 		this.repaint();
 	}
+
+	public AbstractControler getControler() {
+		return controler;
+	}
+
+	public void setControler(AbstractControler controler) {
+		this.controler = controler;
+	}
+	
+	
+	
 
 
 }

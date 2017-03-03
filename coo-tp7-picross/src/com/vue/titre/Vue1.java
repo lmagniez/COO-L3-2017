@@ -1,10 +1,14 @@
 package com.vue.titre;
 
+import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.controler.AbstractControler;
@@ -42,9 +46,8 @@ public class Vue1 extends Fenetre implements Observer{
 	protected boolean[] reussites;
 	
 	
+	protected WindowAdapter windowAdapter;
 	
-	
-	private AbstractControler gridControler;
 	/**
 	 * Contructeur de la vue (appelé une fois)
 	 * @param controler
@@ -52,11 +55,12 @@ public class Vue1 extends Fenetre implements Observer{
 	 */
 	public Vue1(AbstractControler controler) throws SQLException{
 		
-		this.setGridControler(controler);
+		//initFrame();
 		
-		this.setTitle("CONNECT 4");
+		super(controler);
+		
+		this.setTitle("PICROSS");
 		this.setSize(400, 400);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setFocusable(false);
@@ -82,14 +86,49 @@ public class Vue1 extends Fenetre implements Observer{
 		
 	}
 
+	
+	private void initFrame() {
+
+	    this.windowAdapter = new WindowAdapter() {
+	        // WINDOW_CLOSING event handler
+	        @Override
+	        public void windowClosing(WindowEvent e) {
+	            super.windowClosing(e);
+	            // You can still stop closing if you want to
+	            int res = JOptionPane.showConfirmDialog(Vue1.this, "Are you sure you want to close?", "Close?", JOptionPane.YES_NO_OPTION);
+	            if ( res == 0 ) {
+	                // dispose method issues the WINDOW_CLOSED event
+	            	Vue1.this.dispose();
+	            }
+	        }
+
+	        // WINDOW_CLOSED event handler
+	        @Override
+	        public void windowClosed(WindowEvent e) {
+	            super.windowClosed(e);
+	            // Close application if you want to with System.exit(0)
+	            // but don't forget to dispose of all resources 
+	            // like child frames, threads, ...
+	            // System.exit(0);
+	        }
+	    };
+
+	    // when you press "X" the WINDOW_CLOSING event is called but that is it
+	    // nothing else happens
+	    this.setDefaultCloseOperation(Vue1.DO_NOTHING_ON_CLOSE);
+	    // don't forget this
+	    this.addWindowListener(this.windowAdapter);
+	}
+	
 	public void requestGrilles(){
 		this.getGridControler().requestGrilles();
 	}
 	
+	
 	/**
-	 * Initialise une fenetre de jeu (et l'initialise)
-	 * @param swapColor 
-	 * @throws SQLException 
+	 * Initialise une fenetre de jeu
+	 * @param idPuzzle id de la grille
+	 * @throws SQLException
 	 */
 	public void initFenetreEcranJeu(int idPuzzle) throws SQLException
 	{
@@ -108,6 +147,13 @@ public class Vue1 extends Fenetre implements Observer{
 		
 	}
 
+	/**
+	 * Initialiser une fenetre de création
+	 * @param nom nom de la grille
+	 * @param nbRow nombre de ligne 
+	 * @param nbCol nombre de colonne
+	 * @throws SQLException
+	 */
 	public void initFenetreCreation(String nom, int nbRow, int nbCol) throws SQLException
 	{
 		
@@ -126,48 +172,22 @@ public class Vue1 extends Fenetre implements Observer{
 	}
 	
 
-	@Override
-	public void updateReinit() {
-		
-	}
-
-
-
-	@Override
-	public void updateChangeValue(int x, int y) {
-		
-	}
-
 	
-
-
-	@Override
-	public void updateWin() {
-		
-	}
-
-
-
-	@Override
-	public void updateLose() {
-		
-	}
-
-
-	public void updateStart(){
-
-	}
-
+	
+	/**
+	 * Mettre a jour l'ensemble des informations des grilles (Menu selection)
+	 * @param nbGrille nombre de grille
+	 * @param id ensemble des ids
+	 * @param nom ensemble des noms 
+	 * @param reussite ensemble des reussites de grille
+	 * @param nbLignes ensemble des nombres de lignes
+	 * @param nbColonnes ensemble des nombres de colonnes
+	 */
 	@Override
 	public void updateInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite, int[] nbLignes, int[] nbColonnes) {
 		// TODO Auto-generated method stub
-		System.out.println("infos grille!!");
 		this.nbGrille=nbGrille;
 		this.ids=id;
-		
-		for(int i=0; i< nbGrille; i++)
-			System.out.println("<<<< "+ids[i]);
-		
 		this.noms=nom;
 		this.reussites=reussite;
 		this.nbLignes=nbLignes;
@@ -175,28 +195,12 @@ public class Vue1 extends Fenetre implements Observer{
 		
 	}
 
-
-
-
-	@Override
-	public void updateGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne,
-			boolean reussite) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateReinitWindow() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public AbstractControler getGridControler() {
-		return gridControler;
+		return this.getControler();
 	}
 
 	public void setGridControler(AbstractControler gridControler) {
-		this.gridControler = gridControler;
+		this.setControler(gridControler);
 	}
 
 	public EcranParam getPanneauParam() {
@@ -216,7 +220,25 @@ public class Vue1 extends Fenetre implements Observer{
 	}
 	
 	
-	
+	@Override
+	public void updateGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne,
+			boolean reussite) {	
+	}
+	@Override
+	public void updateReinitWindow() {	
+	}
+	@Override
+	public void updateReinit() {	
+	}
+	@Override
+	public void updateChangeValue(int x, int y) {
+	}
+	@Override
+	public void updateWin() {
+	}
+	@Override
+	public void updateLose() {	
+	}
 
 
 }

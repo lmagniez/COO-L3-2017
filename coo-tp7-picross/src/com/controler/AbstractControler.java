@@ -32,9 +32,10 @@ public abstract class AbstractControler {
 	protected boolean requestGenererGrille;
 	
 	protected boolean reussiteGrille;
-	
 	protected boolean creationGrille;
 	protected boolean creation;
+	protected boolean requestUpdateReussite;
+	
 	
 	protected int idPuzzle;
 	protected String nom;
@@ -65,8 +66,15 @@ public abstract class AbstractControler {
 	/**
 	 * Reinitialiser le modèle
 	 */
-	public void reset(){
-		calc.reinit();
+	public void reset(int idGrille){
+		calc.reinit(idGrille);
+	}
+	
+	/**
+	 * Reinitialise la grille de création
+	 */
+	public void resetCreation(){
+		calc.reinitCreation();
 	}
 	
 	public void requestGrilles(){
@@ -78,6 +86,12 @@ public abstract class AbstractControler {
 	//Methode de controle
 	abstract void control();
 
+	/**
+	 * Changer une valeur dans une grille donnée
+	 * @param idPuzzle id du puzzle
+	 * @param i abscisse dans le puzzle
+	 * @param j ordonée dans le puzzle
+	 */
 	public void changeValue(int idPuzzle, int i, int j) {
 		// TODO Auto-generated method stub
 		this.idPuzzle=idPuzzle;
@@ -87,6 +101,10 @@ public abstract class AbstractControler {
 		
 	}
 
+	/**
+	 * Demander au modèle d'envoyer l'ensemble des informations pour une grille
+	 * @param idPuzzle id du puzzle
+	 */
 	public void requestGrilleDetail(int idPuzzle) {
 		// TODO Auto-generated method stub
 		this.requestGrilleDetail=true;
@@ -94,20 +112,36 @@ public abstract class AbstractControler {
 		control();
 	}
 	
+	/**
+	 * Demander au modèle de vérifier si la grille est correcte ou non
+	 * @param idPuzzle id du puzzle
+	 */
 	public void requestVerif(int idPuzzle){
 		this.requestVerifWin=true;
 		this.idPuzzle=idPuzzle;
 		control();
 	}
 	
+	/**
+	 * Demander l'ajout d'observer
+	 * @param obs
+	 */
 	public void addObserverModel(Observer obs){
 		this.calc.addObserver(obs);
 	}
 	
+	/**
+	 * Demander la suppression d'observer
+	 */
 	public void removeObserverModel(){
 		this.calc.removeObserver();
 	}
 
+	/**
+	 * Changer la valeur d'une case pour la grille de création
+	 * @param i abscisse de la grille
+	 * @param j ordonnée de la grille
+	 */
 	public void changeValueCreate(int i, int j) {
 		// TODO Auto-generated method stub
 		this.creation=true;
@@ -116,6 +150,12 @@ public abstract class AbstractControler {
 		control();
 	}
 
+	/**
+	 * Demander la création d'une nouvelle grille (initialisation création)
+	 * @param nom nom de la grille
+	 * @param nbRow nombre de ligne
+	 * @param nbCol nombre de colonne
+	 */
 	public void requestCreationGrille(String nom, int nbRow, int nbCol) {
 		this.creationGrille=true;
 		this.nom=nom;
@@ -124,7 +164,9 @@ public abstract class AbstractControler {
 		control();
 	}
 
-	
+	/**
+	 * Demander la sauvegarde de la grille (création)
+	 */
 	public void requestSave() {
 		// TODO Auto-generated method stub
 		this.requestSave=true;
@@ -132,11 +174,20 @@ public abstract class AbstractControler {
 		
 	}
 	
+	/**
+	 * Demander la génération des grilles dans le modèle
+	 */
 	public void requestGenererGrilles() {
 		// TODO Auto-generated method stub
 		this.requestGenererGrille=true;
 		control();
 		
+	}
+
+	public void requestUpdateReussite() {
+		// TODO Auto-generated method stub
+		this.requestUpdateReussite=true;
+		control();
 	}
 	
 	

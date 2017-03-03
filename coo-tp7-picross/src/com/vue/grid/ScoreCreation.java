@@ -1,6 +1,7 @@
 package com.vue.grid;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -32,11 +33,11 @@ public class ScoreCreation extends JPanel {
 	
 	private ImageIcon title;
 	
-	JTextArea textBox;
 	private String msgTour;
 	
 	private JButton retour,confirmer;
 	private JButton restart;
+	public ImageIcon logo= transform(new ImageIcon("./sprites/picross2.png"),VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30);
 	
 	
 	
@@ -61,21 +62,15 @@ public class ScoreCreation extends JPanel {
 		this.setBackground(Color.BLACK);
 		//this.setOpaque(true);
 		
-		title = new ImageIcon("./sprites/title.jpeg");
-		JLabel titre = new JLabel();
-		JLabel titre2 = new JLabel("test");
-		titre2.setIcon(title);
 		
-		msgTour="La textBox";
-		textBox=initTextArea(msgTour);
-		textBox.setEditable(false);
-		textBox.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
-		textBox.setSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
-		textBox.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		JLabel title = new JLabel();
+		title.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		title.setSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		title.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		title.setIcon(logo);
+		title.setAlignmentX( Component.CENTER_ALIGNMENT );
 		
-		
-		this.add(titre);
-		this.add(textBox);
+		this.add(title);
 		
 		restart= new JButton("Recommencer");
 		restart.addActionListener(new ButtonListener());
@@ -92,44 +87,18 @@ public class ScoreCreation extends JPanel {
 		p.add(retour);
 		
 		this.add(p);
-		this.changeTour(0);
 		
 		repaint();
 		
 	}
-	
-	/**
-	 * Initialisation de la zone de texte.
-	 * @param s Le contenu de la JTextArea
-	 * @return La JTextArea initialisé
-	 */
-	
-	public JTextArea initTextArea(String s)
-	{
-		
-		JTextArea textArea = new JTextArea();
-        textArea.setRows(15);
-        textArea.setColumns(10);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        textArea.setFont(new Font("Arial", Font.PLAIN, 16));
-        textArea.setBackground(Color.lightGray);
-		textArea.append(s);
-		return textArea;
 
-	}
-	
-	
-	/**
-	 * Changer le joueur courant (maj affichage)
-	 * @param tour joueur courant
-	 */
-	public void changeTour(int tour)
+	public ImageIcon transform (ImageIcon img, int hx, int hy)
 	{
-		msgTour="Au tour de: J"+(tour+1);
-		textBox.setText(msgTour);	
+		Image image=img.getImage();
+		Image newImg= image.getScaledInstance(hx, hy, java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(newImg);
 	}
-	
+
 	
 	
 	class ButtonListener implements ActionListener
@@ -139,12 +108,10 @@ public class ScoreCreation extends JPanel {
 			
 			String command = ((JButton) e.getSource()).getActionCommand();
 			
-			System.out.println("recommencer");
-			
 			if(command=="Confirmer")
 			{
 				//vue.controler.requestVerif(ScoreCreation.this.vue.getGrid().idGrid);
-				vue.controler.requestSave();
+				vue.getControler().requestSave();
 				ScoreCreation.this.confirmer.setEnabled(false);
 				ScoreCreation.this.restart.setEnabled(false);
 				ScoreCreation.this.retour.setEnabled(false);
@@ -153,14 +120,14 @@ public class ScoreCreation extends JPanel {
 			
 			if(command=="Recommencer")
 			{
-				vue.controler.reset();
+				vue.getControler().resetCreation();
 			}
 			
 			
 			if(command=="Retour")
 			{
 				
-				ScoreCreation.this.vue.controler.removeObserverModel();
+				ScoreCreation.this.vue.getControler().removeObserverModel();
 				vue.vueMenu.setVisible(true);
 				vue.setVisible(false);
 				
@@ -173,7 +140,6 @@ public class ScoreCreation extends JPanel {
 	public void displayWinner(int tour) {
 		tour=(tour+1)%2;
 		msgTour="J"+(tour+1)+" a remporté la partie !!";
-		textBox.setText(msgTour);	
 	}
 	
 	

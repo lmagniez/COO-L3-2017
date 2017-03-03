@@ -20,37 +20,48 @@
 
 \entete
 
-\section{Ce qui a été réalisé}
 
--Implémentation du jeu Puissance 4 en MVC\\%
--Possibilité de choisir le nombre de lignes et de colonnes\\%
--Possibilité de changer sa couleur de jeton\\%
--Implémentation d\textquotesingle une IA (choix pour chaque joueur si il est humain ou IA)\\%
--Menu de gestion du nombre de joueurs, du type de joueurs (Humain/IA), du nombre de cases. \\%
+\section{Ce qui a été implémenté}
 
 
-\section{Détection des patterns de victoire.}
-
--Difficulté pour mémoriser quel sont les jetons qui forment le pattern de victoire.
-
--Difficulté pour l\textquotesingle implémentation des diagonales, ci-dessous le schéma résumant les nombreuses méthodes de vérifications.
-On a divisé la recherche de diagonale en 4 méthodes.
-
-
-
-On les regroupe ensuite dans une dernière méthode qui va se charger de mettre à jour les pions qui ont permis de gagner (en cas de victoire).
+-Base de données fonctionnelle sur MySQL, respectant le schéma minimum inscrit dans le sujet (voir plus bas).\\%
+-Jeu fonctionnel, détecte les victoires à partir des indices de ligne et colonne (Sans avoir à stocker la solution).\\%
+-Sélection du puzzle dans la base de donnée pour jouer.\\%
+-Ensemble de puzzle par défaut se générant au démarrage du jeu (premier démarrage long, mais ne s\textquotesingle inscrit qu\textquotesingle une fois dans la base de donnée).\\%
+-Sauvegarde des puzzles réussi en fonction de l\textquotesingle utilisateur (enregistré en local, demande la confirmation de sauvegarder lorsque le joueur quitte le jeu).\\%
+-Création de puzzle à partir d\textquotesingle une grille vide et insertion dans la base.\\%
 
 
-\makebox[\textwidth]{\includegraphics[width=500pt]{img/1}}
-\makebox[\textwidth]{\includegraphics[width=500pt]{img/2}}
+\section{Base de données}
 
 
-\section{Méthode de décision de l\textquotesingle IA}
+Le schéma utilisé a été celui indiqué dans le sujet.\\%
+Petite indication concernant les indices de lignes, ils sont entrés comme suit :\\%
+« 1,10,12,2,3 », « 3,2,4,12 », ... \\%
+
+Je suis parti en début de projet sur un attribut entier, stockant le nombre en entier.\\%
+Un problème s\textquotesingle est cependant posé, on ne pouvait différencier les nombres à 1 et 2 chiffres. Il a fallut donc adopter une structure de chaîne, séparant chaque nombre par des virgules.\\%
+
+\makebox[\textwidth]{\includegraphics[width=300pt]{img/bd}}
 
 
-Premièrement, on va tester pour chaque colonne si le joueur peut gagner.\\%
-Si aucune colonne ne permet de gagner, on va regarder où l\textquotesingle adversaire peut potentiellement gagner et le stopper.\\%
-Dans le cas contraire, on va essayer de bloquer l\textquotesingle adversaire au maximum en cherchant la valeur maximum.\\%
+\section{Vérification des patterns}
+
+
+Pour vérifier la victoire, j\textquotesingle ai simplement vérifier pour chaque ligne puis pour chaque colonne si il y avait un conflit avec les indices.\\%
+Exemple : « 1,3 », conflit si on trouve 3 blocs de cases sur la même ligne, etc...\\%
+
+
+\section{Captures d\textquotesingle écrans du jeu}
+
+Écran de sélection:\\%
+\makebox[\textwidth]{\includegraphics[height=200pt]{img/choix}}
+
+Écran de jeu:\\%
+\makebox[\textwidth]{\includegraphics[height=200pt]{img/jeu}}
+
+Création de grille: \\%
+\makebox[\textwidth]{\includegraphics[height=200pt]{img/creation}}
 
 
 \end{document}

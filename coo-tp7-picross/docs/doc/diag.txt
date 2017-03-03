@@ -1,0 +1,36 @@
+@startuml
+class Jeu {
+ idPuzzle: int PRIMARY KEY
+ nom: String
+ nbLigne: int
+ nbColonne: int
+ reussite: boolean 
+}
+
+class Ligne {
+ idLigne: int PRIMARY KEY
+ indices: String
+}
+
+class Colonne {
+ idColonne: int PRIMARY KEY
+ indices: String
+}
+
+class indicesJeuLigne {
+ idPuzzle: int FOREIGN KEY REFERENCES Jeu(idPuzzle)
+ idLigne: int FOREIGN KEY REFERENCES Ligne(idLigne)
+ numLigne: int
+}
+
+class indicesJeuColonne {
+ idPuzzle: int FOREIGN KEY REFERENCES Jeu(idPuzzle)
+ idColonne: int FOREIGN KEY REFERENCES Colonne(idLigne)
+ numColonne: int
+}
+
+Jeu -- indicesJeuColonne
+Jeu -- indicesJeuLigne
+Ligne -- indicesJeuLigne
+Colonne -- indicesJeuColonne
+@enduml

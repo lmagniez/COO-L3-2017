@@ -1,6 +1,7 @@
 package com.vue.grid;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -38,6 +39,7 @@ public class Score extends JPanel {
 	private JButton retour,confirmer;
 	private JButton restart;
 	
+	public ImageIcon logo= transform(new ImageIcon("./sprites/picross2.png"),VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30);
 	
 	
 	
@@ -66,16 +68,19 @@ public class Score extends JPanel {
 		JLabel titre2 = new JLabel("test");
 		titre2.setIcon(title);
 		
-		msgTour="La textBox";
-		textBox=initTextArea(msgTour);
-		textBox.setEditable(false);
-		textBox.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
-		textBox.setSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
-		textBox.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
 		
 		
-		this.add(titre);
-		this.add(textBox);
+		
+		
+		JLabel title = new JLabel();
+
+		title.setMaximumSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		title.setSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		title.setPreferredSize(new Dimension(VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30));
+		title.setIcon(logo);
+		title.setAlignmentX( Component.CENTER_ALIGNMENT );
+		
+		this.add(title);
 		
 		restart= new JButton("Recommencer");
 		restart.addActionListener(new ButtonListener());
@@ -84,7 +89,6 @@ public class Score extends JPanel {
 		confirmer= new JButton("Confirmer");
 		confirmer.addActionListener(new ButtonListener());
 		
-		
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
 		p.add(confirmer);
@@ -92,42 +96,9 @@ public class Score extends JPanel {
 		p.add(retour);
 		
 		this.add(p);
-		this.changeTour(0);
 		
 		repaint();
 		
-	}
-	
-	/**
-	 * Initialisation de la zone de texte.
-	 * @param s Le contenu de la JTextArea
-	 * @return La JTextArea initialisé
-	 */
-	
-	public JTextArea initTextArea(String s)
-	{
-		
-		JTextArea textArea = new JTextArea();
-        textArea.setRows(15);
-        textArea.setColumns(10);
-        textArea.setLineWrap(true);
-        textArea.setWrapStyleWord(true);
-        textArea.setFont(new Font("Arial", Font.PLAIN, 16));
-        textArea.setBackground(Color.lightGray);
-		textArea.append(s);
-		return textArea;
-
-	}
-	
-	
-	/**
-	 * Changer le joueur courant (maj affichage)
-	 * @param tour joueur courant
-	 */
-	public void changeTour(int tour)
-	{
-		msgTour="Au tour de: J"+(tour+1);
-		textBox.setText(msgTour);	
 	}
 	
 	
@@ -139,29 +110,40 @@ public class Score extends JPanel {
 			
 			String command = ((JButton) e.getSource()).getActionCommand();
 			
-			System.out.println("recommencer");
 			
 			if(command=="Confirmer")
 			{
-				vue.controler.requestVerif(Score.this.vue.getGrid().idGrid);
+				vue.getControler().requestVerif(Score.this.vue.getGrid().idGrid);
 			}
 			
 			if(command=="Recommencer")
 			{
-				vue.controler.reset();
+				vue.getControler().reset(vue.getGrid().idGrid);
 			}
 			
 			
 			if(command=="Retour")
 			{
-				Score.this.vue.controler.removeObserverModel();
+				Score.this.vue.getControler().removeObserverModel();
 				vue.vueMenu.setVisible(true);
 				vue.setVisible(false);
 			}
 		} 
 	}
 
+	
+	public ImageIcon transform (ImageIcon img, int hx, int hy)
+	{
+		Image image=img.getImage();
+		Image newImg= image.getScaledInstance(hx, hy, java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(newImg);
+	}
+	
 
+	/**
+	 * Afficher le gagnant 
+	 * @param tour 
+	 */
 	public void displayWinner(int tour) {
 		tour=(tour+1)%2;
 		msgTour="J"+(tour+1)+" a remporté la partie !!";

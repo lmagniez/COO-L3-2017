@@ -35,7 +35,7 @@ public class Grid extends JPanel implements MouseListener{
 	public static int GRILLE_POSX;
 	public static int GRILLE_POSY;
 	
-	public static final int INDICE_SIZE=50;
+	public static final int INDICE_SIZE=75;
 	public static final int ESPACEMENT_SIZE=15;
 	public static final int ESPACEMENT2_SIZE=15;
 	
@@ -46,11 +46,16 @@ public class Grid extends JPanel implements MouseListener{
 
 	protected boolean actif=true;
 	
-	
 	/**
 	 * Constructeur créant la grille et l'intégrant à la vue.
 	 * @param v vue 
-	 * @param nbLigne nombre de ligne de la grille
+	 * @param idGrid id de la grille
+	 * @param nbRow nombre de ligne 
+	 * @param nbCol nombre de colonne
+	 * @param nom nom de la grille
+	 * @param infosLigne indices de ligne
+	 * @param infosColonne indices de colonne
+	 * @param reussite reussite ou non
 	 */
 	public Grid(VueGrid v, int idGrid, int nbRow, int nbCol, String nom, String[] infosLigne, String[] infosColonne, boolean reussite)
 	{
@@ -65,8 +70,6 @@ public class Grid extends JPanel implements MouseListener{
 		setBackground(Color.BLUE);
 		this.setOpaque(true);
 		this.setVisible(true);
-		
-		//this.setBorder(BorderFactory.createLineBorder(Color.white));
 		
 		
 		GRILLE_POSX=(VueGrid.TAILLE_ECRAN_GRILLE_X
@@ -115,12 +118,16 @@ public class Grid extends JPanel implements MouseListener{
 	
 	
 	
-	/**
-	 * Test de collision sur les différents traits
-	 * @param arg0 Souris 
-	 * @return Coté si on en trouve un qui concorde avec la position de souris
-	 */
 	
+	
+	/**
+	 * Test de collision pour une case donnée
+	 * @param x abscisse 
+	 * @param y ordonée
+	 * @param mouseX posX de la souris
+	 * @param mouseY posY de la souris
+	 * @return collision ou non
+	 */
 	public boolean collide(int x, int y, int mouseX, int mouseY)
 	{
 		return(mouseX>=cases[x][y].posX 
@@ -130,6 +137,11 @@ public class Grid extends JPanel implements MouseListener{
 		
 	}
 	
+	/**
+	 * Test de collision
+	 * @param arg0 
+	 * @return collision ou non
+	 */
 	public int collision(MouseEvent arg0)
 	{
 		if(actif)
@@ -138,7 +150,7 @@ public class Grid extends JPanel implements MouseListener{
 			for(int j=0; j<nbCol; j++){
 				if(collide(i,j,arg0.getX(), arg0.getY()))
 				{
-					vue.controler.changeValue(idGrid,i,j);
+					vue.getControler().changeValue(idGrid,i,j);
 					this.repaint();
 					return 1;
 				}
@@ -213,19 +225,25 @@ public class Grid extends JPanel implements MouseListener{
 				
 				for(int k=0; k<this.infosLigne.length; k++){
 					
-					if(infosLigne[k].length()>4)
+
+					String str=infosLigne[k];
+					str.replace(","," ");
+					
+					if(str.length()>4)
 						g.setFont(new Font("Arial", Font.BOLD, 10)); 
 					else
 						g.setFont(new Font("Arial", Font.BOLD, 15));
+					
 					
 					g.setColor(Color.LIGHT_GRAY);
 					g.fillRect(ESPACEMENT_SIZE, cases[0][k].posY, INDICE_SIZE, Case.DIAMETRE_CASE);
 					g.setColor(Color.BLACK);
 					g.drawRect(ESPACEMENT_SIZE, cases[0][k].posY, INDICE_SIZE, Case.DIAMETRE_CASE);
-					g.drawString(infosLigne[k], ESPACEMENT_SIZE+3, cases[0][k].posY+cases[0][k].hY*3/4);
+					g.drawString(str, ESPACEMENT_SIZE+3, cases[0][k].posY+cases[0][k].hY*3/4);
 				}
 				
 				for(int k=0; k<this.infosColonne.length; k++){
+					
 					int size;
 					if(infosColonne[k].length()>3){
 						size=10;
@@ -240,8 +258,25 @@ public class Grid extends JPanel implements MouseListener{
 					g.fillRect(cases[k][0].posX,0, Case.DIAMETRE_CASE,INDICE_SIZE);
 					g.setColor(Color.BLACK);
 					g.drawRect(cases[k][0].posX,0, Case.DIAMETRE_CASE,INDICE_SIZE);
+					int cpt=0;
 					for(int l=0; l<this.infosColonne[k].length(); l++){
-						g.drawString(""+infosColonne[k].charAt(l),cases[k][0].posX+cases[k][0].hX/2,size+size*l);
+						String res="";
+						
+						
+						while(l<this.infosColonne[k].length()){
+							if(infosColonne[k].charAt(l)==',')
+								break;
+							
+							res+=infosColonne[k].charAt(l);
+							l++;
+						}
+						
+						if(res.length()==2)
+							g.setFont(new Font("Arial", Font.BOLD, 10));
+						g.drawString(res,cases[k][0].posX+3,size+size*cpt);
+						cpt++;
+						g.setFont(new Font("Arial", Font.BOLD, size));
+						//g.drawString(""+infosColonne[k].charAt(l),cases[k][0].posX+cases[k][0].hX/2,size+size*l);
 					}
 					
 					

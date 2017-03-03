@@ -36,26 +36,22 @@ public class VueGridCreation extends Fenetre implements Observer {
 	public static final int TAILLE_ECRAN_SCORE=150;
 	
 
-	// L'instance de notre objet controleur
-	protected AbstractControler controler;
-
 	/**
-	 * Constructeur de la vue de la grille.
-	 * @param nbCol 
-	 * @param nbRow 
-	 * @param nom 
-	 * @param controler Controler de la grille
+	 * Constructeur
+	 * @param nom nom de la grille
 	 * @param nbRow nombre de lignes
 	 * @param nbCol nombre de colonnes
-	 * @param swapColor 
-	 * @param menu Vue correspondant au menu
+	 * @param controler controler
+	 * @param menu vue
 	 */
 	
 	//ADD CONTROLEr
 	public VueGridCreation(String nom, int nbRow, int nbCol, AbstractControler controler, Vue1 menu) {
 		
+		super(controler);
+		
 		this.swapColor=swapColor;
-		this.controler=controler;
+		this.setControler(controler);
 		this.vueMenu=menu;
 		this.setSize(TAILLE_ECRAN_GRILLE_X, TAILLE_ECRAN_GRILLE_Y+TAILLE_ECRAN_SCORE);
 		this.setTitle("PICROSS");
@@ -64,7 +60,7 @@ public class VueGridCreation extends Fenetre implements Observer {
 		this.setResizable(false);
 		this.setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		
-		this.controler = controler;
+		this.setControler(controler);
 		//this.grid=new Grid(this, nbRow, nbCol);
 		this.score= new ScoreCreation(this,2);
 		
@@ -106,28 +102,70 @@ public class VueGridCreation extends Fenetre implements Observer {
 		}
 		getGrid().repaint();
 		this.getGrid().actif=true;
-		
 	}
 
+	/**
+	 * Mettre à jour la grille
+	 * @param x abscisse de la grille
+	 * @param y ordonnée de la grille
+	 */
 	@Override
 	public void updateChangeValue(int x, int y) {
 		// TODO Auto-generated method stub
 		this.getGrid().cases[x][y].changeValue();
 	}
 
+	/**
+	 * Mettre à jour la victoire
+	 */
 	@Override
 	public void updateWin() {
 		// TODO Auto-generated method stub
-		System.out.println("WINNER");
 	}
 
+	/**
+	 * Mettre à jour une défaite
+	 */
 	@Override
 	public void updateLose() {
 		// TODO Auto-generated method stub
-		System.out.println("LOSER");
 	}
 
 
+	
+
+	public GridCreation getGrid() {
+		return grid;
+	}
+
+	public void setGrid(GridCreation grid) {
+		this.grid = grid;
+	}
+	
+	/**
+	 * Réinitialiser une fenetre 
+	 */
+	@Override
+	public void updateReinitWindow() {
+		// TODO Auto-generated method stub
+		this.getControler().removeObserverModel();
+		try {
+			vueMenu= new Vue1(vueMenu.getGridControler());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		this.getControler().addObserverModel(vueMenu);
+		this.getControler().requestGenererGrilles();
+		vueMenu.requestGrilles();
+		
+		//this.vueMenu.setVisible(true);
+		
+		
+		this.setVisible(false);
+	}
+	
 	@Override
 	public void updateInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite, int[] nbLignes, int[] nbColonnes) {
 		//pour VueMenu
@@ -137,41 +175,6 @@ public class VueGridCreation extends Fenetre implements Observer {
 	public void updateGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne,
 			boolean reussite) {
 		
-	}
-
-	public GridCreation getGrid() {
-		return grid;
-	}
-
-	public void setGrid(GridCreation grid) {
-		this.grid = grid;
-	}
-
-	@Override
-	public void updateStart() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void updateReinitWindow() {
-		// TODO Auto-generated method stub
-		this.controler.removeObserverModel();
-		try {
-			vueMenu= new Vue1(vueMenu.getGridControler());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		this.controler.addObserverModel(vueMenu);
-		this.controler.requestGenererGrilles();
-		vueMenu.requestGrilles();
-		
-		//this.vueMenu.setVisible(true);
-		
-		
-		this.setVisible(false);
 	}
 
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.controler.AbstractControler;
@@ -38,23 +39,23 @@ public class VueGrid extends Fenetre implements Observer {
 	public static final int TAILLE_ECRAN_SCORE=150;
 	
 
-	// L'instance de notre objet controleur
-	protected AbstractControler controler;
+	
 
+	
+	
 	/**
-	 * Constructeur de la vue de la grille.
-	 * @param controler Controler de la grille
-	 * @param nbRow nombre de lignes
-	 * @param nbCol nombre de colonnes
-	 * @param swapColor 
-	 * @param menu Vue correspondant au menu
+	 * COnstructeur
+	 * @param controler controler
+	 * @param menu vue
 	 */
 	
 	//ADD CONTROLEr
 	public VueGrid(AbstractControler controler, Vue1 menu) {
 		
+		super(controler);
+		
 		this.swapColor=swapColor;
-		this.controler=controler;
+		this.setControler(controler);
 		this.vueMenu=menu;
 		this.setSize(TAILLE_ECRAN_GRILLE_X, TAILLE_ECRAN_GRILLE_Y+TAILLE_ECRAN_SCORE);
 		this.setTitle("PICROSS");
@@ -63,7 +64,7 @@ public class VueGrid extends Fenetre implements Observer {
 		this.setResizable(false);
 		this.setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		
-		this.controler = controler;
+		this.setControler(controler);
 		//this.grid=new Grid(this, nbRow, nbCol);
 		this.score= new Score(this,2);
 		
@@ -99,38 +100,48 @@ public class VueGrid extends Fenetre implements Observer {
 		
 	}
 
+	/**
+	 * Mettre à jour la valeur d'une case dans la grille
+	 * @param x abscisse de la case
+	 * @param y ordonée de la case
+	 */
 	@Override
 	public void updateChangeValue(int x, int y) {
 		// TODO Auto-generated method stub
 		this.getGrid().cases[x][y].changeValue();
 	}
 
+	/**
+	 * Mettre à jour une victoire
+	 */
 	@Override
 	public void updateWin() {
 		// TODO Auto-generated method stub
-		
-
-		System.out.println("WINNER");
+		JOptionPane.showMessageDialog(this,"Gogné!"); 
 		updateReinitWindow();
 	}
 
+	
+	/**
+	 * Mettre à jour une défaite
+	 */
 	@Override
 	public void updateLose() {
-		// TODO Auto-generated method stub
-		System.out.println("LOSER");
+		JOptionPane.showMessageDialog(this,"Perdu, Réessayer!"); 
 	}
 
 
-	@Override
-	public void updateInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite, int[] nbLignes, int[] nbColonnes) {
-		//pour VueMenu
-	}
-
+	/**
+	 * Mettre à jour une grille en détail
+	 * @param id id de la grille
+	 * @param nom nom de la grille
+	 * @param indicesLigne liste des indices de ligne
+	 * @param indicesColonne liste des indices de colonnes
+	 */
 	@Override
 	public void updateGrilleDetail(int id, String nom, String[] indicesLigne, String[] indicesColonne,
 			boolean reussite) {
 		// TODO Auto-generated method stub
-		System.out.println("update Grille !");
 		
 		this.setGrid(new Grid(this, id, indicesLigne.length, indicesColonne.length, nom, 
 				indicesLigne, indicesColonne, reussite));
@@ -147,21 +158,19 @@ public class VueGrid extends Fenetre implements Observer {
 		this.grid = grid;
 	}
 
-	@Override
-	public void updateStart() {
-		// TODO Auto-generated method stub
-		
-	}
 
+	/**
+	 * Réinitialiser la fenêtre 
+	 */
 	@Override
 	public void updateReinitWindow() {
 		// TODO Auto-generated method stub
 		//this
 		
 		
-		this.controler.removeObserverModel();
+		this.getControler().removeObserverModel();
 		
-		this.controler.addObserverModel(vueMenu);
+		this.getControler().addObserverModel(vueMenu);
 		//this.controler.requestGenererGrilles();
 		vueMenu.requestGrilles();
 		this.vueMenu.setVisible(true);
@@ -175,4 +184,9 @@ public class VueGrid extends Fenetre implements Observer {
 		
 	}
 
+	@Override
+	public void updateInfosGrilles(int nbGrille, int[] id, String[] nom, boolean[] reussite, int[] nbLignes, int[] nbColonnes) {
+		//pour VueMenu
+	}
+	
 }
