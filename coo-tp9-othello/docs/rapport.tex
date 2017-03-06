@@ -1,0 +1,67 @@
+\documentclass[a4paper,utf8]{article}
+\usepackage{rapport}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{MnSymbol,wasysym}
+\usepackage{hyperref}
+\usepackage[french]{babel}
+
+
+\formation{L3MI}
+\date{}
+\matiere{Conception Orientée Objet}
+\titre{Dots And Boxes - Compte Rendu}
+
+\newcommand\code[1]{\textsf{#1}}
+\newcommand\srdjan[1]{{\color{red} #1}}
+
+\begin{document}
+
+\entete
+
+
+\section{Ce qui a été implémenté}
+
+
+-Base de données fonctionnelle sur MySQL, respectant le schéma minimum inscrit dans le sujet (voir plus bas).\\%
+-Jeu fonctionnel, détecte les victoires à partir des indices de ligne et colonne (Sans avoir à stocker la solution).\\%
+-Sélection du puzzle dans la base de donnée pour jouer.\\%
+-Ensemble de puzzle par défaut se générant au démarrage du jeu (premier démarrage long, mais ne s\textquotesingle inscrit qu\textquotesingle une fois dans la base de donnée).\\%
+-Sauvegarde des puzzles réussi en fonction de l\textquotesingle utilisateur (enregistré en local, demande la confirmation de sauvegarder lorsque le joueur quitte le jeu).\\%
+-Création de puzzle à partir d\textquotesingle une grille vide et insertion dans la base.\\%
+
+
+\section{Base de données}
+
+
+Le schéma utilisé a été celui indiqué dans le sujet.\\%
+Petite indication concernant les indices de lignes, ils sont entrés comme suit :\\%
+« 1,10,12,2,3 », « 3,2,4,12 », ... \\%
+
+Je suis parti en début de projet sur un attribut entier, stockant le nombre en entier.\\%
+Un problème s\textquotesingle est cependant posé, on ne pouvait différencier les nombres à 1 et 2 chiffres. Il a fallut donc adopter une structure de chaîne, séparant chaque nombre par des virgules.\\%
+
+\makebox[\textwidth]{\includegraphics[width=300pt]{img/bd}}
+
+
+\section{Vérification des patterns}
+
+
+Pour vérifier la victoire, j\textquotesingle ai simplement vérifier pour chaque ligne puis pour chaque colonne si il y avait un conflit avec les indices.\\%
+Exemple : « 1,3 », conflit si on trouve 3 blocs de cases sur la même ligne, etc...\\%
+
+
+\section{Captures d\textquotesingle écrans du jeu}
+
+Écran de sélection:\\%
+\makebox[\textwidth]{\includegraphics[height=200pt]{img/choix}}
+
+Écran de jeu:\\%
+\makebox[\textwidth]{\includegraphics[height=200pt]{img/jeu}}
+
+Création de grille: \\%
+\makebox[\textwidth]{\includegraphics[height=200pt]{img/creation}}
+
+
+\end{document}

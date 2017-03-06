@@ -140,7 +140,6 @@ public class EcranOpt extends Ecran implements ActionListener{
 	    	typeJoueurs[i].setMaximumSize(new Dimension(150,50));
 	    	typeJoueurs[i].setSelectedIndex(0);
 	    	
-	    	
 	    	//Nom des joueurs
 	    	nomJoueurs[i]=new JTextField(15);
 	    	nomJoueurs[i].setMaximumSize(new Dimension(200,25));
@@ -237,7 +236,6 @@ public class EcranOpt extends Ecran implements ActionListener{
 		
 		this.addListener();
 	}
-	
 	
 	public ImageIcon transform (ImageIcon img, int hx, int hy)
 	{
