@@ -41,7 +41,7 @@ public class VueGrid extends Fenetre implements Observer {
 	public static final int TAILLE_ECRAN_GRILLE_X=500;
 	public static final int TAILLE_ECRAN_GRILLE_Y=500-Grid.ESPACEMENT_SIZE-Grid.ESPACEMENT2_SIZE;
 	
-	public static final int TAILLE_ECRAN_SCORE=150;
+	public static final int TAILLE_ECRAN_SCORE=200;
 	
 
 	
@@ -72,6 +72,7 @@ public class VueGrid extends Fenetre implements Observer {
 		
 		this.grid=new Grid(this, nbColonne, nbLigne);
 		this.score= new Score(this,2);
+		this.tour=CaseValue.J1;
 		
 		this.setVisible(true);
 		
@@ -123,6 +124,12 @@ public class VueGrid extends Fenetre implements Observer {
 				getGrid().cases[i][j].color=CaseValue.getColorFromValue(CaseValue.EMPTY);
 			}
 		}
+		
+		this.score.nbJetonsJ1=0;
+		this.score.nbJetonsJ2=0;
+		this.score.scoreJ1.setText("score J1: "+2);
+		this.score.scoreJ2.setText("score J2: "+2);
+		
 		getGrid().repaint();
 		this.getGrid().actif=true;
 		
@@ -141,13 +148,34 @@ public class VueGrid extends Fenetre implements Observer {
 	@Override
 	public void updateChangeValue(int x, int y, CaseValue v) {
 		// TODO Auto-generated method stub
-		
+		this.grid.cases[x][y].changeValue(v);
+		this.repaint();
 	}
 
 	@Override
 	public void updateWin(CaseValue v) {
 		// TODO Auto-generated method stub
 		System.out.println("WINNER !!");
+	}
+
+	@Override
+	public void updateScore(int nbJetonsJ1, int nbJetonsJ2) {
+		// TODO Auto-generated method stub
+		this.score.nbJetonsJ1=nbJetonsJ1;
+		this.score.nbJetonsJ2=nbJetonsJ2;
+		this.score.scoreJ1.setText("Score J1: "+nbJetonsJ1);
+		this.score.scoreJ2.setText("Score J2: "+nbJetonsJ2);
+		
+		this.score.p2.revalidate();
+		this.score.p2.repaint();
+		
+	}
+
+	@Override
+	public void updateTour(CaseValue v) {
+		// TODO Auto-generated method stub
+		System.out.println("update tour "+v);
+		this.tour=v;
 	}
 
 	

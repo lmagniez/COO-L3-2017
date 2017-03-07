@@ -26,7 +26,10 @@ public abstract class AbstractModel implements Observable{
 	public abstract CaseValue getTour();
 	public abstract  boolean peutJouer(CaseValue tour);
 	public abstract void getWinner();
-	
+	public abstract void placerinit();
+	public abstract void afficherGrille();
+	public abstract void startIA();
+	public abstract void stopIA();
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur
@@ -77,15 +80,22 @@ public abstract class AbstractModel implements Observable{
 	}
 
 	
-
+	public void notifyScore(int nbJetonsJ1, int nbJetonsJ2){
+		for(Observer obs : listObserver)
+			obs.updateScore(nbJetonsJ1,nbJetonsJ2);
+	}
 
 
 	public void reinit() {
-		// TODO Auto-generated method stub
-		
+		for(Observer obs : listObserver)
+			obs.updateReinit();
 	}
 	
 	
+	public void notifyTour(CaseValue v){
+		for(Observer obs : listObserver)
+			obs.updateTour(v);
+	}
 	
 
 

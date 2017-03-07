@@ -41,17 +41,23 @@ public class GridControler extends AbstractControler{
 			}
 		}
 		
+		System.out.println(v);
+		//this.calc.afficherGrille();
+		
 		if(peutPlacer){
+			System.out.println("peut placer!!");
 			this.calc.remplirCase(x, y, res, v);
-		}
 		
-		this.calc.changerTour();
-		if(!calc.peutJouer(this.calc.getTour())){
+		
 			this.calc.changerTour();
-			if(!calc.peutJouer(this.calc.getTour()))
-				this.calc.getWinner();
+			if(!calc.peutJouer(this.calc.getTour())){
+				this.calc.changerTour();
+				if(!calc.peutJouer(this.calc.getTour())){
+					this.calc.getWinner();
+					this.calc.stopIA();
+				}
+			}
 		}
-		
 		
 		
 			

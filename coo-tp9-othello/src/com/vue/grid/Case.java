@@ -67,7 +67,7 @@ public class Case
 	public void changeValue(CaseValue v){
 		this.v=v;
 		this.color=CaseValue.getColorFromValue(v);
-			
+		
 	}
 	
 }

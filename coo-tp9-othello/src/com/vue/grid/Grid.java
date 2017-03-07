@@ -28,7 +28,7 @@ public class Grid extends JPanel implements MouseListener{
 	public static int GRILLE_POSX;
 	public static int GRILLE_POSY;
 	
-	public static final int INDICE_SIZE=75;
+	public static final int INDICE_SIZE=10;
 	public static final int ESPACEMENT_SIZE=15;
 	public static final int ESPACEMENT2_SIZE=15;
 	
@@ -54,7 +54,7 @@ public class Grid extends JPanel implements MouseListener{
 		this.nbRow=nbRow;
 		this.nbCol=nbCol;
 		
-		setBackground(Color.BLUE);
+		setBackground(new Color(98,31,6));
 		this.setOpaque(true);
 		this.setVisible(true);
 		
@@ -195,16 +195,17 @@ public class Grid extends JPanel implements MouseListener{
 		for(int i=0; i<nbRow; i++)
 			for(int j=0; j<nbCol; j++)
 			{
-				g.setColor(new Color(0, 0, 128));
-				g.fillRect (cases[i][j].posX, cases[i][j].posY
-						, cases[i][j].hX, cases[i][j].hY);
 				
+				g.setColor(new Color(46,115,58));
+				g.fillRect(cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
+				g.setColor(Color.LIGHT_GRAY);
+				g.drawRect(cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
 				
 				
 				g.setColor(cases[i][j].color);
 				//System.out.println(cases[i][j].c);
 				//g.clearRect(cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
-				g.fillRect (cases[i][j].posX+2, cases[i][j].posY+2, cases[i][j].hX-4, cases[i][j].hY-4);
+				g.fillOval (cases[i][j].posX+4, cases[i][j].posY+4, cases[i][j].hX-8, cases[i][j].hY-8);
 				
 				
 				g.setFont(new Font("Arial", Font.BOLD, 15)); 

@@ -36,7 +36,7 @@ public enum CaseValue {
 	public static Color getColorFromValue(CaseValue c){
 		switch(c){
 			case EMPTY:
-				return Color.gray;
+				return new Color(46,115,58);
 			case J1:
 				return Color.white;
 			case J2:

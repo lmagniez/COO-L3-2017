@@ -14,6 +14,7 @@ public interface Observable {
 	public void notifyWin(CaseValue v);
 	
 	public void notifyReinit();
-	
+	public void notifyScore(int nbJetonsJ1,int nbJetonsJ2);
+	public void notifyTour(CaseValue v);
 	
 }

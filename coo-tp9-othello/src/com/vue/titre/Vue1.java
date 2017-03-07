@@ -74,22 +74,26 @@ public class Vue1 extends Fenetre{
 	 * Initialise une fenetre de jeu
 	 * @param nbColonne 
 	 * @param nbLigne 
+	 * @param isIA 
 	 * @param idPuzzle id de la grille
 	 * @throws SQLException
 	 */
-	public void initFenetreEcranJeu(int nbLigne, int nbColonne) 
+	public void initFenetreEcranJeu(int nbLigne, int nbColonne, boolean[] isIA) 
 	{
 		
 		
 		//Creation du modele de grille
-		AbstractModel gridModel = new GrilleModel(nbColonne,nbLigne,true);
+		AbstractModel gridModel = new GrilleModel(nbColonne,nbLigne,isIA,true);
 		//Creation du controleur
 		AbstractControler gameControler = new GridControler(gridModel);
 		//Creation de notre fenetre avec le controleur en parametre
 		VueGrid vueJeu = new VueGrid(gameControler, this, nbLigne, nbColonne);
 		//Ajout de la fenetre comme observer de notre modele
 		gridModel.addObserver(vueJeu);
-				
+		
+		gridModel.placerinit();
+		gridModel.startIA();
+		
 		this.setVisible(false);
 		
 	}

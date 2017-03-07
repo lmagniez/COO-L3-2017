@@ -12,7 +12,7 @@ public interface Observer {
 
 	public void updateChangeValue(int x, int y, CaseValue v);
 	public void updateWin(CaseValue v);
-	
-	
+	public void updateScore(int nbJetonsJ1,int nbJetonsJ2);
+	public void updateTour(CaseValue v);
 	
 }
