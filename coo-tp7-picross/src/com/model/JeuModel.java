@@ -16,7 +16,7 @@ public class JeuModel extends AbstractModel{
 	GrilleModel creation;
 	
 	public JeuModel() throws SQLException{
-		this.client=new MySQLCli("//localhost:3306/", "", "");
+		this.client=new MySQLCli("//localhost:3306/", "root", "root");
 		
 		this.genererGrilles();
        
