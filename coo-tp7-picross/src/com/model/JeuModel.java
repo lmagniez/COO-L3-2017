@@ -31,14 +31,14 @@ public class JeuModel extends AbstractModel{
 	public void genererGrilles(){
 		this.grilles=new ArrayList<GrilleModel>();
 		if (client.connect()) {
-				/*
-				System.out.println(client.execUpdate(ConstantesRequetes.createDataBase));
-	       		System.out.println(client.execUpdate(ConstantesRequetes.createJeu));
-	       		System.out.println(client.execUpdate(ConstantesRequetes.createLigne));
-	       		System.out.println(client.execUpdate(ConstantesRequetes.createColonne));
-	       		System.out.println(client.execUpdate(ConstantesRequetes.createIndiceJeuColonne));
-	       		System.out.println(client.execUpdate(ConstantesRequetes.createIndiceJeuLigne));
-	       	 	*/
+				
+				client.execUpdate(ConstantesRequetes.createDataBase);
+	       		client.execUpdate(ConstantesRequetes.createJeu);
+	       		client.execUpdate(ConstantesRequetes.createLigne);
+	       		client.execUpdate(ConstantesRequetes.createColonne);
+	       		client.execUpdate(ConstantesRequetes.createIndiceJeuColonne);
+	       		client.execUpdate(ConstantesRequetes.createIndiceJeuLigne);
+	       	 	
 	       		try {
 					
 	       			if(client.getIdPuzzleFromName(ConstantesRequetes.nomStar)==-1){
