@@ -1,6 +1,8 @@
 package com.controler;
 
 
+import java.util.ArrayList;
+
 import com.model.AbstractModel;
 import com.vue.titre.Vue1;
 
@@ -50,13 +52,21 @@ public class GridControler extends AbstractControler{
 		
 		
 			this.calc.changerTour();
-			if(!calc.peutJouer(this.calc.getTour())){
+			
+			ArrayList<int[]> liste= this.calc.peutJouer(this.calc.getTour());
+			
+			
+			if(liste.size()==0){
 				this.calc.changerTour();
-				if(!calc.peutJouer(this.calc.getTour())){
+				liste= this.calc.peutJouer(this.calc.getTour());
+				if(liste.size()==0){
 					this.calc.getWinner();
 					this.calc.stopIA();
 				}
 			}
+			
+			this.calc.notifyPosJouable(liste);
+			
 		}
 		
 		

@@ -98,9 +98,13 @@ public abstract class AbstractControler {
 	 */
 	public void requestSave() {
 		// TODO Auto-generated method stub
-		this.requestSave=true;
-		control();
-		
+		this.calc.sauvegarder();
+		this.calc.stopIA();
+	}
+
+	public void requestStopIA() {
+		// TODO Auto-generated method stub
+		this.calc.stopIA();
 	}
 	
 	

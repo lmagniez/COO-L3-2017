@@ -10,6 +10,8 @@ import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import com.model.CaseValue;
+
 
 
 /**
@@ -192,6 +194,8 @@ public class Grid extends JPanel implements MouseListener{
 		super.paintComponent(g);
 		
 		
+		
+		
 		for(int i=0; i<nbRow; i++)
 			for(int j=0; j<nbCol; j++)
 			{
@@ -210,8 +214,18 @@ public class Grid extends JPanel implements MouseListener{
 				
 				g.setFont(new Font("Arial", Font.BOLD, 15)); 
 				
+			}
+		
+		if(vue.posJouable!=null)
+			for(int i=0; i<vue.posJouable.size(); i++){
 				
-				
+				if(this.vue.tour==CaseValue.J1)
+					g.setColor(Color.WHITE);
+				else
+					g.setColor(Color.BLACK);
+				int[] pos=vue.posJouable.get(i);
+				g.drawOval(cases[pos[0]][pos[1]].posX+4, cases[pos[0]][pos[1]].posY+4, 
+						cases[pos[0]][pos[1]].hX-8, cases[pos[0]][pos[1]].hY-8);
 			}
 		
 	}

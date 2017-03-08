@@ -59,7 +59,7 @@ public class EcranParam extends JPanel{
 		start.addActionListener(new ButtonListener());
 		
 		//init bouton quitter
-		quit=new ButtonMenu("Quitter",Colors.textColor2,Colors.case16);	
+		quit=new ButtonMenu("Retour",Colors.textColor2,Colors.case16);	
 		quit.addActionListener(new ButtonListener());
 		
 		//init label titre
@@ -187,8 +187,8 @@ public class EcranParam extends JPanel{
 			}
 			
 			
-			if(command=="Quitter")
-				f.dispose();
+			if(command=="Retour")
+				f.afficherPanneau(f.getPanneauTitre());
 		} 
 	}
 	

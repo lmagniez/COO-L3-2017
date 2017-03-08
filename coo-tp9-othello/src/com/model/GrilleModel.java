@@ -1,5 +1,16 @@
 package com.model;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
+import org.xml.sax.*;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 /**
  * Classe représentant une grille de jeu de manière logique
  * @author loick
@@ -49,7 +60,150 @@ public class GrilleModel extends AbstractModel{
 			tour=CaseValue.J2;
 		}
 		
+		
+		//this.recupXML();
 	}
+	
+	public GrilleModel(){
+		this.ia=new IA(this);
+		this.recupXML();
+		ArrayList<int[]> liste= this.peutJouer(getTour());
+		this.notifyPosJouable(liste);
+	}
+	
+	
+	
+	public void genererXML(){
+		
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		
+		try{
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document xml = builder.newDocument();
+			Element root = xml.createElement("grille");
+			
+			Element trunk1 = xml.createElement("nbX");
+			trunk1.setTextContent(this.nbX+"");
+			root.appendChild(trunk1);
+			
+			Element trunk2 = xml.createElement("nbY");
+			trunk2.setTextContent(this.nbY+"");
+			root.appendChild(trunk2);
+			
+			Element trunk3 = xml.createElement("IAJ1");
+			trunk3.setTextContent(this.isIA[0]+"");
+			root.appendChild(trunk3);
+			
+			Element trunk4 = xml.createElement("IAJ2");
+			trunk4.setTextContent(this.isIA[1]+"");
+			root.appendChild(trunk4);
+			
+			System.out.println("IA "+isIA[0]+isIA[1]);
+			
+			
+			for(int i=0; i<nbX; i++){
+				for(int j=0; j<nbY; j++){
+					Element trunk = xml.createElement("case");
+					trunk.setAttribute("x", ""+i);
+					trunk.setAttribute("y", ""+j);
+					Element branche = xml.createElement("value");
+					branche.setTextContent(grille[i][j].v+"");
+					trunk.appendChild(branche);
+					root.appendChild(trunk);
+				}
+			}
+			
+			Transformer t;
+			t = TransformerFactory.newInstance().newTransformer();
+			String resultFile = "save.xml";
+			StreamResult XML = new StreamResult(resultFile);
+			t.transform(new DOMSource(root), XML);
+		} catch (ParserConfigurationException e) {
+		e.printStackTrace();
+		} catch (TransformerConfigurationException | TransformerFactoryConfigurationError e) {
+		e.printStackTrace();
+		} catch (TransformerException e) {
+		e.printStackTrace();
+		}
+		
+	}
+	
+	public void recupXML(){
+		
+		// Une instance de factory se charge de nous fournir un parseur
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		
+		try {
+			// Creation du parseur via la factory
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			//creation de notre objet d'erreurs
+			ErrorHandler errHandler = new SimpleErrorHandler();
+			//Affectation de notre objet au document pour interception des erreurs eventuelles
+			builder.setErrorHandler(errHandler);
+			try {
+				File fileXML = new File("save.xml");
+				// parsing de notre fichier via un objet File et recuperation d'un objet Document
+				// Ce dernier represente la hierarchie d'objet creee pendant le parsing
+				Document xml = builder.parse(fileXML);
+				// Via notre objet Document, nous pouvons recuperer un objet Element, ici nous prenons la racine
+				Element root = xml.getDocumentElement();
+				
+				NodeList list=root.getChildNodes();
+				
+				this.nbX=Integer.parseInt(list.item(1).getTextContent());
+				this.nbY=Integer.parseInt(list.item(0).getTextContent());
+				this.grille=new CaseModel[nbX][nbY];
+				for(int i=0; i<nbX; i++){
+					for(int j=0; j<nbY; j++){
+						grille[i][j]=new CaseModel();
+					}	
+				}
+					
+				this.isIA=new boolean[2];
+				this.isIA[0]=Boolean.valueOf(list.item(2).getTextContent());
+				this.isIA[1]=Boolean.valueOf(list.item(3).getTextContent());
+				
+				System.out.println("IA "+isIA[0]+isIA[1]);
+				
+				this.nbJetons=0;
+				this.nbJetonsJ1=0;
+				this.nbJetonsJ2=0;
+				
+				for(int i=4; i<list.getLength(); i++){
+					NamedNodeMap coordonees=list.item(i).getAttributes();
+					int x=Integer.parseInt(coordonees.getNamedItem("x").getNodeValue());
+					int y=Integer.parseInt(coordonees.getNamedItem("y").getNodeValue());
+					//String value  =list.item(i).getTextContent();
+					CaseValue value=CaseValue.fromString(list.item(i).getTextContent());
+					
+					if(value!=CaseValue.EMPTY)
+						this.placer(x, y, value);
+					System.out.println(x+" "+y+" "+value);
+					
+				}
+				
+				if(nbJetons%2==0) tour=CaseValue.J1;
+				else tour=CaseValue.J2;
+				
+				System.out.println(root.getNodeName());
+			
+			
+			} catch (SAXParseException e){}
+			
+			
+		} catch (ParserConfigurationException e) {
+		e.printStackTrace();
+		} catch (SAXException e) {
+		e.printStackTrace();
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
+		
+		
+		this.afficherGrille();
+		
+	}
+	
 	
 	public void startIA(){
 		this.ia.start();
@@ -64,7 +218,13 @@ public class GrilleModel extends AbstractModel{
 		this.placer(this.nbX/2, this.nbY/2-1, CaseValue.J2);
 		this.placer(this.nbX/2-1, this.nbY/2, CaseValue.J2);
 		this.placer(this.nbX/2, this.nbY/2, CaseValue.J1);
+		
+		ArrayList<int[]> liste= this.peutJouer(getTour());
+		this.notifyPosJouable(liste);
+		
 	}
+	
+	
 	
 	public void placer(int x, int y, CaseValue v){
 		this.nbJetons++;
@@ -78,6 +238,22 @@ public class GrilleModel extends AbstractModel{
 		int i,j;
 	}
 	
+	
+	public void initCharger(){
+		for(int i=0; i<nbX; i++){
+			for(int j=0; j<nbY; j++){
+				if(grille[i][j].v!=CaseValue.EMPTY)
+					this.notifyChangeValue(i, j, grille[i][j].v);
+			}
+		}
+		this.notifyTour(this.tour);
+		this.notifyScore(nbJetonsJ1, nbJetonsJ2);
+		ArrayList<int[]> liste= this.peutJouer(getTour());
+		this.notifyPosJouable(liste);
+		
+		
+		
+	}
 	
 	public boolean[] peutPlacer(int x, int y, CaseValue v){
 		
@@ -318,10 +494,8 @@ public class GrilleModel extends AbstractModel{
 		
 	}
 	
-public int nbCasesPrises(int x, int y, CaseValue v){
-		
-		
-		
+	public int nbCasesPrises(int x, int y, CaseValue v){
+
 		int res=0;
 		
 		if(grille[x][y].v!=CaseValue.EMPTY){
@@ -419,10 +593,8 @@ public int nbCasesPrises(int x, int y, CaseValue v){
 		return this.nbJetons==this.nbX*this.nbY;
 	}
 	
-	
-	
-	public boolean peutJouer(CaseValue tour){
-		
+	public ArrayList<int[]> peutJouer(CaseValue tour){
+		ArrayList<int[]> liste=new ArrayList<int[]>();
 		for(int i=0; i<nbX; i++){
 			for(int j=0; j<nbY; j++){
 				
@@ -430,15 +602,22 @@ public int nbCasesPrises(int x, int y, CaseValue v){
 				
 					boolean res[]=peutPlacer(i,j,tour);
 					for(int k=0; k<8; k++){
-						if(res[k])
-							return true;
+						if(res[k]){
+							int[] point=new int[2];
+							point[0]=i;
+							point[1]=j;
+							liste.add(point);
+							
+						}
+							
 					}
 				}
 				
 			}
 		}
-		return false;
+		return liste;
 	}
+	
 	
 	public void getWinner(){
 		if(this.nbJetonsJ1>this.nbJetonsJ2)
@@ -495,6 +674,28 @@ public int nbCasesPrises(int x, int y, CaseValue v){
 	public CaseValue getTour(){
 		return tour;
 	}
+
+	public int getNbX() {
+		return nbX;
+	}
+
+	public void setNbX(int nbX) {
+		this.nbX = nbX;
+	}
+
+	public int getNbY() {
+		return nbY;
+	}
+
+	public void setNbY(int nbY) {
+		this.nbY = nbY;
+	}
+
+	@Override
+	public void sauvegarder() {
+		// TODO Auto-generated method stub
+		this.genererXML();
+	}
 	
 	/*
 	
@@ -531,6 +732,6 @@ public int nbCasesPrises(int x, int y, CaseValue v){
 	}
 	*/
 
-
+	
 	
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sauvegarde>
+<personnage nom="Pacman">
+	<vie>12</vie>
+</personnage>
+
+<personnage nom="Mario">
+	<vie>5</vie>
+</personnage>
+
+</sauvegarde>
+
+
+

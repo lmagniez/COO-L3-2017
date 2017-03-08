@@ -98,7 +98,7 @@ public class Score extends JPanel {
 		restart.addActionListener(new ButtonListener());
 		retour= new JButton("Retour");
 		retour.addActionListener(new ButtonListener());
-		confirmer= new JButton("Confirmer");
+		confirmer= new JButton("Sauvegarder");
 		confirmer.addActionListener(new ButtonListener());
 		
 		
@@ -186,7 +186,9 @@ public class Score extends JPanel {
 			
 			if(command=="Sauvegarder")
 			{
-				
+				vue.gridControler.requestSave();
+				vue.vueMenu.setVisible(true);
+				vue.setVisible(false);
 			}
 			
 			if(command=="Recommencer")
@@ -199,6 +201,7 @@ public class Score extends JPanel {
 			{
 				vue.vueMenu.setVisible(true);
 				vue.setVisible(false);
+				vue.gridControler.requestStopIA();
 			}
 		} 
 	}

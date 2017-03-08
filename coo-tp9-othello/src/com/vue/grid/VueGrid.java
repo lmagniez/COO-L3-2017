@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -36,7 +37,7 @@ public class VueGrid extends Fenetre implements Observer {
 	protected Score score;
 	protected boolean swapColor;
 	protected CaseValue tour;
-	
+	protected ArrayList<int[]> posJouable;
 	
 	public static final int TAILLE_ECRAN_GRILLE_X=500;
 	public static final int TAILLE_ECRAN_GRILLE_Y=500-Grid.ESPACEMENT_SIZE-Grid.ESPACEMENT2_SIZE;
@@ -93,7 +94,7 @@ public class VueGrid extends Fenetre implements Observer {
 		        if(PromptResult==JOptionPane.YES_OPTION)
 		        {
 		        	//do something
-		        	
+		        	VueGrid.this.gridControler.requestSave();
 		        }
 		        System.exit(0);
 		    }
@@ -155,7 +156,10 @@ public class VueGrid extends Fenetre implements Observer {
 	@Override
 	public void updateWin(CaseValue v) {
 		// TODO Auto-generated method stub
-		System.out.println("WINNER !!");
+		JOptionPane.showMessageDialog(this,v+" a gogné!"); 
+		
+		vueMenu.setVisible(true);
+		this.setVisible(false);
 	}
 
 	@Override
@@ -176,6 +180,15 @@ public class VueGrid extends Fenetre implements Observer {
 		// TODO Auto-generated method stub
 		System.out.println("update tour "+v);
 		this.tour=v;
+	}
+
+	@Override
+	public void updatePosJouable(ArrayList<int[]> liste) {
+		// TODO Auto-generated method stub
+		
+		this.posJouable=liste;
+		this.grid.repaint();
+		
 	}
 
 	

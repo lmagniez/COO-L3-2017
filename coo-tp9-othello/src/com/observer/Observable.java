@@ -1,5 +1,7 @@
 package com.observer;
 
+import java.util.ArrayList;
+
 import com.model.CaseValue;
 /**
  * Interface des différents elements observables
@@ -16,5 +18,6 @@ public interface Observable {
 	public void notifyReinit();
 	public void notifyScore(int nbJetonsJ1,int nbJetonsJ2);
 	public void notifyTour(CaseValue v);
+	public void notifyPosJouable(ArrayList<int[]> liste);
 	
 }

@@ -98,6 +98,14 @@ public class Vue1 extends Fenetre{
 		
 	}
 
+	public EcranTitre getPanneauTitre() {
+		return panneauTitre;
+	}
+
+	public void setPanneauTitre(EcranTitre panneauTitre) {
+		this.panneauTitre = panneauTitre;
+	}
+
 	public EcranParam getPanneauParam() {
 		return panneauParam;
 	}

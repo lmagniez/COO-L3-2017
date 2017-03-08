@@ -1,5 +1,7 @@
 package com.observer;
 
+import java.util.ArrayList;
+
 import com.model.CaseValue;
 
 /**
@@ -14,5 +16,6 @@ public interface Observer {
 	public void updateWin(CaseValue v);
 	public void updateScore(int nbJetonsJ1,int nbJetonsJ2);
 	public void updateTour(CaseValue v);
+	public void updatePosJouable(ArrayList<int[]> liste);
 	
 }

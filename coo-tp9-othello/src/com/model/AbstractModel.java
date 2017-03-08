@@ -24,12 +24,14 @@ public abstract class AbstractModel implements Observable{
 	public abstract void remplirCase(int x, int y, boolean[] directions, CaseValue v);
 	public abstract void changerTour();
 	public abstract CaseValue getTour();
-	public abstract  boolean peutJouer(CaseValue tour);
+	public abstract  ArrayList<int[]> peutJouer(CaseValue tour);
 	public abstract void getWinner();
 	public abstract void placerinit();
 	public abstract void afficherGrille();
 	public abstract void startIA();
 	public abstract void stopIA();
+	public abstract void sauvegarder();
+	
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur
@@ -95,6 +97,11 @@ public abstract class AbstractModel implements Observable{
 	public void notifyTour(CaseValue v){
 		for(Observer obs : listObserver)
 			obs.updateTour(v);
+	}
+	public void notifyPosJouable(ArrayList<int[]> liste) {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver)
+			obs.updatePosJouable(liste);
 	}
 	
 

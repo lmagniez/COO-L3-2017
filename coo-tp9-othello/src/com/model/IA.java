@@ -78,11 +78,18 @@ public class IA extends Thread {
 					
 					g.remplirCase(i, j, res, g.tour);
 					g.changerTour();
-					if(!g.peutJouer(g.getTour())){
+					
+					ArrayList<int[]> liste=g.peutJouer(g.getTour());
+					
+					if(liste.size()==0){
 						g.changerTour();
-						if(!g.peutJouer(g.getTour()))
+						liste=g.peutJouer(g.getTour());
+						if(liste.size()==0)
 							g.getWinner();
 					}
+					
+					this.g.notifyPosJouable(liste);
+					
 					return;
 				}
 				
@@ -130,16 +137,23 @@ public class IA extends Thread {
 		
 		if(ok){
 			
+			
 			g.remplirCase(imax, jmax, res, g.tour);
 			g.changerTour();
-			if(!g.peutJouer(g.getTour())){
+			
+			ArrayList<int[]> liste=g.peutJouer(g.getTour());
+			if(liste.size()==0){
 				g.changerTour();
-				if(!g.peutJouer(g.getTour())){
+				liste=g.peutJouer(g.getTour());
+				if(liste.size()==0){
 					g.getWinner();
 					this.arret();
 				}
 			}
+			
+			this.g.notifyPosJouable(liste);
 			return;
+			
 		}
 		
 	}

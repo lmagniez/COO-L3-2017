@@ -28,6 +28,18 @@ public enum CaseValue {
         return null;
     }
 	
+	
+	public static CaseValue fromString(String s) {
+        if(s.equals("EMPTY"))
+        	return EMPTY;
+        if(s.equals("J1"))
+        	return J1;
+        if(s.equals("J2"))
+        	return J2;
+        return null;
+    }
+	
+	
 	/**
 	 * Récupérer une couleur en fonction de la valeur
 	 * @param c valeur de la case
