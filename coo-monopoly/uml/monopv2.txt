@@ -1,0 +1,81 @@
+@startuml
+
+
+
+Plateau "1" o-- "40" Case : associe
+Jeu "1" -- "1" Plateau
+Case <|-- CommunautéChance
+Case <|-- DepartImpotsTaxe
+Case <|-- Terrain
+Case <|-- Prison
+Case <|-- Gendarme
+Case <|-- GareService
+
+CommunautéChance "4" -- "2" Pioche : lié
+Pioche "1" o-- "16" Carte : contient
+
+Terrain "0..1" -- "0..22" Joueur : associé
+Jeu "1" -- "2..4" Joueur : joue
+
+
+abstract class Case {
+ -id : int
+ -position : int
+ +action()
+}
+
+class CommunautéChance {
+ +piocherCarte() : Carte
+}
+
+class Terrain {
+ -tabAssoTerrainJoueur : static int[]
+ -loyers: int[]
+ -prixMaison: int
+ -couleur : int 
+ -maisons : int 
+ +associer(j: Joueur)
+ +ajouterMaison()
+ +retirerMaison()
+
+}
+
+class GareService {
+ -tabAssoJoueur: static int[]
+ -loyers: int[]
+ -prixAchat: int
+}
+
+class DepartImpotsTaxe {
+ -value : int
+}
+
+class Carte {
+ -effetMonnaie : int
+ -effetPosition : int 
+ -changerPosition : int
+ -prison : boolean
+ -repiocher : boolean
+ +actionCarte()
+}
+
+class Jeu {
+ +lancerDé(j : Joueur) : int
+ +lancerEnchere()
+ +lancerTour()
+ +lancerNegociation(t : Terrain)
+ +comblerDette()
+ +paiementJoueur(j1:int, j2:int, pos:int)
+ +achatMaison(idJ:int, pos:int)
+ +achatCase(idJ:int, pos:int)
+}
+
+class Joueur {
+ -position : int
+ -argent : int
+  
+}
+
+
+
+@enduml

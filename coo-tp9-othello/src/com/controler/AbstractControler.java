@@ -64,13 +64,12 @@ public abstract class AbstractControler {
 	abstract void control();
 
 	/**
-	 * Changer une valeur dans une grille donnée
-	 * @param idPuzzle id du puzzle
-	 * @param i abscisse dans le puzzle
-	 * @param j ordonée dans le puzzle
+	 * Changer une valeur sur la grille
+	 * @param i abscisse grille
+	 * @param j ordonée grille
+	 * @param v valeur case
 	 */
 	public void changeValue(int i, int j, CaseValue v) {
-		// TODO Auto-generated method stub
 		this.x=i;
 		this.y=j;
 		this.v=v;
@@ -102,6 +101,9 @@ public abstract class AbstractControler {
 		this.calc.stopIA();
 	}
 
+	/**
+	 * Demander l'arret de l'IA
+	 */
 	public void requestStopIA() {
 		// TODO Auto-generated method stub
 		this.calc.stopIA();

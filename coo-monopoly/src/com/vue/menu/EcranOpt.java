@@ -263,8 +263,22 @@ public class EcranOpt extends Ecran implements ActionListener{
 				cptJoueurs++;
 			}
 		}
-		boolean[] isIA=new boolean[cptJoueurs];
+		
+		ConstantesParam.NB_JOUEURS=cptJoueurs;
+		
+		ConstantesParam.NAMES=new String[ConstantesParam.NB_JOUEURS];
+		ConstantesParam.ID_ICONES=new int[ConstantesParam.NB_JOUEURS];
+		
 		int cpt=0;
+		for(int i=0; i<4; i++){
+			if(nomJoueurs[i].isEnabled()){
+				ConstantesParam.NAMES[cpt]=nomJoueurs[i].getText();
+				ConstantesParam.ID_ICONES[cpt++]=icons[i].getSelectedIndex();
+			}
+		}
+		
+		boolean[] isIA=new boolean[cptJoueurs];
+		cpt=0;
 		for(int i=0; i<4; i++){
 			if(typeJoueurs[i].getSelectedItem().equals("IA")){
 				isIA[cpt++]=true;
@@ -275,13 +289,16 @@ public class EcranOpt extends Ecran implements ActionListener{
 			
 		}
 		ConstantesParam.IS_IA=isIA;
-		ConstantesParam.NB_JOUEURS=cptJoueurs;
+		
+		
 		
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
+		
+		
 		
 		for(int i=2; i<4; i++){
 			if(arg0.getSource()==this.typeJoueurs[i]){

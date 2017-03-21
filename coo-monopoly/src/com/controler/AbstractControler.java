@@ -20,10 +20,10 @@ public abstract class AbstractControler {
 	protected boolean paiement;
 	protected boolean achatMaison;
 	protected boolean venteMaison;
-	
+	protected boolean echangePropriete;
 	
 	protected int positionAchat;
-	
+	protected int somme;
 	
 	protected int idJoueur;
 	protected int idJoueur2;
@@ -122,4 +122,15 @@ public abstract class AbstractControler {
 		this.positionAchat=position;
 		control();
 	}
+	
+	public void requestEchange(int idJ1, int idJ2, int position, int somme){
+		this.echangePropriete=true;
+		this.idJoueur=idJ1;
+		this.idJoueur2=idJ2;
+		this.positionAchat=position;
+		this.somme=somme;
+		control();
+	}
+	
+	
 }

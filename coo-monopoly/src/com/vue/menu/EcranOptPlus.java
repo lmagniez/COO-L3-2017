@@ -176,7 +176,6 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	panelRegles[0].add(Box.createRigidArea(new Dimension(5,50)),c);
     	panelRegles[1].add(Box.createRigidArea(new Dimension(5,50)),c);
     	
-    	
     	//ARGENT DEBUT PARTIE
     	SpinnerModel model = new SpinnerNumberModel(1500, 1, 1000000, 100);     
     	argent = new JSpinner(model);
@@ -442,18 +441,11 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 		ConstantesParam.TAUX_INTERET=this.tauxIntValue[this.valeurInteret.getSelectedIndex()];
 		ConstantesParam.EGALISATION_ENABLED=this.egalisation.isSelected();
 		
-		System.out.println("posAlea"+ConstantesParam.POSITION_ALEA_ENABLED);
-		
-		
 	}
 	
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
-		
-		
 		
 		if(arg0.getSource()==this.troisDes){
 			if(troisDes.isSelected())

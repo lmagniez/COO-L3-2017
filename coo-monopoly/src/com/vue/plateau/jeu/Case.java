@@ -163,7 +163,6 @@ public class Case extends JLabel {
 	 * Ajouter une maison à la case
 	 */
 	public void addMaison(){
-		System.out.println("add maison "+idCase);
 		this.nbMaisons++;
 		this.p.addMaison(this.getPosition(), this.nbMaisons);
 		this.p.revalidate();
@@ -250,6 +249,83 @@ public class Case extends JLabel {
 
 	public void setType(TypeCase type) {
 		this.type = type;
+	}
+
+	public int getNbMaisons() {
+		return nbMaisons;
+	}
+
+	public void setNbMaisons(int nbMaisons) {
+		this.nbMaisons = nbMaisons;
+	}
+
+	public int getIdCase() {
+		return idCase;
+	}
+
+	public void setIdCase(int idCase) {
+		String path="";
+		
+		hX=ConstantesVue.CASE_WIDTH/3+5;
+		hY=ConstantesVue.CASE_HEIGHT/3+5;
+		
+		this.idCase = idCase;
+		//CASE BAS
+				if(position>0&&position<10){
+					path="Sprites/pieces/BOTTOM/"+idCase+".png";
+					this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(hX)*(position)-(ConstantesVue.CASE_SPE_WIDTH/3-1);
+					this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(hY)-2;
+				}
+				
+				//CASE GAUCHE
+				else if(position>10&&position<20){
+					path="Sprites/pieces/LEFT/"+idCase+".png";
+					//image=new RotatedIcon(image,Rotate.DOWN);
+					int tmp=hY;
+					this.hY=hX;
+					this.hX=tmp;
+					
+					this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(hY)
+					*(position%10)-(ConstantesVue.CASE_SPE_HEIGHT/3);
+					
+					//this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(ConstantesVue.CASE_WIDTH/3+4)
+					//		*(position%10)-(ConstantesVue.CASE_SPE_HEIGHT*5/12-6);
+					this.posX=2;
+				}
+				
+				
+				
+				//CASE HAUT
+				else if(position>20&&position<30){
+					path="Sprites/pieces/UP/"+idCase+".png";
+					//this.posX=(ConstantesVue.CASE_WIDTH/3)*(position%20)+(ConstantesVue.CASE_SPE_WIDTH/3);;
+					//this.posY=0;
+					
+					
+					this.posX=(hX)*(position%21)+(ConstantesVue.CASE_SPE_WIDTH/3-1);
+					this.posY=2;
+					
+					
+				}
+				
+				
+				
+				//CASE DROITE 
+				else if(position>30&&position<40){
+					int tmp=hY;
+					this.hY=hX;
+					this.hX=tmp;
+					path="Sprites/pieces/RIGHT/"+idCase+".png";
+					this.posY=(ConstantesVue.CASE_WIDTH/3+4)
+							*(position%31)+(ConstantesVue.CASE_SPE_HEIGHT/3);;
+					this.posX=ConstantesVue.DIMENSION_PLATEAU_X-hX-2;
+					
+				}
+				image=new ImageIcon(path);
+				image = transform((ImageIcon) image,hX,hY);
+				this.setIcon(image);
+		
+		
 	}
 	
 	

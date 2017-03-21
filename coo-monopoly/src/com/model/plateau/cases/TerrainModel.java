@@ -46,8 +46,8 @@ public class TerrainModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_TERRAIN];
 		for(int i=0; i<ConstantesModel.NB_CASES_TERRAIN; i++){
-			//tabAsso[i]=-1;
-			tabAsso[i]=1;
+			tabAsso[i]=-1;
+			//tabAsso[i]=1;
 //
 		}
 		return tabAsso;
@@ -97,10 +97,7 @@ public class TerrainModel extends CaseModel{
 	{
 		JoueurModel j=p.getJoueurs()[tabAssoTerrainJoueur[idTerrain]];
 		
-		System.out.println(resteDesMaisons()+" "+peutAjouterMaison()+" "+resteDesHotels());
-		
 		if(resteDesMaisons()&&peutAjouterMaison()){
-			System.out.println("ok1");
 			this.nbMaisons++;
 			//met a jour le nombre d'hotel total si besoin
 			if(nbMaisons==5){
@@ -133,10 +130,7 @@ public class TerrainModel extends CaseModel{
 		// TODO Auto-generated method stub
 		JoueurModel j=p.getJoueurs()[tabAssoTerrainJoueur[idTerrain]];
 		
-		System.out.println("suppr?"+peutSupprimerMaison());
-		
 		if(peutSupprimerMaison()){
-			System.out.println("ok1");
 			this.nbMaisons--;
 			//met a jour le nombre d'hotel total si besoin
 			if(nbMaisons==4){
@@ -244,7 +238,6 @@ public class TerrainModel extends CaseModel{
 			}
 		}
 		else{
-			System.out.println("TerrainModel notifie case");
 			this.p.getModel().notifyAchatCase(j.getIdJoueur(), j.getPosition());
 		}
 		

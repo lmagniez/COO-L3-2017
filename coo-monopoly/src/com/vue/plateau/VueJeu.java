@@ -3,6 +3,7 @@ package com.vue.plateau;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import com.controler.AbstractControler;
@@ -78,42 +79,39 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateArgentJoueur(int idJoueur, int argent) {
-		// TODO Auto-generated method stub
 		lePanneau.s.getJoueurs()[idJoueur].setArgent(argent);
-		lePanneau.s.getProprietes().setArgent(argent);
+		if(lePanneau.s.getProprietes()!=null)
+			lePanneau.s.getProprietes().setArgent(argent);
 		
 	}
 
 	@Override
 	public void updateAjoutMaison(int position) {
-		// TODO Auto-generated method stub
-		System.out.println("ajout Maison"+position);
 		lePanneau.getP().getCases()[position].addMaison();
 	}
 
 	@Override
 	public void updateRetirerMaison(int position) {
-		// TODO Auto-generated method stub
 		lePanneau.getP().getCases()[position].removeMaison();
 	}
 	
 	@Override
 	public void updateAcquisitionJoueur(int idJoueur, int position) {
-		// TODO Auto-generated method stub
 		lePanneau.s.getJoueurs()[idJoueur].getAcquisition()[position]=true;
 	}
 
 	@Override
 	public void updatePosJoueur(int idJoueur, int position) {
-		// TODO Auto-generated method stub
 		lePanneau.getP().getPions()[idJoueur].changePosition(position);
 	}
 
 	@Override
 	public void updateCases(CaseModel[] cases) {
-		// TODO Auto-generated method stub
 		for(int i=0; i<ConstantesModel.NB_CASES; i++){
+			
 			lePanneau.getP().getCases()[i].setPosition(cases[i].getPosition());
+			lePanneau.getP().getCases()[i].setIdCase((cases[i].getIdCase()));
+			
 			if(cases[i] instanceof TerrainModel){
 				lePanneau.getP().getCases()[i].setType(TypeCase.TERRAIN);
 				lePanneau.getP().getCases()[i].setPrixAchat(((TerrainModel) cases[i]).getPrixAchat());
@@ -144,25 +142,25 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateTour(int tour) {
-		// TODO Auto-generated method stub
 		lePanneau.setTour(tour);
 	}
 	
+	@Override
 	public void updateInitTour() {
-		// TODO Auto-generated method stub
 		lePanneau.initTour();
 		lePanneau.choixA.setVisible(false);
 		lePanneau.choixP.setVisible(false);
+		lePanneau.choixA.setActif(false);
+		lePanneau.choixP.setActif(false);
 		
 	}
 	
 	@Override
 	public void updateAchatCase(int idJoueur, int position) {
-		// TODO Auto-generated method stub
 		lePanneau.choixA.genererChoixAchat(idJoueur, position);
 	}
 	
-
+	@Override
 	public void updatePaiementCase(int idJoueur, int idJoueur2, int position){
 		lePanneau.choixP.genererPaiement(idJoueur, idJoueur2, position); 
 	}
@@ -177,8 +175,26 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateMessageChoix(String msg) {
-		// TODO Auto-generated method stub
 		lePanneau.choixA.setMessage(msg);
+	}
+
+	@Override
+	public void updateEchangeJoueur(int idJoueur1, int idJoueur2, int position) {
+		
+		
+		lePanneau.s.getJoueurs()[idJoueur1].getAcquisition()[position]=false;
+		lePanneau.s.getJoueurs()[idJoueur2].getAcquisition()[position]=true;
+		lePanneau.s.revalidate();
+		lePanneau.s.repaint();
+		
+		
+		lePanneau.choixE.setVisible(false);
+		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getCarte());
+		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getEchange());
+		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getMaison());
+		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getMaisonVente());
+		
+		
 	}
 
 	

@@ -94,7 +94,6 @@ public class ServiceModel extends CaseModel{
 		}
 		else{
 			
-			System.out.println("Service notifie case");
 			this.p.getModel().notifyAchatCase(j.getIdJoueur(), j.getPosition());
 		}
 		

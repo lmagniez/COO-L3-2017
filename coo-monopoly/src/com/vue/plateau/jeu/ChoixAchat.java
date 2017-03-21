@@ -41,6 +41,7 @@ public class ChoixAchat extends JPanel{
 	protected JTextArea textBox;
 	protected JPanel panneauLateral ;
 	protected String messagePrincipal;
+	protected boolean actif;
 	
 	protected JPanel carte;
 	
@@ -60,6 +61,7 @@ public class ChoixAchat extends JPanel{
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(new Color(200,200,200,90));
 		
+		this.actif=false;
 		
 		JLabel l=new JLabel("Choix: ");
 		l.setBackground(Color.BLACK);
@@ -120,6 +122,7 @@ public class ChoixAchat extends JPanel{
 	 */
 	public void genererChoixAchat(int idJoueur, int position){
 		
+		this.actif=true;
 		panneauLateral.removeAll();
 		
 		Case c = this.ecran.getP().getCases()[position];
@@ -154,7 +157,6 @@ public class ChoixAchat extends JPanel{
 			
 			if(command=="Accepter")
 			{
-				System.out.println("ACCEPTER");
 				ChoixAchat.this.ecran.getVue().getControler().requestAchat(idJoueur,posJoueur);
 				//ChoixAchat.this.setVisible(false);
 			}
@@ -165,6 +167,7 @@ public class ChoixAchat extends JPanel{
 				
 				ChoixAchat.this.ecran.getVue().getControler().requestEnchere(idJoueur,posJoueur);
 				ChoixAchat.this.setVisible(false);
+				ChoixAchat.this.actif=false;
 			}
 		} 
 	}
@@ -198,7 +201,16 @@ public class ChoixAchat extends JPanel{
 	}
 
 	public void setMessage(String msg) {
-		System.out.println("set!! "+msg);
 		this.textBox.setText(this.messagePrincipal+" \n"+msg);
 	}
+
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+	
+	
 }

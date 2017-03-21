@@ -26,7 +26,6 @@ public class JeuModel extends AbstractModel{
 	public JeuModel()
 	{
 		int posDepart=0;
-		System.out.println("nbJoueur"+ConstantesParam.NB_JOUEURS);
 		this.setP(new PlateauModel(this,ConstantesParam.NB_JOUEURS, ConstantesParam.POSITION_ALEA_ENABLED, ConstantesParam.SOMME_DEPART));
 		this.tour=0;
 	}
@@ -55,17 +54,11 @@ public class JeuModel extends AbstractModel{
 		
 		this.p.cases[j.position].action(j);
 		
-		/*
-		tour=(tour+1)%ConstantesParam.NB_JOUEURS;
-		System.out.println("tour a notifier "+tour);
-		this.notifyTour(tour);
-		*/
 	}
 	
 	@Override
 	public void tourSuivant(){
 		tour=(tour+1)%ConstantesParam.NB_JOUEURS;
-		System.out.println("tour a notifier "+tour);
 		this.notifyTour(tour);
 		this.notifyInitTour();
 		
@@ -133,7 +126,6 @@ public class JeuModel extends AbstractModel{
 	 */
 	@Override
 	public void achatCase(int idJoueur, int positionAchat) {
-		// TODO Auto-generated method stub
 		CaseModel c=p.getCases()[positionAchat];
 		JoueurModel j =p.getJoueurs()[idJoueur];
 		j.nbProprietes++;
@@ -162,7 +154,6 @@ public class JeuModel extends AbstractModel{
 	 */
 	@Override
 	public void achatMaison(int idJoueur, int positionAchat) {
-		// TODO Auto-generated method stub
 		((TerrainModel) this.p.cases[positionAchat]).ajouterMaison();
 	}
 	
@@ -203,10 +194,20 @@ public class JeuModel extends AbstractModel{
 
 	@Override
 	public void venteMaison(int idJoueur, int positionAchat) {
-		// TODO Auto-generated method stub
 		((TerrainModel) this.p.cases[positionAchat]).retirerMaison();
 	}
 
+	@Override
+	public void echangePropriete(int idJoueur1, int idJoueur2, int positionAchat, int somme) {
+		//TerrainModel.tabAssoTerrainJoueur[positionAchat]=idJoueur2;
+		((TerrainModel) this.p.cases[positionAchat]).associer(this.p.joueurs[idJoueur2]);
+		this.p.joueurs[idJoueur1].setArgent(this.p.joueurs[idJoueur1].getArgent()+somme);
+		this.p.joueurs[idJoueur2].setArgent(this.p.joueurs[idJoueur2].getArgent()-somme);
+		this.notifyEchangeJoueur(idJoueur1, idJoueur2, positionAchat);
+	}
+
+
+	
 	
 	
 

@@ -1,0 +1,84 @@
+@startuml
+
+GrilleModel -- ControlerJoueur
+ControlerJoueur -- JoueurModel
+ControlerJeux -- JeuxModel
+
+
+ControlerGrille -- GrilleModel
+GrilleModel -- CaseThreadSuppr
+GrilleModel *-- CaseModel
+CaseModel -- CaseThreadSuppr
+CaseModel -- CaseValue
+VueJoueur1 *-- ControlerJeux
+VueJoueur2 *-- ControlerJeux
+VueJoueur1 *-- ControlerGrille
+VueJoueur2 *-- ControlerGrille
+VueJoueur1 *-- ControlerJoueur
+VueJoueur2 *-- ControlerJoueur
+
+
+class GrilleModel {
+ -idGrille: int
+ -score: int
+ -listeSuppr: ArrayList<CaseThreadSuppr>
+ +creerColonne(y: int)
+ +ajoutLigneGrille()
+ +descendreCube()
+ +comboColonne()
+ +comboLigne()
+ +gameOver: boolean
+ +swap(x1:int, x2:int, y1:int)
+}
+
+enum CaseValue {
+ VIDE,CYAN,ROUGE,JAUNE,VERT,VIOLET,BLEU,GRIS;
+}
+
+class CaseThreadSuppr{
+ -casesSuppr: ArrayList<CaseModel>
+ +run()
+}
+
+class JeuxModel {
+ +updateTime(minute: int, seconde: int)
+}
+
+class CaseModel {
+ -swappable: boolean
+ -isBloc: boolean
+ -x: int
+ -y: int
+}
+
+class JoueurModel {
+ -x1: int
+ -x2: int
+ -y: int
+ +changePos(x1:int, x2:int, y1:int)
+}
+
+class ControlerJoueur {
+  -timer: Thread
+}
+
+class VueJoueur1 {
+ -grille: Grille
+ -joueur: Joueur
+ -score: Score
+ -speed: Score
+}
+
+class VueJoueur2 {
+ -grille1: Grille
+ -joueur1: Joueur
+ -grille2: Grille
+ -joueur2: Joueur
+ -score1: Score
+ -score2: Score
+ -speed1: Score
+ -speed2: Score
+}
+
+
+@enduml

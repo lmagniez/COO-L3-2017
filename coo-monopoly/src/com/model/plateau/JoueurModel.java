@@ -44,8 +44,6 @@ public class JoueurModel {
 		
 		this.setLastSumDes(0);
 		
-		System.out.println("position! "+pos+ConstantesParam.POSITION_ALEA_ENABLED);
-		
 		
 	}
 

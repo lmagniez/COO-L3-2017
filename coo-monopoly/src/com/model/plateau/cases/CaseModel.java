@@ -35,5 +35,15 @@ public abstract class CaseModel {
 	public void setPosition(int position) {
 		this.position = position;
 	}
+
+	public int getIdCase() {
+		return idCase;
+	}
+
+	public void setIdCase(int idCase) {
+		this.idCase = idCase;
+	}
+	
+	
 	
 }

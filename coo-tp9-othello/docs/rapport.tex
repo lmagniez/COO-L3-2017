@@ -11,7 +11,7 @@
 \formation{L3MI}
 \date{}
 \matiere{Conception Orientée Objet}
-\titre{Dots And Boxes - Compte Rendu}
+\titre{Othello - Compte Rendu}
 
 \newcommand\code[1]{\textsf{#1}}
 \newcommand\srdjan[1]{{\color{red} #1}}
@@ -24,44 +24,38 @@
 \section{Ce qui a été implémenté}
 
 
--Base de données fonctionnelle sur MySQL, respectant le schéma minimum inscrit dans le sujet (voir plus bas).\\%
--Jeu fonctionnel, détecte les victoires à partir des indices de ligne et colonne (Sans avoir à stocker la solution).\\%
--Sélection du puzzle dans la base de donnée pour jouer.\\%
--Ensemble de puzzle par défaut se générant au démarrage du jeu (premier démarrage long, mais ne s\textquotesingle inscrit qu\textquotesingle une fois dans la base de donnée).\\%
--Sauvegarde des puzzles réussi en fonction de l\textquotesingle utilisateur (enregistré en local, demande la confirmation de sauvegarder lorsque le joueur quitte le jeu).\\%
--Création de puzzle à partir d\textquotesingle une grille vide et insertion dans la base.\\%
+-Jeu othello fonctionnel en MVC.\\%
+-Nombre de cases variables.\\%
+-Implémentation d\textquotesingle une IA (Possibilité de choisir).\\%
+-Implémentation d\textquotesingle un système de sauvegarde utilisant des fichiers XML.\\%
+-Affichage des coups disponibles pour un joueur durant son tour.\\%
+
+\section{Structure du fichier XML}
 
 
-\section{Base de données}
+L\textquotesingle utilisateur peut à tout moment de la partie sauvegarder l\textquotesingle état de celle-ci.\\%
+Une génération d\textquotesingle un fichier XML aura alors lieu, et la partie sera quittée après sa génération.\\%
+\\%
+Lors du chargement de la partie, on reprendra le fichier précédemment créé et on exécutera le parsing en fonction de la structure afin de récupérer le modèle.\\%
+
+Ci-dessous la structure du fichier\\%
+Une grille contiendra :\\%
+-Un nombre de case en abscisse\\%
+-Un nombre de case en ordonnée\\%
+-Le type du joueur 1 et 2\\%
+-Un ensemble de cases ayant pour identifiants une coordonnée (x,y) et une valeur de case.\\%
+
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/xml}}
+
+\newpage
+
+\section{Implémentation de l\textquotesingle IA}
+
+Lors du tour de l\textquotesingle IA, celle-ci va calculer pour chaque coups possibles le nombre de cases qu\textquotesingle elle va obtenir en réalisant celui-ci.\\%
+Elle va ensuite choisir la case lui conférant le plus de cases.\\%
 
 
-Le schéma utilisé a été celui indiqué dans le sujet.\\%
-Petite indication concernant les indices de lignes, ils sont entrés comme suit :\\%
-« 1,10,12,2,3 », « 3,2,4,12 », ... \\%
-
-Je suis parti en début de projet sur un attribut entier, stockant le nombre en entier.\\%
-Un problème s\textquotesingle est cependant posé, on ne pouvait différencier les nombres à 1 et 2 chiffres. Il a fallut donc adopter une structure de chaîne, séparant chaque nombre par des virgules.\\%
-
-\makebox[\textwidth]{\includegraphics[width=300pt]{img/bd}}
-
-
-\section{Vérification des patterns}
-
-
-Pour vérifier la victoire, j\textquotesingle ai simplement vérifier pour chaque ligne puis pour chaque colonne si il y avait un conflit avec les indices.\\%
-Exemple : « 1,3 », conflit si on trouve 3 blocs de cases sur la même ligne, etc...\\%
-
-
-\section{Captures d\textquotesingle écrans du jeu}
-
-Écran de sélection:\\%
-\makebox[\textwidth]{\includegraphics[height=200pt]{img/choix}}
-
-Écran de jeu:\\%
-\makebox[\textwidth]{\includegraphics[height=200pt]{img/jeu}}
-
-Création de grille: \\%
-\makebox[\textwidth]{\includegraphics[height=200pt]{img/creation}}
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/IA}}
 
 
 \end{document}

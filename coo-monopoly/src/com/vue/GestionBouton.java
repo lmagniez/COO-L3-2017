@@ -44,7 +44,6 @@ public abstract class GestionBouton {
 			{	
 				final int curRow = i;
 				final int curCol = j;
-				System.out.println(curRow);
 				
 				buttons[i][j].addKeyListener(enter);	
 				buttons[i][j].addKeyListener(new KeyAdapter(){

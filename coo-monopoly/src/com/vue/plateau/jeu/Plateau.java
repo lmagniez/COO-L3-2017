@@ -62,7 +62,7 @@ public class Plateau extends JPanel{
 		
 		setPions(new Pion[ConstantesParam.NB_JOUEURS]);
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
-			getPions()[i]=new Pion(this,0,i,i);
+			getPions()[i]=new Pion(this,0,i,ConstantesParam.ID_ICONES[i]);
 			this.add(getPions()[i]);
 			//pions[i].setLocation(50*i,50*i);
 			//pions[i].setSize(50,50);
@@ -118,11 +118,9 @@ public class Plateau extends JPanel{
 	 */
 	public void addMaison(int position, int nbMaison){
 		
-		System.out.println("add last "+position+" "+nbMaison);
 		
 		Case c =getCases()[position];
-		System.out.println(c.maison1+" "+c.maison2+" "+c.maison3+" "+c.maison4+" "+c.hotel+" ");
-		
+	
 		
 		maison=transform(new ImageIcon("./Sprites/pion/maison.png"),25,25);
 		
@@ -152,7 +150,7 @@ public class Plateau extends JPanel{
 			else if(position<30)
 				c.hotel.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-25);
 			else
-				c.hotel.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3);
+				c.hotel.setLocation(c.posX, c.posY-60+ConstantesVue.CASE_HEIGHT/3);
 				
 			this.add(c.hotel);
 			this.setComponentZOrder(c.hotel, 0);
@@ -178,7 +176,7 @@ public class Plateau extends JPanel{
 				else if(position<30)
 					c.maison1.setBounds(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-25,25,25);
 				else
-					c.maison1.setBounds(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3,25,25);
+					c.maison1.setBounds(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-60,25,25);
 				
 				this.add(c.maison1);
 				//this.setComponentZOrder(c, -1);
@@ -196,7 +194,7 @@ public class Plateau extends JPanel{
 				else if(position<30)
 					c.maison2.setLocation(c.posX+(ConstantesVue.CASE_WIDTH/3)*1/4, c.posY+ConstantesVue.CASE_HEIGHT/3-25);
 				else
-					c.maison2.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-(ConstantesVue.CASE_WIDTH/3)*1/4);
+					c.maison2.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-60-(ConstantesVue.CASE_WIDTH/3)*1/4);
 				
 				
 				this.add(c.maison2);
@@ -216,7 +214,7 @@ public class Plateau extends JPanel{
 				else if(position<30)
 					c.maison3.setLocation(c.posX+(ConstantesVue.CASE_WIDTH/3)*2/4, c.posY+ConstantesVue.CASE_HEIGHT/3-25);
 				else
-					c.maison3.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-(ConstantesVue.CASE_WIDTH/3)*2/4);
+					c.maison3.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-60-(ConstantesVue.CASE_WIDTH/3)*2/4);
 				
 				
 				this.add(c.maison3);
@@ -235,7 +233,7 @@ public class Plateau extends JPanel{
 				else if(position<30)
 					c.maison4.setLocation(c.posX+(ConstantesVue.CASE_WIDTH/3)*3/4, c.posY+ConstantesVue.CASE_HEIGHT/3-25);
 				else
-					c.maison4.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-(ConstantesVue.CASE_WIDTH/3)*3/4);
+					c.maison4.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-60-(ConstantesVue.CASE_WIDTH/3)*3/4);
 				
 				
 				this.add(c.maison4);

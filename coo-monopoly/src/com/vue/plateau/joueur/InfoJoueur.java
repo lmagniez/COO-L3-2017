@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.model.ConstantesModel;
+import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 
 /**
@@ -52,12 +53,12 @@ public class InfoJoueur extends JPanel{
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
 			this.getAcquisition()[i]=false;
 		
-		
+		/*
 		if(idJoueur==1){
 			for(int i=0; i<ConstantesModel.NB_CASES; i++)
 				this.getAcquisition()[i]=true;
 			
-		}
+		}*/
 		
 //---->		
 		/*
@@ -96,8 +97,8 @@ public class InfoJoueur extends JPanel{
 		};
 		
 		pionJoueur=new JLabel();
-		pionJoueur.setIcon((Icon) items[idJoueur]);
-		nomJoueur=new JLabel("Joueur "+idJoueur);
+		pionJoueur.setIcon((Icon) items[idIcon]);
+		nomJoueur=new JLabel(ConstantesParam.NAMES[idJoueur]);
 		argentJoueur=new JLabel("Argent : "+argent);
 		lanceDes=new JButton("Lancer dés");
 		lanceDes.addActionListener(new ButtonListener());

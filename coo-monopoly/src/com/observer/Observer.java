@@ -47,19 +47,23 @@ public interface Observer {
 	 * @param position position de la case
 	 */
 	public void updateAcquisitionJoueur(int idJoueur, int position);
+	
+	/**
+	 * Mettre à jour le paiement d'une case
+	 * @param idJoueur1 id du joueur propriétaire
+	 * @param idJoueur2 id du joueur receveur
+	 * @param position position de la case
+	 */
+	public void updateEchangeJoueur(int idJoueur1, int idJoueur2, int position);
+	
+	
 	/**
 	 * Mettre à jour l'achat d'une case
 	 * @param idJoueur id du joueur
 	 * @param position position de la case
 	 */
 	public void updateAchatCase(int idJoueur, int position);
-	/**
-	 * Mettre à jour le paiement d'une case
-	 * @param idJoueur id du joueur propriétaire
-	 * @param idJoueur2 id du joueur receveur
-	 * @param position position de la case
-	 */
-	public void updatePaiementCase(int idJoueur, int idJoueur2, int position);
+	
 	/**
 	 * Mettre à jour un message de choix
 	 * @param msg message a afficher
@@ -69,5 +73,14 @@ public interface Observer {
 	/**
 	 * Mettre à jour l'initialisation d'un tour
 	 */
+	
+	
+	
+	
 	public void updateInitTour();
+	
+	public void updatePaiementCase(int idJoueur, int idPossesseur, int position);
+
 }
+
+

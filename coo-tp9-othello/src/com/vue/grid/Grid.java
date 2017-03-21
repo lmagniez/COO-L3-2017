@@ -42,14 +42,10 @@ public class Grid extends JPanel implements MouseListener{
 	protected boolean actif=true;
 	
 	/**
-	 * Constructeur créant la grille et l'intégrant à la vue.
-	 * @param v vue 
-	 * @param idGrid id de la grille
-	 * @param nbRow nombre de ligne 
-	 * @param nbCol nombre de colonne
-	 * @param nom nom de la grille
-	 * @param infosLigne indices de ligne
-	 * @param infosColonne indices de colonne
+	 * Constructeur
+	 * @param v vue grille
+	 * @param nbRow nombre de cases en abscisse
+	 * @param nbCol nombre de cases en ordonnée
 	 */
 	public Grid(VueGrid v, int nbRow, int nbCol)
 	{
@@ -207,8 +203,6 @@ public class Grid extends JPanel implements MouseListener{
 				
 				
 				g.setColor(cases[i][j].color);
-				//System.out.println(cases[i][j].c);
-				//g.clearRect(cases[i][j].posX, cases[i][j].posY, cases[i][j].hX, cases[i][j].hY);
 				g.fillOval (cases[i][j].posX+4, cases[i][j].posY+4, cases[i][j].hX-8, cases[i][j].hY-8);
 				
 				

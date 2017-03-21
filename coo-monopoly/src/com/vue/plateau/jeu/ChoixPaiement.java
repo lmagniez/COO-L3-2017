@@ -44,6 +44,7 @@ public class ChoixPaiement extends JPanel{
 	protected JPanel panneauLateral ;
 	protected String messagePrincipal;
 	protected int idJ1, idJ2;
+	protected boolean actif;
 	
 	protected int prixAPayer;
 	
@@ -60,6 +61,7 @@ public class ChoixPaiement extends JPanel{
 		//appuyer sur ok
 		
 		this.ecran=e;
+		this.actif=false;
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
 		this.setSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
 		this.setMinimumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
@@ -120,8 +122,8 @@ public class ChoixPaiement extends JPanel{
 	 */
 	public void genererPaiement(int idJoueur, int idJoueur2, int position){
 		
-		System.out.println("GENERER PAIEMENT");
 		panneauLateral.removeAll();
+		this.actif=true;
 		
 		idJ1=idJoueur;
 		idJ2=idJoueur2;
@@ -157,7 +159,7 @@ public class ChoixPaiement extends JPanel{
 		}
 		panneauLateral.add(carte);
 		
-		this.messagePrincipal="Payer au joueur "+idJoueur2+"\n"+prixAPayer+" !";
+		this.messagePrincipal="Payer au joueur "+(idJoueur2+1)+"\n"+prixAPayer+" !";
 		this.textBox.setText(messagePrincipal);
 		
 		this.revalidate();
@@ -179,7 +181,6 @@ public class ChoixPaiement extends JPanel{
 			
 			if(command=="Payer")
 			{
-				System.out.println("ACCEPTER");
 				ChoixPaiement.this.ecran.getVue().getControler().requestPaiement(idJ1,idJ2,posJoueur);
 				//ChoixAchat.this.setVisible(false);
 			}
@@ -215,7 +216,17 @@ public class ChoixPaiement extends JPanel{
 	}
 
 	public void setMessage(String msg) {
-		System.out.println("set!! "+msg);
 		this.textBox.setText(this.messagePrincipal+" \n"+msg);
 	}
+
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+	
+	
+	
 }

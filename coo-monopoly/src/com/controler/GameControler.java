@@ -26,7 +26,6 @@ public class GameControler extends AbstractControler{
 
 		 if(this.achat){
 			 
-			 System.out.println("requestAchat "+positionAchat+" idJ "+idJoueur);
 			 
 			 if(this.calc.hasEnoughMoney(idJoueur, this.positionAchat)){
 				 this.calc.achatCase(idJoueur, this.positionAchat);
@@ -65,6 +64,11 @@ public class GameControler extends AbstractControler{
 			 this.calc.venteMaison(idJoueur,positionAchat);
 		 }
 		 
+		 if(this.echangePropriete){
+			this.echangePropriete=false;
+			this.calc.echangePropriete(idJoueur, idJoueur2, positionAchat, somme);
+			control();
+		 }
 		 
 		 /*
 		 if(this.x>=0&&this.x<=AbstractModel.NB_LIGNE

@@ -59,14 +59,6 @@ public class Vue1 extends Fenetre{
 		this.add(panneauTitre);
 		this.setVisible(true);
 		
-		/*
-		//Creation du modele de grille
-		jeuModel = new JeuModel();
-		jeuModel.addObserver(this);
-		//Creation du controleure
-		gridControler = new GridControler(jeuModel);
-		*/
-		
 		
 	}
 	
@@ -75,8 +67,6 @@ public class Vue1 extends Fenetre{
 	 * @param nbColonne 
 	 * @param nbLigne 
 	 * @param isIA 
-	 * @param idPuzzle id de la grille
-	 * @throws SQLException
 	 */
 	public void initFenetreEcranJeu(int nbLigne, int nbColonne, boolean[] isIA) 
 	{

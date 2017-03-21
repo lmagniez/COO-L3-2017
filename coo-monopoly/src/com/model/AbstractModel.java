@@ -58,6 +58,15 @@ public abstract class AbstractModel implements Observable{
 	 * @param positionAchat position de la case */
 	public abstract void venteMaison(int idJoueur, int positionAchat);
 	
+	/**
+	 * Donner une propriété a un joueur
+	 * @param idJoueur1 id du joueur 1
+	 * @param idJoueur2 id du joueur 2
+	 * @param positionAchat position achat
+	 * @param somme montant achat
+	 */
+	public abstract void echangePropriete(int idJoueur1, int idJoueur2, int positionAchat, int somme);
+	
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur
@@ -82,28 +91,24 @@ public abstract class AbstractModel implements Observable{
 	
 	@Override
 	public void notifyCases(CaseModel[] cases) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updateCases(cases);
 	}
 
 	@Override
 	public void notifyPosJoueur(int idJoueur, int position) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updatePosJoueur(idJoueur,position);
 	}
 
 	@Override
 	public void notifyArgentJoueur(int idJoueur, int argent) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updateArgentJoueur(idJoueur,argent);
 	}
 
 	@Override
 	public void notifyAcquisitionJoueur(int idJoueur, int position) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updateAcquisitionJoueur(idJoueur,position);
 		
@@ -111,14 +116,11 @@ public abstract class AbstractModel implements Observable{
 
 	@Override
 	public void notifyAjoutMaison(int position) {
-		// TODO Auto-generated method stub
-		System.out.println("notify maison "+position);
 		for(Observer obs : listObserver)
 			obs.updateAjoutMaison(position);
 	}
 	
 	public void notifyRetirerMaison(int position) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updateRetirerMaison(position);
 	}
@@ -135,7 +137,6 @@ public abstract class AbstractModel implements Observable{
 	}
 
 	public void init_grille() {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -151,14 +152,23 @@ public abstract class AbstractModel implements Observable{
 	
 	@Override
 	public void notifyInitTour() {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updateInitTour();
 	}
 	
-	public void notifyPaiementCase(int idJoueur, int idJoueur2, int position){
-		for(Observer obs : listObserver)
-			obs.updatePaiementCase(idJoueur, idJoueur2, position);
+	@Override
+	public void notifyEchangeJoueur(int idJoueur1, int idJoueur2, int position){
+		for(Observer obs : listObserver){
+			obs.updateEchangeJoueur(idJoueur1, idJoueur2, position);
+		}
+	}
+	
+
+	@Override
+	public void notifyPaiementCase(int idJoueur, int idPossesseur, int position) {
+		for(Observer obs : listObserver){
+			obs.updatePaiementCase(idJoueur, idPossesseur, position);
+		}
 	}
 	
 }

@@ -56,8 +56,6 @@ public class IA extends Thread {
 
 	/**
 	 * Décision aléatoire, non utilisé
-	 * @param g Grille de jeu
-	 * @param score Score du jeu
 	 */
 	public void deciderAlea() {
 		
@@ -100,10 +98,11 @@ public class IA extends Thread {
 		}
 	}
 	
-	
+	/**
+	 * Décision de l'IA.
+	 * Va chercher la case lui conférant le plus de points (voir rapport).
+	 */
 	public void decider() {
-		
-		System.out.println(">>>>>>>>DECIDE");
 		
 		int max=-1; int imax=-1; int jmax=-1;
 		
@@ -120,23 +119,18 @@ public class IA extends Thread {
 				
 			}		
 		}
-		
-		System.out.println(max+" "+imax+" "+jmax);
-		
 
 		boolean ok=false;
 		
 		boolean res[]=g.peutPlacer(imax, jmax, g.tour);
 		for(int k=0; k<8; k++){
 			if(res[k]){
-				System.out.println("ok!");
 				ok=true;
 				break;
 			}
 		}
 		
 		if(ok){
-			
 			
 			g.remplirCase(imax, jmax, res, g.tour);
 			g.changerTour();

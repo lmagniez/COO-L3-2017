@@ -15,6 +15,9 @@ public class ConstantesParam {
 	public static int SOMME_DEPART=50000;
 	public static boolean[] IS_IA={false,false,false,false};
 	
+	public static int[] ID_ICONES;
+	public static String[] NAMES;
+	
 	public static int NB_MAISONS=20;
 	public static int NB_PROPRIETES=20;
 	

@@ -1,0 +1,46 @@
+@startuml
+
+GameControler--JeuModel
+
+VueMenu--VueJeu
+VueJeu--GameControler
+JeuModel--VueJeu
+
+class GameControler {
+ +requestLancerDes(idJ: int)
+ +requestAchat(idJ:int, pos:int)
+ +requestPaiement(idJ1:int, idJ2:int, pos:int)
+ +requestEnchere(idJ: int, pos:int)
+ +requestAchatMaison(idJ: int, pos:int)
+ +control()
+}
+
+class JeuModel {
+ -plateau: PlateauModel
+ +lancerDé(j : Joueur) : int
+ +lancerEnchere()
+ +lancerTour()
+ +lancerNegociation(t : Terrain)
+ +comblerDette()
+ +paiementJoueur(j1:int, j2:int, pos:int)
+ +achatMaison(idJ:int, pos:int)
+ +achatCase(idJ:int, pos:int)
+}
+
+class VueMenu {
+ -ecranTitre: EcranStart
+ -ecranRegle: EcranRegle
+ -ecranOption: EcranOpt
+ -ecranOptionPlus: EcranOptPlus
+ +initFenetreEcranJeu()
+}
+
+class VueJeu {
+ -plateau: Plateau
+ -scoreJoueur: Score
+ -fenetreChoix: Choix
+}
+
+
+
+@enduml

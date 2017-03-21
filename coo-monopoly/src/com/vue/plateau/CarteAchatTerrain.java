@@ -62,8 +62,6 @@ public class CarteAchatTerrain extends JPanel{
 		this.prixMaison=prixMaison;
 		
 		this.labelNom=new JLabel(nom+" (achat:"+prixAchat+")");
-		System.out.println("couleur!!");
-		System.out.println(CouleurTerrain.getColorFromEnum(couleurTerrain));
 		
 		Border border = labelNom.getBorder();
 		Border margin = new EmptyBorder(10,25,10,10);

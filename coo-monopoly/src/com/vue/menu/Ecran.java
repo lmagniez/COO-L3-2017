@@ -54,8 +54,6 @@ public abstract class Ecran extends JPanel{
 			}
 		}
 		
-		System.out.println(c.NB_BUTTONS_X + " "+ c.NB_BUTTONS_Y);
-		
 		for(int i=0; i<c.NB_BUTTONS_X; i++)
 		{
 			for(int j=0; j<c.NB_BUTTONS_Y; j++)

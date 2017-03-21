@@ -105,7 +105,6 @@ public class GareModel extends CaseModel{
 		}
 		else{
 			
-			System.out.println("GareModel notifie case");
 			this.p.getModel().notifyAchatCase(j.getIdJoueur(), j.getPosition());
 		}
 	}

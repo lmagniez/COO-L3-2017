@@ -1,0 +1,12 @@
+
+com.controler
+com.model
+com.model.plateau
+com.model.plateau.cases
+com.model.plateau.pioche
+com.observer
+com.vue
+com.vue.menu
+com.vue.plateau
+com.vue.plateau.jeu
+com.vue.plateau.joueur

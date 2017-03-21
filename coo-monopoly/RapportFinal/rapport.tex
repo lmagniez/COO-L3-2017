@@ -1,0 +1,116 @@
+\documentclass[a4paper,utf8]{article}
+\usepackage{rapport}
+\usepackage[normalem]{ulem}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{MnSymbol,wasysym}
+\usepackage{hyperref}
+\usepackage[french]{babel}
+
+
+\formation{L3MI}
+\date{}
+\matiere{Conception Orientée Objet}
+\titre{Monopoly - Compte Rendu}
+
+\newcommand\code[1]{\textsf{#1}}
+\newcommand\srdjan[1]{{\color{red} #1}}
+
+\begin{document}
+
+\entete
+
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/titre}}
+\\%
+
+\section{Description du projet :}
+Le Monopoly est un jeu de plateau à informations imparfaites de deux à quatre joueurs, datant de 1931, dont le but est de ruiner les autres concurrents et ainsi parvenir au monopole suite à l?achat et à la vente de propriétés. Le hasard y joue une part importante mais la notion de stratégie reste suffisamment importante pour s\textquotesingle y intéresser (notamment dans le contexte d?intelligence artificielle).
+
+\section{Fonctionnalités du jeu implémentés :}
+
+\subsection{Ecran titre :}
+Déplacement au clavier ou à la souris.\\%
+Possibilité d\textquotesingle afficher les crédits, de lancer une partie, ou de lire les règles.\\%
+
+\subsection{Paramétrage simple d\textquotesingle une partie :}
+Déplacement clavier/souris.\\%
+Demande à l\textquotesingle utilisateur de saisir les informations élémentaires pour commencer une partie :\\%
+Nom, type de joueur (Humain/IA/Aucun), et icône de pion.\\%
+
+Possibilité d\textquotesingle afficher le menu d\textquotesingle options avancés, ou de commencer directement la partie.\\%
+
+\makebox[\textwidth]{\includegraphics[width=400pt]{img/parametre1}}
+
+\subsection{Paramétrage avancé :}
+Déplacement à la souris souris.\\%
+Demande à l\textquotesingle utilisateur de saisir des informations complémentaire afin de modifier les règles initiales du jeu.\\%
+\textbf{Ce qui a été implémenté :}\\%
+-Position aléatoire des joueurs\\%
+-Montant de départ\\%
+
+Possibilité de retourner au paramétrage simple, ou de lancer la partie.
+Note : On stocke les différents paramètres de partie dans une classe constante.
+
+\makebox[\textwidth]{\includegraphics[width=400pt]{img/parametre2}}
+
+\subsection{Jeu :}
+Déplacement à la souris.\\%
+\textbf{Ce qui a été implémenté :}\\%
+-Génération du plateau simple, case découpés et dessinés indépendamment (pour la génération aléatoire plus tard)\\%
+-Génération des événements simples de jeu : Lancer un dé, acheter une propriété, payer un joueur, ajouter une maison, vendre une propriété à un joueur.\\%
+
+\makebox[\textwidth]{\includegraphics[width=400pt]{img/plateau}}\\%
+
+\subsection{Interface du jeu :}
+
+\textbf{Événement achat}
+Possibilité d\textquotesingle acheter une propriété. On lancera plus tard dans l\textquotesingle implémentation une enchère en cas de refus d\textquotesingle achat.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/choixAchat}}\\%
+
+\textbf{Événement paiement}
+Imposer le paiement d\textquotesingle une somme d\textquotesingle un joueur à un autre joueur.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/choixPaiement}}
+
+\textbf{Affichage des propriétés du joueur}
+Peut voir l\textquotesingle ensemble des propriétés acquises par le joueur.
+Peut de là ajouter une maison à tout moment, ou encore vendre un terrain à un autre joueur.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/proprietes}}\\%
+
+\newpage
+
+\textbf{Événement vente}
+Lancé à tout moment (pas de fenêtre déjà affichée), lance une négociation avec un autre joueur pour vendre le terrain.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/choixEchange}}\\%
+
+\subsection{Règles additionnelles :}
+\textbf{Plateau aléatoire}
+
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/plateauAlea}}\\%
+
+
+\section{Ce qu\textquotesingle il reste à implémenter :}
+\begin{itemize}
+\item Enchères
+\item Prison
+\item Carte chance
+\item Déplacer en gare
+\item Événement gagne
+\item Sauvegarde XML
+\end{itemize}
+
+Toutes les règles supplémentaires :
+\begin{itemize}
+\item Cases cachées
+\item ...
+\end{itemize}
+
+
+\section{UML :}
+\subsection{Modèle}
+\makebox[\textwidth]{\includegraphics[width=500pt]{img/umlv2}}
+
+\subsection{MVC}
+\makebox[\textwidth]{\includegraphics[width=300pt]{img/umlMVC}}
+
+
+\end{document}

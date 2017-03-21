@@ -35,6 +35,10 @@ public abstract class AbstractModel implements Observable{
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur
+	
+	/**
+	 * Ajout observer
+	 */
 	public void addObserver(Observer obs) {
 		this.listObserver.add(obs);
 	}
@@ -65,7 +69,6 @@ public abstract class AbstractModel implements Observable{
 	 */
 	@Override
 	public void notifyChangeValue(int x, int y, CaseValue v) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updateChangeValue(x, y, v);
 	}
@@ -76,30 +79,39 @@ public abstract class AbstractModel implements Observable{
 	 */
 	@Override
 	public void notifyWin(CaseValue v) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updateWin(v);
 	}
 
-	
+	/**
+	 * Notifier les scores de J1 et J2
+	 */
 	public void notifyScore(int nbJetonsJ1, int nbJetonsJ2){
 		for(Observer obs : listObserver)
 			obs.updateScore(nbJetonsJ1,nbJetonsJ2);
 	}
 
 
+	/**
+	 * Notifier la réinitialisation de la grille
+	 */
 	public void reinit() {
 		for(Observer obs : listObserver)
 			obs.updateReinit();
 	}
 	
-	
+	/**
+	 * Notifier le tour actuel
+	 */
 	public void notifyTour(CaseValue v){
 		for(Observer obs : listObserver)
 			obs.updateTour(v);
 	}
+	
+	/**
+	 * Notifier la liste des positions où le joueur actuel peut placer ses pions
+	 */
 	public void notifyPosJouable(ArrayList<int[]> liste) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver)
 			obs.updatePosJouable(liste);
 	}

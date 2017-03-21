@@ -18,19 +18,17 @@ public class GridControler extends AbstractControler{
 
 	 public GridControler(AbstractModel g) {
 		 super(g);
-		 //this.calc=g;
 	 }
 
-	 /**
-	  * Controle
-	  * RequestGrille: demande au modèle de notifier les grilles
-	  * RequestGenererGrille: demande au modele de générer les grilles
-	  * RequestGrilleDetail: demande de notifier une grille a la vue
-	  * RequestVerifWin: demande au modèle de vérifier la grille (victoire?)
-	  * Creation: Change la valeur d'une case de la grille de création
-	  * CreationGrille: Demande la création de la grille de création
-	  * requestSave: Demande la sauvegarde de la grille de création
-	  */
+	/**
+	 * Méthode de controle
+	 * 1- Vérifie si on peut placer la case aux coordonées (x,y) pour la valeur v
+	 * 2- Place et change de valeur les cases touchés par l'action du joueur
+	 * 3- Change le tour et vérifie si le prochain joueur peut jouer
+	 * 		-Si il ne peut pas jouer, on change à nouveau le tour
+	 * 		-Si le 2e joueur ne peut pas jouer, fin de partie
+	 * 4- Notifie les positions où le joueur peut placer ses pions
+	 */
 	public void control()
 	{
 	
@@ -43,18 +41,13 @@ public class GridControler extends AbstractControler{
 			}
 		}
 		
-		System.out.println(v);
-		//this.calc.afficherGrille();
-		
 		if(peutPlacer){
-			System.out.println("peut placer!!");
 			this.calc.remplirCase(x, y, res, v);
 		
 		
 			this.calc.changerTour();
 			
 			ArrayList<int[]> liste= this.calc.peutJouer(this.calc.getTour());
-			
 			
 			if(liste.size()==0){
 				this.calc.changerTour();

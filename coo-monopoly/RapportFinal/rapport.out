@@ -1,0 +1,12 @@
+\BOOKMARK [1][-]{section.1}{Description du projet :}{}% 1
+\BOOKMARK [1][-]{section.2}{Fonctionnalit\351s du jeu impl\351ment\351s :}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Ecran titre :}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Param\351trage simple dune partie :}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{Param\351trage avanc\351 :}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Jeu :}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Interface du jeu :}{section.2}% 7
+\BOOKMARK [2][-]{subsection.2.6}{R\350gles additionnelles :}{section.2}% 8
+\BOOKMARK [1][-]{section.3}{Ce quil reste \340 impl\351menter :}{}% 9
+\BOOKMARK [1][-]{section.4}{UML :}{}% 10
+\BOOKMARK [2][-]{subsection.4.1}{Mod\350le}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.2}{MVC}{section.4}% 12

@@ -105,15 +105,6 @@ public class VueGrid extends Fenetre implements Observer {
 		
 		
 	}
-
-	private Component topJustify( JPanel panel )  {
-	    Box  b = Box.createVerticalBox();
-	    b.add( panel );
-	    b.add( Box.createVerticalGlue() );
-	    // (Note that you could throw a lot more components
-	    // and struts and glue in here.)
-	    return b;
-	}
 	
 
 	/**
@@ -146,25 +137,36 @@ public class VueGrid extends Fenetre implements Observer {
 		this.grid = grid;
 	}
 	
-	@Override
+	/**
+	 * Changer une valeur 
+	 * @param x abscisse
+	 * @param y ordonnee
+	 * @param v valeur
+	 */
 	public void updateChangeValue(int x, int y, CaseValue v) {
-		// TODO Auto-generated method stub
 		this.grid.cases[x][y].changeValue(v);
 		this.repaint();
 	}
 
-	@Override
+	
+	/**
+	 * Mettre à jour une victoire
+	 * @param v gagnant
+	 */
 	public void updateWin(CaseValue v) {
-		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(this,v+" a gogné!"); 
 		
 		vueMenu.setVisible(true);
 		this.setVisible(false);
 	}
 
-	@Override
+	/**
+	 * Mettre à jour le score
+	 * @param nbJetonsJ1 Score J1
+	 * @param nbJetonsJ2 Score J2
+	 * 
+	 */
 	public void updateScore(int nbJetonsJ1, int nbJetonsJ2) {
-		// TODO Auto-generated method stub
 		this.score.nbJetonsJ1=nbJetonsJ1;
 		this.score.nbJetonsJ2=nbJetonsJ2;
 		this.score.scoreJ1.setText("Score J1: "+nbJetonsJ1);
@@ -175,17 +177,19 @@ public class VueGrid extends Fenetre implements Observer {
 		
 	}
 
-	@Override
+	/**
+	 * Mettre à jour un tour
+	 * @param v tour actuel
+	 */
 	public void updateTour(CaseValue v) {
-		// TODO Auto-generated method stub
-		System.out.println("update tour "+v);
 		this.tour=v;
 	}
 
-	@Override
+	/**
+	 * Mettre à jour les positions jouables
+	 * @param liste liste des coordonnées jouables
+	 */
 	public void updatePosJouable(ArrayList<int[]> liste) {
-		// TODO Auto-generated method stub
-		
 		this.posJouable=liste;
 		this.grid.repaint();
 		

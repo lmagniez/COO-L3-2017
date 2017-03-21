@@ -1,0 +1,13 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {english}
+\beamer@sectionintoc {1}{Conception objet - UML}{3}{0}{1}
+\beamer@sectionintoc {2}{Ce qui a \IeC {\'e}t\IeC {\'e} r\IeC {\'e}alis\IeC {\'e}}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{Fonctionnalit\IeC {\'e}s g\IeC {\'e}n\IeC {\'e}rales}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{Param\IeC {\'e}trage}{6}{0}{2}
+\beamer@subsectionintoc {2}{3}{Plateau}{8}{0}{2}
+\beamer@subsectionintoc {2}{4}{\IeC {\'E}v\IeC {\'e}nements du jeu}{9}{0}{2}
+\beamer@subsectionintoc {2}{5}{Interface joueur}{13}{0}{2}
+\beamer@subsectionintoc {2}{6}{R\IeC {\`e}gles additionnelles}{15}{0}{2}
+\beamer@sectionintoc {3}{Ce qu'il reste \IeC {\`a} impl\IeC {\'e}menter}{16}{0}{3}
+\beamer@sectionintoc {4}{Conclusion}{17}{0}{4}
+\beamer@sectionintoc {5}{Les Questions}{18}{0}{5}

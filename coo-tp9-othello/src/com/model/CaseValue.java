@@ -29,6 +29,11 @@ public enum CaseValue {
     }
 	
 	
+	/**
+	 * Retourne une CaseValue en fonction d'une string (utilisé dans le parsing XML)
+	 * @param s chaine
+	 * @return CaseValue correspondante
+	 */
 	public static CaseValue fromString(String s) {
         if(s.equals("EMPTY"))
         	return EMPTY;

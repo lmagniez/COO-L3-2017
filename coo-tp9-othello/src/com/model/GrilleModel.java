@@ -29,14 +29,19 @@ public class GrilleModel extends AbstractModel{
 	protected boolean[] isIA;
 	protected IA ia;
 	
+	/**
+	 * Constructeur normal
+	 * @param nbX nombre de cases en abscisse
+	 * @param nbY nombre de cases en ordonnée
+	 * @param isIA types de joueurs (true:IA false:HUMAIN)
+	 * @param J1Start 
+	 */
 	public GrilleModel(int nbX, int nbY,boolean[] isIA, boolean J1Start){
 		
 		this.isIA=isIA;
-		/*
-		isIA=new boolean[2];
-		isIA[0]=false;
-		isIA[1]=true;*/
+		
 		this.ia=new IA(this);
+		
 		
 		
 		
@@ -60,10 +65,11 @@ public class GrilleModel extends AbstractModel{
 			tour=CaseValue.J2;
 		}
 		
-		
-		//this.recupXML();
 	}
 	
+	/**
+	 * Constructeur vide (pour récupérer la sauvegarde ensuite)
+	 */
 	public GrilleModel(){
 		this.ia=new IA(this);
 		this.recupXML();
@@ -71,8 +77,9 @@ public class GrilleModel extends AbstractModel{
 		this.notifyPosJouable(liste);
 	}
 	
-	
-	
+	/**
+	 * Sauvegarde d'une partie (voir rapport pour la structure)
+	 */
 	public void genererXML(){
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -97,9 +104,6 @@ public class GrilleModel extends AbstractModel{
 			Element trunk4 = xml.createElement("IAJ2");
 			trunk4.setTextContent(this.isIA[1]+"");
 			root.appendChild(trunk4);
-			
-			System.out.println("IA "+isIA[0]+isIA[1]);
-			
 			
 			for(int i=0; i<nbX; i++){
 				for(int j=0; j<nbY; j++){
@@ -128,6 +132,10 @@ public class GrilleModel extends AbstractModel{
 		
 	}
 	
+	/**
+	 * Charger une partie (Voir le rapport pour la structure).
+	 * Appelé dans le constructeur simple.
+	 */
 	public void recupXML(){
 		
 		// Une instance de factory se charge de nous fournir un parseur
@@ -142,6 +150,7 @@ public class GrilleModel extends AbstractModel{
 			builder.setErrorHandler(errHandler);
 			try {
 				File fileXML = new File("save.xml");
+				
 				// parsing de notre fichier via un objet File et recuperation d'un objet Document
 				// Ce dernier represente la hierarchie d'objet creee pendant le parsing
 				Document xml = builder.parse(fileXML);
@@ -163,8 +172,6 @@ public class GrilleModel extends AbstractModel{
 				this.isIA[0]=Boolean.valueOf(list.item(2).getTextContent());
 				this.isIA[1]=Boolean.valueOf(list.item(3).getTextContent());
 				
-				System.out.println("IA "+isIA[0]+isIA[1]);
-				
 				this.nbJetons=0;
 				this.nbJetonsJ1=0;
 				this.nbJetonsJ2=0;
@@ -173,19 +180,16 @@ public class GrilleModel extends AbstractModel{
 					NamedNodeMap coordonees=list.item(i).getAttributes();
 					int x=Integer.parseInt(coordonees.getNamedItem("x").getNodeValue());
 					int y=Integer.parseInt(coordonees.getNamedItem("y").getNodeValue());
-					//String value  =list.item(i).getTextContent();
 					CaseValue value=CaseValue.fromString(list.item(i).getTextContent());
 					
 					if(value!=CaseValue.EMPTY)
 						this.placer(x, y, value);
-					System.out.println(x+" "+y+" "+value);
 					
 				}
 				
 				if(nbJetons%2==0) tour=CaseValue.J1;
 				else tour=CaseValue.J2;
 				
-				System.out.println(root.getNodeName());
 			
 			
 			} catch (SAXParseException e){}
@@ -200,19 +204,27 @@ public class GrilleModel extends AbstractModel{
 		}
 		
 		
-		this.afficherGrille();
-		
 	}
 	
-	
+	/**
+	 * Démarrer une IA
+	 */
 	public void startIA(){
 		this.ia.start();
 	}
 	
+	/**
+	 * Stopper une IA
+	 */
 	public void stopIA(){
 		this.ia.arret();
 	}
 	
+	/**
+	 * Placer les 4 pions de l'initialisation
+	 * On notifie également la liste de pions jouables dans cette méthode.
+	 * A utiliser une fois le lien entre vue et modèle réalisé.
+	 */
 	public void placerinit(){
 		this.placer(this.nbX/2-1, this.nbY/2-1, CaseValue.J1);
 		this.placer(this.nbX/2, this.nbY/2-1, CaseValue.J2);
@@ -225,7 +237,13 @@ public class GrilleModel extends AbstractModel{
 	}
 	
 	
-	
+	/**
+	 * Placer une pion et notifier la vue
+	 * (Pas de prise de pion)
+	 * @param x abscisse
+	 * @param y ordonnée
+	 * @param v valeur
+	 */
 	public void placer(int x, int y, CaseValue v){
 		this.nbJetons++;
 		if(v==CaseValue.J1)
@@ -238,7 +256,9 @@ public class GrilleModel extends AbstractModel{
 		int i,j;
 	}
 	
-	
+	/**
+	 * Notifier la vue de l'ensemble des éléments une fois la grille chargée sur le modèle
+	 */
 	public void initCharger(){
 		for(int i=0; i<nbX; i++){
 			for(int j=0; j<nbY; j++){
@@ -252,9 +272,14 @@ public class GrilleModel extends AbstractModel{
 		this.notifyPosJouable(liste);
 		
 		
-		
 	}
 	
+	/**
+	 * Vérifier si on peut placer un pion
+	 * @param x abscisse 
+	 * @param y ordonnée
+	 * @return boolean[8] l'ensemble des directions ou des modifications vont avoir lieu (H,HD,D,BD,B,BG,G,HG)
+	 */
 	public boolean[] peutPlacer(int x, int y, CaseValue v){
 		
 		
@@ -271,16 +296,11 @@ public class GrilleModel extends AbstractModel{
 		if(valeurJ1==CaseValue.J1)valeurJ2=CaseValue.J2;
 		if(valeurJ1==CaseValue.J2)valeurJ2=CaseValue.J1;
 		
-		//System.out.println(valeurJ1);
-		//System.out.println(valeurJ2);
-		
-		
 		int i=x, j=y, cpt=0;
 		
 		//haut
 		j=y-1;cpt=0;
 		while(j>=0&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j--;cpt++;
 		}
 		if(cpt>0&&j!=-1&&grille[i][j].v==valeurJ1)
@@ -289,7 +309,6 @@ public class GrilleModel extends AbstractModel{
 		//diag haut droite
 		j=y-1; i=x+1;cpt=0;
 		while(j>=0&&i<nbX&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j--;i++;cpt++;
 		}
 		if(cpt>0&&j!=-1&&i!=nbX&&grille[i][j].v==valeurJ1)
@@ -306,7 +325,6 @@ public class GrilleModel extends AbstractModel{
 		//diag bas droite
 		j=y+1; i=x+1;cpt=0;
 		while(j<nbY&&i<nbX&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j++;i++;cpt++;
 		}
 		if(cpt>0&&j!=nbY&&i!=nbX&&grille[i][j].v==valeurJ1)
@@ -323,7 +341,6 @@ public class GrilleModel extends AbstractModel{
 		//diag bas gauche
 		j=y+1; i=x-1;cpt=0;
 		while(j<nbY&&i>=0&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j++;i--;cpt++;
 		}
 		if(cpt>0&&j!=nbY&&i!=-1&&grille[i][j].v==valeurJ1)
@@ -340,7 +357,6 @@ public class GrilleModel extends AbstractModel{
 		//diag haut gauche
 		j=y-1; i=x-1;cpt=0;
 		while(j>=0&&i>=0&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j--;i--;cpt++;
 		}
 		if(cpt>0&&j!=-1&&i!=-1&&grille[i][j].v==valeurJ1)
@@ -350,19 +366,24 @@ public class GrilleModel extends AbstractModel{
 		
 	}
 	
+	/**
+	 * Remplir une case et les autres cases affectées (utiliser peutPlacer au préalable)
+	 * Notifie l'ensemble des changements de valeur de case, puis notifie le score.
+	 * @param x abscisse
+	 * @param y ordonnée
+	 * @param directions ensemble de directions possibles (utiliser peutPlacer)
+	 * @param v valeur
+	 */
 	public void remplirCase(int x, int y, boolean[] directions, CaseValue v){
 		
+		//ajoute un jeton
 		this.nbJetons++;
 		if(v==CaseValue.J1)
 			this.nbJetonsJ1++;
 		else
 			this.nbJetonsJ2++;
 		
-		for(int i=0; i<8; i++){
-			System.out.print(directions[i]+" ");
-		}
-		System.out.println();
-		
+		//change la valeur
 		this.grille[x][y].v=v;
 		this.notifyChangeValue(x, y, v);
 		int i,j;
@@ -465,7 +486,6 @@ public class GrilleModel extends AbstractModel{
 				grille[i][j].v=v;
 				i--;
 				if(v==CaseValue.J1){
-					System.out.println("yes");
 					this.nbJetonsJ1++;this.nbJetonsJ2--;
 				}
 				else{
@@ -494,12 +514,18 @@ public class GrilleModel extends AbstractModel{
 		
 	}
 	
+	/**
+	 * Nombres de cases prises pour un coup donné (Utilisé pour l'IA)
+	 * @param x abscisse
+	 * @param y ordonnée
+	 * @param v valeur
+	 * @return nombre de cases prises
+	 */
 	public int nbCasesPrises(int x, int y, CaseValue v){
 
 		int res=0;
 		
 		if(grille[x][y].v!=CaseValue.EMPTY){
-			System.out.println("not emptyyy");
 			return res;
 		}
 		
@@ -508,8 +534,6 @@ public class GrilleModel extends AbstractModel{
 		if(valeurJ1==CaseValue.J1)valeurJ2=CaseValue.J2;
 		if(valeurJ1==CaseValue.J2)valeurJ2=CaseValue.J1;
 		
-		//System.out.println(valeurJ1);
-		//System.out.println(valeurJ2);
 		
 		
 		int i=x, j=y, cpt=0;
@@ -517,7 +541,6 @@ public class GrilleModel extends AbstractModel{
 		//haut
 		j=y-1;cpt=0;
 		while(j>=0&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j--;cpt++;
 		}
 		if(cpt>0&&j!=-1&&grille[i][j].v==valeurJ1)
@@ -526,7 +549,6 @@ public class GrilleModel extends AbstractModel{
 		//diag haut droite
 		j=y-1; i=x+1;cpt=0;
 		while(j>=0&&i<nbX&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j--;i++;cpt++;
 		}
 		if(cpt>0&&j!=-1&&i!=nbX&&grille[i][j].v==valeurJ1)
@@ -543,7 +565,6 @@ public class GrilleModel extends AbstractModel{
 		//diag bas droite
 		j=y+1; i=x+1;cpt=0;
 		while(j<nbY&&i<nbX&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j++;i++;cpt++;
 		}
 		if(cpt>0&&j!=nbY&&i!=nbX&&grille[i][j].v==valeurJ1)
@@ -560,7 +581,6 @@ public class GrilleModel extends AbstractModel{
 		//diag bas gauche
 		j=y+1; i=x-1;cpt=0;
 		while(j<nbY&&i>=0&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j++;i--;cpt++;
 		}
 		if(cpt>0&&j!=nbY&&i!=-1&&grille[i][j].v==valeurJ1)
@@ -577,7 +597,6 @@ public class GrilleModel extends AbstractModel{
 		//diag haut gauche
 		j=y-1; i=x-1;cpt=0;
 		while(j>=0&&i>=0&&grille[i][j].v==valeurJ2){
-			//System.out.println(grille[i][j].v+" puis j--");
 			j--;i--;cpt++;
 		}
 		if(cpt>0&&j!=-1&&i!=-1&&grille[i][j].v==valeurJ1)
@@ -588,11 +607,19 @@ public class GrilleModel extends AbstractModel{
 	}
 	
 	
-	
+	/**
+	 * Vérifier si la grille est pleine
+	 * @return
+	 */
 	public boolean isFull(){
 		return this.nbJetons==this.nbX*this.nbY;
 	}
 	
+	/**
+	 * Vérifie où le joueur peut jouer sur la grille
+	 * @param tour joueur actuel
+	 * @return liste de coordonnées (x,y) où le joueur peut jouer 
+	 */
 	public ArrayList<int[]> peutJouer(CaseValue tour){
 		ArrayList<int[]> liste=new ArrayList<int[]>();
 		for(int i=0; i<nbX; i++){
@@ -618,7 +645,9 @@ public class GrilleModel extends AbstractModel{
 		return liste;
 	}
 	
-	
+	/**
+	 * Notifier le winner à la vue
+	 */
 	public void getWinner(){
 		if(this.nbJetonsJ1>this.nbJetonsJ2)
 			this.notifyWin(CaseValue.J1);
@@ -626,7 +655,9 @@ public class GrilleModel extends AbstractModel{
 			this.notifyWin(CaseValue.J2);
 	}
 	
-	
+	/**
+	 * Changer le tour et notifier la vue
+	 */
 	public void changerTour(){
 		
 		if(tour==CaseValue.J1){
@@ -655,6 +686,9 @@ public class GrilleModel extends AbstractModel{
 		
 	}
 	
+	/**
+	 * Réinitialisation et notification de la vue
+	 */
 	public void reinit(){
 		for(int i=0; i<nbX; i++){
 			for(int j=0; j<nbY; j++){

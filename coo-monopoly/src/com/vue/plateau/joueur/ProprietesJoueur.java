@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -37,13 +38,15 @@ public class ProprietesJoueur extends JPanel{
 	protected JLabel nomJoueur;
 	protected JLabel argentJoueur;
 	
+	private JButton echange=new JButton("Echange");
 	protected JButton retour;
-	protected JButton maison=new JButton("Acheter Maison");
-	protected JButton maisonVente=new JButton("Vendre Maison");
+	private JButton maison=new JButton("Acheter Maison");
+	private JButton maisonVente=new JButton("Vendre Maison");
 	
+	protected ArrayList<JButton> listePropri;
 	
 	protected JPanel[] couleurs;
-	protected JPanel carte;
+	private JPanel carte;
 	protected Case[] cases;
 	protected int idSelected;
 	
@@ -59,6 +62,7 @@ public class ProprietesJoueur extends JPanel{
 		this.infos=infos;
 		this.idJoueur=idJoueur;
 		this.cases=cases;
+		 listePropri=new ArrayList<JButton>();
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
 		this.setSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_X*5/3));
@@ -69,8 +73,10 @@ public class ProprietesJoueur extends JPanel{
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(new Color(200,200,200,90));
 		
-		maison.addActionListener(new ButtonListener());
-		maisonVente.addActionListener(new ButtonListener());
+		getMaison().addActionListener(new ButtonListener());
+		getMaisonVente().addActionListener(new ButtonListener());
+		getEchange().addActionListener(new ButtonListener());
+		
 		this.couleurs=new JPanel[ConstantesModel.NB_COULEUR+2];
 		for(int i=0; i<ConstantesModel.NB_COULEUR+2;i++){
 			couleurs[i]=new JPanel();
@@ -109,6 +115,7 @@ public class ProprietesJoueur extends JPanel{
 			if(!infos.getAcquisition()[i])
 				b.setEnabled(false);
 			b.addActionListener(new ButtonListener());
+			listePropri.add(b);
 			
 			if(cases[i].getType()==TypeCase.TERRAIN){
 				if(cases[i].getCouleurTerrain()==CouleurTerrain.MARRON)
@@ -169,10 +176,52 @@ public class ProprietesJoueur extends JPanel{
 		
 	}
 	
+	public void refresh(){
+		for(int i=0; i<listePropri.size(); i++){
+			JButton b=listePropri.get(i);
+			if(!infos.getAcquisition()[i])
+				b.setEnabled(false);
+		}
+		this.revalidate();
+		this.repaint();
+	}
+	
 	public void setArgent(int argent){
 		this.argentJoueur.setText("Argent: "+argent);
 	}
 	
+	public JPanel getCarte() {
+		return carte;
+	}
+
+	public void setCarte(JPanel carte) {
+		this.carte = carte;
+	}
+
+	public JButton getEchange() {
+		return echange;
+	}
+
+	public void setEchange(JButton echange) {
+		this.echange = echange;
+	}
+
+	public JButton getMaison() {
+		return maison;
+	}
+
+	public void setMaison(JButton maison) {
+		this.maison = maison;
+	}
+
+	public JButton getMaisonVente() {
+		return maisonVente;
+	}
+
+	public void setMaisonVente(JButton maisonVente) {
+		this.maisonVente = maisonVente;
+	}
+
 	class ButtonListener implements ActionListener
 	{ 
 		public void actionPerformed(ActionEvent e) {
@@ -185,51 +234,65 @@ public class ProprietesJoueur extends JPanel{
 			if(command=="Vendre Maison"){
 				ProprietesJoueur.this.infos.score.ecran.getVue().getControler().requestVendreMaison(idJoueur, idSelected);
 			}
+			if(command=="Echange"){
+				
+				ProprietesJoueur.this.infos.score.ecran.getChoixE().genererChoixAchat(idJoueur, idSelected);
+				
+			}
+			
 			else if(command=="Retour"){
 				ProprietesJoueur.this.infos.score.afficherInfosJoueur();
+				ProprietesJoueur.this.infos.score.ecran.getChoixE().setVisible(false);
 			}
 			else{
-				
+				getMaison().setEnabled(true);
+				getMaisonVente().setEnabled(true);
 				for(int i=0; i<ConstantesModel.NB_CASES; i++){
-					System.out.println(command);
-					System.out.println(cases[i].getNom());
 					if(command.equals(cases[i].getNom())){
 						ProprietesJoueur.this.idSelected=i;
-						if(ProprietesJoueur.this.carte!=null)
-							ProprietesJoueur.this.remove(ProprietesJoueur.this.carte);
+						if(ProprietesJoueur.this.getCarte()!=null)
+							ProprietesJoueur.this.remove(ProprietesJoueur.this.getCarte());
+						//case terrain
 						if(cases[i].getType()==TypeCase.TERRAIN){
 							for(int j=0; j<ConstantesModel.NB_CASES; j++){
-								if(cases[j].getType()==TypeCase.TERRAIN&&!infos.getAcquisition()[j])
-									maison.setEnabled(false);
+								if(cases[j].getType()==TypeCase.TERRAIN)
+									if(cases[j].getCouleurTerrain()==cases[i].getCouleurTerrain()&&!infos.getAcquisition()[j])
+										getMaison().setEnabled(false);
 							}
-							ProprietesJoueur.this.carte=new CarteAchatTerrain(i,cases[i].getNom(),
+							ProprietesJoueur.this.setCarte(new CarteAchatTerrain(i,cases[i].getNom(),
 									cases[i].getCouleurTerrain(),cases[i].getPrixAchat(),cases[i].getLoyers(),
-									cases[i].getPrixMaison());
+									cases[i].getPrixMaison()));
+							
+							if(cases[i].getNbMaisons()==0)
+								getMaisonVente().setEnabled(false);
+							
 						}
+						//case gare
 						else if(cases[i].getType()==TypeCase.GARE){
 							for(int j=0; j<ConstantesModel.NB_CASES; j++){
 								if(cases[j].getType()==TypeCase.GARE&&!infos.getAcquisition()[j])
-									maison.setEnabled(false);
+									getMaison().setEnabled(false);
 							}
-							ProprietesJoueur.this.carte=new CarteAchatGare(i,cases[i].getNom(),
-									cases[i].getPrixAchat(),cases[i].getLoyers());
+							ProprietesJoueur.this.setCarte(new CarteAchatGare(i,cases[i].getNom(),
+									cases[i].getPrixAchat(),cases[i].getLoyers()));
 						}
 						else if(cases[i].getType()==TypeCase.SERVICE){
 							for(int j=0; j<ConstantesModel.NB_CASES; j++){
 								if(cases[j].getType()==TypeCase.SERVICE&&!infos.getAcquisition()[j])
-									maison.setEnabled(false);
+									getMaison().setEnabled(false);
 							}
-							ProprietesJoueur.this.carte=new CarteAchatService(i,cases[i].getNom(),
-									cases[i].getPrixAchat(),cases[i].getLoyers());
+							ProprietesJoueur.this.setCarte(new CarteAchatService(i,cases[i].getNom(),
+									cases[i].getPrixAchat(),cases[i].getLoyers()));
 						}
 						
 						
-						ProprietesJoueur.this.add(ProprietesJoueur.this.carte);
+						ProprietesJoueur.this.add(ProprietesJoueur.this.getCarte());
 						if(!(cases[i].getType()==TypeCase.SERVICE||cases[i].getType()==TypeCase.GARE)){
-							ProprietesJoueur.this.add(maison);
-							ProprietesJoueur.this.add(maisonVente);
+							ProprietesJoueur.this.add(getMaison());
+							ProprietesJoueur.this.add(getMaisonVente());
 							
 						}
+						ProprietesJoueur.this.add(getEchange());
 						
 						
 						ProprietesJoueur.this.revalidate();

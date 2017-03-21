@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -73,15 +74,11 @@ public class Score extends JPanel {
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(Color.BLACK);
-		//this.setOpaque(true);
 		
 		title = new ImageIcon("./sprites/title.jpeg");
 		JLabel titre = new JLabel();
 		JLabel titre2 = new JLabel("test");
 		titre2.setIcon(title);
-		
-		
-		
 		
 		
 		JLabel title = new JLabel();
@@ -108,7 +105,11 @@ public class Score extends JPanel {
 		scoreJ2.setForeground(Color.WHITE);
 		
 		
-		
+		/**
+		 * Classe interne gérant les scores et affichant le tour actuel
+		 * @author loick
+		 *
+		 */
 		class ScoreJoueur extends JPanel{
 		
 			public ScoreJoueur(){
@@ -189,6 +190,15 @@ public class Score extends JPanel {
 				vue.gridControler.requestSave();
 				vue.vueMenu.setVisible(true);
 				vue.setVisible(false);
+				vue.vueMenu.setVisible(true);
+				File fileXML = new File("save.xml");
+				if(!fileXML.exists()){
+					vue.vueMenu.getPanneauTitre().getCharger().setEnabled(false);
+				}
+				else{
+					vue.vueMenu.getPanneauTitre().getCharger().setEnabled(true);
+				}
+				
 			}
 			
 			if(command=="Recommencer")
@@ -200,13 +210,29 @@ public class Score extends JPanel {
 			if(command=="Retour")
 			{
 				vue.vueMenu.setVisible(true);
+				File fileXML = new File("save.xml");
+				if(!fileXML.exists()){
+					vue.vueMenu.getPanneauTitre().getCharger().setEnabled(false);
+				}
+				else{
+					vue.vueMenu.getPanneauTitre().getCharger().setEnabled(true);
+				}
+				
 				vue.setVisible(false);
 				vue.gridControler.requestStopIA();
+				
+				
 			}
 		} 
 	}
 
-	
+	/**
+	 * Transformer une ImageIcon (nouvelle dimension)
+	 * @param img
+	 * @param hx
+	 * @param hy
+	 * @return
+	 */
 	public ImageIcon transform (ImageIcon img, int hx, int hy)
 	{
 		Image image=img.getImage();

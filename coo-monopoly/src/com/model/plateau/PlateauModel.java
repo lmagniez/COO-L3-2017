@@ -3,6 +3,7 @@ package com.model.plateau;
 import java.util.Random;
 
 import com.model.ConstantesModel;
+import com.model.ConstantesParam;
 import com.model.plateau.cases.CaseModel;
 import com.model.plateau.cases.CommunauteChanceModel;
 import com.model.plateau.cases.CouleurTerrain;
@@ -35,10 +36,10 @@ public class PlateauModel {
 	 * Constructeur
 	 * @param model Modèle du jeu
 	 * @param nbJoueur Nombre de joueurs
-	 * @param caseAleatoire position des joueurs aléatoires
+	 * @param pionAleatoire position des joueurs aléatoires
 	 * @param sommeDepart somme de départ des joueurs
 	 */
-	public PlateauModel(JeuModel model, int nbJoueur, boolean caseAleatoire, int sommeDepart)
+	public PlateauModel(JeuModel model, int nbJoueur, boolean pionAleatoire, int sommeDepart)
 	{
 		this.setModel(model);
 		this.setNbJoueur(nbJoueur);
@@ -47,7 +48,7 @@ public class PlateauModel {
 			int positionDepart=0;
 			
 			
-			if(caseAleatoire){
+			if(pionAleatoire){
 				Random r = new Random();
 				positionDepart=r.nextInt(40);
 			}
@@ -166,9 +167,30 @@ public class PlateauModel {
 		cases[nb_cases]=new DepartImpotTaxeModel(this,nb_cases,nb_cases++,-10000,"Taxe de Luxe");
 		cases[nb_cases]=new TerrainModel(this,nb_cases,nb_cases++,CouleurTerrain.BLEU_FONCE,tabNom[nb_terrain],tabAchat[nb_terrain],tabLoyers[nb_terrain++],tabMaisons[CouleurTerrain.BLEU_FONCE.ordinal()]);
 		
+		if(ConstantesParam.CASE_ALEA_ENABLED)
+			for(int i=0; i<100; i++)
+				cases=shuffleCases(cases);
+		
 		this.setCases(cases);
 		this.getModel().notifyCases(this.cases);
 		this.getModel().notifyInitTour();
+	}
+	
+	public CaseModel[] shuffleCases(CaseModel[] cases){
+		Random r = new Random();
+		int i1=r.nextInt(cases.length);
+		int i2=r.nextInt(cases.length);
+		
+		if(i1!=0&&i1!=10&&i1!=20&&i1!=30&&i2!=0&&i2!=10&&i2!=20&&i2!=30){
+			cases[i1].setPosition(i2);
+			cases[i2].setPosition(i1);
+		
+			CaseModel tmp=cases[i1];
+			cases[i1]=cases[i2];
+			cases[i2]=tmp;
+		}
+		
+		return cases;
 	}
 	
 	/**
