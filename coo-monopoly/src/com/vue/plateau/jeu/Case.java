@@ -10,8 +10,12 @@ import javax.swing.JLabel;
 
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CouleurTerrain;
-import com.vue.plateau.RotatedIcon.Rotate;
 
+/**
+ * classe représentant une case
+ * @author loick
+ *
+ */
 public class Case extends JLabel {
 
 	protected Plateau p;
@@ -40,8 +44,15 @@ public class Case extends JLabel {
 	
 	
 	
-	
+	/**
+	 * Constructeur
+	 * @param p plateau
+	 * @param idCase id de la case
+	 * @param position position de la case
+	 */
 	public Case(Plateau p, int idCase, int position){
+		
+		
 		
 		this.p=p;
 		this.setBorder(BorderFactory.createLineBorder(Color.black,1));
@@ -148,20 +159,36 @@ public class Case extends JLabel {
 	    
 	}
 	
+	/**
+	 * Ajouter une maison à la case
+	 */
 	public void addMaison(){
+		System.out.println("add maison "+idCase);
 		this.nbMaisons++;
 		this.p.addMaison(this.getPosition(), this.nbMaisons);
+		this.p.revalidate();
+		this.p.repaint();
 	}
 	
+	/**
+	 * Supprimer une maison à la case
+	 */
 	public void removeMaison(){
 		this.nbMaisons--;
 		this.p.removeMaison(this.getPosition(), this.nbMaisons);
-		
+		this.p.revalidate();
+		this.p.repaint();
 		
 	}
 	
 	
-	
+	/**
+	 * Transformer une imageIcon
+	 * @param img image
+	 * @param hx nouvelle taille x 
+	 * @param hy nouvelle taille y
+	 * @return nouvelle imageIcon
+	 */
 	public ImageIcon transform (ImageIcon img, int hx, int hy)
 	{
 		Image image=img.getImage();

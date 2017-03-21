@@ -14,15 +14,24 @@ import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 import com.vue.plateau.EcranJeu;
 
+/**
+ * Classe représentant les différentes infos de jeu
+ * Gère les tours des joueurs et les propriétés
+ * @author loick
+ *
+ */
 public class Score extends JPanel{
 
 	protected EcranJeu ecran;
 	protected Image fond;
 	protected InfoJoueur[] joueurs;
 	protected InfoJeu infos;
-	protected ProprietesJoueur proprietes;
+	private ProprietesJoueur proprietes;
 	
-	
+	/**
+	 * Constructeur
+	 * @param e Ecran de jeu
+	 */
 	public Score(EcranJeu e){
 		
 		
@@ -40,7 +49,7 @@ public class Score extends JPanel{
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++)
 			getJoueurs()[i]=new InfoJoueur(this, i,ConstantesParam.SOMME_DEPART,i);
 			
-		infos=new InfoJeu();
+		infos=new InfoJeu(this);
 		
 		
 		afficherInfosJoueur();
@@ -48,14 +57,20 @@ public class Score extends JPanel{
 
 	}
 	
+	/**
+	 * Afficher les propriétés d'un joueur
+	 */
 	public void afficherProprietes(){
 		this.removeAll();
 		this.add(Box.createRigidArea(new Dimension(5,25)));
-		this.add(proprietes);
+		this.add(getProprietes());
 		this.revalidate();
 		this.repaint();
 	}
 	
+	/**
+	 * Afficher les infos d'un joueur
+	 */
 	public void afficherInfosJoueur(){
 		this.removeAll();
 		this.add(Box.createRigidArea(new Dimension(5,25)));
@@ -72,7 +87,10 @@ public class Score extends JPanel{
         g.drawImage(fond, 0, 0, getWidth(), getHeight(), this);
     }
 
-
+	/**
+	 * Initialiser le tour
+	 * @param tour
+	 */
 	public void initTour(int tour) {
 		System.out.println("init tour "+tour);
 		// TODO Auto-generated method stub
@@ -90,6 +108,14 @@ public class Score extends JPanel{
 
 	public void setJoueurs(InfoJoueur[] joueurs) {
 		this.joueurs = joueurs;
+	}
+
+	public ProprietesJoueur getProprietes() {
+		return proprietes;
+	}
+
+	public void setProprietes(ProprietesJoueur proprietes) {
+		this.proprietes = proprietes;
 	}
 	
 }

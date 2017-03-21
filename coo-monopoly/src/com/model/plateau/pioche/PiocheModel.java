@@ -6,6 +6,11 @@ import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
+/**
+ * Modèle de la pioche
+ * @author loick
+ *
+ */
 public class PiocheModel {
 
 	protected PlateauModel p;
@@ -15,6 +20,11 @@ public class PiocheModel {
 	protected TypePioche type;
 	
 
+	/**
+	 * Constructeur
+	 * @param p modèle du plateau
+	 * @param type type de pioche
+	 */
 	public PiocheModel(PlateauModel p, TypePioche type)
 	{
 		this.type=type;
@@ -56,6 +66,11 @@ public class PiocheModel {
 		}
 	}
 	
+	/**
+	 * Piocher une carte
+	 * @param j joueur piochant la carte
+	 * @return pioche ou non
+	 */
 	public boolean piocherCarte(JoueurModel j)
 	{
 		if(piocheVide())
@@ -66,6 +81,9 @@ public class PiocheModel {
 		return true;
 	}
 	
+	/**
+	 * Génération des cartes chances
+	 */
 	public void genererCartesChance()
 	{
 		int nbCarte=0;
@@ -103,6 +121,9 @@ public class PiocheModel {
 				"La banque vous verse 5.000.");
 	}
 	
+	/**
+	 * Génération des cartes communautés
+	 */
 	public void genererCartesCommunaute()
 	{
 		int nbCarte=0;

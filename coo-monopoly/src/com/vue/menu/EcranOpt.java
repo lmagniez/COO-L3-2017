@@ -23,6 +23,7 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import com.model.ConstantesParam;
 import com.vue.ButtonMenu;
 import com.vue.Colors;
 
@@ -52,6 +53,10 @@ public class EcranOpt extends Ecran implements ActionListener{
 	public static final int MAX_PARAM=9;
 	
 	
+	/**
+	 * Constructeur 
+	 * @param vue Vue du menu
+	 */
 	public EcranOpt(VueMenu vue)
 	{
 		
@@ -108,7 +113,7 @@ public class EcranOpt extends Ecran implements ActionListener{
 		
 		//init combo box
 		String str[]={"JOUEUR","IA"};
-		String str2[]={"NONE","JOUEUR","IA"};
+		String str2[]={"JOUEUR","NONE","IA"};
 		
 		Object items[]={
 				transform(new ImageIcon("./Sprites/pion/1.png"),50,50),
@@ -133,12 +138,12 @@ public class EcranOpt extends Ecran implements ActionListener{
 	    	Border margin = new EmptyBorder(10,10,10,10);
 	    	panelJoueurs[i].setBorder(new CompoundBorder(border, margin));
 	    	
-	    	
 	    	//Type de joueurs (IA/HUMAIN/NONE)
-	    	if(i<=2) typeJoueurs[i] = new JComboBox(str);
+	    	if(i<2) typeJoueurs[i] = new JComboBox(str);
 	    	else typeJoueurs[i] = new JComboBox(str2);
 	    	typeJoueurs[i].setMaximumSize(new Dimension(150,50));
 	    	typeJoueurs[i].setSelectedIndex(0);
+	    	typeJoueurs[i].addActionListener(this);
 	    	
 	    	//Nom des joueurs
 	    	nomJoueurs[i]=new JTextField(15);
@@ -167,8 +172,7 @@ public class EcranOpt extends Ecran implements ActionListener{
 	    	panelJoueurs[i].add(Box.createRigidArea(new Dimension(30,10)));
 	    	
 	    	panelJoueurs[i].add(icons[i]);
-	    	
-	    	
+	    
 	    }
 	    
 	    
@@ -234,7 +238,11 @@ public class EcranOpt extends Ecran implements ActionListener{
 		
 		//this.setBounds(300, 200, 800, 400);
 		
+		
+		
 		this.addListener();
+		
+		
 	}
 	
 	public ImageIcon transform (ImageIcon img, int hx, int hy)
@@ -245,29 +253,75 @@ public class EcranOpt extends Ecran implements ActionListener{
 	}
 	
 
+	/**
+	 * Gérer les paramètres et les enregistrer dans la classe constantesParam
+	 */
+	public void gererParam(){
+		int cptJoueurs=0;
+		for(int i=0; i<4; i++){
+			if(!typeJoueurs[i].getSelectedItem().equals("NONE")){
+				cptJoueurs++;
+			}
+		}
+		boolean[] isIA=new boolean[cptJoueurs];
+		int cpt=0;
+		for(int i=0; i<4; i++){
+			if(typeJoueurs[i].getSelectedItem().equals("IA")){
+				isIA[cpt++]=true;
+			}
+			if(typeJoueurs[i].getSelectedItem().equals("JOUEUR")){
+				isIA[cpt++]=false;
+			}
+			
+		}
+		ConstantesParam.IS_IA=isIA;
+		ConstantesParam.NB_JOUEURS=cptJoueurs;
+		
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
-		String command = ((JButton) arg0.getSource()).getActionCommand();
-		
-		if(command=="Démarrer")
-		{
-			vue.initFenetreEcranJeu();
-			//afficherPanneau(vue.lePanneau);
+		for(int i=2; i<4; i++){
+			if(arg0.getSource()==this.typeJoueurs[i]){
+				if(nomJoueurs[i].isEnabled()){
+					if(typeJoueurs[i].getSelectedItem().equals("NONE")){
+						this.nomJoueurs[i].setEnabled(false);		
+						this.icons[i].setEnabled(false);
+					}
+				}
+				else{
+					this.nomJoueurs[i].setEnabled(true);		
+					this.icons[i].setEnabled(true);
+				}
+				
+			}
 		}
 		
-		if(command=="Règles additionnelles")
-		{
-			this.focusNouvelEcran(vue.lePanneau6);
-		}
-		//this.focusNouvelEcran(vue.lePanneau5);
+		if(arg0.getSource() instanceof JButton){
+			String command = ((JButton) arg0.getSource()).getActionCommand();
 		
-		if(command=="Retour")
-		{
 			
-			this.focusNouvelEcran(vue.lePanneau3);
-			//vue.lePanneau3.requestFocus();
+			if(command=="Démarrer")
+			{	
+				gererParam();
+				vue.initFenetreEcranJeu();
+				//afficherPanneau(vue.lePanneau);
+			}
+			
+			if(command=="Règles additionnelles")
+			{
+				gererParam();
+				this.focusNouvelEcran(vue.lePanneau6);
+			}
+			
+			if(command=="Retour")
+			{
+				
+				this.focusNouvelEcran(vue.lePanneau3);
+				//vue.lePanneau3.requestFocus();
+			}
 		}
 	}
 	

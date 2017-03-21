@@ -19,6 +19,11 @@ import javax.swing.JPanel;
 import com.model.ConstantesModel;
 import com.model.ConstantesVue;
 
+/**
+ * Représente les informations pour un joueur
+ * @author loick
+ *
+ */
 public class InfoJoueur extends JPanel{
 
 	protected Score score;
@@ -34,18 +39,25 @@ public class InfoJoueur extends JPanel{
 	private boolean[] acquisition;
 	
 	
+	/**
+	 * Constructeur
+	 * @param s Score
+	 * @param idJoueur id du joueur
+	 * @param argent argent du joueur
+	 * @param idIcon icone du joueur
+	 */
 	public InfoJoueur(Score s,int idJoueur, int argent, int idIcon){
 		
 		this.setAcquisition(new boolean[ConstantesModel.NB_CASES]);
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
 			this.getAcquisition()[i]=false;
 		
-		/*
+		
 		if(idJoueur==1){
 			for(int i=0; i<ConstantesModel.NB_CASES; i++)
 				this.getAcquisition()[i]=true;
 			
-		}*/
+		}
 		
 //---->		
 		/*
@@ -125,8 +137,8 @@ public class InfoJoueur extends JPanel{
 				InfoJoueur.this.lanceDes.setEnabled(false);
 			}
 			if(command=="Propriétés du joueur"){
-				InfoJoueur.this.score.proprietes=new ProprietesJoueur(InfoJoueur.this.idJoueur,InfoJoueur.this,
-						InfoJoueur.this.score.ecran.getP().getCases());
+				InfoJoueur.this.score.setProprietes(new ProprietesJoueur(InfoJoueur.this.idJoueur,InfoJoueur.this,
+						InfoJoueur.this.score.ecran.getP().getCases()));
 				InfoJoueur.this.score.afficherProprietes();
 			}
 			

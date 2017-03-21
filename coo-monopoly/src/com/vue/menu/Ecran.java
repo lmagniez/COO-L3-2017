@@ -14,6 +14,12 @@ import javax.swing.event.AncestorListener;
 
 import com.vue.GestionBouton;
 
+/**
+ * Classe abstraite représentant un écran.
+ * Dispose d'un tableau à deux dimensions de bouton dans lequel l'utilisateur se déplace dedans.
+ * @author loick
+ *
+ */
 public abstract class Ecran extends JPanel{
 
 	protected int NB_BUTTONS_X;

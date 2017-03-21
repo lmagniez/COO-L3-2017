@@ -4,11 +4,17 @@ import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
+/**
+ * Classe représentant un modèle de terrain
+ * @author loick
+ *
+ */
 public class TerrainModel extends CaseModel{
 
 	
 	public static int[] tabAssoTerrainJoueur;
 	protected CouleurTerrain couleurTerrain;
+	
 	public CouleurTerrain getCouleurTerrain() {
 		return couleurTerrain;
 	}
@@ -32,19 +38,33 @@ public class TerrainModel extends CaseModel{
 	protected PlateauModel p;
 	protected static int nbTerrain=0;
 	
-	
+	/**
+	 * Initialiser le tableau associatif des terrains
+	 * @return tableau associatif initialisé à -1 (aucun joueur ne dispose de terrains
+	 */
 	public static int[] initTab()
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_TERRAIN];
 		for(int i=0; i<ConstantesModel.NB_CASES_TERRAIN; i++){
-			tabAsso[i]=-1;
+			//tabAsso[i]=-1;
+			tabAsso[i]=1;
 //
 		}
 		return tabAsso;
 	}
 	
 	
-	
+	/**
+	 * Constructeur
+	 * @param p modèle du plateau
+	 * @param idCase id de la case
+	 * @param position position de la case
+	 * @param couleurTerrain couleur du terrain
+	 * @param nom nom de la case
+	 * @param prixAchat prix d'achat de la case
+	 * @param loyers differents loyers de la case
+	 * @param prixMaison prix d'une maison
+	 */
 	public TerrainModel(PlateauModel p, int idCase, int position, CouleurTerrain couleurTerrain, String nom
 			,int prixAchat, int[] loyers, int prixMaison)
 	{
@@ -60,6 +80,10 @@ public class TerrainModel extends CaseModel{
 		this.nbMaisons=0;
 	}
 	
+	/**
+	 * Associer un joueur au terrain
+	 * @param j joueur disposant du terrain
+	 */
 	public void associer(JoueurModel j)
 	{
 		TerrainModel.tabAssoTerrainJoueur[idTerrain]=j.getIdJoueur();
@@ -72,27 +96,68 @@ public class TerrainModel extends CaseModel{
 	public void ajouterMaison()
 	{
 		JoueurModel j=p.getJoueurs()[tabAssoTerrainJoueur[idTerrain]];
+		
+		System.out.println(resteDesMaisons()+" "+peutAjouterMaison()+" "+resteDesHotels());
+		
 		if(resteDesMaisons()&&peutAjouterMaison()){
-			j.setArgent(j.getArgent()-prixMaison);
+			System.out.println("ok1");
 			this.nbMaisons++;
-			j.setNbMaison(j.getNbMaison()+1);
-			
 			//met a jour le nombre d'hotel total si besoin
 			if(nbMaisons==5){
 				if(resteDesHotels()){
 					j.setNbMaison(j.getNbMaison()-5);
 					j.setNbHotel(j.getNbHotel()+1);
+					this.p.getModel().notifyAjoutMaison(this.getPosition());
+					j.setArgent(j.getArgent()-prixMaison);
+					j.setNbMaison(j.getNbMaison()+1);
+					
 				}
 				else{
 					nbMaisons--;
 				}
+			}
+			else{
+				this.p.getModel().notifyAjoutMaison(this.getPosition());
+				j.setArgent(j.getArgent()-prixMaison);
+				j.setNbMaison(j.getNbMaison()+1);
 			}
 			
 		}
 		
 	}
 	
-	
+	/**
+	 * Retirer une maison au terrain si possible
+	 */
+	public void retirerMaison() {
+		// TODO Auto-generated method stub
+		JoueurModel j=p.getJoueurs()[tabAssoTerrainJoueur[idTerrain]];
+		
+		System.out.println("suppr?"+peutSupprimerMaison());
+		
+		if(peutSupprimerMaison()){
+			System.out.println("ok1");
+			this.nbMaisons--;
+			//met a jour le nombre d'hotel total si besoin
+			if(nbMaisons==4){
+				j.setNbMaison(j.getNbMaison()+4);
+				j.setNbHotel(j.getNbHotel()-1);
+			}
+			else{
+				j.setNbMaison(j.getNbMaison()-1);
+			}
+			
+			this.p.getModel().notifyRetirerMaison(this.getPosition());
+			j.setArgent(j.getArgent()+prixMaison);
+			
+			
+		}
+	}
+
+	/**
+	 * Vérifie si il reste des hotels en jeu
+	 * @return reste des hotels
+	 */
 	public boolean resteDesHotels()
 	{
 		if(this.p.getNbHotelsTotal()==ConstantesModel.NB_HOTELS)
@@ -101,6 +166,10 @@ public class TerrainModel extends CaseModel{
 	}
 	
 	
+	/**
+	 * Vérifie si il reste des maisons en jeu
+	 * @return reste des maisons
+	 */
 	public boolean resteDesMaisons()
 	{
 		if(this.p.getNbMaisonsTotal()==ConstantesModel.NB_MAISONS)
@@ -116,6 +185,26 @@ public class TerrainModel extends CaseModel{
 	 */
 	public boolean peutAjouterMaison()
 	{
+		TerrainModel tmp;
+		for(int i=0; i<p.getCases().length; i++)
+		{
+			if(p.getCases()[i] instanceof TerrainModel)
+			{
+				tmp=(TerrainModel) p.getCases()[i];
+				if(tmp.couleurTerrain==this.couleurTerrain&&tmp.nbMaisons<this.nbMaisons)
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Vérifie si on peut supprimer une maison (égalisation de terrain)
+	 * @return peut supprimer ou non
+	 */
+	public boolean peutSupprimerMaison()
+	{
+		if(this.nbMaisons==0)return false;
 		TerrainModel tmp;
 		for(int i=0; i<p.getCases().length; i++)
 		{
@@ -221,6 +310,9 @@ public class TerrainModel extends CaseModel{
 		this.nbMaisons = nbMaisons;
 	}
 
+
+
+	
 
 	
 	

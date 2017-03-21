@@ -11,7 +11,7 @@ import com.model.plateau.cases.ServiceModel;
 import com.model.plateau.cases.TerrainModel;
 
 /**
- * Differents elements apparaissant dans la partie
+ * Modèle du jeu
  * @author loick
  *
  */
@@ -20,22 +20,28 @@ public class JeuModel extends AbstractModel{
 	private PlateauModel p;
 	protected int tour;
 	
-	public JeuModel(int nbJoueur, int posDepart, int sommeDepart)
+	/**
+	 * Constructeur
+	 */
+	public JeuModel()
 	{
-		this.setP(new PlateauModel(this,nbJoueur, posDepart, sommeDepart));
+		int posDepart=0;
+		System.out.println("nbJoueur"+ConstantesParam.NB_JOUEURS);
+		this.setP(new PlateauModel(this,ConstantesParam.NB_JOUEURS, ConstantesParam.POSITION_ALEA_ENABLED, ConstantesParam.SOMME_DEPART));
 		this.tour=0;
 	}
 	
-	/**
-	 * Lance le dé après que le joueur l'ai demandé.
-	 * @param j
-	 */
+	@Override
 	public void lancerDes(int idJoueur)
 	{
 		JoueurModel j=this.getP().joueurs[idJoueur];
 		//gerer le cas en prison
 		Random r= new Random();
-		int des=2+r.nextInt(10);
+		
+		int des;
+		if(ConstantesParam.TROIS_DES_ENABLED)
+			des=3+r.nextInt(15);
+		else des=2+r.nextInt(10);
 		
 		j.lastSumDes=des;
 		j.setPosition((j.position+des)%ConstantesModel.NB_CASES);
@@ -56,6 +62,7 @@ public class JeuModel extends AbstractModel{
 		*/
 	}
 	
+	@Override
 	public void tourSuivant(){
 		tour=(tour+1)%ConstantesParam.NB_JOUEURS;
 		System.out.println("tour a notifier "+tour);
@@ -63,19 +70,19 @@ public class JeuModel extends AbstractModel{
 		this.notifyInitTour();
 		
 	}
-	
+	@Override
 	public void lancerEnchere()
 	{
 		
 	}
 	
 	
-	
+	@Override
 	public void lancerNegociation()
 	{
 		
 	}
-	
+	@Override
 	public void comblerDette(int idJoueur)
 	{
 		
@@ -115,6 +122,7 @@ public class JeuModel extends AbstractModel{
 	 * Retourne si le joueur est endetté ou non (pour lancer l'hypothèque)
 	 * @param idJoueur id du joueur
 	 */
+	@Override
 	public boolean isInDebt(int idJoueur){
 		return p.getJoueurs()[idJoueur].argent<0;
 	}
@@ -148,13 +156,21 @@ public class JeuModel extends AbstractModel{
 		
 		//GARE, SERVICE...
 	}
-	
+	/**
+	 * Acheter une maison
+	 * Vérification déjà effectuée avant d'appeler (hasEnoughMoney)
+	 */
+	@Override
+	public void achatMaison(int idJoueur, int positionAchat) {
+		// TODO Auto-generated method stub
+		((TerrainModel) this.p.cases[positionAchat]).ajouterMaison();
+	}
 	
 	/**
 	 * Un joueur paye un autre 
 	 * appelé depuis le controler en cliquant sur un choixPaiement
 	 */
-	
+	@Override
 	public void paiementJoueur(int idJoueur1, int idJoueur2, int position){
 		
 		CaseModel c=p.getCases()[position];
@@ -178,6 +194,21 @@ public class JeuModel extends AbstractModel{
 		}
 		
 	}
+	
+	public void notifyJoueurs(){
+		for(int i=0; i<this.p.nbJoueur; i++){
+			this.notifyPosJoueur(i, p.joueurs[i].position);
+		}
+	}
+
+	@Override
+	public void venteMaison(int idJoueur, int positionAchat) {
+		// TODO Auto-generated method stub
+		((TerrainModel) this.p.cases[positionAchat]).retirerMaison();
+	}
+
+	
+	
 
 	
 	

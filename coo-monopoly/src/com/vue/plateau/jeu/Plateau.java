@@ -14,10 +14,16 @@ import javax.swing.JPanel;
 import com.model.ConstantesModel;
 import com.model.ConstantesParam;
 import com.model.ConstantesVue;
+import com.vue.plateau.EcranJeu;
 
+/**
+ * Représente un plateau
+ * @author loick
+ *
+ */
 public class Plateau extends JPanel{
 
-	
+	protected EcranJeu e;
 	private Case[] cases;
 	private Pion[] pions;
 	
@@ -26,8 +32,13 @@ public class Plateau extends JPanel{
 	protected Icon maison=transform(new ImageIcon("./Sprites/pion/maison.png"),25,25);
 	protected Icon hotel=transform(new ImageIcon("./Sprites/pion/hotel.png"),25,25);
 	
-	
-	public Plateau(){
+	/**
+	 * Constructeur
+	 * @param ecranJeu écran du jeu
+ 	 */
+	public Plateau(EcranJeu ecranJeu){
+		
+		this.e=ecranJeu;
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_PLATEAU_X,ConstantesVue.DIMENSION_PLATEAU_Y));
 		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_PLATEAU_X,ConstantesVue.DIMENSION_PLATEAU_Y));
@@ -46,41 +57,6 @@ public class Plateau extends JPanel{
 		for(int i=0;i<ConstantesModel.NB_CASES; i++){
 			getCases()[i]=new Case(this, i,i);
 		}
-		
-		getCases()[4].addMaison();
-		getCases()[4].addMaison();
-		getCases()[4].addMaison();
-		getCases()[4].addMaison();
-		getCases()[4].addMaison();
-		getCases()[4].removeMaison();
-		
-		getCases()[14].addMaison();
-		getCases()[14].addMaison();
-		getCases()[14].addMaison();
-		getCases()[14].addMaison();
-		getCases()[14].addMaison();
-		getCases()[14].removeMaison();
-		getCases()[14].removeMaison();
-		
-
-		getCases()[24].addMaison();
-		getCases()[24].addMaison();
-		getCases()[24].addMaison();
-		getCases()[24].addMaison();
-		getCases()[24].addMaison();
-		getCases()[24].removeMaison();
-		getCases()[24].removeMaison();
-		getCases()[24].removeMaison();
-		
-		
-		
-		
-		getCases()[34].addMaison();
-		getCases()[34].addMaison();
-		getCases()[34].addMaison();
-		getCases()[34].addMaison();
-		getCases()[34].addMaison();
-		getCases()[34].removeMaison();
 		
 		
 		
@@ -112,6 +88,11 @@ public class Plateau extends JPanel{
 		
 	}
 	
+	/**
+	 * Supprimer une maison
+	 * @param position position de la maison
+	 * @param nbMaison nombre de maison
+	 */
 	public void removeMaison(int position, int nbMaison){
 		Case c =getCases()[position];
 		
@@ -130,21 +111,35 @@ public class Plateau extends JPanel{
 		
 	}
 	
+	/**
+	 * Ajouter une maison
+	 * @param position position de la case
+	 * @param nbMaison nombre de maison
+	 */
 	public void addMaison(int position, int nbMaison){
 		
-		Case c =getCases()[position];
+		System.out.println("add last "+position+" "+nbMaison);
 		
+		Case c =getCases()[position];
+		System.out.println(c.maison1+" "+c.maison2+" "+c.maison3+" "+c.maison4+" "+c.hotel+" ");
+		
+		
+		maison=transform(new ImageIcon("./Sprites/pion/maison.png"),25,25);
 		
 		if(nbMaison==5){
+			
 			
 			this.remove(c.maison1);
 			this.remove(c.maison2);
 			this.remove(c.maison3);
 			this.remove(c.maison4);
+			
 			c.maison1=null;
 			c.maison2=null;
 			c.maison3=null;
 			c.maison4=null;
+			
+			
 			
 			
 			c.hotel= new JLabel();
@@ -160,6 +155,7 @@ public class Plateau extends JPanel{
 				c.hotel.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3);
 				
 			this.add(c.hotel);
+			this.setComponentZOrder(c.hotel, 0);
 			
 			repaint();
 			
@@ -169,16 +165,24 @@ public class Plateau extends JPanel{
 				c.maison1= new JLabel();
 				c.maison1.setIcon(maison);
 				c.maison1.setSize(25,25);
+				c.maison1.setPreferredSize(new Dimension(25,25));
+				c.maison1.setMaximumSize(new Dimension(25,25));
+				c.maison1.setMinimumSize(new Dimension(25,25));
+				
+				
+				
 				if(position<10)
-					c.maison1.setLocation(c.posX, c.posY);
+					c.maison1.setBounds(c.posX, c.posY,25,25);
 				else if(position<20)
-					c.maison1.setLocation(c.posX+ConstantesVue.CASE_HEIGHT/3-25, c.posY);
+					c.maison1.setBounds(c.posX+ConstantesVue.CASE_HEIGHT/3-25, c.posY,25,25);
 				else if(position<30)
-					c.maison1.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-25);
+					c.maison1.setBounds(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3-25,25,25);
 				else
-					c.maison1.setLocation(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3);
-					
+					c.maison1.setBounds(c.posX, c.posY+ConstantesVue.CASE_HEIGHT/3,25,25);
+				
 				this.add(c.maison1);
+				//this.setComponentZOrder(c, -1);
+				this.setComponentZOrder(c.maison1, 0);				
 			}
 			else if(nbMaison==2){
 				c.maison2= new JLabel();
@@ -196,6 +200,7 @@ public class Plateau extends JPanel{
 				
 				
 				this.add(c.maison2);
+				this.setComponentZOrder(c.maison2, 0);
 				
 				
 			}
@@ -215,6 +220,7 @@ public class Plateau extends JPanel{
 				
 				
 				this.add(c.maison3);
+				this.setComponentZOrder(c.maison3, 0);
 			}
 			else if(nbMaison==4){
 				c.maison4= new JLabel();
@@ -233,8 +239,16 @@ public class Plateau extends JPanel{
 				
 				
 				this.add(c.maison4);
+				this.setComponentZOrder(c.maison4, 0);
 			}
 		}
+		
+		this.e.revalidate();
+		this.e.repaint();
+		
+		this.revalidate();		
+		this.repaint();
+		
 	}
 	
 	

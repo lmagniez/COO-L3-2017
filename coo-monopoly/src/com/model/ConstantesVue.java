@@ -1,5 +1,10 @@
 package com.model;
 
+/**
+ * Constantes graphiques
+ * @author loick
+ *
+ */
 public class ConstantesVue {
 
 	

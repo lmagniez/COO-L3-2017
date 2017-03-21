@@ -28,7 +28,6 @@ import javax.swing.text.StyledDocument;
 /**
  * JPanel affichant les règles à l'utilisateur.
  * Permet le déplacement entre les écrans de règle avec le clavier.
- * http://www.monopolypedia.fr/regles/Regle.php
  * @author loick
  *
  */

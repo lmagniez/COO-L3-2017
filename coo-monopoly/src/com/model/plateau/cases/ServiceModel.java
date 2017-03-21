@@ -4,6 +4,11 @@ import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
+/**
+ * Modèle représentant les cases services
+ * @author loick
+ *
+ */
 public class ServiceModel extends CaseModel{
 
 	public static int[] tabAssoServiceJoueur;
@@ -15,6 +20,14 @@ public class ServiceModel extends CaseModel{
 	
 	protected PlateauModel p;
 	
+	/**
+	 * Constructeur
+	 * @param p modèle du plateau
+	 * @param idCase id de la case
+	 * @param position position de la case
+	 * @param nom nom de la case
+	 * @param prixAchat prix d'achat
+	 */
 	public ServiceModel(PlateauModel p, int idCase, int position, String nom, int prixAchat)
 	{
 		this.p=p;
@@ -25,6 +38,10 @@ public class ServiceModel extends CaseModel{
 		this.prixAchat=prixAchat;
 	}
 	
+	/**
+	 * Initialiser le tableau associatif
+	 * @return tableau associatif initialisé à -1 (aucun joueur n'a de services)
+	 */
 	public static int[] initTab()
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_SERVICES];
@@ -34,6 +51,10 @@ public class ServiceModel extends CaseModel{
 		return tabAsso;
 	}
 	
+	/**
+	 * Retourne le nombre de services appartenant au meme joueur
+	 * @return nombre de services appartenant au meme joueur
+	 */
 	public int getNbServiceMemeJoueur()
 	{
 		int nb=0;
@@ -43,6 +64,10 @@ public class ServiceModel extends CaseModel{
 		return nb;
 	}
 	
+	/**
+	 * Associer le service à un joueur
+	 * @param j joueur disposant du service
+	 */
 	public void associer(JoueurModel j)
 	{
 		TerrainModel.tabAssoTerrainJoueur[this.idService]=j.getIdJoueur();

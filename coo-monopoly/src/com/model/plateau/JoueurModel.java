@@ -1,5 +1,12 @@
 package com.model.plateau;
 
+import com.model.ConstantesParam;
+
+/**
+ * Modèle du joueur
+ * @author loick
+ *
+ */
 public class JoueurModel {
 
 	protected PlateauModel p;
@@ -15,11 +22,19 @@ public class JoueurModel {
 	
 	protected int lastSumDes;//utile pour le loyer service public
 	
+	/**
+	 * Constructeur
+	 * @param p modèle du plateau
+	 * @param idJ id du joueur
+	 * @param pos position du joueur
+	 * @param arg argent du joueur
+	 */
 	public JoueurModel(PlateauModel p, int idJ, int pos, int arg)
 	{
 		this.p=p;
 		this.setIdJoueur(idJ);
-		this.position=pos;
+		this.position=0;
+		this.setPosition(pos);
 		this.argent=arg;
 		this.enPrison=false;
 		this.cartePrison=0;
@@ -29,10 +44,15 @@ public class JoueurModel {
 		
 		this.setLastSumDes(0);
 		
+		System.out.println("position! "+pos+ConstantesParam.POSITION_ALEA_ENABLED);
 		
 		
 	}
 
+	/**
+	 * Setter
+	 * @param position
+	 */
 	public void setPosition(int position) {
 		if(this.position>position)
 			this.argent+=20000;
@@ -49,6 +69,9 @@ public class JoueurModel {
 		p.getModel().notifyPosJoueur(idJoueur,position);
 	}
 	
+	/**
+	 * Ajouter une carte prison au joueur 
+	 */
 	public void ajoutCartePrison(){
 		this.cartePrison++;
 	}

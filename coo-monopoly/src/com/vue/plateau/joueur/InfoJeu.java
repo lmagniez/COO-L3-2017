@@ -14,11 +14,19 @@ import javax.swing.JTextArea;
 
 import com.model.ConstantesVue;
 
+/**
+ * Classe contenant les différentes infos de jeu
+ * @author loick
+ *
+ */
 public class InfoJeu extends JPanel {
 
 	protected JTextArea textBox;
+	protected Score s;
 	
-	public InfoJeu(){
+	public InfoJeu(Score score){
+		
+		this.s=score;
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y*2));
 		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_INFO_X,ConstantesVue.DIMENSION_INFO_Y));

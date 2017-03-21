@@ -1,5 +1,10 @@
 package com.vue.plateau.jeu;
 
+/**
+ * Ecran pour piocher
+ * @author loick
+ *
+ */
 public class ChoixPiocher {
 
 	

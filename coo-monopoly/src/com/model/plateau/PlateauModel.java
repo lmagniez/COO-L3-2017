@@ -1,5 +1,7 @@
 package com.model.plateau;
 
+import java.util.Random;
+
 import com.model.ConstantesModel;
 import com.model.plateau.cases.CaseModel;
 import com.model.plateau.cases.CommunauteChanceModel;
@@ -14,6 +16,11 @@ import com.model.plateau.cases.TerrainModel;
 import com.model.plateau.pioche.PiocheModel;
 import com.model.plateau.pioche.TypePioche;
 
+/**
+ * Modèle du plateau (gère les cases et les différents événements)
+ * @author loick
+ *
+ */
 public class PlateauModel {
 
 	protected CaseModel[] cases;
@@ -24,14 +31,27 @@ public class PlateauModel {
 	protected PiocheModel piocheChance;
 	protected JeuModel model;
 	
-	
-	public PlateauModel(JeuModel model, int nbJoueur, int posDepart, int sommeDepart)
+	/**
+	 * Constructeur
+	 * @param model Modèle du jeu
+	 * @param nbJoueur Nombre de joueurs
+	 * @param caseAleatoire position des joueurs aléatoires
+	 * @param sommeDepart somme de départ des joueurs
+	 */
+	public PlateauModel(JeuModel model, int nbJoueur, boolean caseAleatoire, int sommeDepart)
 	{
 		this.setModel(model);
 		this.setNbJoueur(nbJoueur);
 		this.setJoueurs(new JoueurModel[nbJoueur]);
 		for(int i=0; i<nbJoueur; i++){
-			this.getJoueurs()[i]=new JoueurModel(this, i, posDepart, sommeDepart);
+			int positionDepart=0;
+			
+			
+			if(caseAleatoire){
+				Random r = new Random();
+				positionDepart=r.nextInt(40);
+			}
+			this.getJoueurs()[i]=new JoueurModel(this, i, positionDepart, sommeDepart);
 		}
 		
 		
@@ -41,7 +61,9 @@ public class PlateauModel {
 	}
 	
 
-
+	/**
+	 * Générer les cases du plateau de base
+	 */
 	public void genererCases()
 	{
 		int nb_cases=0;
@@ -149,6 +171,9 @@ public class PlateauModel {
 		this.getModel().notifyInitTour();
 	}
 	
+	/**
+	 * Générer la pioche
+	 */
 	public void genererPioche(){
 		this.piocheCommunaute=new PiocheModel(this,TypePioche.COMMUNAUTE);
 		this.piocheChance=new PiocheModel(this,TypePioche.CHANCE);

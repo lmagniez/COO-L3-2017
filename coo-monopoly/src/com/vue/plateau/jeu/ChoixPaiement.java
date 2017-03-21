@@ -30,6 +30,11 @@ import com.vue.plateau.CarteAchatTerrain;
 import com.vue.plateau.EcranJeu;
 import com.vue.plateau.joueur.InfoJoueur;
 
+/**
+ * Ecran de paiement
+ * @author loick
+ *
+ */
 public class ChoixPaiement extends JPanel{
 
 	protected EcranJeu ecran;
@@ -45,6 +50,10 @@ public class ChoixPaiement extends JPanel{
 	
 	protected JPanel carte;
 	
+	/**
+	 * Constructeur
+	 * @param e Ecran de jeu
+	 */
 	public ChoixPaiement(EcranJeu e){
 		
 		//afficher case en question + prix a payer
@@ -103,6 +112,12 @@ public class ChoixPaiement extends JPanel{
 		
 	}
 	
+	/**
+	 * Génération du paiement
+	 * @param idJoueur joueur 1
+	 * @param idJoueur2 joueur 2 concerné
+	 * @param position position de la case
+	 */
 	public void genererPaiement(int idJoueur, int idJoueur2, int position){
 		
 		System.out.println("GENERER PAIEMENT");

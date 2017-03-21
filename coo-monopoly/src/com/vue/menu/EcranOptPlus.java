@@ -34,12 +34,14 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import com.model.ConstantesParam;
 import com.vue.ButtonMenu;
 import com.vue.Colors;
 
 
 /**
  * Ecran a appeler dans l'écran jeu
+ * Ecran d'options avancés
  * @author loick
  *
  */
@@ -56,6 +58,34 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 	
 	protected JPanel panelRegles[];
 	protected Image fond;
+	
+	protected JSpinner argent,maisons;
+	protected JComboBox nbPropriete;
+	
+	protected JCheckBox choixTour;
+	protected JSpinner nbTour;
+	
+	protected JCheckBox positionAlea,troisDes, prison;
+	
+	protected JCheckBox choixDes;
+	protected JCheckBox suicide;
+	protected JCheckBox enchere, timer;
+	protected JCheckBox caseAlea, masquerCase;
+	
+	protected JComboBox valeurAchat, valeurInteret;
+	protected JCheckBox egalisation;
+	
+	protected final String nbPropri[]={"1","2","3","4","5"};
+	protected final int nbPropriValue[]={1,2,3,4,5};
+	
+	protected final String valAch[]={"x0.5","x1","x2","x5","x10"};
+	protected final double valAchValue[]={0.5,1,2,5,10};
+	
+	
+	protected final String tauxInt[]={"x0.5","x1","x2","x5","x10"};
+	protected final double tauxIntValue[]={0.5,1,2,5,10};
+	
+	
 	
 	
 	public static final int MIN_PARAM=2;
@@ -147,9 +177,9 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	panelRegles[1].add(Box.createRigidArea(new Dimension(5,50)),c);
     	
     	
-    	
-    	SpinnerModel model = new SpinnerNumberModel(1500, 1, 10000, 100);     
-    	JSpinner argent = new JSpinner(model);
+    	//ARGENT DEBUT PARTIE
+    	SpinnerModel model = new SpinnerNumberModel(1500, 1, 1000000, 100);     
+    	argent = new JSpinner(model);
     	argent.setPreferredSize(new Dimension(120,30));
     	c.gridwidth=1;
     	c.gridx=0;c.gridy=cpty1++;
@@ -158,9 +188,9 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	panelRegles[0].add(argent,c);
     	//buttons[cptButton++][0]=argent;  
     	
-    	
+    	//NOMBRE DE MAISONS
     	SpinnerModel model2 = new SpinnerNumberModel(20, 1, 40, 1);     
-    	JSpinner maisons = new JSpinner(model2);
+    	maisons = new JSpinner(model2);
     	maisons.setPreferredSize(new Dimension(120,25));
     	c.gridx=0;c.gridy=cpty1++;
     	panelRegles[0].add(new JLabel("Maisons en début de partie: "),c);
@@ -168,8 +198,8 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	panelRegles[0].add(maisons,c);
     	//buttons[cptButton++][0]=maisons;  
     	
-    	String nbPropri[]={"1","2","3","4","5"};
-    	JComboBox nbPropriete = new JComboBox(nbPropri);
+    	//NOMBRE DE PROPRIETES
+    	nbPropriete = new JComboBox(nbPropri);
     	nbPropriete.setPreferredSize(new Dimension(120,25));
     	c.gridx=0;c.gridy=cpty1++;
     	panelRegles[0].add(new JLabel("Nombre de maisons placées:"),c);
@@ -178,7 +208,9 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	buttons[cptButton++][0]=nbPropriete;  
     	
     	
-    	JCheckBox choixTour=new JCheckBox();
+    	//CHOIX DES TOURS
+    	choixTour=new JCheckBox();
+    	choixTour.addActionListener(this);
     	c.gridx=0;c.gridy=cpty1++;
     	panelRegles[0].add(new JLabel("Définir le nombre de tour: "),c);
     	c.gridx=1;
@@ -186,7 +218,8 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	buttons[cptButton++][0]=choixTour;  
     	
     	SpinnerModel model3 = new SpinnerNumberModel(15, 1, 30, 1);     
-    	JSpinner nbTour = new JSpinner(model3);
+    	nbTour = new JSpinner(model3);
+    	nbTour.setEnabled(false);
     	nbTour.setPreferredSize(new Dimension(120,30));
     	c.gridwidth=1;
     	c.gridx=0;c.gridy=cpty1++;
@@ -201,22 +234,18 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	
     	
     	
-    	
-    	
-    	
-    	
-    	
-    	
-    	JCheckBox positionAlea=new JCheckBox();
+    	//POSITION ALEA
+    	positionAlea=new JCheckBox();
     	c.gridx=0;c.gridy=cpty1++;
     	panelRegles[0].add(new JLabel("Position aléatoire des joueurs: "),c);
     	c.gridx=1;
     	panelRegles[0].add(positionAlea,c);
     	
-    	
-    	
-    	JCheckBox troisDes=new JCheckBox();
-    	JCheckBox prison=new JCheckBox();
+    	//PRISON ET DES
+    	troisDes=new JCheckBox();
+    	troisDes.addActionListener(this);
+    	prison=new JCheckBox();
+    	prison.setEnabled(false);
     	c.gridx=0;c.gridy=cpty1++;
     	panelRegles[0].add(new JLabel("Utiliser 3 dés: "),c);
     	c.gridx=1;
@@ -228,13 +257,13 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	
     	
     	
-    	JCheckBox choixDes=new JCheckBox();
+    	choixDes=new JCheckBox();
     	c.gridx=0;c.gridy=cpty1++;
-    	panelRegles[0].add(new JLabel("Choisir le nombre de dés: "),c);
+    	panelRegles[0].add(new JLabel("Le joueur choisit le nombre de dés: "),c);
     	c.gridx=1;
     	panelRegles[0].add(choixDes,c);
     	
-    	JCheckBox suicide=new JCheckBox();
+    	suicide=new JCheckBox();
     	c.gridx=0;c.gridy=cpty1++;
     	panelRegles[0].add(new JLabel("Mode suicide: "),c);
     	c.gridx=1;
@@ -245,14 +274,14 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	//PLATEAU ET ENCHERE
     	///////
     	
-    	JCheckBox enchere=new JCheckBox();
+    	enchere=new JCheckBox();
     	enchere.setSelected(true);
     	c.gridx=0;c.gridy=cpty2++;
     	panelRegles[1].add(new JLabel("Autoriser les enchères: "),c);
     	c.gridx=1;
     	panelRegles[1].add(enchere,c);
     	
-    	JCheckBox timer=new JCheckBox();
+    	timer=new JCheckBox();
     	c.gridx=0;c.gridy=cpty2++;
     	panelRegles[1].add(new JLabel("Timer doublant les valeurs: "),c);
     	c.gridx=1;
@@ -281,13 +310,13 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	panelRegles[1].add(plateau3,c);
     	
     	
-    	JCheckBox caseAlea=new JCheckBox();
+    	caseAlea=new JCheckBox();
     	c.gridx=0;c.gridy=cpty2++;
     	panelRegles[1].add(new JLabel("Générer le plateau aléatoirement: "),c);
     	c.gridx=1;
     	panelRegles[1].add(caseAlea,c);
     	
-    	JCheckBox masquerCase=new JCheckBox();
+    	masquerCase=new JCheckBox();
     	c.gridx=0;c.gridy=cpty2++;
     	panelRegles[1].add(new JLabel("Masquer les cases: "),c);
     	c.gridx=1;
@@ -309,8 +338,8 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	panelRegles[1].add(Box.createRigidArea(new Dimension(5,50)),c);
     	
     	
-    	String valAch[]={"x0.5","x1","x2","x5","x10"};
-    	JComboBox valeurAchat = new JComboBox(valAch);
+    	
+    	valeurAchat = new JComboBox(valAch);
     	valeurAchat.setPreferredSize(new Dimension(120,25));
     	valeurAchat.setSelectedIndex(1);
     	c.gridx=0;c.gridy=cpty1++;
@@ -318,8 +347,8 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	c.gridx=1;
     	panelRegles[1].add(valeurAchat,c);
     	
-    	String tauxInt[]={"x0.5","x1","x2","x5","x10"};
-    	JComboBox valeurInteret = new JComboBox(tauxInt);
+    	
+    	valeurInteret = new JComboBox(tauxInt);
     	valeurAchat.setPreferredSize(new Dimension(120,25));
     	valeurAchat.setSelectedIndex(1);
     	c.gridx=0;c.gridy=cpty1++;
@@ -328,7 +357,7 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	panelRegles[1].add(valeurInteret,c);
     	
     	
-    	JCheckBox egalisation=new JCheckBox();
+    	egalisation=new JCheckBox();
     	c.gridx=0;c.gridy=cpty2++;
     	panelRegles[1].add(new JLabel("Pas d'égalisation de terrain : "),c);
     	c.gridx=1;
@@ -388,7 +417,35 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 		this.addListener();
 	}
 	
-	
+	/**
+	 * Gérer les paramètres et les enregistrer dans la classe constantesParam
+	 */
+	public void gererParam(){
+		
+		ConstantesParam.SOMME_DEPART=(int) this.argent.getValue();
+		ConstantesParam.NB_MAISONS=(int) this.maisons.getValue();
+		ConstantesParam.NB_PROPRIETES=this.nbPropriValue[this.nbPropriete.getSelectedIndex()];
+		ConstantesParam.TOUR_ENABLED=this.choixTour.isSelected();
+		ConstantesParam.NB_TOUR=(int) this.nbTour.getValue();
+		
+		ConstantesParam.POSITION_ALEA_ENABLED=this.positionAlea.isSelected();
+		ConstantesParam.TROIS_DES_ENABLED=this.troisDes.isSelected();
+		ConstantesParam.SOMME_PRISON_ENABLED=this.prison.isSelected();
+		ConstantesParam.CHOIX_DES_ENABLED=this.choixDes.isSelected();
+		ConstantesParam.SUICIDE_ENABLED=this.suicide.isSelected();
+		ConstantesParam.ENCHERE_ENABLED=this.enchere.isSelected();
+		ConstantesParam.TIMER_VALEUR_ENABLED=this.timer.isSelected();
+		ConstantesParam.CASE_ALEA_ENABLED=this.caseAlea.isSelected();
+		ConstantesParam.CASE_MASQUE_ENABLED=this.masquerCase.isSelected();
+		
+		ConstantesParam.TAUX_ACHAT=this.valAchValue[this.valeurAchat.getSelectedIndex()];
+		ConstantesParam.TAUX_INTERET=this.tauxIntValue[this.valeurInteret.getSelectedIndex()];
+		ConstantesParam.EGALISATION_ENABLED=this.egalisation.isSelected();
+		
+		System.out.println("posAlea"+ConstantesParam.POSITION_ALEA_ENABLED);
+		
+		
+	}
 	
 
 	@Override
@@ -396,19 +453,40 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 		// TODO Auto-generated method stub
 		
 		
-		String command = ((JButton) arg0.getSource()).getActionCommand();
 		
-		if(command=="Démarrer")
-		{
-			vue.initFenetreEcranJeu();
-			//vue.afficherPanneau(vue.lePanneau);
+		
+		if(arg0.getSource()==this.troisDes){
+			if(troisDes.isSelected())
+				this.prison.setEnabled(true);
+			else
+				this.prison.setEnabled(false);
+		}
+		
+		if(arg0.getSource()==this.choixTour){
+			if(choixTour.isSelected())
+				this.nbTour.setEnabled(true);
+			else
+				this.nbTour.setEnabled(false);
 		}
 		
 		
-		if(command=="Retour")
-		{
+		if(arg0.getSource() instanceof JButton){
+			String command = ((JButton) arg0.getSource()).getActionCommand();
+		
+		
+			if(command=="Démarrer")
+			{
+				this.gererParam();
+				vue.initFenetreEcranJeu();
+				//vue.afficherPanneau(vue.lePanneau);
+			}
 			
-			this.focusNouvelEcran(vue.lePanneau5);
+			
+			if(command=="Retour")
+			{
+				
+				this.focusNouvelEcran(vue.lePanneau5);
+			}
 		}
 	}
 	

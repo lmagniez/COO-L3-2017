@@ -10,6 +10,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
+/**
+ * Classe abstraite gérant le déplacement des boutons au clavier
+ * @author loick
+ *
+ */
 public abstract class GestionBouton {
 	
 	

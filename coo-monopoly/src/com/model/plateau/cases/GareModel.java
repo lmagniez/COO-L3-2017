@@ -4,6 +4,11 @@ import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
+/**
+ * Modèle de la gare
+ * @author loick
+ *
+ */
 public class GareModel extends CaseModel{
 
 	public static int[] tabAssoGareJoueur;
@@ -16,6 +21,10 @@ public class GareModel extends CaseModel{
 	
 	protected PlateauModel p;
 	
+	/**
+	 * Initialisé le tableau static
+	 * @return tableau associatif des gares aux joueurs
+	 */
 	public static int[] initTab()
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_GARES];
@@ -25,7 +34,14 @@ public class GareModel extends CaseModel{
 		}
 		return tabAsso;
 	}
-	
+	/**
+	 * Constructeur
+	 * @param p modèle du plateau
+	 * @param idCase id de la case
+	 * @param position position de la case
+	 * @param nom nom de la case
+	 * @param prixAchat prix d'achat de la case
+	 */
 	public GareModel(PlateauModel p, int idCase, int position, String nom, int prixAchat)
 	{
 		this.p=p;
@@ -37,6 +53,10 @@ public class GareModel extends CaseModel{
 		GareModel.posGares[idGare]=position;
 	}
 	
+	/**
+	 * Retourne le nombre de gare possédés par le même joueur
+	 * @return nombre de gares ayant le même propriétaire
+	 */
 	public int getNbGareMemeJoueur()
 	{
 		int nb=0;
@@ -46,6 +66,10 @@ public class GareModel extends CaseModel{
 		return nb;
 	}
 
+	/**
+	 * Associer la gare à un joueur
+	 * @param j joueur disposant de la gare
+	 */
 	public void associer(JoueurModel j)
 	{
 		TerrainModel.tabAssoTerrainJoueur[this.idGare]=j.getIdJoueur();

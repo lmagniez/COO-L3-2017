@@ -1,5 +1,10 @@
 package com.model;
 
+/**
+ * Ensemble des constantes du modèle
+ * @author loick
+ *
+ */
 public abstract class ConstantesModel {
 
 	

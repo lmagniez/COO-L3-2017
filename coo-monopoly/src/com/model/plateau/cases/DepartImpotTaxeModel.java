@@ -13,6 +13,14 @@ public class DepartImpotTaxeModel extends CaseModel{
 	private int value;
 	protected PlateauModel p;
 	
+	/**
+	 * Constructeur
+	 * @param p modèle du plateau
+	 * @param idCase id de la case
+	 * @param position position de la case
+	 * @param value argent gagné/perdu
+	 * @param nom nom de la case
+	 */
 	public DepartImpotTaxeModel(PlateauModel p, int idCase, int position, int value, String nom)
 	{
 		this.p=p;

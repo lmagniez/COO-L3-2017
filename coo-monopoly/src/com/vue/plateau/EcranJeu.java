@@ -86,7 +86,7 @@ public class EcranJeu extends Ecran{
 		//c.genererChoixAchat(1, 2, "Case test", CouleurTerrain.MARRON, 500, loyerTest, 3000);
 		
 		
-		setP(new Plateau());
+		setP(new Plateau(this));
 		s=new Score(this);
 		getP().setLocation(0,0);
 		getP().setSize(ConstantesVue.DIMENSION_PLATEAU_X,ConstantesVue.DIMENSION_PLATEAU_Y);
@@ -111,7 +111,9 @@ public class EcranJeu extends Ecran{
 		
 		
 	}
-	
+	/**
+	 * Changer le tour
+	 */
 	public void changeTour(){
 		setTour(getTour() + 1%ConstantesParam.NB_JOUEURS);
 	}

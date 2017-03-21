@@ -28,6 +28,11 @@ import com.vue.Fenetre;
 import com.vue.plateau.EcranJeu;
 import com.vue.plateau.VueJeu;
 
+/**
+ * Vue du menu
+ * @author loick
+ *
+ */
 public class VueMenu extends Fenetre {
 	
 	protected EcranFinDePartie lePanneau2;
@@ -40,7 +45,9 @@ public class VueMenu extends Fenetre {
 	//private 
 	
 	
-	
+	/**
+	 * Constructeur
+	 */
 	public VueMenu(){
 		
 		
@@ -85,11 +92,12 @@ public class VueMenu extends Fenetre {
 	//public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
 	{
 	
-		JeuModel jeuModel = new JeuModel(ConstantesParam.NB_JOUEURS,0 , ConstantesParam.SOMME_DEPART);
+		JeuModel jeuModel = new JeuModel();
 		AbstractControler jeuControler = new GameControler(jeuModel);
 		VueJeu jeu=new VueJeu(jeuControler);
 		jeuModel.addObserver(jeu);
 		jeuModel.getP().genererCases();
+		jeuModel.notifyJoueurs();
 		
 		jeu.setVisible(true);
 		this.setVisible(false);

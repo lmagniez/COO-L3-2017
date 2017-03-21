@@ -1,14 +1,21 @@
 package com.controler;
 
 import com.model.AbstractModel;
-import com.model.IllegalMoveException;
 
+/**
+ * Controler du jeu, demande les différentes actions de jeu
+ * @author loick
+ *
+ */
 public class GameControler extends AbstractControler{
 
 	 public GameControler(AbstractModel cal) {
 		    super(cal);
 	 }
-
+	 
+	 /**
+	  * Méthode de contrôle
+	  */
 	 public void control()
 	 {
 		 
@@ -46,6 +53,16 @@ public class GameControler extends AbstractControler{
 		 if(this.enchere){
 			 this.enchere=false;
 			 this.calc.tourSuivant();
+		 }
+		 
+		 if(this.achatMaison){
+		 
+			this.achatMaison=false;
+			this.calc.achatMaison(idJoueur, positionAchat);
+		 }
+		 if(this.venteMaison){
+			 this.venteMaison=false;
+			 this.calc.venteMaison(idJoueur,positionAchat);
 		 }
 		 
 		 

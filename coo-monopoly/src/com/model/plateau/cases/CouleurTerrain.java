@@ -2,6 +2,11 @@ package com.model.plateau.cases;
 
 import java.awt.Color;
 
+/**
+ * Enumération des différentes couleurs de terrain
+ * @author loick
+ *
+ */
 public enum CouleurTerrain {
 
 	MARRON,BLEU_CLAIR,VIOLET,ORANGE,ROUGE,JAUNE,VERT,BLEU_FONCE;

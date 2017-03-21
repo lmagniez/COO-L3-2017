@@ -17,11 +17,20 @@ import com.vue.Fenetre;
 import com.vue.menu.VueMenu;
 import com.vue.plateau.jeu.TypeCase;
 
+/**
+ * Vue du jeu
+ * @author loick
+ *
+ */
 public class VueJeu extends Fenetre implements Observer{
 
 	protected EcranJeu lePanneau;
 	private AbstractControler controler;
 	
+	/**
+	 * Constructeur
+	 * @param controler controler du jeu
+	 */
 	public VueJeu(AbstractControler controler){
 		
 		this.setControler(controler);
@@ -71,14 +80,23 @@ public class VueJeu extends Fenetre implements Observer{
 	public void updateArgentJoueur(int idJoueur, int argent) {
 		// TODO Auto-generated method stub
 		lePanneau.s.getJoueurs()[idJoueur].setArgent(argent);
+		lePanneau.s.getProprietes().setArgent(argent);
+		
 	}
 
 	@Override
 	public void updateAjoutMaison(int position) {
 		// TODO Auto-generated method stub
+		System.out.println("ajout Maison"+position);
 		lePanneau.getP().getCases()[position].addMaison();
 	}
 
+	@Override
+	public void updateRetirerMaison(int position) {
+		// TODO Auto-generated method stub
+		lePanneau.getP().getCases()[position].removeMaison();
+	}
+	
 	@Override
 	public void updateAcquisitionJoueur(int idJoueur, int position) {
 		// TODO Auto-generated method stub
@@ -162,6 +180,8 @@ public class VueJeu extends Fenetre implements Observer{
 		// TODO Auto-generated method stub
 		lePanneau.choixA.setMessage(msg);
 	}
+
+	
 
 	
 

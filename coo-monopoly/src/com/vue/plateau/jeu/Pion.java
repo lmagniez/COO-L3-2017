@@ -8,6 +8,11 @@ import javax.swing.JLabel;
 
 import com.model.ConstantesVue;
 
+/**
+ * Représentation d'un pion
+ * @author loick
+ *
+ */
 public class Pion extends JLabel {
 
 	protected int position;
@@ -20,6 +25,13 @@ public class Pion extends JLabel {
 	protected int posX,posY,hX,hY;
 	
 	
+	/**
+	 * Constructeur
+	 * @param p plateau
+	 * @param position position du pion
+	 * @param idJoueur id du joueur
+	 * @param idIcon id de l'icone
+	 */
 	public Pion(Plateau p, int position, int idJoueur, int idIcon){
 		this.p=p;
 		this.position=position;
@@ -50,6 +62,10 @@ public class Pion extends JLabel {
 		
 	}
 	
+	/**
+	 * Changer la position du pion 
+	 * @param position position du pion
+	 */
 	public void changePosition(int position){
 		
 		this.position=position;

@@ -15,6 +15,10 @@ import javax.swing.border.EmptyBorder;
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CouleurTerrain;
 
+/**
+ * Classe représentant une case terrain graphiquement
+ * @author loick
+ */
 public class CarteAchatTerrain extends JPanel{
 
 	protected int idCase;
@@ -30,7 +34,15 @@ public class CarteAchatTerrain extends JPanel{
 	protected JLabel labelHypotheque;
 	protected JLabel labelPrixMaison;
 	
-	
+	/**
+	 * Constructeur
+	 * @param idCase id de la case
+	 * @param nom nom de la case
+	 * @param couleur couleur du terrain
+	 * @param prixAchat prix d'achat
+	 * @param loyers loyers
+	 * @param prixMaison prix d'une maison
+	 */
 	public CarteAchatTerrain(int idCase, String nom, CouleurTerrain couleur, int prixAchat,
 			int[] loyers, int prixMaison){
 		

@@ -16,6 +16,10 @@ import com.model.ConstantesVue;
 import com.model.plateau.cases.CouleurTerrain;
 import com.model.plateau.cases.GareModel;
 
+/**
+ * Classe représentant une case service graphiquement
+ * @author loick
+ */
 public class CarteAchatService extends JPanel{
 
 	
@@ -31,7 +35,13 @@ public class CarteAchatService extends JPanel{
 	protected JLabel labelLoyers[];
 	protected JLabel labelHypotheque;
 	
-	
+	/**
+	 * Constructeur
+	 * @param idCase id de la case
+	 * @param nom nom de la case
+	 * @param prixAchat prix d'achat de la case
+	 * @param loyers loyers
+	 */
 	public CarteAchatService(int idCase, String nom, int prixAchat, int[] loyers){
 		
 		this.setMaximumSize(new Dimension(ConstantesVue.CASE_WIDTH*4/3,ConstantesVue.CASE_HEIGHT*2/3));

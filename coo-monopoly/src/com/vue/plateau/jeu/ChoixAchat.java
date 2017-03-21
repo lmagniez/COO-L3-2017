@@ -28,6 +28,11 @@ import com.vue.plateau.CarteAchatTerrain;
 import com.vue.plateau.EcranJeu;
 import com.vue.plateau.joueur.InfoJoueur;
 
+/**
+ * Représente un écran de choix d'achat
+ * @author loick
+ *
+ */
 public class ChoixAchat extends JPanel{
 
 	protected EcranJeu ecran;
@@ -39,6 +44,10 @@ public class ChoixAchat extends JPanel{
 	
 	protected JPanel carte;
 	
+	/**
+	 * Constructeur 
+	 * @param e Ecran de jeu
+	 */
 	public ChoixAchat(EcranJeu e){
 		
 		this.ecran=e;
@@ -104,6 +113,11 @@ public class ChoixAchat extends JPanel{
 		
 	}
 	
+	/**
+	 * Génération du choix
+	 * @param idJoueur id du joueur concerné
+	 * @param position case à acheter
+	 */
 	public void genererChoixAchat(int idJoueur, int position){
 		
 		panneauLateral.removeAll();

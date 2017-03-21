@@ -3,6 +3,11 @@ package com.model.plateau.pioche;
 import com.model.ConstantesModel;
 import com.model.plateau.JoueurModel;
 
+/**
+ * Modèle d'une carte de la pioche
+ * @author loick
+ *
+ */
 public class CarteModel {
 
 	protected PiocheModel pioche;
@@ -18,6 +23,19 @@ public class CarteModel {
 	protected int anniversaire;
 	protected String msg;
 	
+	/**
+	 * Constructeur
+	 * @param effArg effet sur l'argent
+	 * @param effPos effet sur la position
+	 * @param chPos effet sur la position direct
+	 * @param allerPrison aller en prison
+	 * @param sortirPrison sortir de prison
+	 * @param argParHotel argent a payer par hotel
+	 * @param argParMaison argent a payer par maison
+	 * @param anniversaire argent a gagner
+	 * @param repiocher repiocher
+	 * @param msg message de la carte
+	 */
 	public CarteModel(int effArg, int effPos, int chPos, boolean allerPrison, 
 			boolean sortirPrison, int argParHotel, int argParMaison, int anniversaire, 
 			boolean repiocher, String msg)
@@ -31,6 +49,10 @@ public class CarteModel {
 		this.msg=msg;
 	}
 	
+	/**
+	 * Action d'une carte sur un joueur donné
+	 * @param j joueur subissant l'effet de la carte
+	 */
 	public void actionCarte(JoueurModel j)
 	{
 		
