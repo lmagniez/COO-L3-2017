@@ -13,6 +13,7 @@ import com.model.plateau.cases.CaseModel;
 import com.model.plateau.cases.GareModel;
 import com.model.plateau.cases.ServiceModel;
 import com.model.plateau.cases.TerrainModel;
+import com.model.plateau.pioche.TypePioche;
 import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.menu.VueMenu;
@@ -195,6 +196,13 @@ public class VueJeu extends Fenetre implements Observer{
 		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getMaisonVente());
 		
 		
+	}
+
+	@Override
+	public void updateMessageCarte(String msg, int idJoueur, int posCarte, TypePioche type) {
+		// TODO Auto-generated method stub
+		System.out.println("ok "+msg+" idJoueur "+idJoueur);
+		lePanneau.choixC.genererPiocheCarte(idJoueur, posCarte, msg, type);
 	}
 
 	

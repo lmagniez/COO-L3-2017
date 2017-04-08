@@ -97,6 +97,8 @@ public class VueMenu extends Fenetre {
 		VueJeu jeu=new VueJeu(jeuControler);
 		jeuModel.addObserver(jeu);
 		jeuModel.getP().genererCases();
+		jeuModel.getP().genererPioche();
+		
 		jeuModel.notifyJoueurs();
 		
 		jeu.setVisible(true);

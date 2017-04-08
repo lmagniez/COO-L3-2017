@@ -1,6 +1,7 @@
 package com.observer;
 
 import com.model.plateau.cases.CaseModel;
+import com.model.plateau.pioche.TypePioche;
 
 public interface Observer {
 	//public void update(String str); // Le meme type que la methode notify
@@ -74,10 +75,9 @@ public interface Observer {
 	 * Mettre à jour l'initialisation d'un tour
 	 */
 	
-	
-	
-	
 	public void updateInitTour();
+	
+	public void updateMessageCarte(String msg, int idJoueur, int posCarte, TypePioche type);
 	
 	public void updatePaiementCase(int idJoueur, int idPossesseur, int position);
 

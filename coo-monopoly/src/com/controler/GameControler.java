@@ -70,6 +70,12 @@ public class GameControler extends AbstractControler{
 			control();
 		 }
 		 
+		 if(this.effetPioche){
+			 this.effetPioche=false;
+			 this.calc.effetPioche(idJoueur, idCarte, this.type);
+			 this.calc.tourSuivant();
+		 }
+		 
 		 /*
 		 if(this.x>=0&&this.x<=AbstractModel.NB_LIGNE
 					 &&this.y>=0&&this.y<=AbstractModel.NB_LIGNE)

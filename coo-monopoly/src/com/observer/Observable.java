@@ -1,6 +1,7 @@
 package com.observer;
 
 import com.model.plateau.cases.CaseModel;
+import com.model.plateau.pioche.TypePioche;
 
 /**
  * Méthodes de notification
@@ -52,6 +53,8 @@ public interface Observable {
 	public void notifyAcquisitionJoueur(int idJoueur, int position);
 	public void notifyEchangeJoueur(int idJoueur1, int idJoueur2, int position);
 	
+	
+	public void notifyMessageCarte(String msg, int idJoueur, int posCarte, TypePioche type);
 	
 	public void notifyMessageChoix(String msg);
 	

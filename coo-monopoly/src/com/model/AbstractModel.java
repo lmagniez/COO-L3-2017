@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.model.plateau.JoueurModel;
 import com.model.plateau.cases.CaseModel;
+import com.model.plateau.pioche.TypePioche;
 import com.observer.Observable;
 import com.observer.Observer;
 
@@ -67,6 +68,7 @@ public abstract class AbstractModel implements Observable{
 	 */
 	public abstract void echangePropriete(int idJoueur1, int idJoueur2, int positionAchat, int somme);
 	
+	public abstract void effetPioche(int idJoueur, int idCarte, TypePioche type);
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur
@@ -170,5 +172,14 @@ public abstract class AbstractModel implements Observable{
 			obs.updatePaiementCase(idJoueur, idPossesseur, position);
 		}
 	}
+	
+	@Override
+	public void notifyMessageCarte(String msg, int idJoueur, int posCarte, TypePioche type) {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver){
+			obs.updateMessageCarte(msg, idJoueur, posCarte, type);
+		}
+	}
+
 	
 }

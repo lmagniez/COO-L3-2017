@@ -30,6 +30,7 @@ public class GendarmeModel extends CaseModel{
 	@Override
 	public void action(JoueurModel j) {
 		// TODO Auto-generated method stub
+		j.setPositionSansArgent(10);
 		this.p.getModel().tourSuivant();
 		
 	}

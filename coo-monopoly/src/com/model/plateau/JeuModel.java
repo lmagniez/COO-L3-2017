@@ -9,6 +9,7 @@ import com.model.plateau.cases.CaseModel;
 import com.model.plateau.cases.GareModel;
 import com.model.plateau.cases.ServiceModel;
 import com.model.plateau.cases.TerrainModel;
+import com.model.plateau.pioche.TypePioche;
 
 /**
  * Modèle du jeu
@@ -206,6 +207,18 @@ public class JeuModel extends AbstractModel{
 		this.notifyEchangeJoueur(idJoueur1, idJoueur2, positionAchat);
 	}
 
+	@Override
+	public void effetPioche(int idJoueur, int idCarte, TypePioche type) {
+		// TODO Auto-generated method stub
+		if(type==TypePioche.CHANCE){
+			this.p.piocheChance.getCartes()[idCarte].execActionCarte(this.p.joueurs[idJoueur]);
+		}
+		if(type==TypePioche.COMMUNAUTE){
+			this.p.piocheCommunaute.getCartes()[idCarte].execActionCarte(this.p.joueurs[idJoueur]);
+		}
+	}
+
+	
 
 	
 	

@@ -28,6 +28,7 @@ import com.model.plateau.cases.CouleurTerrain;
 import com.vue.menu.Ecran;
 import com.vue.menu.VueMenu;
 import com.vue.plateau.jeu.ChoixAchat;
+import com.vue.plateau.jeu.ChoixCarte;
 import com.vue.plateau.jeu.ChoixEchange;
 import com.vue.plateau.jeu.ChoixPaiement;
 import com.vue.plateau.jeu.Plateau;
@@ -41,6 +42,7 @@ import com.vue.plateau.joueur.Score;
 
 public class EcranJeu extends Ecran{
 
+	
 	private VueJeu vue;
 	private JLabel title;
 	
@@ -50,7 +52,7 @@ public class EcranJeu extends Ecran{
 	protected ChoixAchat choixA;
 	protected ChoixPaiement choixP;
 	protected ChoixEchange choixE;
-	
+	protected ChoixCarte choixC;
 	
 	private int tour;
 	
@@ -87,6 +89,11 @@ public class EcranJeu extends Ecran{
 		getChoixE().setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
 		getChoixE().setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
 		
+		choixC=new ChoixCarte(this);
+		choixC.setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
+		choixC.setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
+		
+		
 		
 		//int loyerTest[]={10,200,2000,3000,3000,4000};
 		//c.genererChoixAchat(1, 2, "Case test", CouleurTerrain.MARRON, 500, loyerTest, 3000);
@@ -105,6 +112,7 @@ public class EcranJeu extends Ecran{
 
 		this.add(choixA);
 		this.add(choixP);
+		this.add(choixC);
 		this.add(getChoixE());
 		
 		this.add(getP());

@@ -23,8 +23,8 @@ public abstract class ConstantesModel {
 	public static final int NB_HOTELS=12;
 	
 	
-	public static final int NB_CARTES_COMMUNAUTE=22;
-	public static final int NB_CARTES_CHANCE=22;
+	public static final int NB_CARTES_COMMUNAUTE=14;
+	public static final int NB_CARTES_CHANCE=16;
 	
 	
 	

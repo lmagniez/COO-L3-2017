@@ -55,10 +55,6 @@ public class PlateauModel {
 			this.getJoueurs()[i]=new JoueurModel(this, i, positionDepart, sommeDepart);
 		}
 		
-		
-		
-		
-		
 	}
 	
 
@@ -187,10 +183,12 @@ public class PlateauModel {
 		
 			CaseModel tmp=cases[i1];
 			cases[i1]=cases[i2];
-			cases[i2]=tmp;
 		}
 		
 		return cases;
+		
+		
+		
 	}
 	
 	/**

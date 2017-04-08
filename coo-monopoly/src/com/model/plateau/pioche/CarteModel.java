@@ -36,10 +36,11 @@ public class CarteModel {
 	 * @param repiocher repiocher
 	 * @param msg message de la carte
 	 */
-	public CarteModel(int effArg, int effPos, int chPos, boolean allerPrison, 
+	public CarteModel(PiocheModel p, int effArg, int effPos, int chPos, boolean allerPrison, 
 			boolean sortirPrison, int argParHotel, int argParMaison, int anniversaire, 
 			boolean repiocher, String msg)
 	{
+		this.pioche=p;
 		this.effetMonnaie=effArg;
 		this.effetPosition=effPos;
 		this.changerPosition=chPos;
@@ -53,13 +54,18 @@ public class CarteModel {
 	 * Action d'une carte sur un joueur donné
 	 * @param j joueur subissant l'effet de la carte
 	 */
-	public void actionCarte(JoueurModel j)
+	public void actionCarte(JoueurModel j, int posCarte)
 	{
+		
+		this.pioche.p.getModel().notifyMessageCarte(this.msg, j.getIdJoueur(), posCarte, this.pioche.type);
 		
 ///////////////////////////
 //		PASSE PAR DEPART
 /////////////////////////
-		
+	}
+	
+	public void execActionCarte(JoueurModel j)
+	{
 		//effet argent
 		j.setArgent(j.getArgent() + effetMonnaie);
 		j.setArgent(j.getArgent() + argParHotel*j.getNbHotel()+argParMaison*j.getNbMaison());

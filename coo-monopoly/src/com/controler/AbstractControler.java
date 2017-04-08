@@ -4,6 +4,7 @@ package com.controler;
 import java.util.ArrayList;
 
 import com.model.AbstractModel;
+import com.model.plateau.pioche.TypePioche;
 
 /**
  * Classe abstraite du controler
@@ -21,13 +22,15 @@ public abstract class AbstractControler {
 	protected boolean achatMaison;
 	protected boolean venteMaison;
 	protected boolean echangePropriete;
+	protected boolean effetPioche;
 	
 	protected int positionAchat;
 	protected int somme;
 	
 	protected int idJoueur;
 	protected int idJoueur2;
-	
+	protected int idCarte;
+	protected TypePioche type;
 	
 	public AbstractControler(){
 	
@@ -129,6 +132,15 @@ public abstract class AbstractControler {
 		this.idJoueur2=idJ2;
 		this.positionAchat=position;
 		this.somme=somme;
+		control();
+	}
+
+	public void requestEffetPioche(int idJ1, int idCarte, TypePioche type) {
+		// TODO Auto-generated method stub
+		this.idJoueur=idJ1;
+		this.idCarte=idCarte;
+		this.type=type;
+		this.effetPioche=true;
 		control();
 	}
 	
