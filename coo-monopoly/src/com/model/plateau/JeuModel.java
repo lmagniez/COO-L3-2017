@@ -197,10 +197,10 @@ public class JeuModel extends AbstractModel{
 			j2.setArgent(j2.getArgent()+montant);
 			j1.setArgent(j1.getArgent()-montant);
 		}
-		
+		/*
 		if(this.p.joueurs[idJoueur1].argent<0){
 			this.comblerDette(idJoueur1);
-		}
+		}*/
 		
 		
 	}
@@ -232,10 +232,10 @@ public class JeuModel extends AbstractModel{
 		this.p.joueurs[idJoueur1].setArgent(this.p.joueurs[idJoueur1].getArgent()+somme);
 		this.p.joueurs[idJoueur2].setArgent(this.p.joueurs[idJoueur2].getArgent()-somme);
 		this.notifyEchangeJoueur(idJoueur1, idJoueur2, positionAchat);
-		
+		/*
 		if(this.p.joueurs[idJoueur2].argent<0){
 			this.comblerDette(idJoueur2);
-		}
+		}*/
 		
 	}
 
@@ -248,6 +248,7 @@ public class JeuModel extends AbstractModel{
 		if(type==TypePioche.COMMUNAUTE){
 			this.p.piocheCommunaute.getCartes()[idCarte].execActionCarte(this.p.joueurs[idJoueur]);
 		}
+		
 	}
 
 	@Override

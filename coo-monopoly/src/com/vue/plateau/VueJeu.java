@@ -188,7 +188,8 @@ public class VueJeu extends Fenetre implements Observer{
 		
 		
 		lePanneau.choixE.setVisible(false);
-		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getCarte());
+		if(lePanneau.s.getProprietes().getCarte()!=null)
+			lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getCarte());
 		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getEchange());
 		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getMaison());
 		lePanneau.s.getProprietes().remove(lePanneau.s.getProprietes().getMaisonVente());

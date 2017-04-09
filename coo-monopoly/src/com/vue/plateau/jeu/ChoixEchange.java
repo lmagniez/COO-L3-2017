@@ -98,9 +98,9 @@ public class ChoixEchange extends JPanel{
 		for(int i=0; i<ConstantesParam.NB_JOUEURS-1; i++){
 			this.buttonsJ2[i]=new JToggleButton();
 			groupeBoutons.add(buttonsJ2[i]);
+			
 		}
-		buttonsJ2[0].setSelected(true);
-    	
+		
     	
 		/*
 		JLabel l2 = new JLabel();
@@ -165,11 +165,18 @@ public class ChoixEchange extends JPanel{
 		
 		int cpt=0;
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
+			
 			if(i!=idJoueur){
+				buttonsJ2[cpt].setEnabled(true);
+				if(this.ecran.getS().getJoueurs()[i].isGameOver())
+					buttonsJ2[cpt].setEnabled(false);
+				else
+					buttonsJ2[cpt].setSelected(true);
 				this.buttonsJ2[cpt].setText("Joueur "+i);
 				this.idJoueurs[cpt]=i;
 				panneauJoueur2.add(buttonsJ2[cpt++]);
 			}
+			
 		}
 		
 		

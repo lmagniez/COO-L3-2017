@@ -83,6 +83,10 @@ public class JoueurModel {
 	public void setArgent(int argent) {
 		this.argent = argent;
 		p.getModel().notifyArgentJoueur(idJoueur, argent);
+		if(this.p.joueurs[idJoueur].argent<0){
+			this.p.model.comblerDette(idJoueur);
+		}
+		
 	}
 
 
