@@ -68,7 +68,10 @@ public abstract class AbstractModel implements Observable{
 	 */
 	public abstract void echangePropriete(int idJoueur1, int idJoueur2, int positionAchat, int somme);
 	
+	public abstract void hypothequer(int idJoueur1, int positionAchat);
 	public abstract void effetPioche(int idJoueur, int idCarte, TypePioche type);
+	public abstract void gameOver(int idJoueur);
+	
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur
@@ -84,10 +87,15 @@ public abstract class AbstractModel implements Observable{
 	
 	}
 	
-	public void notifyWinner(String s) {	
+	public void notifyWinner(int idJoueur) {	
 		// si tout est ok, on met a jour les observateurs
 		for(Observer obs : listObserver)
-			obs.updateWinner(s);
+			obs.updateWinner(idJoueur);
+	}
+	public void notifyGameOver(int idJoueur) {	
+		// si tout est ok, on met a jour les observateurs
+		for(Observer obs : listObserver)
+			obs.updateGameOver(idJoueur);
 	}
 	
 	
@@ -116,6 +124,13 @@ public abstract class AbstractModel implements Observable{
 		
 	}
 
+	@Override
+	public void notifyDesacquisitionJoueur(int idJoueur, int position) {
+		for(Observer obs : listObserver)
+			obs.updateDesacquisitionJoueur(idJoueur,position);
+		
+	}
+	
 	@Override
 	public void notifyAjoutMaison(int position) {
 		for(Observer obs : listObserver)
@@ -180,6 +195,15 @@ public abstract class AbstractModel implements Observable{
 			obs.updateMessageCarte(msg, idJoueur, posCarte, type);
 		}
 	}
+	
+	@Override
+	public void notifyDette(int idJoueur) {
+		// TODO Auto-generated method stub
+		for(Observer obs : listObserver){
+			obs.updateDette(idJoueur);
+		}
+	}
+	
 
 	
 }

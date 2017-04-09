@@ -18,6 +18,7 @@ public class JoueurModel {
 	protected int nbMaison;
 	protected int nbHotel;
 	protected int nbProprietes;
+	protected boolean gameOver;
 	
 	
 	protected int lastSumDes;//utile pour le loyer service public
@@ -41,7 +42,7 @@ public class JoueurModel {
 		this.nbMaison=0;
 		this.nbHotel=0;
 		this.nbProprietes=0;
-		
+		this.gameOver=false;
 		this.setLastSumDes(0);
 		
 		

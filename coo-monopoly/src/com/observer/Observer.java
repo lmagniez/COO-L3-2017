@@ -6,7 +6,8 @@ import com.model.plateau.pioche.TypePioche;
 public interface Observer {
 	//public void update(String str); // Le meme type que la methode notify
 	public void update(int x, int y, String s);
-	public void updateWinner(String s);
+	public void updateWinner(int idJoueur);
+	public void updateGameOver(int idJoueur);
 	
 	/**
 	 * Mettre à jour l'argent du joueur
@@ -49,6 +50,8 @@ public interface Observer {
 	 */
 	public void updateAcquisitionJoueur(int idJoueur, int position);
 	
+	public void updateDesacquisitionJoueur(int idJoueur, int position);
+	
 	/**
 	 * Mettre à jour le paiement d'une case
 	 * @param idJoueur1 id du joueur propriétaire
@@ -81,6 +84,9 @@ public interface Observer {
 	
 	public void updatePaiementCase(int idJoueur, int idPossesseur, int position);
 
+	public void updateDette(int idJoueur);
+	
+	
 }
 
 

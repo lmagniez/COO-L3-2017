@@ -35,9 +35,10 @@ public class InfoJoueur extends JPanel{
 	protected JButton prop;
 	
 	protected int idJoueur;
-	private int argent;
+	protected int argent;
 	protected int idIcon;
 	private boolean[] acquisition;
+	private boolean gameOver;
 	
 	
 	/**
@@ -53,12 +54,13 @@ public class InfoJoueur extends JPanel{
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
 			this.getAcquisition()[i]=false;
 		
-		/*
+		
 		if(idJoueur==1){
 			for(int i=0; i<ConstantesModel.NB_CASES; i++)
 				this.getAcquisition()[i]=true;
 			
-		}*/
+		}
+		this.gameOver=false;
 		
 //---->		
 		/*
@@ -200,6 +202,21 @@ public class InfoJoueur extends JPanel{
 
 	public void setIdJoueur(int idJoueur) {
 		this.idJoueur = idJoueur;
+	}
+
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		System.out.println("set go");
+		this.gameOver = gameOver;
+		if(gameOver==true){
+			this.nomJoueur.setForeground(Color.red);
+			this.prop.setEnabled(false);
+		}
+		this.revalidate();
+		this.repaint();
 	}
 	
 	

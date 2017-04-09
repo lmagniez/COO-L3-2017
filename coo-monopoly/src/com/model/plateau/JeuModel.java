@@ -59,10 +59,23 @@ public class JeuModel extends AbstractModel{
 	
 	@Override
 	public void tourSuivant(){
+		
+		System.out.println("TOUR SUIVANT ");
 		tour=(tour+1)%ConstantesParam.NB_JOUEURS;
+		
+		while(p.joueurs[tour].gameOver){
+			tour= (tour + 1)%ConstantesParam.NB_JOUEURS;
+		}
+		
 		this.notifyTour(tour);
 		this.notifyInitTour();
 		
+		/*
+		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
+			if((!this.p.joueurs[i].gameOver)&&this.p.joueurs[i].argent<0){
+				this.comblerDette(i);
+			}
+		}*/
 	}
 	@Override
 	public void lancerEnchere()
@@ -79,7 +92,7 @@ public class JeuModel extends AbstractModel{
 	@Override
 	public void comblerDette(int idJoueur)
 	{
-		
+		this.notifyDette(idJoueur);
 	}
 
 	public PlateauModel getP() {
@@ -185,6 +198,11 @@ public class JeuModel extends AbstractModel{
 			j1.setArgent(j1.getArgent()-montant);
 		}
 		
+		if(this.p.joueurs[idJoueur1].argent<0){
+			this.comblerDette(idJoueur1);
+		}
+		
+		
 	}
 	
 	public void notifyJoueurs(){
@@ -201,10 +219,24 @@ public class JeuModel extends AbstractModel{
 	@Override
 	public void echangePropriete(int idJoueur1, int idJoueur2, int positionAchat, int somme) {
 		//TerrainModel.tabAssoTerrainJoueur[positionAchat]=idJoueur2;
-		((TerrainModel) this.p.cases[positionAchat]).associer(this.p.joueurs[idJoueur2]);
+		if(p.cases[positionAchat] instanceof TerrainModel){
+			((TerrainModel) this.p.cases[positionAchat]).associerEchange(this.p.joueurs[idJoueur2]);
+		}
+		if(p.cases[positionAchat] instanceof ServiceModel){
+			((ServiceModel) this.p.cases[positionAchat]).associerEchange(this.p.joueurs[idJoueur2]);
+		}
+		if(p.cases[positionAchat] instanceof GareModel){
+			((GareModel) this.p.cases[positionAchat]).associerEchange(this.p.joueurs[idJoueur2]);
+		}
+		
 		this.p.joueurs[idJoueur1].setArgent(this.p.joueurs[idJoueur1].getArgent()+somme);
 		this.p.joueurs[idJoueur2].setArgent(this.p.joueurs[idJoueur2].getArgent()-somme);
 		this.notifyEchangeJoueur(idJoueur1, idJoueur2, positionAchat);
+		
+		if(this.p.joueurs[idJoueur2].argent<0){
+			this.comblerDette(idJoueur2);
+		}
+		
 	}
 
 	@Override
@@ -217,6 +249,51 @@ public class JeuModel extends AbstractModel{
 			this.p.piocheCommunaute.getCartes()[idCarte].execActionCarte(this.p.joueurs[idJoueur]);
 		}
 	}
+
+	@Override
+	public void hypothequer(int idJoueur1, int positionAchat) {
+		// TODO Auto-generated method stub
+		if(this.p.cases[positionAchat] instanceof TerrainModel){
+			((TerrainModel) this.p.cases[positionAchat]).hypothequer(this.p.joueurs[idJoueur1]);
+		}
+		if(this.p.cases[positionAchat] instanceof GareModel){
+			((GareModel) this.p.cases[positionAchat]).hypothequer(this.p.joueurs[idJoueur1]);
+		}
+		if(this.p.cases[positionAchat] instanceof ServiceModel){
+			((ServiceModel) this.p.cases[positionAchat]).hypothequer(this.p.joueurs[idJoueur1]);
+		}
+		
+		this.notifyDesacquisitionJoueur(idJoueur1,positionAchat);
+		
+		
+	}
+
+	@Override
+	public void gameOver(int idJoueur) {
+		
+		System.out.println("game over "+idJoueur);
+		
+		this.p.joueurs[idJoueur].gameOver=true;
+		
+		if(this.tour==idJoueur){
+			this.tourSuivant();
+		}
+		
+		int cptJoueurs=0;
+		for(int i=0; i<p.joueurs.length; i++){
+			if(!p.joueurs[i].gameOver)
+				cptJoueurs++;
+		}
+		if(cptJoueurs==1){
+			this.notifyWinner(idJoueur);
+		}
+		else{
+			this.notifyGameOver(idJoueur);
+		}
+	}
+
+
+	
 
 	
 

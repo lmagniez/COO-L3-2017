@@ -74,6 +74,23 @@ public class ServiceModel extends CaseModel{
 		j.setArgent(j.getArgent()-prixAchat);
 	}
 	
+	public void associerEchange(JoueurModel j)
+	{
+		TerrainModel.tabAssoTerrainJoueur[this.idService]=j.getIdJoueur();
+	}
+	
+	
+	/**
+	 * Hypothequer
+	 * @param j joueur disposant du terrain
+	 */
+	public void hypothequer(JoueurModel j)
+	{
+		ServiceModel.tabAssoServiceJoueur[idService]=-1;
+		j.setArgent(j.getArgent()+prixAchat/2);
+	}
+	
+	
 	@Override
 	public void action(JoueurModel j) {
 		int idPossesseur=tabAssoServiceJoueur[this.idService];

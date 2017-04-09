@@ -12,7 +12,8 @@ public interface Observable {
 	public void addObserver(Observer obs);
 	public void removeObserver();
 	public void notifyObserver(int x, int y, String s); // String est un exemple
-	public void notifyWinner(String s);
+	public void notifyWinner(int idJoueur);
+	public void notifyGameOver(int idJoueur);
 	
 	/**
 	 * Notifier un changement de tour
@@ -51,6 +52,8 @@ public interface Observable {
 	public void notifyAchatCase(int idJoueur, int position);
 	
 	public void notifyAcquisitionJoueur(int idJoueur, int position);
+	public void notifyDesacquisitionJoueur(int idJoueur, int position);
+	
 	public void notifyEchangeJoueur(int idJoueur1, int idJoueur2, int position);
 	
 	
@@ -61,5 +64,9 @@ public interface Observable {
 	public void notifyInitTour();
 	public void notifyPaiementCase(int idJoueur, int idPossesseur, int position);
 
+	public void notifyDette(int idJoueur);
+	
+	
+	
 	
 }

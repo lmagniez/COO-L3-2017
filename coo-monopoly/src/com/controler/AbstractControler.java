@@ -23,6 +23,10 @@ public abstract class AbstractControler {
 	protected boolean venteMaison;
 	protected boolean echangePropriete;
 	protected boolean effetPioche;
+	protected boolean hypotheque;
+	protected boolean gameOver;
+	protected boolean tour;
+	
 	
 	protected int positionAchat;
 	protected int somme;
@@ -141,6 +145,25 @@ public abstract class AbstractControler {
 		this.idCarte=idCarte;
 		this.type=type;
 		this.effetPioche=true;
+		control();
+	}
+
+	public void requestHypothequer(int idJ1, int idSelected) {
+		this.hypotheque=true;
+		this.idJoueur=idJ1;
+		this.positionAchat=idSelected;
+		control();
+		
+	}
+
+	public void requestFinPartie(int idJoueur3) {
+		this.gameOver=true;
+		this.idJoueur=idJoueur3;
+		control();
+	}
+
+	public void requestTour() {
+		this.tour=true;
 		control();
 	}
 	

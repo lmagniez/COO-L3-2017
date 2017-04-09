@@ -76,6 +76,22 @@ public class GareModel extends CaseModel{
 		j.setArgent(j.getArgent()-prixAchat);
 	}
 	
+	public void associerEchange(JoueurModel j)
+	{
+		TerrainModel.tabAssoTerrainJoueur[this.idGare]=j.getIdJoueur();
+	}
+	
+	/**
+	 * Hypothequer
+	 * @param j joueur disposant du terrain
+	 */
+	public void hypothequer(JoueurModel j)
+	{
+		GareModel.tabAssoGareJoueur[idGare]=-1;
+		j.setArgent(j.getArgent()+prixAchat/2);
+	}
+	
+	
 	@Override
 	public void action(JoueurModel j) {
 		

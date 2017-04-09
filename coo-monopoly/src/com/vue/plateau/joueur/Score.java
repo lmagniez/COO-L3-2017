@@ -26,7 +26,7 @@ public class Score extends JPanel{
 	protected Image fond;
 	protected InfoJoueur[] joueurs;
 	protected InfoJeu infos;
-	private ProprietesJoueur proprietes;
+	protected ProprietesJoueur proprietes;
 	
 	/**
 	 * Constructeur
@@ -64,6 +64,7 @@ public class Score extends JPanel{
 		this.removeAll();
 		this.add(Box.createRigidArea(new Dimension(5,25)));
 		this.add(getProprietes());
+		getProprietes().refresh();
 		this.revalidate();
 		this.repaint();
 	}

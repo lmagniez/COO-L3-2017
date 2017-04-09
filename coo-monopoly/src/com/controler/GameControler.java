@@ -40,10 +40,10 @@ public class GameControler extends AbstractControler{
 		 if(this.paiement){
 			 
 			 this.calc.paiementJoueur(idJoueur, idJoueur2, positionAchat);
+			 this.calc.tourSuivant();
 			 if(this.calc.isInDebt(idJoueur))
-				 this.calc.comblerDette(idJoueur);
-			 else
-				 this.calc.tourSuivant();
+				 this.calc.comblerDette(idJoueur); 
+			 
 			 
 			 this.paiement=false;
 		 }
@@ -75,12 +75,20 @@ public class GameControler extends AbstractControler{
 			 this.calc.effetPioche(idJoueur, idCarte, this.type);
 			 this.calc.tourSuivant();
 		 }
+		 if(this.hypotheque){
+			 this.hypotheque=false;
+			 this.calc.hypothequer(idJoueur, positionAchat);
+		 }
 		 
-		 /*
-		 if(this.x>=0&&this.x<=AbstractModel.NB_LIGNE
-					 &&this.y>=0&&this.y<=AbstractModel.NB_LIGNE)
-			 this.calc.set_grille(x, y);
-		 */
+		 if(this.gameOver){
+			 this.gameOver=false;
+			 this.calc.gameOver(idJoueur);
+		 }
+		 if(this.tour){
+			 this.tour=false;
+			 this.calc.tourSuivant();
+		 }
+		 
 	 }
 	
 }

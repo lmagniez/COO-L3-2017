@@ -18,6 +18,8 @@ import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.menu.VueMenu;
 import com.vue.plateau.jeu.TypeCase;
+import com.vue.plateau.joueur.InfoJoueur;
+import com.vue.plateau.joueur.ProprietesJoueur;
 
 /**
  * Vue du jeu
@@ -72,11 +74,7 @@ public class VueJeu extends Fenetre implements Observer{
 		
 	}
 
-	@Override
-	public void updateWinner(String s) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void updateArgentJoueur(int idJoueur, int argent) {
@@ -200,13 +198,40 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateMessageCarte(String msg, int idJoueur, int posCarte, TypePioche type) {
-		// TODO Auto-generated method stub
-		System.out.println("ok "+msg+" idJoueur "+idJoueur);
 		lePanneau.choixC.genererPiocheCarte(idJoueur, posCarte, msg, type);
+	}
+
+	@Override
+	public void updateDesacquisitionJoueur(int idJoueur, int position) {
+		// TODO Auto-generated method stub
+		lePanneau.s.getJoueurs()[idJoueur].getAcquisition()[position]=false;
+	}
+
+	@Override
+	public void updateDette(int idJoueur) {
+		// TODO Auto-generated method stub
+		this.lePanneau.s.setProprietes(new ProprietesJoueur(idJoueur,lePanneau.s.getJoueurs()[idJoueur],
+				lePanneau.p.getCases()));
+		lePanneau.s.afficherProprietes();
 	}
 
 	
 
+	@Override
+	public void updateWinner(int idJoueur) {
+		// TODO Auto-generated method stub
+		System.out.println("WINNER!!");
+	}
+	
+	@Override
+	public void updateGameOver(int idJoueur) {
+		//if(thi)
+			//si tour actuel, passe tour envoie controler
+		
+		lePanneau.s.getJoueurs()[idJoueur].setGameOver(true);
+		lePanneau.s.afficherInfosJoueur();
+		lePanneau.getChoixE().setVisible(false);
+	}
 	
 
 }

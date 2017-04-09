@@ -46,8 +46,8 @@ public class TerrainModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_TERRAIN];
 		for(int i=0; i<ConstantesModel.NB_CASES_TERRAIN; i++){
-			tabAsso[i]=-1;
-			//tabAsso[i]=1;
+			//tabAsso[i]=-1;
+			tabAsso[i]=1;
 //
 		}
 		return tabAsso;
@@ -89,6 +89,28 @@ public class TerrainModel extends CaseModel{
 		TerrainModel.tabAssoTerrainJoueur[idTerrain]=j.getIdJoueur();
 		j.setArgent(j.getArgent()-prixAchat);
 	}
+	
+	/**
+	 * Associer sans payer
+	 * @param j joueur disposant du terrain
+	 */
+	public void associerEchange(JoueurModel j)
+	{
+		TerrainModel.tabAssoTerrainJoueur[idTerrain]=j.getIdJoueur();
+	}
+	
+	/**
+	 * Hypothequer
+	 * @param j joueur disposant du terrain
+	 */
+	public void hypothequer(JoueurModel j)
+	{
+		TerrainModel.tabAssoTerrainJoueur[idTerrain]=-1;
+		j.setArgent(j.getArgent()+prixAchat/2);
+		
+	}
+	
+	
 	
 	/**
 	 * Doit appartenir à un joueur et les autres cases ont entre -1 et 0 maisons de différence
