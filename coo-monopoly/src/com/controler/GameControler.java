@@ -51,7 +51,7 @@ public class GameControler extends AbstractControler{
 		 
 		 if(this.enchere){
 			 this.enchere=false;
-			 this.calc.tourSuivant();
+			 this.calc.lancerEnchere(positionAchat);
 		 }
 		 
 		 if(this.achatMaison){
@@ -87,6 +87,10 @@ public class GameControler extends AbstractControler{
 		 if(this.tour){
 			 this.tour=false;
 			 this.calc.tourSuivant();
+		 }
+		 if(this.achatEnchere){
+			 this.achatEnchere=false;
+			 this.calc.achatCaseEnchere(idJoueur, positionAchat, prix);
 		 }
 		 
 	 }

@@ -78,9 +78,9 @@ public class JeuModel extends AbstractModel{
 		}*/
 	}
 	@Override
-	public void lancerEnchere()
+	public void lancerEnchere(int position)
 	{
-		
+		this.notifyEnchere(position);
 	}
 	
 	
@@ -218,7 +218,6 @@ public class JeuModel extends AbstractModel{
 
 	@Override
 	public void echangePropriete(int idJoueur1, int idJoueur2, int positionAchat, int somme) {
-		//TerrainModel.tabAssoTerrainJoueur[positionAchat]=idJoueur2;
 		if(p.cases[positionAchat] instanceof TerrainModel){
 			((TerrainModel) this.p.cases[positionAchat]).associerEchange(this.p.joueurs[idJoueur2]);
 		}
@@ -232,16 +231,13 @@ public class JeuModel extends AbstractModel{
 		this.p.joueurs[idJoueur1].setArgent(this.p.joueurs[idJoueur1].getArgent()+somme);
 		this.p.joueurs[idJoueur2].setArgent(this.p.joueurs[idJoueur2].getArgent()-somme);
 		this.notifyEchangeJoueur(idJoueur1, idJoueur2, positionAchat);
-		/*
-		if(this.p.joueurs[idJoueur2].argent<0){
-			this.comblerDette(idJoueur2);
-		}*/
+
 		
 	}
 
 	@Override
 	public void effetPioche(int idJoueur, int idCarte, TypePioche type) {
-		// TODO Auto-generated method stub
+		
 		if(type==TypePioche.CHANCE){
 			this.p.piocheChance.getCartes()[idCarte].execActionCarte(this.p.joueurs[idJoueur]);
 		}
@@ -253,7 +249,7 @@ public class JeuModel extends AbstractModel{
 
 	@Override
 	public void hypothequer(int idJoueur1, int positionAchat) {
-		// TODO Auto-generated method stub
+
 		if(this.p.cases[positionAchat] instanceof TerrainModel){
 			((TerrainModel) this.p.cases[positionAchat]).hypothequer(this.p.joueurs[idJoueur1]);
 		}
@@ -293,8 +289,32 @@ public class JeuModel extends AbstractModel{
 		}
 	}
 
+	@Override
+	public void achatCaseEnchere(int idJoueur, int positionAchat, int prix) {
+		
+		CaseModel c=p.getCases()[positionAchat];
+		JoueurModel j =p.getJoueurs()[idJoueur];
+		j.nbProprietes++;
+			
+		if(c instanceof TerrainModel){
+			j.setArgent(j.argent-prix);
+			TerrainModel.tabAssoTerrainJoueur[((TerrainModel)c).getIdTerrain()]=idJoueur;
+		}
+		else if(c instanceof GareModel){
+			j.setArgent(j.argent-prix);
+			GareModel.tabAssoGareJoueur[((GareModel)c).getIdGare()]=idJoueur;
+		}
+		else if(c instanceof ServiceModel){
+			j.setArgent(j.argent-prix);
+			ServiceModel.tabAssoServiceJoueur[((ServiceModel)c).getIdService()]=idJoueur;
+		}
+		
+		this.notifyAcquisitionJoueur(idJoueur, positionAchat);
+		this.notifyArgentJoueur(idJoueur,j.getArgent());
+		
+	}
 
-	
+
 
 	
 

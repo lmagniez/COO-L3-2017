@@ -86,6 +86,7 @@ public interface Observer {
 
 	public void updateDette(int idJoueur);
 	
+	public void updateEnchere(int position);
 	
 }
 

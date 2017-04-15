@@ -233,6 +233,12 @@ public class VueJeu extends Fenetre implements Observer{
 		lePanneau.s.afficherInfosJoueur();
 		lePanneau.getChoixE().setVisible(false);
 	}
+
+	@Override
+	public void updateEnchere(int position) {
+		// TODO Auto-generated method stub
+		lePanneau.choixEn.genererEnchere(position);
+	}
 	
 
 }

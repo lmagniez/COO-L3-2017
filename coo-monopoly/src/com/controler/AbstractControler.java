@@ -26,6 +26,8 @@ public abstract class AbstractControler {
 	protected boolean hypotheque;
 	protected boolean gameOver;
 	protected boolean tour;
+	protected boolean achatEnchere;
+	
 	
 	
 	protected int positionAchat;
@@ -34,6 +36,7 @@ public abstract class AbstractControler {
 	protected int idJoueur;
 	protected int idJoueur2;
 	protected int idCarte;
+	protected int prix;
 	protected TypePioche type;
 	
 	public AbstractControler(){
@@ -164,6 +167,14 @@ public abstract class AbstractControler {
 
 	public void requestTour() {
 		this.tour=true;
+		control();
+	}
+
+	public void requestAchatEnchere(int idJoueur3, int position, int prix) {
+		this.achatEnchere=true;
+		this.idJoueur=idJoueur3;
+		this.positionAchat=position;
+		this.prix=prix;
 		control();
 	}
 	

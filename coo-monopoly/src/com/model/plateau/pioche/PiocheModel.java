@@ -57,8 +57,15 @@ public class PiocheModel {
 		Random r=new Random();
 		for(int i=0; i<nbSwap; i++)
 		{
-			int i1=r.nextInt(ConstantesModel.NB_CARTES_CHANCE-1);
-			int i2=r.nextInt(ConstantesModel.NB_CARTES_CHANCE-1);
+			int i1=0,i2=0;
+			if(type==TypePioche.CHANCE){
+				i1=r.nextInt(ConstantesModel.NB_CARTES_CHANCE-1);
+				i2=r.nextInt(ConstantesModel.NB_CARTES_CHANCE-1);
+			}
+			if(type==TypePioche.COMMUNAUTE){
+				i1=r.nextInt(ConstantesModel.NB_CARTES_COMMUNAUTE-1);
+				i2=r.nextInt(ConstantesModel.NB_CARTES_COMMUNAUTE-1);
+			}
 			CarteModel tmp=getCartes()[i1];
 			getCartes()[i1]=getCartes()[i2];
 			getCartes()[i2]=tmp;

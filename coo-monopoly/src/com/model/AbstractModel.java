@@ -23,7 +23,7 @@ public abstract class AbstractModel implements Observable{
 	 * @param idJoueur id du joueur */
 	public abstract void lancerDes(int idJoueur);
 	/** Lancer une enchère */
-	public abstract void lancerEnchere();
+	public abstract void lancerEnchere(int position);
 	/** Lancer une négociation entre deux joueurs */
 	public abstract void lancerNegociation();
 	/** Lancer le prochain tour */
@@ -71,6 +71,7 @@ public abstract class AbstractModel implements Observable{
 	public abstract void hypothequer(int idJoueur1, int positionAchat);
 	public abstract void effetPioche(int idJoueur, int idCarte, TypePioche type);
 	public abstract void gameOver(int idJoueur);
+	public abstract void achatCaseEnchere(int idJoueur, int positionAchat, int prix);
 	
 	
 	// Implementation du pattern observer
@@ -190,7 +191,6 @@ public abstract class AbstractModel implements Observable{
 	
 	@Override
 	public void notifyMessageCarte(String msg, int idJoueur, int posCarte, TypePioche type) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver){
 			obs.updateMessageCarte(msg, idJoueur, posCarte, type);
 		}
@@ -198,12 +198,19 @@ public abstract class AbstractModel implements Observable{
 	
 	@Override
 	public void notifyDette(int idJoueur) {
-		// TODO Auto-generated method stub
 		for(Observer obs : listObserver){
 			obs.updateDette(idJoueur);
 		}
 	}
 	
+	@Override
+	public void notifyEnchere(int position) {
+		for(Observer obs : listObserver){
+			obs.updateEnchere(position);
+		}
+	}
 
+
+	
 	
 }

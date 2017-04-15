@@ -46,9 +46,9 @@ public class TerrainModel extends CaseModel{
 	{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_TERRAIN];
 		for(int i=0; i<ConstantesModel.NB_CASES_TERRAIN; i++){
-			//tabAsso[i]=-1;
-			tabAsso[i]=1;
-//
+			tabAsso[i]=-1;
+			//tabAsso[i]=1;
+
 		}
 		return tabAsso;
 	}

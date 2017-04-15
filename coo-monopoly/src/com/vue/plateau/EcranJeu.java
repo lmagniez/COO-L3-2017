@@ -30,7 +30,9 @@ import com.vue.menu.VueMenu;
 import com.vue.plateau.jeu.ChoixAchat;
 import com.vue.plateau.jeu.ChoixCarte;
 import com.vue.plateau.jeu.ChoixEchange;
+import com.vue.plateau.jeu.ChoixEnchere;
 import com.vue.plateau.jeu.ChoixGameOver;
+import com.vue.plateau.jeu.ChoixMessage;
 import com.vue.plateau.jeu.ChoixPaiement;
 import com.vue.plateau.jeu.Plateau;
 import com.vue.plateau.joueur.Score;
@@ -55,6 +57,9 @@ public class EcranJeu extends Ecran{
 	protected ChoixEchange choixE;
 	protected ChoixCarte choixC;
 	private ChoixGameOver choixG;
+	protected ChoixEnchere choixEn;
+	private ChoixMessage choixM;
+	
 	
 	private int tour;
 	
@@ -99,6 +104,13 @@ public class EcranJeu extends Ecran{
 		getChoixG().setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
 		getChoixG().setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
 		
+		choixEn=new ChoixEnchere(this);
+		choixEn.setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
+		choixEn.setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y*5/3);
+		
+		setChoixM(new ChoixMessage(this));
+		getChoixM().setLocation(ConstantesVue.DIMENSION_CHOIX_POSX,ConstantesVue.DIMENSION_CHOIX_POSY);
+		getChoixM().setSize(ConstantesVue.DIMENSION_CHOIX_X,ConstantesVue.DIMENSION_CHOIX_Y);
 		
 		
 		
@@ -121,8 +133,9 @@ public class EcranJeu extends Ecran{
 		this.add(choixP);
 		this.add(choixC);
 		this.add(getChoixG());
-		
+		this.add(choixEn);
 		this.add(getChoixE());
+		this.add(getChoixM());
 		
 		this.add(getP());
 		this.add(s);
@@ -257,6 +270,16 @@ public class EcranJeu extends Ecran{
 
 	public void setChoixG(ChoixGameOver choixG) {
 		this.choixG = choixG;
+	}
+
+
+	public ChoixMessage getChoixM() {
+		return choixM;
+	}
+
+
+	public void setChoixM(ChoixMessage choixM) {
+		this.choixM = choixM;
 	}
 	
 	

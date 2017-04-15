@@ -73,7 +73,7 @@ public class CarteModel {
 		//effet position: Relance l'effet de la prochaine case
 		if(effetPosition!=0){
 			j.setPosition(j.getPosition() + effetPosition);
-			this.pioche.p.getCases()[j.getPosition()].action(j);
+			//this.pioche.p.getCases()[j.getPosition()].action(j);
 		}
 		else if(changerPosition>=0){
 			j.setPosition(changerPosition);
