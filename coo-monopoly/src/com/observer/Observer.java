@@ -78,7 +78,8 @@ public interface Observer {
 	 * Mettre à jour l'initialisation d'un tour
 	 */
 	
-	public void updateInitTour();
+	public void updateInitTourDes();
+	public void updateInitTourFenetre();
 	
 	public void updateMessageCarte(String msg, int idJoueur, int posCarte, TypePioche type);
 	
@@ -87,6 +88,14 @@ public interface Observer {
 	public void updateDette(int idJoueur);
 	
 	public void updateEnchere(int position);
+	
+	public void updateCartePrison(int idJoueur, boolean hasCarte);
+	
+	public void updatePrison(int idJoueur, int nbTour);
+	
+	public void updateEnPrison(int idJoueur, int nbTour);
+	
+	public void updateLiberePrison(int idJoueur);
 	
 }
 

@@ -31,6 +31,10 @@ public class InfoJoueur extends JPanel{
 	protected JLabel nomJoueur;
 	protected JLabel argentJoueur;
 	protected JLabel pionJoueur;
+	protected JLabel enPrison;
+	protected JLabel cartePrison;
+	
+	
 	protected JButton lanceDes;
 	protected JButton prop;
 	
@@ -108,12 +112,17 @@ public class InfoJoueur extends JPanel{
 		prop=new JButton("Propriétés du joueur");
 		prop.addActionListener(new ButtonListener());
 		
+		enPrison= new JLabel("");
+		cartePrison= new JLabel("");
+		
 		
 		this.add(pionJoueur);
 		this.add(nomJoueur);
 		this.add(argentJoueur);
 		this.add(lanceDes);
 		this.add(prop);
+		this.add(enPrison);
+		this.add(cartePrison);
 		
 		pionJoueur.setLocation(50,50);
 		pionJoueur.setSize(50,50);
@@ -126,6 +135,10 @@ public class InfoJoueur extends JPanel{
 		lanceDes.setEnabled(false);
 		prop.setSize(prop.getPreferredSize());
 		prop.setLocation(ConstantesVue.DIMENSION_INFO_X/2,ConstantesVue.DIMENSION_INFO_Y*1/4);
+		enPrison.setLocation(ConstantesVue.DIMENSION_INFO_X/2,ConstantesVue.DIMENSION_INFO_Y*2/4);
+		cartePrison.setLocation(ConstantesVue.DIMENSION_INFO_X/2,ConstantesVue.DIMENSION_INFO_Y*3/4);
+		enPrison.setSize(enPrison.getPreferredSize());
+		cartePrison.setSize(cartePrison.getPreferredSize());
 		
 		
 	}
@@ -148,6 +161,35 @@ public class InfoJoueur extends JPanel{
 			
 			
 		} 
+	}
+	
+	public void updateCartePrison(boolean has){
+		if(has){
+			System.out.println("okay!");
+			this.cartePrison.setText("Dispose: Carte Prison");
+			this.cartePrison.setForeground(Color.blue);
+			
+		}
+		else{
+			this.cartePrison.setText("");
+		}
+		this.revalidate();
+		this.repaint();
+	}
+	
+	public void updatePrison(int nbTour){
+		System.out.println("la prison"+nbTour);
+		if(nbTour>0){
+			System.out.println("la prison");
+			this.enPrison.setText("Prison: "+nbTour+" tours");
+			this.enPrison.setSize(this.enPrison.getPreferredSize());
+			this.enPrison.setForeground(Color.red);
+		}
+		else{
+			this.enPrison.setText("");
+		}
+		this.revalidate();
+		this.repaint();
 	}
 	
 	

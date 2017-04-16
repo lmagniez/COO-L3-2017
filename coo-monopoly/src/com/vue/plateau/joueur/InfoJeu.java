@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 
 /**
@@ -23,6 +24,10 @@ public class InfoJeu extends JPanel {
 
 	protected JTextArea textBox;
 	protected Score s;
+	
+	protected String nbMaisons;
+	protected String tourRestants;
+
 	
 	public InfoJeu(Score score){
 		
@@ -50,6 +55,20 @@ public class InfoJeu extends JPanel {
 		
 		
 	}
+	
+	public void updateTextBox(){
+		this.textBox.setText(nbMaisons+"\n"+tourRestants);
+	}
+	
+	public void updateMaison(int nbM){
+		this.nbMaisons="Nombre de maisons disponibles: "+nbM+"/"+ConstantesParam.NB_MAISONS;
+		updateTextBox();
+	}
+	
+	public void updateTour(int tour){
+		this.tourRestants="Nombre de tours restants: "+tour+"/"+ConstantesParam.NB_TOUR;
+	}
+	
 	
 	/**
 	 * Initialisation de la zone de texte.

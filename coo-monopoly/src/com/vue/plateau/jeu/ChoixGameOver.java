@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import com.model.ConstantesModel;
+import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CouleurTerrain;
 import com.model.plateau.pioche.TypePioche;
@@ -126,7 +127,12 @@ public class ChoixGameOver extends JPanel{
 		this.actif=true;
 		
 		idJ1=idJoueur;
-		this.messagePrincipal="GAME OVER: Joueur "+idJoueur+" est hors-jeu !!";
+		if(ConstantesParam.SUICIDE_ENABLED){
+			this.messagePrincipal="VICTOIRE: "+getNomById(idJoueur)+" est vainqueur !!";
+		}
+		else{
+			this.messagePrincipal="GAME OVER: "+getNomById(idJoueur)+" est hors-jeu !!";
+		}
 		this.textBox.setText(messagePrincipal);
 		
 		this.revalidate();
@@ -195,6 +201,10 @@ public class ChoixGameOver extends JPanel{
 
 	public void setActif(boolean actif) {
 		this.actif = actif;
+	}
+	
+	public String getNomById(int idJoueur){
+		return this.ecran.getS().getJoueurs()[idJoueur].getNomJoueur().getText();
 	}
 	
 	

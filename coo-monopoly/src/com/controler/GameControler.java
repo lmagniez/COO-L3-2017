@@ -73,7 +73,7 @@ public class GameControler extends AbstractControler{
 		 if(this.effetPioche){
 			 this.effetPioche=false;
 			 this.calc.effetPioche(idJoueur, idCarte, this.type);
-			 this.calc.tourSuivant();
+			 //this.calc.tourSuivant();
 		 }
 		 if(this.hypotheque){
 			 this.hypotheque=false;

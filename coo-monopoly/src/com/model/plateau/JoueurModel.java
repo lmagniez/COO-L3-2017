@@ -1,5 +1,6 @@
 package com.model.plateau;
 
+import com.model.ConstantesModel;
 import com.model.ConstantesParam;
 
 /**
@@ -13,12 +14,13 @@ public class JoueurModel {
 	protected int idJoueur;
 	protected int position;
 	protected int argent;
-	protected int cartePrison;
-	protected boolean enPrison;
+	protected boolean cartePrison;
+	protected int enPrison;
 	protected int nbMaison;
 	protected int nbHotel;
 	protected int nbProprietes;
 	protected boolean gameOver;
+	
 	
 	
 	protected int lastSumDes;//utile pour le loyer service public
@@ -37,8 +39,8 @@ public class JoueurModel {
 		this.position=0;
 		this.setPosition(pos);
 		this.argent=arg;
-		this.enPrison=false;
-		this.cartePrison=0;
+		this.enPrison=0;
+		this.cartePrison=false;
 		this.nbMaison=0;
 		this.nbHotel=0;
 		this.nbProprietes=0;
@@ -54,7 +56,7 @@ public class JoueurModel {
 	 */
 	public void setPosition(int position) {
 		if(this.position>position)
-			this.argent+=20000;
+			this.setArgent(argent+20000);
 		this.position = position;
 		p.getModel().notifyPosJoueur(idJoueur,position);
 	}
@@ -72,7 +74,8 @@ public class JoueurModel {
 	 * Ajouter une carte prison au joueur 
 	 */
 	public void ajoutCartePrison(){
-		this.cartePrison++;
+		this.cartePrison=true;
+		p.model.notifyCartePrison(this.idJoueur,true);
 	}
 
 	public int getArgent() {
@@ -131,6 +134,18 @@ public class JoueurModel {
 
 	public void setLastSumDes(int lastSumDes) {
 		this.lastSumDes = lastSumDes;
+	}
+
+	public void allerEnPrison() {
+		if(cartePrison){
+			cartePrison=false;
+			p.model.notifyCartePrison(this.idJoueur,false);
+		}
+		else{
+			this.setPositionSansArgent(ConstantesModel.POS_PRISON);
+			this.enPrison=ConstantesParam.NB_TOUR_PRISON;
+			p.model.notifyPrison(this.idJoueur,this.enPrison);
+		}
 	}
 
 

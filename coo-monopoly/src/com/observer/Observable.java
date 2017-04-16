@@ -61,12 +61,21 @@ public interface Observable {
 	
 	public void notifyMessageChoix(String msg);
 	
-	public void notifyInitTour();
+	public void notifyInitTourDes();
+	public void notifyInitTourFenetre();
+	
 	public void notifyPaiementCase(int idJoueur, int idPossesseur, int position);
 
 	public void notifyDette(int idJoueur);
 	
 	public void notifyEnchere(int position);
+	
+	public void notifyCartePrison(int idJoueur, boolean hasCarte);
+	public void notifyPrison(int idJoueur, int nbTour);
+	public void notifyEnPrison(int idJoueur, int nbTour);
+	public void notifyLiberePrison(int idJoueur);
+	
+	
 	
 	
 	

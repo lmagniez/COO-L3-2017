@@ -1,6 +1,7 @@
 package com.model.plateau.cases;
 
 import com.model.ConstantesModel;
+import com.model.ConstantesParam;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
@@ -49,7 +50,7 @@ public class GareModel extends CaseModel{
 		this.setNom(nom);
 		this.setPosition(position);
 		this.idGare=nb_gare++;
-		this.prixAchat=prixAchat;
+		this.prixAchat=(int) (prixAchat*ConstantesParam.TAUX_ACHAT);;
 		GareModel.posGares[idGare]=position;
 	}
 	
@@ -88,7 +89,7 @@ public class GareModel extends CaseModel{
 	public void hypothequer(JoueurModel j)
 	{
 		GareModel.tabAssoGareJoueur[idGare]=-1;
-		j.setArgent(j.getArgent()+prixAchat/2);
+		j.setArgent((int) (j.getArgent()+prixAchat*ConstantesParam.TAUX_INTERET));
 	}
 	
 	

@@ -62,6 +62,7 @@ public class ChoixEnchere extends JPanel{
 	protected boolean isStarted;
 	private Thread timer;
 	private boolean tourne=true;
+	private boolean stopEnchere=true;
 	
 	/**
 	 * Constructeur
@@ -152,7 +153,7 @@ public class ChoixEnchere extends JPanel{
 	 */
 	public void createTimer() {
 			timer = new Thread(new Runnable() {
-				int seconde=15;
+				int seconde=ConstantesParam.ENCHERE_TIME;
 				
 				public void run() {
 					while (tourne&&seconde>0) {
@@ -165,21 +166,23 @@ public class ChoixEnchere extends JPanel{
 						}
 
 					}
-					ChoixEnchere.this.isStarted=false;
-					ChoixEnchere.this.ecran.getVue().getControler().requestAchatEnchere(idGagnant, position, prixAPayer);
-					ChoixEnchere.this.setVisible(false);
-					ChoixEnchere.this.ecran.getChoixM().genererMessage(idGagnant, position, prixAPayer);
-					
+					if(stopEnchere){
+						ChoixEnchere.this.isStarted=false;
+						ChoixEnchere.this.ecran.getVue().getControler().requestAchatEnchere(idGagnant, position, prixAPayer);
+						ChoixEnchere.this.setVisible(false);
+						System.out.println("ENCORE???");
+						ChoixEnchere.this.ecran.getChoixM().genererMessageEnchere(idGagnant, position, prixAPayer);
+					}
 				}
 			});
 	}
 	
 	public void stopper(){
-		this.tourne=false;
+		this.stopEnchere=false;
 	}
 	
 	public void reprendre(){
-		this.tourne=true;
+		this.stopEnchere=true;
 	}
 	
 	
@@ -201,11 +204,7 @@ public class ChoixEnchere extends JPanel{
 		panneauDroite.add(Box.createRigidArea(new Dimension(5,70)));
 		
 		
-		
-		
-		
-		
-		
+		this.isStarted=false;
 		this.actif=true;
 		this.idGagnant=-1;
 		
@@ -251,10 +250,6 @@ public class ChoixEnchere extends JPanel{
 				noOne=false;
 			}
 			
-			
-			
-			
-			
 			if(i%2==0){
 				panneauGauche.add(b);
 			}
@@ -279,7 +274,7 @@ public class ChoixEnchere extends JPanel{
 		
 		enchereActuelle=new JLabel("Actuellement: "+prixAPayer);
 		joueurActuel=new JLabel("Propriétaire: Personne");
-		timerLabel=new JLabel("Temps Restant: 30s");
+		timerLabel=new JLabel("Temps Restant: "+ConstantesParam.ENCHERE_TIME+"s");
 		
 		enchereActuelle.setAlignmentX(Component.CENTER_ALIGNMENT);
 		joueurActuel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -346,7 +341,10 @@ public class ChoixEnchere extends JPanel{
 				//ChoixEnchere.this.ecran.getVue().getControler().requestPaiement(idJ1,idJ2,posJoueur);
 				ChoixEnchere.this.ecran.getVue().getControler().requestAchatEnchere(idGagnant, position, prixAPayer);
 				ChoixEnchere.this.setVisible(false);
-				ChoixEnchere.this.ecran.getChoixM().genererMessage(idGagnant, position, prixAPayer);
+				ChoixEnchere.this.ecran.getChoixM().genererMessageEnchere(idGagnant, position, prixAPayer);
+				ChoixEnchere.this.timer.stop();
+				
+				//ChoixEnchere.this.stopper();
 				
 			}
 			
@@ -356,6 +354,8 @@ public class ChoixEnchere extends JPanel{
 					System.out.println("joueur"+i);
 					
 					if(!isStarted){
+						reprendre();
+						tourne=true;
 						isStarted=true;
 						confirmer.setEnabled(true);
 						createTimer();

@@ -12,6 +12,7 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CouleurTerrain;
 import com.model.plateau.cases.GareModel;
@@ -80,7 +81,7 @@ public class CarteAchatGare extends JPanel{
 
 		this.add(Box.createRigidArea(new Dimension(5,10)));
 		
-		this.labelHypotheque=new JLabel("Valeur Hypothécaire:     "+(prixAchat/2)+"M");
+		this.labelHypotheque=new JLabel("Valeur Hypothécaire:     "+(int)(prixAchat*ConstantesParam.TAUX_INTERET)+"M");
 		labelHypotheque.setFont(labelHypotheque.getFont().deriveFont(10.0f));
 		this.add(labelHypotheque);
 		

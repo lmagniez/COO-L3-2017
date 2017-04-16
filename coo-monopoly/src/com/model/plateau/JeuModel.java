@@ -39,19 +39,23 @@ public class JeuModel extends AbstractModel{
 		Random r= new Random();
 		
 		int des;
-		if(ConstantesParam.TROIS_DES_ENABLED)
-			des=3+r.nextInt(15);
+		if(ConstantesParam.TROIS_DES_ENABLED){
+			int de1=1+r.nextInt(5);
+			int de2=1+r.nextInt(5);
+			int de3=1+r.nextInt(5);
+			if(ConstantesParam.SOMME_PRISON_ENABLED&&(de1*de2*de3>=50)){
+				this.p.joueurs[idJoueur].allerEnPrison();
+				return;
+			}
+			des=de1+de2+de3;
+			
+		}
 		else des=2+r.nextInt(10);
 		
 		j.lastSumDes=des;
 		j.setPosition((j.position+des)%ConstantesModel.NB_CASES);
 		
 		//this.notifyPosJoueur(j.idJoueur, j.position);
-		
-		
-		
-		
-		
 		
 		this.p.cases[j.position].action(j);
 		
@@ -68,7 +72,6 @@ public class JeuModel extends AbstractModel{
 		}
 		
 		this.notifyTour(tour);
-		this.notifyInitTour();
 		
 		/*
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
@@ -76,6 +79,23 @@ public class JeuModel extends AbstractModel{
 				this.comblerDette(i);
 			}
 		}*/
+		
+		this.notifyInitTourFenetre();
+		
+		if(p.joueurs[tour].enPrison>0){
+			System.out.println("ici prison "+p.joueurs[tour].enPrison);
+			p.joueurs[tour].enPrison--;
+			if(p.joueurs[tour].enPrison>0){
+				this.notifyEnPrison(tour, p.joueurs[tour].enPrison);
+			}
+			else if(p.joueurs[tour].enPrison==0){
+				this.notifyLiberePrison(tour);
+			}
+		}
+		else{
+			this.notifyInitTourDes();
+		}
+		
 	}
 	@Override
 	public void lancerEnchere(int position)
@@ -313,6 +333,10 @@ public class JeuModel extends AbstractModel{
 		this.notifyArgentJoueur(idJoueur,j.getArgent());
 		
 	}
+
+
+
+	
 
 
 

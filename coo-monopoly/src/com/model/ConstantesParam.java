@@ -35,7 +35,11 @@ public class ConstantesParam {
 	public static boolean CASE_MASQUE_ENABLED=false;
 	
 	public static double TAUX_ACHAT=1.0;
-	public static double TAUX_INTERET=1.0;
+	public static double TAUX_INTERET=0.5;
 	public static boolean EGALISATION_ENABLED=false;
+	
+	public static int ENCHERE_TIME=15;
+	
+	public static int NB_TOUR_PRISON=3;
 	
 }

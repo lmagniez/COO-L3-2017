@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CouleurTerrain;
 import com.vue.ButtonMenu;
@@ -164,11 +165,17 @@ public class ChoixAchat extends JPanel{
 			
 			if(command=="Refuser")
 			{
-				
-				ChoixAchat.this.ecran.getVue().getControler().requestEnchere(idJoueur,posJoueur);
+				if(ConstantesParam.ENCHERE_ENABLED){
+					ChoixAchat.this.ecran.getVue().getControler().requestEnchere(idJoueur,posJoueur);
+				}
+				else
+				{
+					ChoixAchat.this.ecran.getVue().getControler().requestTour();
+				}
 				ChoixAchat.this.setVisible(false);
 				ChoixAchat.this.actif=false;
 			}
+				
 		} 
 	}
 	

@@ -74,10 +74,15 @@ public class CarteModel {
 		if(effetPosition!=0){
 			j.setPosition(j.getPosition() + effetPosition);
 			//this.pioche.p.getCases()[j.getPosition()].action(j);
+			
 		}
 		else if(changerPosition>=0){
 			j.setPosition(changerPosition);
-			this.pioche.p.getCases()[j.getPosition()].action(j);
+			//this.pioche.p.getCases()[j.getPosition()].action(j);
+			if(changerPosition==0){
+				j.setArgent(j.getArgent()+2000);
+			}
+			
 		}
 		
 		//anniversaire: enleve de l'argent à chaque joueurs
@@ -94,16 +99,22 @@ public class CarteModel {
 		
 		
 		//effets divers
-		if(allerPrison)
-			j.setPositionSansArgent(ConstantesModel.POS_PRISON);
-		
-		if(sortirPrison)
+		if(allerPrison){
+			j.allerEnPrison();
+		}
+			
+		if(sortirPrison){
 			j.ajoutCartePrison();
+			
+		}
 		
-		if(repiocher)
+		if(repiocher){
 			this.pioche.piocherCarte(j);
+		}
 		
-		
+		if(!allerPrison&&!repiocher){
+			this.pioche.p.getModel().tourSuivant();
+		}
 			
 		
 	}

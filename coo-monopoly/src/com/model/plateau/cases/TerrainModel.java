@@ -1,6 +1,7 @@
 package com.model.plateau.cases;
 
 import com.model.ConstantesModel;
+import com.model.ConstantesParam;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
@@ -74,7 +75,7 @@ public class TerrainModel extends CaseModel{
 		this.idCase=idCase;
 		this.setPosition(position);
 		this.nom=nom;
-		this.prixAchat=prixAchat;
+		this.prixAchat=(int) (prixAchat*ConstantesParam.TAUX_ACHAT);
 		this.loyers=loyers;
 		this.prixMaison=prixMaison;
 		this.nbMaisons=0;
@@ -106,7 +107,7 @@ public class TerrainModel extends CaseModel{
 	public void hypothequer(JoueurModel j)
 	{
 		TerrainModel.tabAssoTerrainJoueur[idTerrain]=-1;
-		j.setArgent(j.getArgent()+prixAchat/2);
+		j.setArgent((int) (j.getArgent()+prixAchat*ConstantesParam.TAUX_INTERET));
 		
 	}
 	
@@ -119,7 +120,7 @@ public class TerrainModel extends CaseModel{
 	{
 		JoueurModel j=p.getJoueurs()[tabAssoTerrainJoueur[idTerrain]];
 		
-		if(resteDesMaisons()&&peutAjouterMaison()){
+		if(resteDesMaisons()&&(peutAjouterMaison()||ConstantesParam.EGALISATION_ENABLED)){
 			this.nbMaisons++;
 			//met a jour le nombre d'hotel total si besoin
 			if(nbMaisons==5){
@@ -152,7 +153,7 @@ public class TerrainModel extends CaseModel{
 		// TODO Auto-generated method stub
 		JoueurModel j=p.getJoueurs()[tabAssoTerrainJoueur[idTerrain]];
 		
-		if(peutSupprimerMaison()){
+		if(peutSupprimerMaison()||ConstantesParam.EGALISATION_ENABLED){
 			this.nbMaisons--;
 			//met a jour le nombre d'hotel total si besoin
 			if(nbMaisons==4){
@@ -188,7 +189,7 @@ public class TerrainModel extends CaseModel{
 	 */
 	public boolean resteDesMaisons()
 	{
-		if(this.p.getNbMaisonsTotal()==ConstantesModel.NB_MAISONS)
+		if(this.p.getNbMaisonsTotal()==ConstantesParam.NB_MAISONS)
 			return false;
 		return true;
 	}

@@ -145,8 +145,13 @@ public class VueJeu extends Fenetre implements Observer{
 	}
 	
 	@Override
-	public void updateInitTour() {
+	public void updateInitTourDes() {
 		lePanneau.initTour();
+		
+	}
+	
+	@Override
+	public void updateInitTourFenetre() {
 		lePanneau.choixA.setVisible(false);
 		lePanneau.choixP.setVisible(false);
 		lePanneau.choixA.setActif(false);
@@ -236,9 +241,42 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateEnchere(int position) {
-		// TODO Auto-generated method stub
 		lePanneau.choixEn.genererEnchere(position);
 	}
+
+	@Override
+	public void updateCartePrison(int idJoueur, boolean hasCarte) {
+		// TODO Auto-generated method stub
+		System.out.println("ajoute carte joueur");
+		this.lePanneau.getS().getJoueurs()[idJoueur].updateCartePrison(hasCarte);
+		//ajoute la carte au joueur
+		
+	}
+
+	@Override
+	public void updatePrison(int idJoueur, int nbTour) {
+		System.out.println("ici");
+		this.lePanneau.getChoixM().genererMessageAllerPrison(idJoueur, nbTour);
+		this.lePanneau.getS().getJoueurs()[idJoueur].updatePrison(nbTour);;
+	}
+
+	@Override
+	public void updateEnPrison(int idJoueur, int nbTour) {
+		// TODO Auto-generated method stub
+		this.lePanneau.getChoixM().genererMessageEnPrison(idJoueur, nbTour);
+		this.lePanneau.getS().getJoueurs()[idJoueur].updatePrison(nbTour);
+	}
+
+	@Override
+	public void updateLiberePrison(int idJoueur) {
+		// TODO Auto-generated method stub
+		this.lePanneau.getChoixM().genererMessageLiberePrison(idJoueur);
+		this.lePanneau.getS().getJoueurs()[idJoueur].updatePrison(0);
+	}
+
+	
+	
+	
 	
 
 }

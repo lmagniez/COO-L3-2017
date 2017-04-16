@@ -28,6 +28,9 @@ public class Score extends JPanel{
 	protected InfoJeu infos;
 	protected ProprietesJoueur proprietes;
 	
+
+	
+	
 	/**
 	 * Constructeur
 	 * @param e Ecran de jeu
@@ -100,6 +103,9 @@ public class Score extends JPanel{
 		this.repaint();
 		
 	}
+	
+	
+	
 
 	public InfoJoueur[] getJoueurs() {
 		return joueurs;

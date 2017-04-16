@@ -76,25 +76,25 @@ public class Case extends JLabel {
 		
 		//GO
 		if(position==0){
-			path="Sprites/pieces/go.png";
+			path="Sprites/go.png";
 			this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(ConstantesVue.CASE_SPE_WIDTH/3)-2;
 			this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(ConstantesVue.CASE_SPE_HEIGHT/3)-2;
 		}
 		//PRISON
 		else if(position==10){
-			path="Sprites/pieces/prison.png";
+			path="Sprites/prison.png";
 			this.posX=0;
 			this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(ConstantesVue.CASE_SPE_HEIGHT/3)-2;
 		}
 		//PARK
 		else if(position==20){
-			path="Sprites/pieces/park.png";
+			path="Sprites/park.png";
 			this.posX=0;
 			this.posY=0;
 		}
 		//POLICE
 		else if(position==30){
-			path="Sprites/pieces/police.png";
+			path="Sprites/police.png";
 			this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(ConstantesVue.CASE_SPE_WIDTH/3);
 			this.posY=0;
 		}

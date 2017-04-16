@@ -48,11 +48,16 @@ public class PlateauModel {
 			int positionDepart=0;
 			
 			
+			
 			if(pionAleatoire){
 				Random r = new Random();
 				positionDepart=r.nextInt(40);
 			}
 			this.getJoueurs()[i]=new JoueurModel(this, i, positionDepart, sommeDepart);
+			//
+			if(i==1){
+				this.getJoueurs()[i].allerEnPrison();
+			}
 		}
 		
 	}
@@ -169,7 +174,7 @@ public class PlateauModel {
 		
 		this.setCases(cases);
 		this.getModel().notifyCases(this.cases);
-		this.getModel().notifyInitTour();
+		this.getModel().notifyInitTourDes();
 	}
 	
 	public CaseModel[] shuffleCases(CaseModel[] cases){
@@ -183,6 +188,7 @@ public class PlateauModel {
 		
 			CaseModel tmp=cases[i1];
 			cases[i1]=cases[i2];
+			cases[i2]=tmp;
 		}
 		
 		return cases;

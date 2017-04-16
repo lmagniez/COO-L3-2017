@@ -1,6 +1,7 @@
 package com.model.plateau.cases;
 
 import com.model.ConstantesModel;
+import com.model.ConstantesParam;
 import com.model.plateau.JoueurModel;
 import com.model.plateau.PlateauModel;
 
@@ -35,7 +36,7 @@ public class ServiceModel extends CaseModel{
 		this.idCase=idCase;
 		this.setPosition(position);
 		this.idService=nb_service++;
-		this.prixAchat=prixAchat;
+		this.prixAchat=(int) (prixAchat*ConstantesParam.TAUX_ACHAT);;
 	}
 	
 	/**
@@ -58,7 +59,7 @@ public class ServiceModel extends CaseModel{
 	public int getNbServiceMemeJoueur()
 	{
 		int nb=0;
-		for(int i=0; i<ConstantesModel.NB_GARES; i++)
+		for(int i=0; i<ConstantesModel.NB_CASES_SERVICES; i++)
 			if(tabAssoServiceJoueur[i]==tabAssoServiceJoueur[idService])
 				nb++;
 		return nb;
@@ -87,7 +88,7 @@ public class ServiceModel extends CaseModel{
 	public void hypothequer(JoueurModel j)
 	{
 		ServiceModel.tabAssoServiceJoueur[idService]=-1;
-		j.setArgent(j.getArgent()+prixAchat/2);
+		j.setArgent((int) (j.getArgent()+prixAchat*ConstantesParam.TAUX_INTERET));
 	}
 	
 	

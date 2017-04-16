@@ -169,9 +169,9 @@ public abstract class AbstractModel implements Observable{
 	}
 	
 	@Override
-	public void notifyInitTour() {
+	public void notifyInitTourDes() {
 		for(Observer obs : listObserver)
-			obs.updateInitTour();
+			obs.updateInitTourDes();
 	}
 	
 	@Override
@@ -210,6 +210,41 @@ public abstract class AbstractModel implements Observable{
 		}
 	}
 
+	@Override
+	public void notifyCartePrison(int idJoueur, boolean hasCarte) {
+		for(Observer obs : listObserver){
+			obs.updateCartePrison(idJoueur, hasCarte);
+		}
+	}
+
+	@Override
+	public void notifyPrison(int idJoueur, int nbTour) {
+		for(Observer obs : listObserver){
+			obs.updatePrison(idJoueur, nbTour);
+		}
+		
+	}
+	
+	@Override
+	public void notifyEnPrison(int idJoueur, int nbTour) {
+		for(Observer obs : listObserver){
+			obs.updateEnPrison(idJoueur, nbTour);
+		}
+	}
+
+	@Override
+	public void notifyLiberePrison(int idJoueur) {
+		for(Observer obs : listObserver){
+			obs.updateLiberePrison(idJoueur);
+		}
+	}
+
+	@Override
+	public void notifyInitTourFenetre() {
+		for(Observer obs : listObserver){
+			obs.updateInitTourFenetre();
+		}
+	}
 
 	
 	

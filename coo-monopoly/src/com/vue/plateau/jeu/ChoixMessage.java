@@ -106,8 +106,9 @@ public class ChoixMessage extends JPanel{
 	 * Génération du choix
 	 * @param idJoueur id du joueur concerné
 	 * @param position case à acheter
+	 * @param prix prix vendu
 	 */
-	public void genererMessage(int idJoueur, int position, int prix){
+	public void genererMessageEnchere(int idJoueur, int position, int prix){
 		
 		this.actif=true;
 		panneauLateral.removeAll();
@@ -122,13 +123,49 @@ public class ChoixMessage extends JPanel{
 		
 		panneauLateral.add(carte);
 		
-		this.messagePrincipal="Le joueur "+idJoueur+" a remporté la case pour "+prix+" !";
+		this.messagePrincipal=getNomById(idJoueur)+" a remporté \n la case pour "+prix+" !";
 		this.textBox.setText(messagePrincipal);
 		
 		this.revalidate();
 		this.repaint();
 		this.setVisible(true);
 		
+	}
+	
+	public void genererMessageAllerPrison(int idJoueur, int nbTour){
+		this.actif=true;
+		panneauLateral.removeAll();
+		
+		this.messagePrincipal=getNomById(idJoueur)+" va en prison \n pendant "+nbTour+" tours !";
+		this.textBox.setText(messagePrincipal);
+		
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
+	}
+	
+	public void genererMessageEnPrison(int idJoueur, int nbTourRestant){
+		this.actif=true;
+		panneauLateral.removeAll();
+		
+		this.messagePrincipal=getNomById(idJoueur)+", il vous reste \n "+nbTourRestant+" tours en prison !";
+		this.textBox.setText(messagePrincipal);
+		
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
+	}
+	
+	public void genererMessageLiberePrison(int idJoueur){
+		this.actif=true;
+		panneauLateral.removeAll();
+		
+		this.messagePrincipal=getNomById(idJoueur)+", vous êtes \n libéré de prison !";
+		this.textBox.setText(messagePrincipal);
+		
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
 	}
 	
 	
@@ -171,6 +208,10 @@ public class ChoixMessage extends JPanel{
 		textArea.setMargin(new Insets(10,10,10,10));
 		return textArea;
 
+	}
+	
+	public String getNomById(int idJoueur){
+		return this.ecran.getS().getJoueurs()[idJoueur].getNomJoueur().getText();
 	}
 	
 	public ImageIcon transform (ImageIcon img, int hx, int hy)
