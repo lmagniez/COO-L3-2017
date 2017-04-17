@@ -38,6 +38,8 @@ public class ProprietesJoueur extends JPanel {
 
 	protected JLabel nomJoueur;
 	protected JLabel argentJoueur;
+	protected JLabel patrimoineJoueur;
+	
 	protected JPanel joueurPanel;
 	
 	private JButton echange = new JButton("Echange");
@@ -157,13 +159,19 @@ public class ProprietesJoueur extends JPanel {
 
 		this.nomJoueur = new JLabel("Joueur " + this.idJoueur);
 		this.argentJoueur = new JLabel("Argent: " + this.infos.getArgent());
-
+		this.patrimoineJoueur = new JLabel("Valeur patrimoine: " + this.infos.getPatrimoine());
+		
+		
 		joueurPanel = new JPanel();
 		joueurPanel.setLayout(new BoxLayout(joueurPanel, BoxLayout.LINE_AXIS));
 		joueurPanel.add(nomJoueur);
 		joueurPanel.add(Box.createRigidArea(new Dimension(30, 25)));
 		joueurPanel.add(argentJoueur);
-
+		joueurPanel.add(Box.createRigidArea(new Dimension(30, 25)));
+		joueurPanel.add(patrimoineJoueur);
+		
+		
+		
 		this.add(joueurPanel);
 
 		for (int i = 0; i < ConstantesModel.NB_COULEUR + 2; i++) {
@@ -219,6 +227,8 @@ public class ProprietesJoueur extends JPanel {
 		joueurPanel.add(Box.createRigidArea(new Dimension(30, 25)));
 		joueurPanel.add(argentJoueur);
 		joueurPanel.add(Box.createRigidArea(new Dimension(30, 25)));
+		joueurPanel.add(patrimoineJoueur);
+		
 		if(infos.argent<0){
 			JLabel msg=new JLabel("Vous êtes endetté! ");
 			msg.setForeground(Color.red);
@@ -381,6 +391,7 @@ public class ProprietesJoueur extends JPanel {
 					joueurPanel.add(Box.createRigidArea(new Dimension(30, 25)));
 					joueurPanel.add(argentJoueur);
 					joueurPanel.add(Box.createRigidArea(new Dimension(30, 25)));
+					joueurPanel.add(patrimoineJoueur);
 					if(infos.argent<0){
 						JLabel msg=new JLabel("Vous êtes endetté! ");
 						msg.setForeground(Color.red);

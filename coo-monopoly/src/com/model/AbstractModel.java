@@ -246,6 +246,31 @@ public abstract class AbstractModel implements Observable{
 		}
 	}
 
+	@Override
+	public void notifyNbMaison(int nbMaison) {
+		for(Observer obs : listObserver){
+			obs.updateNbMaison(nbMaison);
+		}
+	}
 	
+	@Override
+	public void notifyTourPartie(int tourPartie) {
+		for(Observer obs : listObserver){
+			obs.updateTourPartie(tourPartie);
+		}
+	}
+
+	@Override
+	public void notifyPatrimoineJoueur(int idJoueur, int argent) {
+		for(Observer obs : listObserver){
+			obs.updatePatrimoineJoueur(idJoueur,argent);
+		}
+	}
 	
+	@Override
+	public void notifyMessageGameOver(int idJoueur) {
+		for(Observer obs : listObserver){
+			obs.updateMessageGameOver(idJoueur);
+		}
+	}
 }

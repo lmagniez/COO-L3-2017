@@ -55,6 +55,7 @@ public class ChoixGameOver extends JPanel{
 	
 	protected int prixAPayer;
 	protected TypePioche type;
+	protected boolean endGame;
 	
 	//protected JPanel carte;
 	
@@ -78,6 +79,7 @@ public class ChoixGameOver extends JPanel{
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(new Color(200,200,200,90));
 		
+		this.endGame=false;
 		
 		JLabel l=new JLabel("Choix: ");
 		l.setBackground(Color.BLACK);
@@ -129,7 +131,23 @@ public class ChoixGameOver extends JPanel{
 		idJ1=idJoueur;
 		if(ConstantesParam.SUICIDE_ENABLED){
 			this.messagePrincipal="VICTOIRE: "+getNomById(idJoueur)+" est vainqueur !!";
+			endGame=true;
 		}
+		
+		else if(ConstantesParam.TOUR_ENABLED){
+			this.messagePrincipal="VICTOIRE: "+getNomById(idJoueur)+" est vainqueur !!"+
+			"\n\nCLASSEMENT:\n";
+			
+			for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
+				int valeurJoueur=this.ecran.getS().getJoueurs()[i].getPatrimoine()+
+						this.ecran.getS().getJoueurs()[i].getArgent();
+				String nomJoueur=this.ecran.getS().getJoueurs()[i].getNomJoueur().getText();
+				
+				messagePrincipal+=nomJoueur+" -> "+valeurJoueur+"\n";
+			}
+			endGame=true;
+		}
+		
 		else{
 			this.messagePrincipal="GAME OVER: "+getNomById(idJoueur)+" est hors-jeu !!";
 		}
@@ -153,12 +171,17 @@ public class ChoixGameOver extends JPanel{
 			
 			int posJoueur=ChoixGameOver.this.ecran.getP().getPions()[idJ1].position;
 			
-			if(command=="Valider")
+			if(command=="Valider"&&!endGame)
 			{
 				ChoixGameOver.this.ecran.getVue().getControler().requestFinPartie(idJ1);
 				ChoixGameOver.this.setVisible(false);
 				ChoixGameOver.this.actif=false;
 				//ChoixAchat.this.setVisible(false);
+			}
+			if(command=="Valider"&&endGame)
+			{
+				ChoixGameOver.this.setVisible(false);
+				ChoixGameOver.this.actif=false;
 			}
 		} 
 	}

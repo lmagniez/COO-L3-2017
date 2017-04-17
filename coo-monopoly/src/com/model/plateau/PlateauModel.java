@@ -55,7 +55,7 @@ public class PlateauModel {
 			}
 			this.getJoueurs()[i]=new JoueurModel(this, i, positionDepart, sommeDepart);
 			//
-			if(i==1){
+			if(i==1&&ConstantesParam.J1_PRISON){
 				this.getJoueurs()[i].allerEnPrison();
 			}
 		}

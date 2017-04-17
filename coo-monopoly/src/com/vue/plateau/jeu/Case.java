@@ -43,7 +43,6 @@ public class Case extends JLabel {
 	protected JLabel hotel;
 	
 	
-	
 	/**
 	 * Constructeur
 	 * @param p plateau
@@ -76,25 +75,25 @@ public class Case extends JLabel {
 		
 		//GO
 		if(position==0){
-			path="Sprites/go.png";
+			path="Sprites/pieces/go.png";
 			this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(ConstantesVue.CASE_SPE_WIDTH/3)-2;
 			this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(ConstantesVue.CASE_SPE_HEIGHT/3)-2;
 		}
 		//PRISON
 		else if(position==10){
-			path="Sprites/prison.png";
+			path="Sprites/pieces/prison.png";
 			this.posX=0;
 			this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(ConstantesVue.CASE_SPE_HEIGHT/3)-2;
 		}
 		//PARK
 		else if(position==20){
-			path="Sprites/park.png";
+			path="Sprites/pieces/park.png";
 			this.posX=0;
 			this.posY=0;
 		}
 		//POLICE
 		else if(position==30){
-			path="Sprites/police.png";
+			path="Sprites/pieces/police.png";
 			this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(ConstantesVue.CASE_SPE_WIDTH/3);
 			this.posY=0;
 		}

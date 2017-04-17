@@ -26,6 +26,7 @@ public class Plateau extends JPanel{
 	protected EcranJeu e;
 	private Case[] cases;
 	private Pion[] pions;
+	public static boolean casesParcourues[];
 	
 	protected Image bgImage;
 	
@@ -44,6 +45,16 @@ public class Plateau extends JPanel{
 		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_PLATEAU_X,ConstantesVue.DIMENSION_PLATEAU_Y));
 		this.setSize(new Dimension(ConstantesVue.DIMENSION_PLATEAU_X,ConstantesVue.DIMENSION_PLATEAU_Y));
 		this.setMinimumSize(new Dimension(ConstantesVue.DIMENSION_PLATEAU_X,ConstantesVue.DIMENSION_PLATEAU_Y));
+		
+		this.casesParcourues=new boolean[ConstantesModel.NB_CASES];
+		for(int i=0; i<ConstantesModel.NB_CASES; i++){
+			this.casesParcourues[i]=true;
+		}
+		if(ConstantesParam.CASE_MASQUE_ENABLED){
+			for(int i=0; i<ConstantesModel.NB_CASES; i++){
+				this.casesParcourues[i]=false;
+			}
+		}
 		
 		
 		bgImage=new ImageIcon("./Sprites/plateautest.jpg").getImage();
@@ -78,7 +89,8 @@ public class Plateau extends JPanel{
 			this.add(getCases()[i]);
 			getCases()[i].setLocation(getCases()[i].posX,getCases()[i].posY);
 			getCases()[i].setSize(getCases()[i].hX,getCases()[i].hY);
-			
+			if(!casesParcourues[i])
+				getCases()[i].setVisible(false);
 		}
 		
 		

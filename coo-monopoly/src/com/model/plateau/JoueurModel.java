@@ -14,12 +14,15 @@ public class JoueurModel {
 	protected int idJoueur;
 	protected int position;
 	protected int argent;
+	protected int valeurPatrimoine;
 	protected boolean cartePrison;
 	protected int enPrison;
 	protected int nbMaison;
 	protected int nbHotel;
 	protected int nbProprietes;
 	protected boolean gameOver;
+	
+	
 	
 	
 	
@@ -46,7 +49,7 @@ public class JoueurModel {
 		this.nbProprietes=0;
 		this.gameOver=false;
 		this.setLastSumDes(0);
-		
+		this.valeurPatrimoine=0;
 		
 	}
 
@@ -92,6 +95,17 @@ public class JoueurModel {
 		
 	}
 
+	
+	
+
+	public int getValeurPatrimoine() {
+		return valeurPatrimoine;
+	}
+
+	public void setValeurPatrimoine(int valeurPatrimoine) {
+		this.valeurPatrimoine = valeurPatrimoine;
+		p.getModel().notifyPatrimoineJoueur(idJoueur, valeurPatrimoine);
+	}
 
 	public int getPosition() {
 		return position;

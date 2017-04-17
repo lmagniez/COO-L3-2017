@@ -73,11 +73,17 @@ public class ServiceModel extends CaseModel{
 	{
 		TerrainModel.tabAssoTerrainJoueur[this.idService]=j.getIdJoueur();
 		j.setArgent(j.getArgent()-prixAchat);
+		j.setValeurPatrimoine(j.getValeurPatrimoine()+prixAchat);
+		
 	}
 	
 	public void associerEchange(JoueurModel j)
 	{
+		JoueurModel j1=this.p.getJoueurs()[ServiceModel.tabAssoServiceJoueur[idService]];
 		TerrainModel.tabAssoTerrainJoueur[this.idService]=j.getIdJoueur();
+		j1.setValeurPatrimoine(j1.getValeurPatrimoine()-prixAchat);
+		j.setValeurPatrimoine(j.getValeurPatrimoine()+prixAchat);
+		
 	}
 	
 	
@@ -89,6 +95,7 @@ public class ServiceModel extends CaseModel{
 	{
 		ServiceModel.tabAssoServiceJoueur[idService]=-1;
 		j.setArgent((int) (j.getArgent()+prixAchat*ConstantesParam.TAUX_INTERET));
+		j.setValeurPatrimoine(j.getValeurPatrimoine()-prixAchat);
 	}
 	
 	

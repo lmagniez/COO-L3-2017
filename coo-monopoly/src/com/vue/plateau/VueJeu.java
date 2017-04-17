@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import com.controler.AbstractControler;
 import com.model.ConstantesModel;
+import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 import com.model.plateau.cases.CaseModel;
 import com.model.plateau.cases.GareModel;
@@ -209,13 +210,11 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateDesacquisitionJoueur(int idJoueur, int position) {
-		// TODO Auto-generated method stub
 		lePanneau.s.getJoueurs()[idJoueur].getAcquisition()[position]=false;
 	}
 
 	@Override
 	public void updateDette(int idJoueur) {
-		// TODO Auto-generated method stub
 		this.lePanneau.s.setProprietes(new ProprietesJoueur(idJoueur,lePanneau.s.getJoueurs()[idJoueur],
 				lePanneau.p.getCases()));
 		lePanneau.s.afficherProprietes();
@@ -225,15 +224,11 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateWinner(int idJoueur) {
-		// TODO Auto-generated method stub
 		System.out.println("WINNER!!");
 	}
 	
 	@Override
-	public void updateGameOver(int idJoueur) {
-		//if(thi)
-			//si tour actuel, passe tour envoie controler
-		
+	public void updateGameOver(int idJoueur) {		
 		lePanneau.s.getJoueurs()[idJoueur].setGameOver(true);
 		lePanneau.s.afficherInfosJoueur();
 		lePanneau.getChoixE().setVisible(false);
@@ -269,10 +264,31 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateLiberePrison(int idJoueur) {
-		// TODO Auto-generated method stub
 		this.lePanneau.getChoixM().genererMessageLiberePrison(idJoueur);
 		this.lePanneau.getS().getJoueurs()[idJoueur].updatePrison(0);
 	}
+
+	@Override
+	public void updateNbMaison(int nbMaison) {
+		this.lePanneau.s.getInfos().updateMaison(ConstantesParam.NB_MAISONS-nbMaison);
+	}
+
+	@Override
+	public void updateTourPartie(int tourPartie) {
+		this.lePanneau.s.getInfos().updateTour(tourPartie);
+	}
+
+	@Override
+	public void updatePatrimoineJoueur(int idJoueur, int argent) {
+		this.lePanneau.s.getJoueurs()[idJoueur].setPatrimoine(argent);
+	}
+
+	@Override
+	public void updateMessageGameOver(int idJoueur) {
+		this.lePanneau.getChoixG().genererGameOver(idJoueur);
+	}
+
+	
 
 	
 	

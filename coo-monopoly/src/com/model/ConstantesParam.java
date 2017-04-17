@@ -19,7 +19,7 @@ public class ConstantesParam {
 	public static String[] NAMES;
 	
 	public static int NB_MAISONS=20;
-	public static int NB_PROPRIETES=20;
+	public static int NB_PROPRIETES=0;
 	
 	public static boolean TOUR_ENABLED=false;
 	public static int NB_TOUR=-1;
@@ -41,5 +41,11 @@ public class ConstantesParam {
 	public static int ENCHERE_TIME=15;
 	
 	public static int NB_TOUR_PRISON=3;
+	
+	
+	public static boolean J1_GOD_MODE=false;
+	public static boolean J1_PRISON=false;
+	
+	
 	
 }

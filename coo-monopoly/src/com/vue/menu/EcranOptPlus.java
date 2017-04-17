@@ -78,8 +78,8 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 	protected JComboBox valeurAchat, valeurInteret;
 	protected JCheckBox egalisation;
 	
-	protected final String nbPropri[]={"1","2","3","4","5"};
-	protected final int nbPropriValue[]={1,2,3,4,5};
+	protected final String nbPropri[]={"0","1","2","3","4","5"};
+	protected final int nbPropriValue[]={0,1,2,3,4,5};
 	
 	protected final String valAch[]={"x0.5","x1","x2","x5","x10"};
 	protected final double valAchValue[]={0.5,1,2,5,10};
@@ -180,7 +180,7 @@ public class EcranOptPlus extends Ecran implements ActionListener{
     	panelRegles[1].add(Box.createRigidArea(new Dimension(5,30)),c);
     	
     	//ARGENT DEBUT PARTIE
-    	SpinnerModel model = new SpinnerNumberModel(1500, 0, 1000000, 100);     
+    	SpinnerModel model = new SpinnerNumberModel(50000, 0, 1000000, 100);     
     	argent = new JSpinner(model);
     	argent.setPreferredSize(new Dimension(120,30));
     	c.gridwidth=1;
@@ -460,12 +460,15 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 		ConstantesParam.NB_MAISONS=(int) this.maisons.getValue();
 		ConstantesParam.NB_PROPRIETES=this.nbPropriValue[this.nbPropriete.getSelectedIndex()];
 		ConstantesParam.TOUR_ENABLED=this.choixTour.isSelected();
+		System.out.println(this.choixTour.isSelected());
+		
+		
 		ConstantesParam.NB_TOUR=(int) this.nbTour.getValue();
 		
 		ConstantesParam.POSITION_ALEA_ENABLED=this.positionAlea.isSelected();
 		ConstantesParam.TROIS_DES_ENABLED=this.troisDes.isSelected();
 		ConstantesParam.SOMME_PRISON_ENABLED=this.prison.isSelected();
-		ConstantesParam.CHOIX_DES_ENABLED=this.choixDes.isSelected();
+		//ConstantesParam.CHOIX_DES_ENABLED=this.choixDes.isSelected();
 		ConstantesParam.SUICIDE_ENABLED=this.suicide.isSelected();
 		ConstantesParam.ENCHERE_ENABLED=this.enchere.isSelected();
 		ConstantesParam.ENCHERE_TIME=(int) this.tempsEnchere.getValue();

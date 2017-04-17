@@ -76,7 +76,11 @@ public interface Observable {
 	public void notifyLiberePrison(int idJoueur);
 	
 	
+	public void notifyNbMaison(int nbMaison);
+	public void notifyTourPartie (int tourPartie);
+	public void notifyPatrimoineJoueur(int idJoueur, int argent);
 	
+	public void notifyMessageGameOver(int idJoueur);
 	
 	
 }

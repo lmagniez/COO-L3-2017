@@ -45,13 +45,22 @@ public class InfoJeu extends JPanel {
 		l.setForeground(Color.WHITE);
 		l.setAlignmentX(CENTER_ALIGNMENT);
 		this.add(l);
-		textBox=initTextArea("Message");
+		textBox=initTextArea("");
 		textBox.setEditable(false);
 		this.add(textBox);
 		
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(new Color(0,0,0));
+		
+		nbMaisons="";
+		tourRestants="";
+		
+		System.out.println("okayyyyy "+ConstantesParam.TOUR_ENABLED);
+		updateMaison(ConstantesParam.NB_MAISONS);
+		if(ConstantesParam.TOUR_ENABLED){
+			updateTour(1);
+		}
 		
 		
 	}
@@ -66,7 +75,8 @@ public class InfoJeu extends JPanel {
 	}
 	
 	public void updateTour(int tour){
-		this.tourRestants="Nombre de tours restants: "+tour+"/"+ConstantesParam.NB_TOUR;
+		this.tourRestants="Tour actuel: "+tour+"/"+ConstantesParam.NB_TOUR;
+		updateTextBox();
 	}
 	
 	
