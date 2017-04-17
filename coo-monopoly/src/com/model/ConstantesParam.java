@@ -29,7 +29,7 @@ public class ConstantesParam {
 	public static boolean SOMME_PRISON_ENABLED=false;
 	public static boolean CHOIX_DES_ENABLED=false;
 	public static boolean SUICIDE_ENABLED=false;
-	public static boolean ENCHERE_ENABLED=false;
+	public static boolean ENCHERE_ENABLED=true;
 	public static boolean TIMER_VALEUR_ENABLED=false;
 	public static boolean CASE_ALEA_ENABLED=false;
 	public static boolean CASE_MASQUE_ENABLED=false;
