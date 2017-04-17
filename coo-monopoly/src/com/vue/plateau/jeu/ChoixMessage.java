@@ -181,9 +181,10 @@ public class ChoixMessage extends JPanel{
 			
 			if(command=="Confirmer")
 			{
-				ChoixMessage.this.ecran.getVue().getControler().requestTour();
 				ChoixMessage.this.setVisible(false);
 				ChoixMessage.this.actif=false;
+				ChoixMessage.this.ecran.getVue().getControler().requestTour();
+				
 			}
 			
 		} 

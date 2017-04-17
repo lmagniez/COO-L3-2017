@@ -90,6 +90,8 @@ public class Pion extends JLabel {
 		//this.posX=50;
 		//this.posY=50;
 		
+		this.p.getCases()[position].setVisible(true);
+		
 		this.setLocation(posX,posY);
 		this.setSize(hX,hY);
 		

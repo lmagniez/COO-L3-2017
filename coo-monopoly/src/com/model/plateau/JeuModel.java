@@ -20,6 +20,8 @@ public class JeuModel extends AbstractModel{
 
 	private PlateauModel p;
 	protected int tour;
+	protected int tourPartie;
+	
 	
 	/**
 	 * Constructeur
@@ -29,6 +31,47 @@ public class JeuModel extends AbstractModel{
 		int posDepart=0;
 		this.setP(new PlateauModel(this,ConstantesParam.NB_JOUEURS, ConstantesParam.POSITION_ALEA_ENABLED, ConstantesParam.SOMME_DEPART));
 		this.tour=0;
+		this.tourPartie=1;
+		
+	}
+	
+	public void assoTerrain(){
+		//associe terrain aléatoire aux joueurs
+		for(int j=0; j<ConstantesParam.NB_JOUEURS; j++){
+			for(int k=0; k<ConstantesParam.NB_PROPRIETES; k++){
+				Random r = new Random();
+				boolean res=false;
+				while(!res){
+					int nb=r.nextInt(p.cases.length);
+					CaseModel c = p.cases[nb];
+					
+					if(c instanceof TerrainModel){
+						int idTerrain=((TerrainModel) c).getIdTerrain();
+						if(TerrainModel.tabAssoTerrainJoueur[idTerrain]==-1){
+							res=true;
+							TerrainModel.tabAssoTerrainJoueur[idTerrain]=j;
+							this.notifyAcquisitionJoueur(j, nb);
+						}
+					}
+					if(c instanceof GareModel){
+						int idGare=((GareModel) c).getIdGare();
+						if(GareModel.tabAssoGareJoueur[idGare]==-1){
+							res=true;
+							GareModel.tabAssoGareJoueur[idGare]=j;
+							this.notifyAcquisitionJoueur(j, nb);
+						}
+					}
+					if(c instanceof ServiceModel){
+						int idService=((ServiceModel) c).getIdService();
+						if(ServiceModel.tabAssoServiceJoueur[idService]==-1){
+							res=true;
+							ServiceModel.tabAssoServiceJoueur[idService]=j;
+							this.notifyAcquisitionJoueur(j, nb);
+						}
+					}
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -63,6 +106,7 @@ public class JeuModel extends AbstractModel{
 	
 	@Override
 	public void tourSuivant(){
+		int tourPred=tour;
 		
 		System.out.println("TOUR SUIVANT ");
 		tour=(tour+1)%ConstantesParam.NB_JOUEURS;
@@ -70,17 +114,37 @@ public class JeuModel extends AbstractModel{
 		while(p.joueurs[tour].gameOver){
 			tour= (tour + 1)%ConstantesParam.NB_JOUEURS;
 		}
+
+		if(tourPred>tour&&ConstantesParam.TOUR_ENABLED){
+			this.tourPartie++;
+			this.notifyTourPartie(tourPartie);
+			if(tourPartie-1==ConstantesParam.NB_TOUR){
+				int max=-1;
+				int maxValue=-1;
+				
+				for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
+					int valeurJoueur= p.joueurs[i].valeurPatrimoine+p.joueurs[i].argent;
+					if(valeurJoueur>maxValue){
+						max=i;
+						maxValue=valeurJoueur;
+					}
+				}
+				
+				this.notifyMessageGameOver(max);
+				this.notifyTour(tour);
+				this.notifyInitTourFenetre();
+				return;
+			}
+		}
 		
 		this.notifyTour(tour);
-		
+		this.notifyInitTourFenetre();
 		/*
 		for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
 			if((!this.p.joueurs[i].gameOver)&&this.p.joueurs[i].argent<0){
 				this.comblerDette(i);
 			}
 		}*/
-		
-		this.notifyInitTourFenetre();
 		
 		if(p.joueurs[tour].enPrison>0){
 			System.out.println("ici prison "+p.joueurs[tour].enPrison);
@@ -165,16 +229,19 @@ public class JeuModel extends AbstractModel{
 		j.nbProprietes++;
 			
 		if(c instanceof TerrainModel){
-			j.setArgent(j.argent-((TerrainModel) c).getPrixAchat());
-			TerrainModel.tabAssoTerrainJoueur[((TerrainModel)c).getIdTerrain()]=idJoueur;
+			((TerrainModel) c).associer(j);
+			//j.setArgent(j.argent-((TerrainModel) c).getPrixAchat());
+			//TerrainModel.tabAssoTerrainJoueur[((TerrainModel)c).getIdTerrain()]=idJoueur;
 		}
 		else if(c instanceof GareModel){
-			j.setArgent(j.argent-((GareModel) c).getPrixAchat());
-			GareModel.tabAssoGareJoueur[((GareModel)c).getIdGare()]=idJoueur;
+			((GareModel) c).associer(j);
+			//j.setArgent(j.argent-((GareModel) c).getPrixAchat());
+			//GareModel.tabAssoGareJoueur[((GareModel)c).getIdGare()]=idJoueur;
 		}
 		else if(c instanceof ServiceModel){
-			j.setArgent(j.argent-((ServiceModel) c).getPrixAchat());
-			ServiceModel.tabAssoServiceJoueur[((ServiceModel)c).getIdService()]=idJoueur;
+			((ServiceModel) c).associer(j);
+			//j.setArgent(j.argent-((ServiceModel) c).getPrixAchat());
+			//ServiceModel.tabAssoServiceJoueur[((ServiceModel)c).getIdService()]=idJoueur;
 		}
 		
 		this.notifyAcquisitionJoueur(idJoueur, positionAchat);
@@ -333,6 +400,13 @@ public class JeuModel extends AbstractModel{
 		this.notifyArgentJoueur(idJoueur,j.getArgent());
 		
 	}
+
+
+
+
+
+	
+
 
 
 

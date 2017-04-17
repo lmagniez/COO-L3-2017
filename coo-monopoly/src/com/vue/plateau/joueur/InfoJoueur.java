@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import com.model.ConstantesModel;
 import com.model.ConstantesParam;
 import com.model.ConstantesVue;
+import com.model.plateau.cases.TerrainModel;
 
 /**
  * Représente les informations pour un joueur
@@ -34,10 +35,10 @@ public class InfoJoueur extends JPanel{
 	protected JLabel enPrison;
 	protected JLabel cartePrison;
 	
-	
 	protected JButton lanceDes;
 	protected JButton prop;
 	
+	private int patrimoine;
 	protected int idJoueur;
 	protected int argent;
 	protected int idIcon;
@@ -58,13 +59,17 @@ public class InfoJoueur extends JPanel{
 		for(int i=0; i<ConstantesModel.NB_CASES; i++)
 			this.getAcquisition()[i]=false;
 		
+		patrimoine=0;
 		
-		/*
-		if(idJoueur==1){
+		
+		if(idJoueur==1&&ConstantesParam.J1_GOD_MODE){
 			for(int i=0; i<ConstantesModel.NB_CASES; i++)
 				this.getAcquisition()[i]=true;
 			
-		}*/
+		}
+		
+		
+		
 		this.gameOver=false;
 		
 //---->		
@@ -260,6 +265,17 @@ public class InfoJoueur extends JPanel{
 		}
 		this.revalidate();
 		this.repaint();
+	}
+
+	public int getPatrimoine() {
+		return patrimoine;
+	}
+
+	public void setPatrimoine(int patrimoine) {
+		System.out.println("set patrimoine "+patrimoine);
+		this.patrimoine = patrimoine;
+		if(this.score.proprietes!=null)
+			this.score.proprietes.patrimoineJoueur.setText("Valeur Patrimoine: "+patrimoine);
 	}
 	
 	

@@ -97,6 +97,11 @@ public interface Observer {
 	
 	public void updateLiberePrison(int idJoueur);
 	
+	public void updateNbMaison(int nbMaison);
+	public void updateTourPartie (int tourPartie);
+	public void updatePatrimoineJoueur(int idJoueur, int argent);
+	public void updateMessageGameOver(int idJoueur);
+	
 }
 
 

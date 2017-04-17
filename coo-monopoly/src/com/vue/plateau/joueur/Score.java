@@ -29,8 +29,7 @@ public class Score extends JPanel{
 	protected ProprietesJoueur proprietes;
 	
 
-	
-	
+
 	/**
 	 * Constructeur
 	 * @param e Ecran de jeu
@@ -121,6 +120,17 @@ public class Score extends JPanel{
 
 	public void setProprietes(ProprietesJoueur proprietes) {
 		this.proprietes = proprietes;
+	}
+	
+
+	
+	
+	public InfoJeu getInfos() {
+		return infos;
+	}
+
+	public void setInfos(InfoJeu infos) {
+		this.infos = infos;
 	}
 	
 }

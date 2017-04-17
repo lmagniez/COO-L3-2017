@@ -1,5 +1,7 @@
 package com.model.plateau.cases;
 
+import java.util.Random;
+
 import com.model.ConstantesModel;
 import com.model.ConstantesParam;
 import com.model.plateau.JoueurModel;
@@ -48,11 +50,18 @@ public class TerrainModel extends CaseModel{
 		int[] tabAsso=new int[ConstantesModel.NB_CASES_TERRAIN];
 		for(int i=0; i<ConstantesModel.NB_CASES_TERRAIN; i++){
 			tabAsso[i]=-1;
-			//tabAsso[i]=1;
+			
+			
+			
+			//pour tester, associe toute les propriétés au j2
+			if(ConstantesParam.J1_GOD_MODE)
+				tabAsso[i]=1;
 
 		}
 		return tabAsso;
 	}
+	
+	
 	
 	
 	/**
@@ -89,6 +98,7 @@ public class TerrainModel extends CaseModel{
 	{
 		TerrainModel.tabAssoTerrainJoueur[idTerrain]=j.getIdJoueur();
 		j.setArgent(j.getArgent()-prixAchat);
+		j.setValeurPatrimoine(j.getValeurPatrimoine()+prixAchat);
 	}
 	
 	/**
@@ -97,7 +107,10 @@ public class TerrainModel extends CaseModel{
 	 */
 	public void associerEchange(JoueurModel j)
 	{
+		JoueurModel j1=this.p.getJoueurs()[TerrainModel.tabAssoTerrainJoueur[idTerrain]];
 		TerrainModel.tabAssoTerrainJoueur[idTerrain]=j.getIdJoueur();
+		j1.setValeurPatrimoine(j1.getValeurPatrimoine()-prixAchat);
+		j.setValeurPatrimoine(j.getValeurPatrimoine()+prixAchat);
 	}
 	
 	/**
@@ -108,7 +121,7 @@ public class TerrainModel extends CaseModel{
 	{
 		TerrainModel.tabAssoTerrainJoueur[idTerrain]=-1;
 		j.setArgent((int) (j.getArgent()+prixAchat*ConstantesParam.TAUX_INTERET));
-		
+		j.setValeurPatrimoine(j.getValeurPatrimoine()-prixAchat);
 	}
 	
 	
@@ -130,7 +143,7 @@ public class TerrainModel extends CaseModel{
 					this.p.getModel().notifyAjoutMaison(this.getPosition());
 					j.setArgent(j.getArgent()-prixMaison);
 					j.setNbMaison(j.getNbMaison()+1);
-					
+					j.setValeurPatrimoine(j.getValeurPatrimoine()+prixMaison);
 				}
 				else{
 					nbMaisons--;
@@ -140,9 +153,12 @@ public class TerrainModel extends CaseModel{
 				this.p.getModel().notifyAjoutMaison(this.getPosition());
 				j.setArgent(j.getArgent()-prixMaison);
 				j.setNbMaison(j.getNbMaison()+1);
+				j.setValeurPatrimoine(j.getValeurPatrimoine()+prixMaison);
 			}
 			
 		}
+		this.p.getModel().notifyNbMaison(this.p.getNbMaisonsTotal());
+		
 		
 	}
 	
@@ -150,7 +166,6 @@ public class TerrainModel extends CaseModel{
 	 * Retirer une maison au terrain si possible
 	 */
 	public void retirerMaison() {
-		// TODO Auto-generated method stub
 		JoueurModel j=p.getJoueurs()[tabAssoTerrainJoueur[idTerrain]];
 		
 		if(peutSupprimerMaison()||ConstantesParam.EGALISATION_ENABLED){
@@ -165,6 +180,9 @@ public class TerrainModel extends CaseModel{
 			}
 			
 			this.p.getModel().notifyRetirerMaison(this.getPosition());
+			this.p.getModel().notifyNbMaison(this.p.getNbMaisonsTotal());
+			j.setValeurPatrimoine(j.getValeurPatrimoine()-prixMaison);
+			
 			j.setArgent(j.getArgent()+prixMaison);
 			
 			
