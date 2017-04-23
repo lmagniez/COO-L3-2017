@@ -118,6 +118,95 @@ public class CarteModel {
 			
 		
 	}
+
+	public PiocheModel getPioche() {
+		return pioche;
+	}
+
+	public void setPioche(PiocheModel pioche) {
+		this.pioche = pioche;
+	}
+
+	public int getEffetMonnaie() {
+		return effetMonnaie;
+	}
+
+	public void setEffetMonnaie(int effetMonnaie) {
+		this.effetMonnaie = effetMonnaie;
+	}
+
+	public int getEffetPosition() {
+		return effetPosition;
+	}
+
+	public void setEffetPosition(int effetPosition) {
+		this.effetPosition = effetPosition;
+	}
+
+	public int getArgParHotel() {
+		return argParHotel;
+	}
+
+	public void setArgParHotel(int argParHotel) {
+		this.argParHotel = argParHotel;
+	}
+
+	public int getArgParMaison() {
+		return argParMaison;
+	}
+
+	public void setArgParMaison(int argParMaison) {
+		this.argParMaison = argParMaison;
+	}
+
+	public int getChangerPosition() {
+		return changerPosition;
+	}
+
+	public void setChangerPosition(int changerPosition) {
+		this.changerPosition = changerPosition;
+	}
+
+	public boolean isAllerPrison() {
+		return allerPrison;
+	}
+
+	public void setAllerPrison(boolean allerPrison) {
+		this.allerPrison = allerPrison;
+	}
+
+	public boolean isSortirPrison() {
+		return sortirPrison;
+	}
+
+	public void setSortirPrison(boolean sortirPrison) {
+		this.sortirPrison = sortirPrison;
+	}
+
+	public boolean isRepiocher() {
+		return repiocher;
+	}
+
+	public void setRepiocher(boolean repiocher) {
+		this.repiocher = repiocher;
+	}
+
+	public int getAnniversaire() {
+		return anniversaire;
+	}
+
+	public void setAnniversaire(int anniversaire) {
+		this.anniversaire = anniversaire;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	
 	
 	
 	

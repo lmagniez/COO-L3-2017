@@ -27,6 +27,8 @@ public abstract class AbstractControler {
 	protected boolean gameOver;
 	protected boolean tour;
 	protected boolean achatEnchere;
+	protected boolean save;
+	
 	
 	
 	
@@ -178,5 +180,9 @@ public abstract class AbstractControler {
 		control();
 	}
 	
+	public void requestSave(){
+		this.save=true;
+		control();
+	}
 	
 }

@@ -21,11 +21,7 @@ public class JoueurModel {
 	protected int nbHotel;
 	protected int nbProprietes;
 	protected boolean gameOver;
-	
-	
-	
-	
-	
+	protected String nom;
 	protected int lastSumDes;//utile pour le loyer service public
 	
 	/**
@@ -35,7 +31,7 @@ public class JoueurModel {
 	 * @param pos position du joueur
 	 * @param arg argent du joueur
 	 */
-	public JoueurModel(PlateauModel p, int idJ, int pos, int arg)
+	public JoueurModel(PlateauModel p, int idJ, int pos, int arg, String nom)
 	{
 		this.p=p;
 		this.setIdJoueur(idJ);
@@ -50,9 +46,30 @@ public class JoueurModel {
 		this.gameOver=false;
 		this.setLastSumDes(0);
 		this.valeurPatrimoine=0;
+		this.nom=nom;
 		
 	}
-
+	
+	/**
+	 * Constructeur complet pour Charger XML
+	 * @param position2 
+	 */
+	public JoueurModel(PlateauModel p, int idJ, String nom, int argent, int valeurPatrimoine, 
+			boolean cartePrison, int enPrison, int nbMaison, int nbHotel, int nbProprietes, boolean gameOver, int position)
+	{
+		this.p=p;
+		this.idJoueur=idJ;
+		this.nom=nom;
+		this.argent=argent;
+		this.valeurPatrimoine=valeurPatrimoine;
+		this.cartePrison=cartePrison;
+		this.enPrison=enPrison;
+		this.nbMaison=nbMaison;
+		this.nbHotel=nbHotel;
+		this.nbProprietes=nbProprietes;
+		this.gameOver=gameOver;
+		this.position=position;
+	}
 	/**
 	 * Setter
 	 * @param position

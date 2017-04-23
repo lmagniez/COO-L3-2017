@@ -29,20 +29,28 @@ public class CommunauteChanceModel extends CaseModel{
 		this.idCase=idCase;
 		this.setPosition(position);
 		this.nom=nom;
-		this.type=type;
+		this.setType(type);
 	}
 	
 	@Override
 	public void action(JoueurModel j) {
 		
 		
-		if(type==TypePioche.CHANCE)
+		if(getType()==TypePioche.CHANCE)
 			p.getPiocheChance().piocherCarte(j);
-		if(type==TypePioche.COMMUNAUTE)
+		if(getType()==TypePioche.COMMUNAUTE)
 			p.getPiocheCommunaute().piocherCarte(j);
 			
 		//this.p.getModel().tourSuivant();
 		
+	}
+
+	public TypePioche getType() {
+		return type;
+	}
+
+	public void setType(TypePioche type) {
+		this.type = type;
 	}
 
 	

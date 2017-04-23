@@ -27,14 +27,22 @@ public class DepartImpotTaxeModel extends CaseModel{
 		this.setNom(nom);
 		this.idCase=idCase;
 		this.setPosition(position);
-		this.value=value;
+		this.setValue(value);
 		this.setNom(nom);
 	}
 	
 	@Override
 	public void action(JoueurModel j) {
-		j.setArgent(j.getArgent() + value);
+		j.setArgent(j.getArgent() + getValue());
 		this.p.getModel().tourSuivant();
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
 	}
 
 	

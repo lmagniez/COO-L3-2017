@@ -31,12 +31,13 @@ public class VueJeu extends Fenetre implements Observer{
 
 	protected EcranJeu lePanneau;
 	private AbstractControler controler;
+	private VueMenu menu;
 	
 	/**
 	 * Constructeur
 	 * @param controler controler du jeu
 	 */
-	public VueJeu(AbstractControler controler){
+	public VueJeu(AbstractControler controler, VueMenu menu){
 		
 		this.setControler(controler);
 		
@@ -46,6 +47,7 @@ public class VueJeu extends Fenetre implements Observer{
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setFocusable(false);
+		this.setMenu(menu);
 		
 		lePanneau=new EcranJeu(this);
 		this.add(lePanneau);
@@ -97,6 +99,7 @@ public class VueJeu extends Fenetre implements Observer{
 	
 	@Override
 	public void updateAcquisitionJoueur(int idJoueur, int position) {
+		System.out.println(idJoueur + "  "+position);
 		lePanneau.s.getJoueurs()[idJoueur].getAcquisition()[position]=true;
 	}
 
@@ -109,8 +112,18 @@ public class VueJeu extends Fenetre implements Observer{
 	public void updateCases(CaseModel[] cases) {
 		for(int i=0; i<ConstantesModel.NB_CASES; i++){
 			
+			System.out.println(lePanneau.getP());
+			System.out.println(lePanneau.getP().getCases()[i]);
+			System.out.println(cases[i]);
+			//System.out.println(cases[i].getPosition());
+			
+			System.out.println(cases[i].getIdCase());
+			
+			
 			lePanneau.getP().getCases()[i].setPosition(cases[i].getPosition());
 			lePanneau.getP().getCases()[i].setIdCase((cases[i].getIdCase()));
+			
+			//System.out.println();
 			
 			if(cases[i] instanceof TerrainModel){
 				lePanneau.getP().getCases()[i].setType(TypeCase.TERRAIN);
@@ -286,6 +299,14 @@ public class VueJeu extends Fenetre implements Observer{
 	@Override
 	public void updateMessageGameOver(int idJoueur) {
 		this.lePanneau.getChoixG().genererGameOver(idJoueur);
+	}
+
+	public VueMenu getMenu() {
+		return menu;
+	}
+
+	public void setMenu(VueMenu menu) {
+		this.menu = menu;
 	}
 
 	

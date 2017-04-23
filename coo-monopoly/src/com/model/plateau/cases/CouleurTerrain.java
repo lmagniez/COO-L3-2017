@@ -11,6 +11,29 @@ public enum CouleurTerrain {
 
 	MARRON,BLEU_CLAIR,VIOLET,ORANGE,ROUGE,JAUNE,VERT,BLEU_FONCE;
 	
+	public static CouleurTerrain getColorFromString(String s) {
+        switch(s) {
+        case "MARRON":
+            return CouleurTerrain.MARRON;
+        case "BLEU_CLAIR":
+        	return CouleurTerrain.BLEU_CLAIR;
+        case "VIOLET":
+        	return CouleurTerrain.VIOLET;
+        case "ORANGE":
+        	return CouleurTerrain.ORANGE;
+        case "ROUGE":
+        	return CouleurTerrain.ROUGE;
+        case "JAUNE":
+        	return CouleurTerrain.JAUNE;
+        case "VERT":
+        	return CouleurTerrain.VERT;
+        case "BLEU_FONCE":
+        	return CouleurTerrain.BLEU_FONCE;
+        
+        }
+        return null;
+    }
+	
 	public static Color getColorFromEnum(CouleurTerrain c) {
         switch(c) {
         case MARRON:

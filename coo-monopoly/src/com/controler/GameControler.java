@@ -92,6 +92,10 @@ public class GameControler extends AbstractControler{
 			 this.achatEnchere=false;
 			 this.calc.achatCaseEnchere(idJoueur, positionAchat, prix);
 		 }
+		 if(this.save){
+			 this.save=false;
+			 this.calc.genererXML();
+		 }
 		 
 	 }
 	

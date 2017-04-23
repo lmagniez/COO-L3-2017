@@ -14,8 +14,8 @@ import com.model.plateau.PlateauModel;
 public class PiocheModel {
 
 	protected PlateauModel p;
-	private CarteModel[] cartes;
-	protected int carteActuelle;
+	protected CarteModel[] cartes;
+	private int carteActuelle;
 	protected boolean isChance;
 	protected TypePioche type;
 	
@@ -29,7 +29,7 @@ public class PiocheModel {
 	{
 		this.type=type;
 		this.p=p;
-		this.carteActuelle=0;
+		this.setCarteActuelle(0);
 		this.setCartes(new CarteModel[ConstantesModel.NB_CARTES_CHANCE]);
 		if(type==TypePioche.CHANCE)
 			genererCartesChance();
@@ -38,6 +38,18 @@ public class PiocheModel {
 		
 		melangerPaquet(ConstantesModel.NB_SWAP);
 	}
+	/**
+	 * Constructeur pour XML
+	 * @param p
+	 * @param type
+	 * @param xml
+	 */
+	public PiocheModel(PlateauModel p, TypePioche type, int carteActuelle)
+	{
+		this.type=type;
+		this.p=p;
+		this.setCarteActuelle(carteActuelle);
+	}
 	
 	/**
 	 * Teste de pioche vide
@@ -45,7 +57,7 @@ public class PiocheModel {
 	 */
 	public boolean piocheVide()
 	{
-		return(carteActuelle==ConstantesModel.NB_CARTES_CHANCE-1);
+		return(getCarteActuelle()==ConstantesModel.NB_CARTES_CHANCE-1);
 	}
 	
 	/**
@@ -80,13 +92,13 @@ public class PiocheModel {
 	 */
 	public boolean piocherCarte(JoueurModel j)
 	{
-		System.out.println("pioche "+type+" "+carteActuelle+"/"+getCartes().length);
+		System.out.println("pioche "+type+" "+getCarteActuelle()+"/"+getCartes().length);
 		
 		if(piocheVide())
 			return false;
 		
-		this.getCartes()[carteActuelle].actionCarte(j,carteActuelle);
-		carteActuelle++;
+		this.getCartes()[getCarteActuelle()].actionCarte(j,getCarteActuelle());
+		setCarteActuelle(getCarteActuelle() + 1);
 		return true;
 	}
 	
@@ -172,6 +184,12 @@ public class PiocheModel {
 
 	public void setCartes(CarteModel[] cartes) {
 		this.cartes = cartes;
+	}
+	public int getCarteActuelle() {
+		return carteActuelle;
+	}
+	public void setCarteActuelle(int carteActuelle) {
+		this.carteActuelle = carteActuelle;
 	}
 	
 	

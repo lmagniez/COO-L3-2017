@@ -39,7 +39,7 @@ public class PlateauModel {
 	 * @param pionAleatoire position des joueurs aléatoires
 	 * @param sommeDepart somme de départ des joueurs
 	 */
-	public PlateauModel(JeuModel model, int nbJoueur, boolean pionAleatoire, int sommeDepart)
+	public PlateauModel(JeuModel model, int nbJoueur, boolean pionAleatoire, int sommeDepart, String[] nom)
 	{
 		this.setModel(model);
 		this.setNbJoueur(nbJoueur);
@@ -53,13 +53,22 @@ public class PlateauModel {
 				Random r = new Random();
 				positionDepart=r.nextInt(40);
 			}
-			this.getJoueurs()[i]=new JoueurModel(this, i, positionDepart, sommeDepart);
+			this.getJoueurs()[i]=new JoueurModel(this, i, positionDepart, sommeDepart, nom[i]);
 			//
 			if(i==1&&ConstantesParam.J1_PRISON){
 				this.getJoueurs()[i].allerEnPrison();
 			}
 		}
 		
+	}
+	
+	/**
+	 * Constructeur pour XML
+	 * @param model
+	 */
+	public PlateauModel(JeuModel model)
+	{
+		this.model=model;
 	}
 	
 

@@ -3,11 +3,14 @@ package com.vue.plateau.joueur;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -23,6 +26,10 @@ import com.model.ConstantesVue;
 public class InfoJeu extends JPanel {
 
 	protected JTextArea textBox;
+	protected JButton saveGame;
+	protected JButton quitGame;
+	protected JButton savequitGame;
+	
 	protected Score s;
 	
 	protected String nbMaisons;
@@ -49,6 +56,21 @@ public class InfoJeu extends JPanel {
 		textBox.setEditable(false);
 		this.add(textBox);
 		
+		JPanel p= new JPanel();
+		p.setLayout(new BoxLayout(p,BoxLayout.LINE_AXIS));
+		saveGame=new JButton("Sauvegarder");
+		saveGame.addActionListener(new ButtonListener());
+		p.add(saveGame);
+		
+		quitGame=new JButton("Quitter");
+		quitGame.addActionListener(new ButtonListener());
+		p.add(quitGame);
+		
+		savequitGame=new JButton("Sauvegarder et Quitter");
+		savequitGame.addActionListener(new ButtonListener());
+		p.add(savequitGame);
+		
+		this.add(p);
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(new Color(0,0,0));
@@ -98,6 +120,28 @@ public class InfoJeu extends JPanel {
 		textArea.append(s);
 		return textArea;
 
+	}
+	
+	class ButtonListener implements ActionListener
+	{ 
+		public void actionPerformed(ActionEvent e) {
+			String command = ((JButton) e.getSource()).getActionCommand();
+			if(command=="Sauvegarder"){
+				InfoJeu.this.s.ecran.getVue().getControler().requestSave();
+			}
+			if(command=="Quitter"){
+				InfoJeu.this.s.ecran.getVue().setVisible(false);
+				InfoJeu.this.s.ecran.getVue().getMenu().setVisible(true);
+				
+			}
+			
+			if(command=="Sauvegarder et Quitter"){
+				InfoJeu.this.s.ecran.getVue().getControler().requestSave();
+				InfoJeu.this.s.ecran.getVue().setVisible(false);
+				InfoJeu.this.s.ecran.getVue().getMenu().setVisible(true);
+				
+			}
+		}
 	}
 	
 }

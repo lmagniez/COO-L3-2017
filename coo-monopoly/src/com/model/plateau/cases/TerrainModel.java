@@ -18,18 +18,6 @@ public class TerrainModel extends CaseModel{
 	public static int[] tabAssoTerrainJoueur;
 	protected CouleurTerrain couleurTerrain;
 	
-	public CouleurTerrain getCouleurTerrain() {
-		return couleurTerrain;
-	}
-
-
-
-	public void setCouleurTerrain(CouleurTerrain couleurTerrain) {
-		this.couleurTerrain = couleurTerrain;
-	}
-
-
-
 	protected int idTerrain;
 	protected int nbMaisons;
 	
@@ -39,7 +27,7 @@ public class TerrainModel extends CaseModel{
 	
 	
 	protected PlateauModel p;
-	protected static int nbTerrain=0;
+	private static int nbTerrain=0;
 	
 	/**
 	 * Initialiser le tableau associatif des terrains
@@ -61,8 +49,33 @@ public class TerrainModel extends CaseModel{
 		return tabAsso;
 	}
 	
-	
-	
+	/**
+	 * Constructeur pour XML
+	 * @param p modèle du plateau
+	 * @param idCase id de la case
+	 * @param position position de la case
+	 * @param couleurTerrain couleur du terrain
+	 * @param nom nom de la case
+	 * @param prixAchat prix d'achat de la case
+	 * @param loyers differents loyers de la case
+	 * @param prixMaison prix d'une maison
+	 * @param nbMaisons
+	 * @param idTerrain
+	 */
+	public TerrainModel(PlateauModel p, int idCase, int position, CouleurTerrain couleurTerrain, String nom
+			,int prixAchat, int[] loyers, int prixMaison, int nbMaisons, int idTerrain)
+	{
+		this.p=p;
+		this.couleurTerrain=couleurTerrain;
+		this.idCase=idCase;
+		this.setPosition(position);
+		this.nom=nom;
+		this.prixAchat=(int) (prixAchat*ConstantesParam.TAUX_ACHAT);
+		this.loyers=loyers;
+		this.prixMaison=prixMaison;
+		this.nbMaisons=0;
+		this.idTerrain=idTerrain;
+	}
 	
 	/**
 	 * Constructeur
@@ -342,6 +355,31 @@ public class TerrainModel extends CaseModel{
 
 	public void setNbMaisons(int nbMaisons) {
 		this.nbMaisons = nbMaisons;
+	}
+
+	
+	public CouleurTerrain getCouleurTerrain() {
+		return couleurTerrain;
+	}
+
+
+
+	public void setCouleurTerrain(CouleurTerrain couleurTerrain) {
+		this.couleurTerrain = couleurTerrain;
+	}
+
+
+
+
+	public static int getNbTerrain() {
+		return nbTerrain;
+	}
+
+
+
+
+	public static void setNbTerrain(int nbTerrain) {
+		TerrainModel.nbTerrain = nbTerrain;
 	}
 
 

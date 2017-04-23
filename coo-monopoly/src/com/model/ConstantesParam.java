@@ -41,7 +41,7 @@ public class ConstantesParam {
 	public static int ENCHERE_TIME=15;
 	
 	public static int NB_TOUR_PRISON=3;
-	
+	public static String[] NOM_JOUEURS;
 	
 	public static boolean J1_GOD_MODE=false;
 	public static boolean J1_PRISON=false;

@@ -72,7 +72,7 @@ public abstract class AbstractModel implements Observable{
 	public abstract void effetPioche(int idJoueur, int idCarte, TypePioche type);
 	public abstract void gameOver(int idJoueur);
 	public abstract void achatCaseEnchere(int idJoueur, int positionAchat, int prix);
-	
+	public abstract void genererXML();
 	
 	// Implementation du pattern observer
 	// permet d'ajouter un observateur

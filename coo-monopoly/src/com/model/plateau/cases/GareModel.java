@@ -35,6 +35,26 @@ public class GareModel extends CaseModel{
 		}
 		return tabAsso;
 	}
+	
+	/**
+	 * Constructeur XML
+	 * @param p modèle du plateau
+	 * @param idCase id de la case
+	 * @param position position de la case
+	 * @param nom nom de la case
+	 * @param prixAchat prix d'achat de la case
+	 */
+	public GareModel(PlateauModel p, int idCase, int position, String nom, int prixAchat, int idGare)
+	{
+		this.p=p;
+		this.idCase=idCase;
+		this.setNom(nom);
+		this.setPosition(position);
+		this.idGare=idGare;
+		this.prixAchat=(int) (prixAchat*ConstantesParam.TAUX_ACHAT);;
+		GareModel.posGares[idGare]=position;
+	}
+	
 	/**
 	 * Constructeur
 	 * @param p modèle du plateau

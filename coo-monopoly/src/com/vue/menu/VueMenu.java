@@ -92,14 +92,13 @@ public class VueMenu extends Fenetre {
 	//public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
 	{
 	
-		JeuModel jeuModel = new JeuModel();
+		JeuModel jeuModel = new JeuModel(false);
 		AbstractControler jeuControler = new GameControler(jeuModel);
-		VueJeu jeu=new VueJeu(jeuControler);
+		VueJeu jeu=new VueJeu(jeuControler,this);
 		jeuModel.addObserver(jeu);
 		jeuModel.getP().genererCases();
 		jeuModel.getP().genererPioche();
 		jeuModel.assoTerrain();
-		
 		
 		jeuModel.notifyJoueurs();
 		

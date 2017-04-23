@@ -14,12 +14,31 @@ public class ServiceModel extends CaseModel{
 
 	public static int[] tabAssoServiceJoueur;
 	protected int idService;
-	protected static int nb_service=0;
+	private static int nb_service=0;
 	
 	protected int prixAchat;
 	protected static int[] loyers={400,1000};
 	
 	protected PlateauModel p;
+	
+	/**
+	 * Constructeur XML
+	 * @param p modèle du plateau
+	 * @param idCase id de la case
+	 * @param position position de la case
+	 * @param nom nom de la case
+	 * @param prixAchat prix d'achat
+	 * @param idService 
+	 */
+	public ServiceModel(PlateauModel p, int idCase, int position, String nom, int prixAchat, int idService)
+	{
+		this.p=p;
+		this.setNom(nom);
+		this.idCase=idCase;
+		this.setPosition(position);
+		this.idService=idService;
+		this.prixAchat=(int) (prixAchat*ConstantesParam.TAUX_ACHAT);
+	}
 	
 	/**
 	 * Constructeur
@@ -146,6 +165,14 @@ public class ServiceModel extends CaseModel{
 
 	public void setIdService(int idService) {
 		this.idService = idService;
+	}
+
+	public static int getNb_service() {
+		return nb_service;
+	}
+
+	public static void setNb_service(int nb_service) {
+		ServiceModel.nb_service = nb_service;
 	}
 
 	

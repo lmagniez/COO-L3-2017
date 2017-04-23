@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
@@ -22,7 +23,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import com.controler.AbstractControler;
+import com.controler.GameControler;
+import com.model.plateau.JeuModel;
 import com.vue.Colors;
+import com.vue.plateau.VueJeu;
 
 import java.awt.Image;
 
@@ -40,6 +45,8 @@ public class EcranStart extends Ecran implements ActionListener{
 	protected JButton quit;
 	protected JButton credits;
 	protected JButton regles;
+	protected JButton charger;
+	
 	
 	
 	//protected JButton buttons[][];
@@ -94,11 +101,21 @@ public class EcranStart extends Ecran implements ActionListener{
 		quit.setBorder(new LineBorder (Color.BLACK, 1));
 		quit.setBounds(100, 550, 200, 50);
 		
+		charger=new JButton("Charger une partie");	
+		charger.setAlignmentX(this.CENTER_ALIGNMENT);
+		charger.addActionListener(this);
+		charger.setForeground(Colors.textColor1);
+		charger.setBackground(Colors.case8);
+		charger.setBorder(new LineBorder (Color.BLACK, 1));
+		charger.setBounds(900, 450, 200, 50);
+		
+		
 		buttons=new JComponent[NB_BUTTONS_X][NB_BUTTONS_Y];
 		buttons[0][0]=start;
 		buttons[1][0]=credits;
 		buttons[2][0]=quit;
 		buttons[3][0]=regles;
+		
 		
 		this.addListener();
 		
@@ -106,6 +123,7 @@ public class EcranStart extends Ecran implements ActionListener{
 		this.add(credits);
 		this.add(regles);
 		this.add(quit);
+		this.add(charger);
 	
 		this.start.requestFocus();
 		
@@ -142,6 +160,32 @@ public class EcranStart extends Ecran implements ActionListener{
 		
 		if(command=="Quitter")
 			vue.dispose();
+		
+		if(command=="Charger une partie")
+		{
+				File fileXML = new File("save.xml");
+				if(fileXML.exists()){
+					JeuModel jeuModel = new JeuModel(true);
+					AbstractControler jeuControler = new GameControler(jeuModel);
+					VueJeu jeu=new VueJeu(jeuControler,this.vue);
+					jeuModel.addObserver(jeu);
+					
+					jeuModel.notifierTerrain();
+					jeuModel.notifyJoueurs();
+					System.out.println(jeuModel.getP());
+					System.out.println(jeuModel.getP().getCases());
+					
+					jeuModel.notifyCases(jeuModel.getP().getCases());
+					jeuModel.notifyTour(jeuModel.getTour());
+					jeuModel.notifyInitTourDes();
+					jeuModel.notifyInitTourFenetre();
+					
+					
+					jeu.setVisible(true);
+					this.vue.setVisible(false);
+				}
+			
+		}
 	}
 	
 	public void paintComponent(Graphics g) {
