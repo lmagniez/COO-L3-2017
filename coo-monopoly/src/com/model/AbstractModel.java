@@ -68,10 +68,38 @@ public abstract class AbstractModel implements Observable{
 	 */
 	public abstract void echangePropriete(int idJoueur1, int idJoueur2, int positionAchat, int somme);
 	
+	/**
+	 * Hypothequer un terrain
+	 * @param idJoueur1 id joueur
+	 * @param positionAchat position du terrain
+	 */
 	public abstract void hypothequer(int idJoueur1, int positionAchat);
+	
+	/**
+	 * Activer l'effet d'une carte pioche sur le joueur
+	 * @param idJoueur id joueur
+	 * @param idCarte id carte
+	 * @param type type carte
+	 */
 	public abstract void effetPioche(int idJoueur, int idCarte, TypePioche type);
+	
+	/**
+	 * Game over sur un joueur
+	 * @param idJoueur id joueur
+	 */
 	public abstract void gameOver(int idJoueur);
+	
+	/**
+	 * Achat d'une case via enchere
+	 * @param idJoueur id joueur
+	 * @param positionAchat position case
+	 * @param prix prix achat
+	 */
 	public abstract void achatCaseEnchere(int idJoueur, int positionAchat, int prix);
+	
+	/**
+	 * Methode utilisé pour la sauvegarde, sauvegarde la structure du code sous xml
+	 */
 	public abstract void genererXML();
 	
 	// Implementation du pattern observer

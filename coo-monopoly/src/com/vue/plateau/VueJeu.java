@@ -99,7 +99,6 @@ public class VueJeu extends Fenetre implements Observer{
 	
 	@Override
 	public void updateAcquisitionJoueur(int idJoueur, int position) {
-		System.out.println(idJoueur + "  "+position);
 		lePanneau.s.getJoueurs()[idJoueur].getAcquisition()[position]=true;
 	}
 
@@ -112,12 +111,6 @@ public class VueJeu extends Fenetre implements Observer{
 	public void updateCases(CaseModel[] cases) {
 		for(int i=0; i<ConstantesModel.NB_CASES; i++){
 			
-			System.out.println(lePanneau.getP());
-			System.out.println(lePanneau.getP().getCases()[i]);
-			System.out.println(cases[i]);
-			//System.out.println(cases[i].getPosition());
-			
-			System.out.println(cases[i].getIdCase());
 			
 			
 			lePanneau.getP().getCases()[i].setPosition(cases[i].getPosition());
@@ -254,8 +247,6 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updateCartePrison(int idJoueur, boolean hasCarte) {
-		// TODO Auto-generated method stub
-		System.out.println("ajoute carte joueur");
 		this.lePanneau.getS().getJoueurs()[idJoueur].updateCartePrison(hasCarte);
 		//ajoute la carte au joueur
 		
@@ -263,14 +254,12 @@ public class VueJeu extends Fenetre implements Observer{
 
 	@Override
 	public void updatePrison(int idJoueur, int nbTour) {
-		System.out.println("ici");
 		this.lePanneau.getChoixM().genererMessageAllerPrison(idJoueur, nbTour);
 		this.lePanneau.getS().getJoueurs()[idJoueur].updatePrison(nbTour);;
 	}
 
 	@Override
 	public void updateEnPrison(int idJoueur, int nbTour) {
-		// TODO Auto-generated method stub
 		this.lePanneau.getChoixM().genererMessageEnPrison(idJoueur, nbTour);
 		this.lePanneau.getS().getJoueurs()[idJoueur].updatePrison(nbTour);
 	}

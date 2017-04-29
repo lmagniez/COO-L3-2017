@@ -23,6 +23,9 @@ import com.model.AbstractModel;
 import com.model.ConstantesParam;
 import com.model.ConstantesVue;
 import com.model.plateau.JeuModel;
+import com.model.plateau.cases.GareModel;
+import com.model.plateau.cases.ServiceModel;
+import com.model.plateau.cases.TerrainModel;
 import com.observer.Observer;
 import com.vue.Fenetre;
 import com.vue.plateau.EcranJeu;
@@ -92,6 +95,10 @@ public class VueMenu extends Fenetre {
 	//public void initFenetreEcranJeu(int nbLigne, int nbJoueur, boolean[] isIA)
 	{
 	
+		GareModel.nb_gare=0;
+		TerrainModel.setNbTerrain(0);
+		ServiceModel.setNb_service(0);
+		
 		JeuModel jeuModel = new JeuModel(false);
 		AbstractControler jeuControler = new GameControler(jeuModel);
 		VueJeu jeu=new VueJeu(jeuControler,this);

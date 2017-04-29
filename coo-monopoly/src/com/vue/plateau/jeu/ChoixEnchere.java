@@ -34,7 +34,7 @@ import com.vue.plateau.EcranJeu;
 import com.vue.plateau.joueur.InfoJoueur;
 
 /**
- * Ecran de paiement
+ * Ecran d'enchere
  * @author loick
  *
  */
@@ -305,6 +305,11 @@ public class ChoixEnchere extends JPanel{
 		
 	}
 	
+	/**
+	 * Changer le gagnant de l'enchere (a chaque fois qu'on clique sur un joueur)
+	 * @param idJoueur id joueur
+	 * @param ajoutValeur valeur d'ajout au prix initial
+	 */
 	public void changerProprietaire(int idJoueur, int ajoutValeur){
 		this.idGagnant=idJoueur;
 		this.joueurActuel.setText("Propriétaire: "+this.ecran.getS().getJoueurs()[idJoueur].getNomJoueur().getText());
@@ -351,7 +356,6 @@ public class ChoixEnchere extends JPanel{
 			for(int i=0; i<ConstantesParam.NB_JOUEURS; i++){
 				if(ChoixEnchere.this.listButtons.get(i)==origin){
 					confirmer.setEnabled(true);
-					System.out.println("joueur"+i);
 					
 					if(!isStarted){
 						reprendre();

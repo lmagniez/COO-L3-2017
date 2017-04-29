@@ -460,7 +460,6 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 		ConstantesParam.NB_MAISONS=(int) this.maisons.getValue();
 		ConstantesParam.NB_PROPRIETES=this.nbPropriValue[this.nbPropriete.getSelectedIndex()];
 		ConstantesParam.TOUR_ENABLED=this.choixTour.isSelected();
-		System.out.println(this.choixTour.isSelected());
 		
 		
 		ConstantesParam.NB_TOUR=(int) this.nbTour.getValue();

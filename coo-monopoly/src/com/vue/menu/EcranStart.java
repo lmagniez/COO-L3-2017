@@ -172,8 +172,6 @@ public class EcranStart extends Ecran implements ActionListener{
 					
 					jeuModel.notifierTerrain();
 					jeuModel.notifyJoueurs();
-					System.out.println(jeuModel.getP());
-					System.out.println(jeuModel.getP().getCases());
 					
 					jeuModel.notifyCases(jeuModel.getP().getCases());
 					jeuModel.notifyTour(jeuModel.getTour());

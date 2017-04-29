@@ -123,6 +123,10 @@ public class ChoixGameOver extends JPanel{
 		
 	}
 	
+	/**
+	 * Generer un game over pour un joueur donné
+	 * @param idJoueur id joueur
+	 */
 	public void genererGameOver(int idJoueur){
 		
 		//panneauLateral.removeAll();

@@ -45,6 +45,10 @@ public abstract class AbstractControler {
 	
 	}
 
+	/**
+	 * Constructeur
+	 * @param cal
+	 */
 	public AbstractControler(AbstractModel cal){
 		this.calc = cal;
 		
@@ -135,6 +139,13 @@ public abstract class AbstractControler {
 		control();
 	}
 	
+	/**
+	 * Demande un echange entre 2 joueurs
+	 * @param idJ1 id joueur 1
+	 * @param idJ2 id joueur 2
+	 * @param position position de la carte
+	 * @param somme somme de la carte
+	 */
 	public void requestEchange(int idJ1, int idJ2, int position, int somme){
 		this.echangePropriete=true;
 		this.idJoueur=idJ1;
@@ -144,8 +155,13 @@ public abstract class AbstractControler {
 		control();
 	}
 
+	/**
+	 * Demander l'effet d'une carte d'une pioche
+	 * @param idJ1 id joueur 
+	 * @param idCarte id de la carte
+	 * @param type type de la carte
+	 */
 	public void requestEffetPioche(int idJ1, int idCarte, TypePioche type) {
-		// TODO Auto-generated method stub
 		this.idJoueur=idJ1;
 		this.idCarte=idCarte;
 		this.type=type;
@@ -153,6 +169,11 @@ public abstract class AbstractControler {
 		control();
 	}
 
+	/**
+	 * Demander l'hypotheque d'une propriété
+	 * @param idJ1 id joueur 
+	 * @param idSelected id sélectionné
+	 */
 	public void requestHypothequer(int idJ1, int idSelected) {
 		this.hypotheque=true;
 		this.idJoueur=idJ1;
@@ -161,17 +182,30 @@ public abstract class AbstractControler {
 		
 	}
 
+	/**
+	 * Demander la fin de partie pour un joueur 
+	 * @param idJoueur3 id joueur
+	 */
 	public void requestFinPartie(int idJoueur3) {
 		this.gameOver=true;
 		this.idJoueur=idJoueur3;
 		control();
 	}
 
+	/**
+	 * Demander le tour suivant
+	 */
 	public void requestTour() {
 		this.tour=true;
 		control();
 	}
 
+	/**
+	 * Demander l'achat via une enchere
+	 * @param idJoueur3 id joueur
+	 * @param position position carte
+	 * @param prix prix carte
+	 */
 	public void requestAchatEnchere(int idJoueur3, int position, int prix) {
 		this.achatEnchere=true;
 		this.idJoueur=idJoueur3;
@@ -180,6 +214,9 @@ public abstract class AbstractControler {
 		control();
 	}
 	
+	/**
+	 * Demander la sauvegarde de la partie
+	 */
 	public void requestSave(){
 		this.save=true;
 		control();

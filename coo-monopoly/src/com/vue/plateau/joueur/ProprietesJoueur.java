@@ -409,7 +409,6 @@ public class ProprietesJoueur extends JPanel {
 						
 					}
 					if(res){
-						System.out.println("GAME OVER2!!!");
 						ProprietesJoueur.this.infos.score.ecran.getChoixG().genererGameOver(idJoueur);
 					}
 				}

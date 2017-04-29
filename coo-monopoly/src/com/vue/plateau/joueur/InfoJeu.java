@@ -78,7 +78,6 @@ public class InfoJeu extends JPanel {
 		nbMaisons="";
 		tourRestants="";
 		
-		System.out.println("okayyyyy "+ConstantesParam.TOUR_ENABLED);
 		updateMaison(ConstantesParam.NB_MAISONS);
 		if(ConstantesParam.TOUR_ENABLED){
 			updateTour(1);

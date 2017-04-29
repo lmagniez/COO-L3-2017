@@ -155,7 +155,6 @@ public class JeuModel extends AbstractModel{
 					
 					GareModel.tabAssoGareJoueur=new int[tab.getLength()];
 					for(int i=0; i<tab.getLength(); i++){
-						System.out.println(varStatic.item(cptStatic).getNodeName());
 						GareModel.tabAssoGareJoueur[i]=Integer.parseInt(tab.item(i).getTextContent());
 					}
 					GareModel.nb_gare=Integer.parseInt(varStatic.item(cptStatic++).getTextContent());
@@ -197,7 +196,6 @@ public class JeuModel extends AbstractModel{
 						int cptCase=0;
 						if(typeCase.equals("TerrainModel")){
 							int idTerrain = Integer.parseInt(caseP.item(cptCase++).getTextContent());
-							System.out.println("idTerrain "+idTerrain);
 							int nbMaisons = Integer.parseInt(caseP.item(cptCase++).getTextContent());
 							int prixAchat = Integer.parseInt(caseP.item(cptCase++).getTextContent());
 							
@@ -242,7 +240,6 @@ public class JeuModel extends AbstractModel{
 							cases[i]=new ParkingModel(model, idCase, position);	
 						}
 						else{
-							System.out.println(typeCase);
 							System.out.println("PROBLEME!!!!");
 						}
 						
@@ -319,7 +316,6 @@ public class JeuModel extends AbstractModel{
 					model.piocheCommunaute=p2;
 					
 					this.p=model;
-					System.out.println("okkkkk");
 					this.notifyCases(this.p.cases);
 					this.notifyInitTourDes();
 					
@@ -339,6 +335,9 @@ public class JeuModel extends AbstractModel{
 		
 	}
 	
+	/**
+	 * Notifier les terrains suite au chargement d'une partie
+	 */
 	public void notifierTerrain(){
 		
 		
@@ -376,7 +375,9 @@ public class JeuModel extends AbstractModel{
 		
 	}
 	
-	
+	/**
+	 * Associer des terrains de manière aléatoires aux joueurs (option dans les parametres)
+	 */
 	public void assoTerrain(){
 		//associe terrain aléatoire aux joueurs
 		for(int j=0; j<ConstantesParam.NB_JOUEURS; j++){
@@ -450,7 +451,6 @@ public class JeuModel extends AbstractModel{
 	public void tourSuivant(){
 		int tourPred=getTour();
 		
-		System.out.println("TOUR SUIVANT ");
 		setTour((getTour()+1)%ConstantesParam.NB_JOUEURS);
 		
 		while(p.joueurs[getTour()].gameOver){
@@ -489,7 +489,6 @@ public class JeuModel extends AbstractModel{
 		}*/
 		
 		if(p.joueurs[getTour()].enPrison>0){
-			System.out.println("ici prison "+p.joueurs[getTour()].enPrison);
 			p.joueurs[getTour()].enPrison--;
 			if(p.joueurs[getTour()].enPrison>0){
 				this.notifyEnPrison(getTour(), p.joueurs[getTour()].enPrison);
@@ -697,7 +696,6 @@ public class JeuModel extends AbstractModel{
 	@Override
 	public void gameOver(int idJoueur) {
 		
-		System.out.println("game over "+idJoueur);
 		
 		this.p.joueurs[idJoueur].gameOver=true;
 		
@@ -746,12 +744,26 @@ public class JeuModel extends AbstractModel{
 		
 	}
 	
-	
+	/**
+	 * Methode pour XML
+	 * @param xml
+	 * @param trunk
+	 * @param nom
+	 * @param value
+	 */
 	public void addToTrunk(Document xml, Element trunk, String nom, String value){
 		Element branche = xml.createElement(nom);
 		branche.setTextContent(value);
 		trunk.appendChild(branche);
 	}
+	
+	/**
+	 * Methode pour XML, ajoute un tableau de bool au trunk
+	 * @param xml
+	 * @param trunk
+	 * @param nom
+	 * @param value
+	 */
 	public void addTabToTrunk(Document xml, Element trunk, String nom, boolean[] value){
 		Element branche = xml.createElement(nom);
 		for(int i=0; i<value.length; i++){
@@ -762,6 +774,13 @@ public class JeuModel extends AbstractModel{
 		}
 		trunk.appendChild(branche);
 	}
+	/**
+	 * Methode pour XML, ajoute un tableau de int au trunk
+	 * @param xml
+	 * @param trunk
+	 * @param nom
+	 * @param value
+	 */
 	public void addTabToTrunk(Document xml, Element trunk, String nom, int[] value){
 		Element branche = xml.createElement(nom);
 		for(int i=0; i<value.length; i++){
@@ -772,6 +791,14 @@ public class JeuModel extends AbstractModel{
 		}
 		trunk.appendChild(branche);
 	}
+	
+	/**
+	 * Methode pour XML, ajoute un tableau de String au trunk
+	 * @param xml
+	 * @param trunk
+	 * @param nom
+	 * @param value
+	 */
 	public void addTabToTrunk(Document xml, Element trunk, String nom, String[] value){
 		Element branche = xml.createElement(nom);
 		for(int i=0; i<value.length; i++){

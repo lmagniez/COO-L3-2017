@@ -167,6 +167,9 @@ public class JoueurModel {
 		this.lastSumDes = lastSumDes;
 	}
 
+	/**
+	 * Mettre le joueur en prison
+	 */
 	public void allerEnPrison() {
 		if(cartePrison){
 			cartePrison=false;

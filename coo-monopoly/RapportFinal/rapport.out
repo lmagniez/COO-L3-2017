@@ -6,7 +6,13 @@
 \BOOKMARK [2][-]{subsection.2.4}{Jeu :}{section.2}% 6
 \BOOKMARK [2][-]{subsection.2.5}{Interface du jeu :}{section.2}% 7
 \BOOKMARK [2][-]{subsection.2.6}{R\350gles additionnelles :}{section.2}% 8
-\BOOKMARK [1][-]{section.3}{Ce quil reste \340 impl\351menter :}{}% 9
-\BOOKMARK [1][-]{section.4}{UML :}{}% 10
-\BOOKMARK [2][-]{subsection.4.1}{Mod\350le}{section.4}% 11
-\BOOKMARK [2][-]{subsection.4.2}{MVC}{section.4}% 12
+\BOOKMARK [1][-]{section.3}{Mise \340 jour finale :}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{Prison :}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Gestion de tours :}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{Gestion de sauvegarde :}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.4}{Evenements victoire et game over :}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.5}{Gestion des ench\350res :}{section.3}% 14
+\BOOKMARK [2][-]{subsection.3.6}{R\350gles additionnelles :}{section.3}% 15
+\BOOKMARK [1][-]{section.4}{UML :}{}% 16
+\BOOKMARK [2][-]{subsection.4.1}{Mod\350le}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.2}{MVC}{section.4}% 18

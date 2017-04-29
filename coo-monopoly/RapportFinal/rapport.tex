@@ -88,7 +88,74 @@ Lancé à tout moment (pas de fenêtre déjà affichée), lance une négociation avec u
 \makebox[\textwidth]{\includegraphics[width=200pt]{img/plateauAlea}}\\%
 
 
-\section{Ce qu\textquotesingle il reste à implémenter :}
+\section{Mise à jour finale :}
+
+\subsection{Prison :}
+
+Notifie le joueur à chaque début de tour, doit attendre X tours\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/prison}}\\%
+
+
+\subsection{Gestion de tours :}
+
+Ajout d\textquotesingle une valeur de patrimoine pour calculer le gagnant a la fin de la partie\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/valeurPatri}}\\%
+
+\subsection{Gestion de sauvegarde :}
+
+Utilisation d\textquotesingle un fichier XML.\\%
+Enregistre les paramètres de partie.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/charger1}}\\%
+
+Les informations du joueur.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/charger2}}\\%
+
+Pour chaque carte, des informations différentes en fonction de son type.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/charger3}}\\%
+
+Bouton de sauvegarde en bas à droite de l\textquotesingle écran.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/charger4}}\\%
+
+\subsection{Evenements victoire et game over :}
+Evenements de victoires et de game over\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/gameOver}}\\%
+Ajout d\textquotesingle un écran d\textquotesingle endettement quand le joueur ne peut plus payer. Il doit hypothéquer ou échanger ses biens à d\textquotesingle autres joueurs jusqu\textquotesingle à ce qu\textquotesingle il soit dans le positif. \\%
+Si il n\textquotesingle a plus de propriété, il est considéré hors jeu.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/endette}}\\%
+
+
+
+\subsection{Gestion des enchères :}
+
+Le timer se lance dès qu\textquotesingle un joueur enchérit (Un clic = +100 mono).\\%
+Seuls les joueurs disposant d\textquotesingle assez d\textquotesingle argent peuvent enchérir.\\%
+Une fois l\textquotesingle enchère terminée, le dernier joueur ayant enchérit remporte la carte.\\%
+\makebox[\textwidth]{\includegraphics[width=200pt]{img/enchere}}\\%
+
+
+\subsection{Règles additionnelles :}
+
+\begin{itemize}
+\item Modifier l\textquotesingle argent des joueurs
+\item Modifier le nombre de maisons disponibles
+\item Allouer X propriétés à chaque joueurs
+\item Définir un nombre de tours
+\item Placer les joueurs de manière aléatoire
+\item Utiliser 3 dés
+\item Aller en prison si dé1*dé2*dé3 supérieur à 50
+\item Mode suicide
+\item Nombre de tours en prison
+\item Autoriser/Désactiver les enchères
+\item Modifier le temps des enchères
+\item Générer le plateau aléatoirement
+\item Masquer les cases
+\item Modifier la valeur d?achat
+\item Modifier la valeur de rachat de l\textquotesingle hypothèque
+\item Pas d\textquotesingle égalisation de terrain
+\end{itemize}
+
+
+
 \begin{itemize}
 \item Enchères
 \item Prison

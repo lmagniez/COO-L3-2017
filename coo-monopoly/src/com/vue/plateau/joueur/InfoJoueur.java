@@ -170,7 +170,6 @@ public class InfoJoueur extends JPanel{
 	
 	public void updateCartePrison(boolean has){
 		if(has){
-			System.out.println("okay!");
 			this.cartePrison.setText("Dispose: Carte Prison");
 			this.cartePrison.setForeground(Color.blue);
 			
@@ -183,9 +182,7 @@ public class InfoJoueur extends JPanel{
 	}
 	
 	public void updatePrison(int nbTour){
-		System.out.println("la prison"+nbTour);
 		if(nbTour>0){
-			System.out.println("la prison");
 			this.enPrison.setText("Prison: "+nbTour+" tours");
 			this.enPrison.setSize(this.enPrison.getPreferredSize());
 			this.enPrison.setForeground(Color.red);
@@ -257,7 +254,6 @@ public class InfoJoueur extends JPanel{
 	}
 
 	public void setGameOver(boolean gameOver) {
-		System.out.println("set go");
 		this.gameOver = gameOver;
 		if(gameOver==true){
 			this.nomJoueur.setForeground(Color.red);
@@ -272,7 +268,6 @@ public class InfoJoueur extends JPanel{
 	}
 
 	public void setPatrimoine(int patrimoine) {
-		System.out.println("set patrimoine "+patrimoine);
 		this.patrimoine = patrimoine;
 		if(this.score.proprietes!=null)
 			this.score.proprietes.patrimoineJoueur.setText("Valeur Patrimoine: "+patrimoine);

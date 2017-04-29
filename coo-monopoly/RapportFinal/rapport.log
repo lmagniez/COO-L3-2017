@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.1.14)  21 MAR 2017 22:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.1.14)  29 APR 2017 15:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -560,7 +560,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--21
 
  []
 
-<img/titre.png, id=52, 1204.5pt x 731.73375pt>
+<img/titre.png, id=76, 1204.5pt x 731.73375pt>
 File: img/titre.png Graphic file (type png)
  <use img/titre.png>
 Package pdftex.def Info: img/titre.png used on input line 23.
@@ -594,7 +594,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 40--41
 
  []
 
-<img/parametre1.png, id=54, 1204.5pt x 734.745pt>
+<img/parametre1.png, id=78, 1204.5pt x 734.745pt>
 File: img/parametre1.png Graphic file (type png)
  <use img/parametre1.png>
 Package pdftex.def Info: img/parametre1.png used on input line 42.
@@ -612,7 +612,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 45--50
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./img/titre.png> <./img/pa
-rametre1.png>] <img/parametre2.png, id=68, 1206.5075pt x 732.7375pt>
+rametre1.png>] <img/parametre2.png, id=92, 1206.5075pt x 732.7375pt>
 File: img/parametre2.png Graphic file (type png)
 
 <use img/parametre2.png>
@@ -628,7 +628,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 57--61
 
  []
 
-<img/plateau.png, id=69, 1203.49625pt x 730.73pt>
+<img/plateau.png, id=93, 1203.49625pt x 730.73pt>
 File: img/plateau.png Graphic file (type png)
  <use img/plateau.png>
 Package pdftex.def Info: img/plateau.png used on input line 62.
@@ -643,7 +643,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--63
 
  []
 
-<img/choixAchat.png, id=70, 425.59pt x 238.8925pt>
+<img/choixAchat.png, id=94, 425.59pt x 238.8925pt>
 File: img/choixAchat.png Graphic file (type png)
  <use img/choixAchat.png>
 Package pdftex.def Info: img/choixAchat.png used on input line 68.
@@ -654,14 +654,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 66--69
  []
 
 [2 <./img/parametre2.png> <./img/plateau.png>]
-<img/choixPaiement.png, id=78, 433.62pt x 243.91125pt>
+<img/choixPaiement.png, id=102, 433.62pt x 243.91125pt>
 File: img/choixPaiement.png Graphic file (type png)
 
 <use img/choixPaiement.png>
 Package pdftex.def Info: img/choixPaiement.png used on input line 72.
 (pdftex.def)             Requested size: 200.0pt x 112.50198pt.
 
-<img/proprietes.png, id=79, 503.8825pt x 700.6175pt>
+<img/proprietes.png, id=103, 503.8825pt x 700.6175pt>
 File: img/proprietes.png Graphic file (type png)
  <use img/proprietes.png>
 Package pdftex.def Info: img/proprietes.png used on input line 77.
@@ -672,7 +672,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 74--78
  []
 
 [3 <./img/choixAchat.png> <./img/choixPaiement.png> <./img/proprietes.png>]
-<img/choixEchange.png, id=87, 430.60875pt x 248.93pt>
+<img/choixEchange.png, id=111, 430.60875pt x 248.93pt>
 File: img/choixEchange.png Graphic file (type png)
 
 <use img/choixEchange.png>
@@ -683,7 +683,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 81--84
 
  []
 
-<img/plateauAlea.png, id=88, 706.64pt x 726.715pt>
+<img/plateauAlea.png, id=112, 706.64pt x 726.715pt>
 File: img/plateauAlea.png Graphic file (type png)
  <use img/plateauAlea.png>
 Package pdftex.def Info: img/plateauAlea.png used on input line 88.
@@ -698,62 +698,146 @@ Underfull \hbox (badness 10000) in paragraph at lines 88--89
 
  []
 
+<img/prison.png, id=113, 438.63875pt x 248.93pt>
+File: img/prison.png Graphic file (type png)
+ <use img/prison.png>
+Package pdftex.def Info: img/prison.png used on input line 96.
+(pdftex.def)             Requested size: 200.0pt x 113.50261pt.
 
-Package hyperref Warning: Glyph not defined in PD1 encoding,
-(hyperref)                removing `\textquotesingle' on input line 91.
+Underfull \hbox (badness 10000) in paragraph at lines 95--97
 
-<img/umlv2.png, id=89, 1178.4025pt x 1006.76125pt>
+ []
+
+<img/valeurPatri.png, id=114, 497.86pt x 355.3275pt>
+File: img/valeurPatri.png Graphic file (type png)
+ <use img/valeurPatri.png>
+Package pdftex.def Info: img/valeurPatri.png used on input line 102.
+(pdftex.def)             Requested size: 200.0pt x 142.74113pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--103
+
+ []
+
+[4 <./img/choixEchange.png> <./img/plateauAlea.png> <./img/prison.png>]
+<img/charger1.png, id=122, 374.39874pt x 156.585pt>
+File: img/charger1.png Graphic file (type png)
+ <use img/charger1.png>
+Package pdftex.def Info: img/charger1.png used on input line 108.
+(pdftex.def)             Requested size: 200.0pt x 83.6467pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 106--109
+
+ []
+
+<img/charger2.png, id=123, 460.72125pt x 228.855pt>
+File: img/charger2.png Graphic file (type png)
+ <use img/charger2.png>
+Package pdftex.def Info: img/charger2.png used on input line 111.
+(pdftex.def)             Requested size: 200.0pt x 99.34508pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--112
+
+ []
+
+<img/charger3.png, id=124, 891.33pt x 401.5pt>
+File: img/charger3.png Graphic file (type png)
+ <use img/charger3.png>
+Package pdftex.def Info: img/charger3.png used on input line 114.
+(pdftex.def)             Requested size: 200.0pt x 90.08853pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 113--115
+
+ []
+
+<img/charger4.png, id=125, 641.39626pt x 172.645pt>
+File: img/charger4.png Graphic file (type png)
+ <use img/charger4.png>
+Package pdftex.def Info: img/charger4.png used on input line 117.
+(pdftex.def)             Requested size: 200.0pt x 53.83287pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--118
+
+ []
+
+<img/gameOver.png, id=126, 463.7325pt x 277.035pt>
+File: img/gameOver.png Graphic file (type png)
+ <use img/gameOver.png>
+Package pdftex.def Info: img/gameOver.png used on input line 121.
+(pdftex.def)             Requested size: 200.0pt x 119.48203pt.
+
+<img/endette.png, id=127, 497.86pt x 352.31625pt>
+File: img/endette.png Graphic file (type png)
+ <use img/endette.png>
+Package pdftex.def Info: img/endette.png used on input line 124.
+(pdftex.def)             Requested size: 200.0pt x 141.53148pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--125
+
+ []
+
+[5 <./img/valeurPatri.png> <./img/charger1.png> <./img/charger2.png> <./img/cha
+rger3.png> <./img/charger4.png>]
+<img/enchere.png, id=137, 470.75874pt x 439.6425pt>
+File: img/enchere.png Graphic file (type png)
+ <use img/enchere.png>
+Package pdftex.def Info: img/enchere.png used on input line 133.
+(pdftex.def)             Requested size: 200.0pt x 186.78186pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 130--134
+
+ []
+
+[6 <./img/gameOver.png> <./img/endette.png> <./img/enchere.png>]
+<img/umlv2.png, id=145, 1178.4025pt x 1006.76125pt>
 File: img/umlv2.png Graphic file (type png)
  <use img/umlv2.png>
-Package pdftex.def Info: img/umlv2.png used on input line 110.
+Package pdftex.def Info: img/umlv2.png used on input line 177.
 (pdftex.def)             Requested size: 500.0pt x 427.1689pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 110--111
+Overfull \hbox (15.0pt too wide) in paragraph at lines 177--178
 [][] 
  []
 
-[4 <./img/choixEchange.png> <./img/plateauAlea.png>]
-<img/umlMVC.png, id=97, 561.09625pt x 513.92pt>
+<img/umlMVC.png, id=146, 561.09625pt x 513.92pt>
 File: img/umlMVC.png Graphic file (type png)
  <use img/umlMVC.png>
-Package pdftex.def Info: img/umlMVC.png used on input line 113.
+Package pdftex.def Info: img/umlMVC.png used on input line 180.
 (pdftex.def)             Requested size: 300.0pt x 274.77588pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 113--114
+Overfull \hbox (15.0pt too wide) in paragraph at lines 180--181
 [][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 116.
-[5 <./img/umlv2.png (PNG copy)>] [6 <./img/umlMVC.png (PNG copy)>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 116.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 183.
+[7 <./img/umlv2.png (PNG copy)>] [8 <./img/umlMVC.png (PNG copy)>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 183.
 
 (./rapport.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 116.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 116.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 183.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 183.
 Package rerunfilecheck Info: File `rapport.out' has not changed.
-(rerunfilecheck)             Checksum: 2ACA7C620F84448F0E8BE431F9E7C0CE;778.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 116.
+(rerunfilecheck)             Checksum: E03504673E32462348A18630840DA110;1200.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 183.
  ) 
 Here is how much of TeX's memory you used:
- 9455 strings out of 494883
- 132239 string characters out of 6178693
+ 9512 strings out of 494883
+ 133256 string characters out of 6178693
  206146 words of memory out of 5000000
- 12638 multiletter control sequences out of 15000+600000
- 7174 words of font info for 26 fonts, out of 8000000 for 9000
+ 12679 multiletter control sequences out of 15000+600000
+ 6833 words of font info for 25 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 36i,5n,37p,449b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/loick/.texmf-var/fonts/pk/ljfour/jknappen/ec/tcbx1440.600pk> </home/l
-oick/.texmf-var/fonts/pk/ljfour/jknappen/ec/tcbx1200.600pk> </home/loick/.texmf
--var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmssbx10.pfb>
-Output written on rapport.pdf (6 pages, 2622438 bytes).
+ 36i,5n,37p,449b,458s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/loick/.texmf-var/fonts/pk/ljfour/jknappen/ec/tcbx1200.600pk> </home/l
+oick/.texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmssbx10.pfb>
+Output written on rapport.pdf (8 pages, 3057385 bytes).
 PDF statistics:
- 143 PDF objects out of 1000 (max. 8388607)
- 105 compressed objects within 2 object streams
- 19 named destinations out of 1000 (max. 500000)
- 152 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 191 PDF objects out of 1000 (max. 8388607)
+ 134 compressed objects within 2 object streams
+ 27 named destinations out of 1000 (max. 500000)
+ 245 words of extra memory for PDF output out of 10000 (max. 10000000)
 
