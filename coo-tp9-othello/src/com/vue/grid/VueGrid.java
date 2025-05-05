@@ -65,7 +65,7 @@ public class VueGrid extends Fenetre implements Observer {
 		this.swapColor=swapColor;
 		this.vueMenu=menu;
 		this.setSize(TAILLE_ECRAN_GRILLE_X, TAILLE_ECRAN_GRILLE_Y+TAILLE_ECRAN_SCORE);
-		this.setTitle("PICROSS");
+		this.setTitle("OTHELLO");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);

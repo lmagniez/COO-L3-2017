@@ -56,8 +56,8 @@ public class EcranParam extends JPanel{
 	public static final int MIN_PARAM=3;
 	public static final int MAX_PARAM=15;
 	
-	public ImageIcon checked= transform(new ImageIcon("./sprites/checked.png"),40,40);
-	public ImageIcon unchecked= transform(new ImageIcon("./sprites/unchecked.png"),40,40);
+	public ImageIcon checked= transform(new ImageIcon(getClass().getResource("/sprites/checked.png")),40,40);
+	public ImageIcon unchecked= transform(new ImageIcon(getClass().getResource("/sprites/unchecked.png")),40,40);
 	
 
 	

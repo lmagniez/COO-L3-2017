@@ -39,7 +39,7 @@ public class Score extends JPanel {
 	private JButton retour,confirmer;
 	private JButton restart;
 	
-	public ImageIcon logo= transform(new ImageIcon("./sprites/picross2.png"),VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30);
+	public ImageIcon logo= transform(new ImageIcon(getClass().getResource("/sprites/picross2.png")),VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30);
 	
 	
 	
@@ -63,7 +63,7 @@ public class Score extends JPanel {
 		this.setBackground(Color.BLACK);
 		//this.setOpaque(true);
 		
-		title = new ImageIcon("./sprites/title.jpeg");
+		title = new ImageIcon(getClass().getResource("/sprites/title.jpeg"));
 		JLabel titre = new JLabel();
 		JLabel titre2 = new JLabel("test");
 		titre2.setIcon(title);

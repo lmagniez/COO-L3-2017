@@ -37,7 +37,7 @@ public class ScoreCreation extends JPanel {
 	
 	private JButton retour,confirmer;
 	private JButton restart;
-	public ImageIcon logo= transform(new ImageIcon("./sprites/picross2.png"),VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30);
+	public ImageIcon logo= transform(new ImageIcon(getClass().getResource("/sprites/picross2.png")),VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30);
 	
 	
 	

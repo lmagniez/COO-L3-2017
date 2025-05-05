@@ -47,7 +47,7 @@ public class Score extends JPanel {
 	protected int nbJetonsJ1;
 	protected int nbJetonsJ2;
 	
-	public ImageIcon logo= transform(new ImageIcon("./sprites/logo2.png"),VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30);
+	public ImageIcon logo= transform(new ImageIcon(getClass().getResource("/sprites/logo2.png")),VueGrid.TAILLE_ECRAN_GRILLE_X,VueGrid.TAILLE_ECRAN_SCORE-30);
 	
 	protected JPanel p2;
 	
@@ -75,7 +75,7 @@ public class Score extends JPanel {
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(Color.BLACK);
 		
-		title = new ImageIcon("./sprites/title.jpeg");
+		title = new ImageIcon(getClass().getResource("/sprites/logo2.png"));
 		JLabel titre = new JLabel();
 		JLabel titre2 = new JLabel("test");
 		titre2.setIcon(title);
