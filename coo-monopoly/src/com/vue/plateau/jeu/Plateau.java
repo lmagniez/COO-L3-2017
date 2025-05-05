@@ -30,8 +30,8 @@ public class Plateau extends JPanel{
 	
 	protected Image bgImage;
 	
-	protected Icon maison=transform(new ImageIcon("./Sprites/pion/maison.png"),25,25);
-	protected Icon hotel=transform(new ImageIcon("./Sprites/pion/hotel.png"),25,25);
+	protected Icon maison=transform(new ImageIcon(getClass().getResource("/Sprites/pion/maison.png")),25,25);
+	protected Icon hotel=transform(new ImageIcon(getClass().getResource("/Sprites/pion/hotel.png")),25,25);
 	
 	/**
 	 * Constructeur
@@ -57,7 +57,7 @@ public class Plateau extends JPanel{
 		}
 		
 		
-		bgImage=new ImageIcon("./Sprites/plateautest.jpg").getImage();
+		bgImage=new ImageIcon(getClass().getResource("/Sprites/plateautest.jpg")).getImage();
 		
 		this.setLayout(null);
 		this.setCases(new Case[ConstantesModel.NB_CASES]);
@@ -134,7 +134,7 @@ public class Plateau extends JPanel{
 		Case c =getCases()[position];
 	
 		
-		maison=transform(new ImageIcon("./Sprites/pion/maison.png"),25,25);
+		maison=transform(new ImageIcon(getClass().getResource("/Sprites/pion/maison.png")),25,25);
 		
 		if(nbMaison==5){
 			

@@ -43,7 +43,7 @@ public class Score extends JPanel{
 		this.setMinimumSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_Y));
 		this.setPreferredSize(new Dimension(ConstantesVue.DIMENSION_SCORE_X,ConstantesVue.DIMENSION_SCORE_Y));
 		
-		fond=new ImageIcon("./Sprites/aide.png").getImage();
+		fond=new ImageIcon(getClass().getResource("/Sprites/aide.png")).getImage();
 	
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		

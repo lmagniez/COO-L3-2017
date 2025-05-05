@@ -44,14 +44,14 @@ public class Pion extends JLabel {
 		this.setText("test");
 		
 		Object items[]={
-				transform(new ImageIcon("./Sprites/pion/1.png"),hX,hY),
-				transform(new ImageIcon("./Sprites/pion/2.png"),hX,hY),
-				transform(new ImageIcon("./Sprites/pion/3.png"),hX,hY),
-				transform(new ImageIcon("./Sprites/pion/4.png"),hX,hY),
-				transform(new ImageIcon("./Sprites/pion/5.png"),hX,hY),
-				transform(new ImageIcon("./Sprites/pion/6.png"),hX,hY),
-				transform(new ImageIcon("./Sprites/pion/7.png"),hX,hY),
-				transform(new ImageIcon("./Sprites/pion/8.png"),hX,hY)
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/1.png")),hX,hY),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/2.png")),hX,hY),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/3.png")),hX,hY),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/4.png")),hX,hY),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/5.png")),hX,hY),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/6.png")),hX,hY),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/7.png")),hX,hY),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/8.png")),hX,hY)
 		};
 		
 		image=(Icon) items[idIcon];

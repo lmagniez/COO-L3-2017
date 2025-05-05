@@ -57,7 +57,7 @@ public class EcranRegle extends Ecran implements ActionListener{
 		this.NB_BUTTONS_X=0;
 		this.NB_BUTTONS_Y=0;
 		
-		fond=new ImageIcon("./Sprites/aide.png").getImage();		
+		fond=new ImageIcon(getClass().getResource("/Sprites/aide.png")).getImage();		
 		
 		this.vue=vue;
 		

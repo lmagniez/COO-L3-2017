@@ -75,25 +75,25 @@ public class Case extends JLabel {
 		
 		//GO
 		if(position==0){
-			path="Sprites/pieces/go.png";
+			path="/Sprites/pieces/go.png";
 			this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(ConstantesVue.CASE_SPE_WIDTH/3)-2;
 			this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(ConstantesVue.CASE_SPE_HEIGHT/3)-2;
 		}
 		//PRISON
 		else if(position==10){
-			path="Sprites/pieces/prison.png";
+			path="/Sprites/pieces/prison.png";
 			this.posX=0;
 			this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(ConstantesVue.CASE_SPE_HEIGHT/3)-2;
 		}
 		//PARK
 		else if(position==20){
-			path="Sprites/pieces/park.png";
+			path="/Sprites/pieces/park.png";
 			this.posX=0;
 			this.posY=0;
 		}
 		//POLICE
 		else if(position==30){
-			path="Sprites/pieces/police.png";
+			path="/Sprites/pieces/police.png";
 			this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(ConstantesVue.CASE_SPE_WIDTH/3);
 			this.posY=0;
 		}
@@ -101,14 +101,14 @@ public class Case extends JLabel {
 		
 		//CASE BAS
 		if(position>0&&position<10){
-			path="Sprites/pieces/BOTTOM/"+idCase+".png";
+			path="/Sprites/pieces/BOTTOM/"+idCase+".png";
 			this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(hX)*(position)-(ConstantesVue.CASE_SPE_WIDTH/3-1);
 			this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(hY)-2;
 		}
 		
 		//CASE GAUCHE
 		else if(position>10&&position<20){
-			path="Sprites/pieces/LEFT/"+idCase+".png";
+			path="/Sprites/pieces/LEFT/"+idCase+".png";
 			//image=new RotatedIcon(image,Rotate.DOWN);
 			int tmp=hY;
 			this.hY=hX;
@@ -126,7 +126,7 @@ public class Case extends JLabel {
 		
 		//CASE HAUT
 		else if(position>20&&position<30){
-			path="Sprites/pieces/UP/"+idCase+".png";
+			path="/Sprites/pieces/UP/"+idCase+".png";
 			//this.posX=(ConstantesVue.CASE_WIDTH/3)*(position%20)+(ConstantesVue.CASE_SPE_WIDTH/3);;
 			//this.posY=0;
 			
@@ -144,13 +144,13 @@ public class Case extends JLabel {
 			int tmp=hY;
 			this.hY=hX;
 			this.hX=tmp;
-			path="Sprites/pieces/RIGHT/"+idCase+".png";
+			path="/Sprites/pieces/RIGHT/"+idCase+".png";
 			this.posY=(ConstantesVue.CASE_WIDTH/3+4)
 					*(position%31)+(ConstantesVue.CASE_SPE_HEIGHT/3);;
 			this.posX=ConstantesVue.DIMENSION_PLATEAU_X-hX-2;
 			
 		}
-		image=new ImageIcon(path);
+		image=new ImageIcon(getClass().getResource(path));
 		image = transform((ImageIcon) image,hX,hY);
 		this.setIcon(image);
 	    this.idCase=idCase;
@@ -271,14 +271,14 @@ public class Case extends JLabel {
 		this.idCase = idCase;
 		//CASE BAS
 				if(position>0&&position<10){
-					path="Sprites/pieces/BOTTOM/"+idCase+".png";
+					path="/Sprites/pieces/BOTTOM/"+idCase+".png";
 					this.posX=ConstantesVue.DIMENSION_PLATEAU_X-(hX)*(position)-(ConstantesVue.CASE_SPE_WIDTH/3-1);
 					this.posY=ConstantesVue.DIMENSION_PLATEAU_Y-(hY)-2;
 				}
 				
 				//CASE GAUCHE
 				else if(position>10&&position<20){
-					path="Sprites/pieces/LEFT/"+idCase+".png";
+					path="/Sprites/pieces/LEFT/"+idCase+".png";
 					//image=new RotatedIcon(image,Rotate.DOWN);
 					int tmp=hY;
 					this.hY=hX;
@@ -296,7 +296,7 @@ public class Case extends JLabel {
 				
 				//CASE HAUT
 				else if(position>20&&position<30){
-					path="Sprites/pieces/UP/"+idCase+".png";
+					path="/Sprites/pieces/UP/"+idCase+".png";
 					//this.posX=(ConstantesVue.CASE_WIDTH/3)*(position%20)+(ConstantesVue.CASE_SPE_WIDTH/3);;
 					//this.posY=0;
 					
@@ -314,13 +314,13 @@ public class Case extends JLabel {
 					int tmp=hY;
 					this.hY=hX;
 					this.hX=tmp;
-					path="Sprites/pieces/RIGHT/"+idCase+".png";
+					path="/Sprites/pieces/RIGHT/"+idCase+".png";
 					this.posY=(ConstantesVue.CASE_WIDTH/3+4)
 							*(position%31)+(ConstantesVue.CASE_SPE_HEIGHT/3);;
 					this.posX=ConstantesVue.DIMENSION_PLATEAU_X-hX-2;
 					
 				}
-				image=new ImageIcon(path);
+				image=new ImageIcon(getClass().getResource(path));
 				image = transform((ImageIcon) image,hX,hY);
 				this.setIcon(image);
 		

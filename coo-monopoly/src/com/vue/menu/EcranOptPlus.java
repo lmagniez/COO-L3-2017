@@ -97,7 +97,7 @@ public class EcranOptPlus extends Ecran implements ActionListener{
 	public EcranOptPlus(VueMenu vue)
 	{
 		
-		fond=new ImageIcon("./Sprites/aide.png").getImage();
+		fond=new ImageIcon(getClass().getResource("/Sprites/aide.png")).getImage();
 		
 		this.vue=vue;
 		NB_BUTTONS_X=2;

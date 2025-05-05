@@ -98,14 +98,14 @@ public class InfoJoueur extends JPanel{
 		this.setBackground(new Color(200,200,200,90));
 		
 		Object items[]={
-				transform(new ImageIcon("./Sprites/pion/1.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/2.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/3.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/4.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/5.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/6.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/7.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/8.png"),50,50)
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/1.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/2.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/3.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/4.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/5.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/6.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/7.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/8.png")),50,50)
 		};
 		
 		pionJoueur=new JLabel();

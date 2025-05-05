@@ -61,7 +61,7 @@ public class EcranOpt extends Ecran implements ActionListener{
 	{
 		
 		
-		fond=new ImageIcon("./Sprites/aide.png").getImage();
+		fond=new ImageIcon(getClass().getResource("/Sprites/aide.png")).getImage();
 		this.vue=vue;
 		NB_BUTTONS_X=1;
 		NB_BUTTONS_Y=15;
@@ -116,14 +116,14 @@ public class EcranOpt extends Ecran implements ActionListener{
 		String str2[]={"JOUEUR","NONE","IA"};
 		
 		Object items[]={
-				transform(new ImageIcon("./Sprites/pion/1.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/2.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/3.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/4.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/5.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/6.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/7.png"),50,50),
-				transform(new ImageIcon("./Sprites/pion/8.png"),50,50)
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/1.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/2.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/3.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/4.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/5.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/6.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/7.png")),50,50),
+				transform(new ImageIcon(getClass().getResource("/Sprites/pion/8.png")),50,50)
 		};
 		
 	    

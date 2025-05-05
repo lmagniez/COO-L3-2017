@@ -64,7 +64,7 @@ public class EcranStart extends Ecran implements ActionListener{
 		
 		this.vue=f;
 		//fond= Toolkit.getDefaultToolkit().createImage("r")
-		fond=new ImageIcon("./Sprites/title.jpg").getImage();
+		fond=new ImageIcon(getClass().getResource("/Sprites/title.jpg")).getImage();
 		
 		this.setLayout(null);
 		
